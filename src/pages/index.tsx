@@ -1,19 +1,19 @@
-// import Head from "next/head";
-// import Image from "next/image";
+import Head from "next/head";
+import Image from "next/image";
 import { Inter } from "@next/font/google";
-// import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Home.module.css";
 
-const inter = Inter({ subsets: ["latin"] });
-function jokes(): Promise<string> {
-  return fetch("https://api.chucknorris.io/jokes/random")
-    .then((data) => data.json())
-    .then((data) => data.toString());
-}
-console.log(jokes());
+import { useEffect, useState } from "react";
+
 export default function Home() {
   return (
     <>
-      <div>Test</div>
+      <div>
+        <Head>
+          <title>Nelis Portfolio</title>
+        </Head>
+        <h1>Something here</h1>
+      </div>
     </>
   );
 }
