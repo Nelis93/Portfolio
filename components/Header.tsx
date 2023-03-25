@@ -23,11 +23,7 @@ function Header({}: Props) {
         }}
         className="flex flex-row items-center"
       >
-        <SocialIcon
-          url="https://en.wikipedia.org"
-          fgColor="gray"
-          bgColor="transparant"
-        />
+        <SocialIcon url="" fgColor="gray" bgColor="transparant" />
         <SocialIcon url="" fgColor="gray" bgColor="transparant" />
         <SocialIcon url="" fgColor="gray" bgColor="transparant" />
         <SocialIcon url="" fgColor="gray" bgColor="transparant" />
