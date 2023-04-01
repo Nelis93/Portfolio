@@ -16,7 +16,7 @@ export default function Projects({}: Props) {
         Projects
       </h3>
       <div className="relative w-full flex overflow-x-scroll overflow-y-hidden snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
-        {/* {projects.map((project, i) => {
+        {projects.map((project, i) => {
           <div className="w-screen flex-shrink-0 snap-center flex flex-col space-y-5 items-center justify-center p-20 md:p44 h-screen">
             <motion.img
               initial={{ y: -300, opacity: 0 }}
@@ -36,7 +36,7 @@ export default function Projects({}: Props) {
               <p className="text-lg text-center md:text-left"></p>
             </div>
           </div>;
-        })} */}
+        })}
       </div>
       <div className="w-full absolute top-[30%] bg-teal-300/10 h-[500px] -skew-y-12"></div>
     </motion.div>
