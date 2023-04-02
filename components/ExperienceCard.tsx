@@ -27,18 +27,18 @@ export default function ExperienceCard({ experience }: Props) {
         <p className="font-bold text-2xl mt-1">men of the west</p>
         <div className="flex space-x-2 my-2">
           {experience.technologies.map((tech) => {
-            <img key={tech._id} className="h-10 w-10 rounded-full" />;
+            return <img key={tech._id} className="h-10 w-10 rounded-full" />;
           })}
         </div>
         <p className="uppercase py-5 text-white">
-          {new Date(experience.dateStarted.toDateString())} -
+          {new Date(experience.dateStarted).toDateString()} -
           {experience.isCurrentlyWorkingHere
             ? "present"
             : new Date(experience.dataEnded).toDateString()}
         </p>
         <ul className="list-disc space-y-4 ml-5 text-lg h-96 overflow-y-scroll scrollbar-thin scrollbar-track-black scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
-            <li key={i}>{point}</li>;
+            return <li key={i}>{point}</li>;
           })}
         </ul>
       </div>

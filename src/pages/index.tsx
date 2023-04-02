@@ -28,7 +28,7 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
     <>
       <div className="bg-teal-600 text-white h-screen snap-y snap-mandatory overflow-y-scroll overflow-x-hidden z-0 scrollbar scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         <Head>
-          <title>Nelis Portfolio</title>
+          <title>{pageInfo?.name} Portfolio</title>
         </Head>
         <Header socials={socials} />
         <section id="hero" className="snap-start">

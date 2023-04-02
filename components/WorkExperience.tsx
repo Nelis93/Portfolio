@@ -20,7 +20,9 @@ export default function WorkExperience({ experiences }: Props) {
       </h3>
       <div className=" w-full flex space-x-5 overflow-x-scroll p-10 snap-x snap-mandatory mt-60 scrollbar scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {experiences?.map((experience) => {
-          <ExperienceCard key={experience._id} experience={experience} />;
+          return (
+            <ExperienceCard key={experience._id} experience={experience} />
+          );
         })}
       </div>
     </motion.div>
