@@ -8,12 +8,12 @@ import Hero from "components/Hero";
 import Projects from "components/Projects";
 import Skills from "components/Skills";
 import WorkExperience from "components/WorkExperience";
-import { PageInfo, Experience, Skill, Project, Social } from "../../../typings";
-import { fetchPageInfo } from "../../../utils/fetchPageInfo";
-import { fetchExperiences } from "../../../utils/fetchExperiences";
-import { fetchProjects } from "../../../utils/fetchProjects";
-import { fetchSkills } from "../../../utils/fetchSkills";
-import { fetchSocials } from "../../../utils/fetchSocials";
+import { PageInfo, Experience, Skill, Project, Social } from "../../typings";
+import { fetchPageInfo } from "../../utils/fetchPageInfo";
+import { fetchExperiences } from "../../utils/fetchExperiences";
+import { fetchProjects } from "../../utils/fetchProjects";
+import { fetchSkills } from "../../utils/fetchSkills";
+import { fetchSocials } from "../../utils/fetchSocials";
 
 type Props = {
   pageInfo: PageInfo;
