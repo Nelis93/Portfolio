@@ -8,6 +8,7 @@ import Hero from "components/Hero";
 import Projects from "components/Projects";
 import Skills from "components/Skills";
 import WorkExperience from "components/WorkExperience";
+import { urlFor } from "../../sanity";
 import { PageInfo, Experience, Skill, Project, Social } from "../../typings";
 import { fetchPageInfo } from "../../utils/fetchPageInfo";
 import { fetchExperiences } from "../../utils/fetchExperiences";
@@ -53,9 +54,9 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
           <footer className="sticky bottom-5 w-full cursor-pointer">
             <div className="flex items-center justify-center">
               <img
-                className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0"
-                src=""
-                alt="not yet"
+                className="h-10 w-10 rounded-full filter grayscale hover:grayscale-0 object-cover object-center"
+                src={urlFor(experiences[0].companyImage).url()}
+                alt={experiences[0].companyImage._type}
               />
             </div>
           </footer>

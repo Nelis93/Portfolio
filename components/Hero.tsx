@@ -3,7 +3,6 @@ import React from "react";
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import { PageInfo } from "../typings";
 import BackgroundCircles from "./BackgroundCircles";
-import Image from "next/image";
 import { urlFor } from "../sanity";
 type Props = {
   pageInfo: PageInfo;
@@ -11,19 +10,19 @@ type Props = {
 
 function Hero({ pageInfo }: Props) {
   const [text, count] = useTypewriter({
-    words: ["Elesar", "Strider", "Isildur's heir", "Captain of the Dunedain"],
+    words: ["Elessar", "Strider", "Isildur's heir", "Captain of the Dunedain"],
     loop: true,
     delaySpeed: 3000,
   });
   return (
     <div className="h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
       <BackgroundCircles />
-      <Image
-        src={urlFor(pageInfo.heroImage).url()}
-        width={32}
-        height={32}
+      <img
+        src={urlFor(pageInfo?.heroImage).url()}
+        width="200"
+        height="200"
         alt="no"
-        className="relative rounded-full mx-auto object-cover"
+        className="relative rounded-full mx-auto object-contain"
       />
       <div className="z-20">
         <h2 className="text-sm uppercase text-white pb-2 tracking-[15px]">
