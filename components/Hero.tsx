@@ -16,8 +16,10 @@ function Hero({ pageInfo }: Props) {
   });
   return (
     <>
-      <BackgroundCircles />
       <div className="h-screen relative flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
+        <div className="absolute top-0 mt-20">
+          <BackgroundCircles />
+        </div>
         <img
           src={urlFor(pageInfo?.heroImage).url()}
           width="200"

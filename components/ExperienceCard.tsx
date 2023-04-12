@@ -9,7 +9,7 @@ type Props = {
 
 export default function ExperienceCard({ experience }: Props) {
   return (
-    <article className="flex flex-col mb-5 rounded-lg items-center space-y-7 flex-shrink-0 w-[500px] md:w-[600px] xl:w-[600px] snap-center bg-teal-200 p-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden">
+    <article className="flex flex-col mb-10 rounded-lg items-center space-y-7 flex-shrink-0 w-[500px] md:max-w-[600px] xl:max-w-[500px] snap-center bg-teal-200 px-5 py-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden">
       <motion.img
         initial={{
           y: -100,
@@ -25,7 +25,7 @@ export default function ExperienceCard({ experience }: Props) {
       <div className="px-0 md:px-10">
         <h4 className="text-4xl font-light">{experience.jobTitle}</h4>
         <p className="font-bold text-2xl mt-1">{experience.company}</p>
-        <div className="flex space-x-2 my-2">
+        <div className="flex space-x-2 my-4">
           {experience.technologies.map((tech) => {
             return (
               <img
@@ -37,12 +37,12 @@ export default function ExperienceCard({ experience }: Props) {
           })}
         </div>
         <p className="uppercase py-5 text-white">
-          {new Date(experience.dateStarted).toDateString()} -
+          {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"
             : new Date(experience.dataEnded).toDateString()}
         </p>
-        <ul className="list-disc space-y-4 ml-5 text-lg h-60 overflow-y-scroll scrollbar-thin scrollbar-track-teal scrollbar-thumb-yellow-500/80">
+        <ul className="list-disc space-y-4 ml-5 text-lg h-40 w-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
             return <li key={i}>{point}</li>;
           })}
