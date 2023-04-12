@@ -14,7 +14,6 @@ function Header({ socials }: Props) {
         initial={{
           x: -500,
           opacity: 0,
-          scale: 0.5,
         }}
         animate={{
           x: 0,
@@ -42,7 +41,6 @@ function Header({ socials }: Props) {
           initial={{
             x: 500,
             opacity: 0,
-            scale: 0.5,
           }}
           animate={{
             x: 0,
@@ -60,7 +58,7 @@ function Header({ socials }: Props) {
             fgColor="gray"
             bgColor="transparant"
           />
-          <p className="uppercase hidden md:inline-flex text-sm text-gray-400">
+          <p className="uppercase pl-5 hidden md:inline-flex text-sm text-gray-400 hover:text-yellow-500">
             get in touch
           </p>
         </motion.div>
