@@ -9,7 +9,7 @@ type Props = {
 
 export default function ExperienceCard({ experience }: Props) {
   return (
-    <article className="flex flex-col mb-10 rounded-lg items-center space-y-7 flex-shrink-0 w-[500px] md:max-w-[600px] xl:max-w-[500px] snap-center bg-teal-200 px-5 py-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden">
+    <article className="flex flex-col mb-10 rounded-lg items-center space-y-7 w-[28%] snap-center bg-teal-200 px-5 py-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden">
       <motion.img
         initial={{
           y: -100,
@@ -18,20 +18,20 @@ export default function ExperienceCard({ experience }: Props) {
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="w-32 h-32 rounded-full xl:w-[200px] xl:h-[200px] object-cover object-center"
+        className="w-[8rem] h-32 rounded-full xl:w-[200px] xl:h-[200px] object-cover object-center"
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
       <div className="px-0 md:px-10">
         <h4 className="text-4xl font-light">{experience.jobTitle}</h4>
         <p className="font-bold text-2xl mt-1">{experience.company}</p>
-        <div className="flex space-x-2 my-4">
+        <div className="flex space-x-4 my-4">
           {experience.technologies.map((tech) => {
             return (
               <img
                 key={tech._id}
                 src={urlFor(tech.image).url()}
-                className="h-10 w-10 rounded-full"
+                className="h-10 w-10"
               />
             );
           })}
@@ -40,7 +40,7 @@ export default function ExperienceCard({ experience }: Props) {
           {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"
-            : new Date(experience.dataEnded).toDateString()}
+            : new Date(experience.dateEnded).toDateString()}
         </p>
         <ul className="list-disc space-y-4 ml-5 text-lg h-40 w-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {

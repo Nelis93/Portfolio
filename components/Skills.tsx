@@ -25,14 +25,12 @@ export default function Skills({ skills }: Props) {
           ?.slice(0, skills.length / 2)
           .filter((skill) => skill.webdev)
           .map((skill) => {
-            console.log(skill.title);
             return <Skill key={skill._id} skill={skill} />;
           })}
         {skills
           ?.slice(skills.length / 2, skills.length)
           .filter((skill) => skill.webdev)
           .map((skill) => {
-            console.log(skill.title);
             return <Skill key={skill._id} skill={skill} directionLeft />;
           })}
       </div>

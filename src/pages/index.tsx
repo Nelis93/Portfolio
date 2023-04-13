@@ -15,6 +15,7 @@ import { fetchExperiences } from "../../utils/fetchExperiences";
 import { fetchProjects } from "../../utils/fetchProjects";
 import { fetchSkills } from "../../utils/fetchSkills";
 import { fetchSocials } from "../../utils/fetchSocials";
+import dynamic from "next/dynamic";
 
 type Props = {
   pageInfo: PageInfo;
@@ -48,7 +49,7 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
           <Projects projects={projects} />
         </section>
         <section id="contact" className="snap-start">
-          <Contact />
+          <Contact pageInfo={pageInfo} />
         </section>
         <Link href="#hero">
           <footer className="sticky bottom-5 w-full cursor-pointer">
@@ -65,7 +66,7 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
     </>
   );
 };
-export default Home;
+export default dynamic(() => Promise.resolve(Home), { ssr: false });
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const pageInfo: PageInfo = await fetchPageInfo();

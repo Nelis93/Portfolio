@@ -20,7 +20,7 @@ export interface PageInfo extends SanityBody {
   email: string;
   role: string;
   heroImage: string;
-  name: string;
+  title: string;
   phoneNumber: string;
   profilePic: Image;
 }
@@ -45,7 +45,7 @@ export interface Experience extends SanityBody {
   company: string;
   companyImage: Image;
   dateStarted: Date;
-  dataEnded: Date;
+  dateEnded: Date;
   isCurrentlyWorkingHere: Boolean;
   jobTitle: string;
   points: string[];
