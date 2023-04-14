@@ -14,10 +14,10 @@ export default function Skills({ skills }: Props) {
       whileInView={{ opacity: 1 }}
       className="h-screen flex relative flex-col text-center md:text-left xl:flex-row max-w-[2000px] xl:px-5 min-h-screen justify-center xl:space-y-5 mx-auto items-center"
     >
-      <h3 className="top-24 absolute uppercase tracking-[20px] text-white text-2xl">
+      <h3 className="top-24 md:top-16 absolute uppercase tracking-[20px] text-white text-2xl">
         skills
       </h3>
-      <h3 className="top-36 absolute uppercase tracking-[3px] text-white text-sm">
+      <h3 className="top-36 md:top-28 absolute uppercase tracking-[3px] text-white text-sm">
         Hover over a skill for current proficiency
       </h3>
       <div className="grid grid-cols-4 gap-5 pt-40">
