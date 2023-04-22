@@ -9,7 +9,7 @@ type Props = {
 
 export default function ExperienceCard({ experience }: Props) {
   return (
-    <article className="flex flex-col mb-5 rounded-lg items-center space-y-7 w-[28%] snap-center bg-teal-200 px-5 py-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden">
+    <article className="relative flex flex-col flex-shrink-0 mb-5 pb-5 rounded-lg items-center space-y-7 md:w-[28%] snap-center bg-teal-200 px-5 py-10  hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200">
       <motion.img
         initial={{
           y: -100,
@@ -18,16 +18,14 @@ export default function ExperienceCard({ experience }: Props) {
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="w-[100px] h-[100px] flex-shrink-0 rounded-full md:w-[150px] md:h-[150px] xl:w-[10em] xl:h-[10em] object-cover object-center"
+        className="w-[20vh] h-[20vh] flex-shrink-0 rounded-full  object-cover object-center"
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
-      <div className="px-0 md:px-5">
-        <h4 className="text-4xl md:text-3xl font-light">
-          {experience.jobTitle}
-        </h4>
-        <p className="font-bold text-2xl mt-1">{experience.company}</p>
-        <div className="flex space-x-4 my-4 md:overflow-x-auto md:scrollbar-none">
+      <div className="relative bottom-0 h-full w-full px-5 ">
+        <h4 className="text-3xl font-light">{experience.jobTitle}</h4>
+        <p className="font-bold text-2xl">{experience.company}</p>
+        <div className="relative flex space-x-4 overflow-x-auto scrollbar-none py-[2.5vh]">
           {experience.technologies.map((tech) => {
             return (
               <img
@@ -38,15 +36,19 @@ export default function ExperienceCard({ experience }: Props) {
             );
           })}
         </div>
-        <p className="uppercase py-5 text-white">
+        <p className="uppercase text-white pb-[2vh]">
           {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"
             : new Date(experience.dateEnded).toDateString()}
         </p>
-        <ul className="list-disc space-y-4 ml-5 text-lg h-40 w-auto overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+        <ul className="absolute list-disc space-y-[2vh] top-0 mt-[50%]  bottom-0 ml-5 text-lg overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
-            return <li key={i}>{point}</li>;
+            return (
+              <li key={i} className="pr-2">
+                {point}
+              </li>
+            );
           })}
         </ul>
       </div>

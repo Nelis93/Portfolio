@@ -20,19 +20,19 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="h-screen flex relative flex-col text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center">
-      <h3 className="absolute top-16 uppercase tracking-[20px] text-white text-2xl">
+    <div className="h-screen flex relative flex-col text-center md:text-left md:flex-row max-w-screen md:max-w-7xl px-10 justify-evenly mx-auto items-center">
+      <h3 className="absolute top-32 md:top-[7vh] uppercase tracking-[20px] text-white text-2xl">
         Contact
       </h3>
 
-      <div className="flex flex-col space-y-10">
-        <h4 className="text-4xl font-semibold text-center">
-          You must light{" "}
+      <div className="flex flex-col mt-40 md:mt-0 justify-end md:justify-center space-y-[5vh] pt-[3vh]">
+        <h4 className="text-3xl md:text-4xl font-semibold text-center">
+          Details will be shared{" "}
           <span className="decoration-yellow-500/50 underline">
-            the Beacons
+            soon{"(ish)"}
           </span>
         </h4>
-        <div className="space-y-10">
+        <div className="space-y-[3vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-7 w-7 animate-pulse" />
             <p className="text-2xl">{pageInfo.phoneNumber}</p>
@@ -48,7 +48,7 @@ export default function Contact({ pageInfo }: Props) {
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-2 w-fit mx-auto"
+          className="flex flex-col space-y-2 w-full md:w-fit md:mx-auto"
         >
           <div className="flex space-x-2">
             <input
