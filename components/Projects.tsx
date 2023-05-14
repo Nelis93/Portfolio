@@ -13,18 +13,18 @@ export default function Projects({ projects }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="h-screen relative flex overflow-hidden flex-col text-left md:flex-row max-w-full justify-evenly mx-auto items-center z-0"
+      className="h-screen relative flex overflow-hidden flex-col text-left md:flex-row max-w-screen justify-evenly mx-auto items-center z-0"
     >
-      <h3 className="top-[7vh] absolute uppercase tracking-[20px] text-white text-2xl">
+      <h3 className="top-32 md:top-[7vh] absolute uppercase tracking-[20px] text-white text-2xl">
         Projects
       </h3>
-      <div className="relative w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
+      <div className="relative top-40 md:top-0 w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, i) => {
           // console.log(urlFor(project.image).url());
           return (
             <div
               key={project._id}
-              className="w-screen snap-center flex flex-col flex-shrink-0 space-y-5 items-center justify-center p-20 md:p-44 h-screen"
+              className="w-screen snap-center flex flex-col flex-shrink-0 space-y-5 items-center justify-start md:justify-center p-5 md:p-44 h-screen"
             >
               <motion.img
                 initial={{ y: -300, opacity: 0 }}
@@ -33,7 +33,8 @@ export default function Projects({ projects }: Props) {
                 viewport={{ once: true }}
                 src={urlFor(project.image).url()}
                 alt="none available"
-                width={"30%"}
+                width={"100%"}
+                className="md:w-[30%]"
               />
               <div className="space-y-10 px-0 md:px-10 max-w-6xl">
                 <h4 className="text-4xl font-semibold text-center">
