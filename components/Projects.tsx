@@ -20,7 +20,7 @@ export default function Projects({ projects }: Props) {
       </h3>
       <div className="relative top-40 md:top-0 w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, i) => {
-          // console.log(urlFor(project.image).url());
+          console.log(project);
           return (
             <div
               key={project._id}
