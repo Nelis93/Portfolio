@@ -1,5 +1,5 @@
-import { createClient } from "../portfolio/node_modules/next-sanity";
-import createImageUrlBuilder from "../portfolio/node_modules/@sanity/image-url";
+import { createClient } from "./node_modules/next-sanity";
+import createImageUrlBuilder from "./node_modules/@sanity/image-url";
 
 export const config = {
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "pdxb9c80",
