@@ -1,20 +1,20 @@
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import About from "components/About";
-import Contact from "components/Contact";
-import Header from "components/Header";
-import Hero from "components/Hero";
-import Projects from "components/Projects";
-import Skills from "components/Skills";
-import WorkExperience from "components/WorkExperience";
+import About from "@/components/About";
+import Contact from "@/components/Contact";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import Projects from "@/components/Projects";
+import Skills from "@/components/Skills";
+import WorkExperience from "@/components/WorkExperience";
 import { urlFor } from "../../sanity";
 import { PageInfo, Experience, Skill, Project, Social } from "../../typings";
-import { fetchPageInfo } from "../../utils/fetchPageInfo";
-import { fetchExperiences } from "../../utils/fetchExperiences";
-import { fetchProjects } from "../../utils/fetchProjects";
-import { fetchSkills } from "../../utils/fetchSkills";
-import { fetchSocials } from "../../utils/fetchSocials";
+import { fetchPageInfo } from "../utils/fetchPageInfo";
+import { fetchExperiences } from "../utils/fetchExperiences";
+import { fetchProjects } from "../utils/fetchProjects";
+import { fetchSkills } from "../utils/fetchSkills";
+import { fetchSocials } from "../utils/fetchSocials";
 import dynamic from "next/dynamic";
 
 type Props = {

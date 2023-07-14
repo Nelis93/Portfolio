@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
 import { Cursor, useTypewriter } from "react-simple-typewriter";
-import { PageInfo } from "../typings";
+import { PageInfo } from "../../typings";
 import BackgroundCircles from "./BackgroundCircles";
-import { urlFor } from "../sanity";
+import { urlFor } from "../../sanity";
 type Props = {
   pageInfo: PageInfo;
 };

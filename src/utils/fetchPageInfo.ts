@@ -1,4 +1,4 @@
-import { PageInfo } from "../typings";
+import { PageInfo } from "../../typings";
 
 export const fetchPageInfo = async () => {
   const res = await fetch(
