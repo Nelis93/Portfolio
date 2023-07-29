@@ -24,16 +24,14 @@ function Hero({ pageInfo }: Props) {
       <div className="relative w-screen flex flex-col mt-[37.5vh] space-y-5 justify-center items-center">
         <img
           src={urlFor(pageInfo?.heroImage).url()}
-          width="200px"
-          height="200px"
           alt="no"
-          className=" relative rounded-full mx-auto  object-cover xl:w-[25vh] xl:h-[25vh]"
+          className=" relative rounded-full mx-auto  object-cover w-[25vh] h-[25vh]"
         />
         <div className="z-20 w-full mx-auto">
           <h2 className="text-sm uppercase text-white pb-2 tracking-[15px]  text-center">
             {pageInfo?.role}
           </h2>
-          <h1 className="relative px-3 md:px-0 flex flex-row flex-wrap justify-center text-5xl lg:text-6xl font-semibold text-center">
+          <h1 className="relative px-3 md:px-0 flex flex-row flex-wrap justify-center text-2xl lg:text-3xl font-semibold text-center">
             <span className="mr-3">{text}</span>
             <Cursor cursorColor="White" />
           </h1>
