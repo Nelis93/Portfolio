@@ -17,7 +17,7 @@ export default function About({ pageInfo }: Props) {
       whileInView={{ opacity: 1 }}
       className="flex flex-col relative h-screen text-center md:text-left md:flex-row max-w-7xl px-20 justify-start md:justify-evenly mx-auto items-center"
     >
-      <h3 className="absolute w-screen text-center top-32 md:top-[7vh]  uppercase tracking-[20px] text-white text-2xl">
+      <h3 className="absolute w-screen text-center top-[7vh]  uppercase tracking-[20px] text-white text-2xl">
         About
       </h3>
       <motion.img

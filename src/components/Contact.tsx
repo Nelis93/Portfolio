@@ -20,12 +20,12 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="h-screen max-w-screen flex relative flex-col text-center md:text-left md:flex-row md:max-w-7xl justify-evenly md:px-10 md:mx-auto items-center">
-      <h3 className="absolute top-32 md:top-[7vh] uppercase tracking-[20px] text-white text-2xl">
+    <div className="h-screen max-w-screen flex relative text-left flex-row justify-evenly px-10 items-center">
+      <h3 className="absolute top-[7vh] uppercase tracking-[20px] text-white text-2xl">
         Contact
       </h3>
 
-      <div className="flex flex-col max-w-[100%] mt-40 md:mt-0 justify-end md:justify-center space-y-[5vh] md:pt-[3vh]">
+      <div className="flex flex-col max-w-[100%] mt-[7vh] justify-center space-y-[5vh] ">
         <h4 className="text-3xl md:text-4xl font-semibold text-center">
           Details will be shared{" "}
           <span className="decoration-yellow-500/50 underline">

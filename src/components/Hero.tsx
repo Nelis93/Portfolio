@@ -19,19 +19,19 @@ function Hero({ pageInfo }: Props) {
     delaySpeed: 3000,
   });
   return (
-    <div className="h-screen w-screen relative flex flex-col justify-start items-center px-10 mx-auto">
-      <BackgroundCircles />
-      <div className="relative w-screen flex flex-col mt-[37.5vh] space-y-5 justify-center items-center">
+    <div className="h-screen w-screen relative flex flex-col justify-center mx-auto">
+      {/* <BackgroundCircles /> */}
+      <div className="relative w-screen flex flex-col space-y-5">
         <img
           src={urlFor(pageInfo?.heroImage).url()}
           alt="no"
           className=" relative rounded-full mx-auto  object-cover w-[25vh] h-[25vh]"
         />
-        <div className="z-20 w-full mx-auto">
-          <h2 className="text-sm uppercase text-white pb-2 tracking-[15px]  text-center">
+        <div className="w-full mx-auto">
+          <h2 className="text-[3vh] uppercase text-white pb-2 tracking-[15px]  text-center">
             {pageInfo?.role}
           </h2>
-          <h1 className="relative px-3 md:px-0 flex flex-row flex-wrap justify-center text-2xl lg:text-3xl font-semibold text-center">
+          <h1 className="relative  flex flex-row flex-wrap justify-center text-[5vh] font-semibold text-center">
             <span className="mr-3">{text}</span>
             <Cursor cursorColor="White" />
           </h1>
