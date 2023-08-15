@@ -9,7 +9,7 @@ type Props = {
 
 function Header({ socials }: Props) {
   return (
-    <header className="sticky top-0 p-5 flex items-start justify-between mx-auto z-20">
+    <header className="sticky top-0 p-5 flex items-start justify-between mx-5 z-20">
       <motion.div
         initial={{
           x: -500,
@@ -18,7 +18,7 @@ function Header({ socials }: Props) {
         animate={{
           x: 0,
           opacity: 1,
-          scale: 0.75,
+          scale: 1,
         }}
         transition={{
           duration: 1.5,
@@ -45,7 +45,7 @@ function Header({ socials }: Props) {
           animate={{
             x: 0,
             opacity: 1,
-            scale: 0.75,
+            scale: 1,
           }}
           transition={{
             duration: 1.5,
