@@ -9,7 +9,7 @@ type Props = {
 
 export default function ExperienceCard({ experience }: Props) {
   return (
-    <article className="relative flex flex-col flex-shrink-0 mb-5  rounded-lg items-center md:w-[28%] snap-center bg-teal-200 px-5 py-[2vh] hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200">
+    <article className="relative flex flex-col flex-shrink-0 mb-[3vh] w-[25%]  rounded-lg items-center snap-center bg-teal-200 px-[2vh] py-[2vh] hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200">
       <motion.img
         initial={{
           y: -100,
@@ -18,11 +18,11 @@ export default function ExperienceCard({ experience }: Props) {
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="w-[20vh] h-[20vh] flex-shrink-0 rounded-full  object-cover object-center"
+        className="w-[20vh] h-[20vh] my-[1vh] flex-shrink-0 rounded-full  object-cover object-center"
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
-      <div className="relative bottom-0 h-full w-full px-5 ">
+      <div className="relative pl-[2vh]">
         <h4 className="text-[1rem] font-light">{experience.jobTitle}</h4>
         <p className="font-bold text-[1rem]">{experience.company}</p>
         <div className="relative flex space-x-4 overflow-x-auto scrollbar-none py-[2.5vh]">
@@ -42,10 +42,10 @@ export default function ExperienceCard({ experience }: Props) {
             ? "present"
             : new Date(experience.dateEnded).toDateString()}
         </p>
-        <ul className="absolute space-y-[1vh] mt-[50%] h-[10vh] bottom-0 ml-5 text-[.75rem] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+        <ul className="space-y-[1vh] h-[15vh]  ml-[1vh] text-[.75rem] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
             return (
-              <li key={i} className="pr-2">
+              <li key={i} className="">
                 {point}
               </li>
             );

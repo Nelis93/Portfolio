@@ -20,35 +20,35 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="h-screen max-w-screen flex relative text-left flex-row justify-evenly px-10 items-center">
-      <h3 className="absolute top-[7vh] uppercase tracking-[20px] text-white text-2xl">
+    <div className="h-screen max-w-screen flex relative text-left flex-row justify-center px-10 items-start">
+      <h3 className="absolute top-[7vh] uppercase tracking-[20px] text-white text-[5vh]">
         Contact
       </h3>
 
-      <div className="flex flex-col max-w-[100%] mt-[7vh] justify-center space-y-[5vh] ">
-        <h4 className="text-3xl md:text-4xl font-semibold text-center">
+      <div className="flex flex-col mt-[20vh] max-w-screen justify-start space-y-[5vh] ">
+        {/* <h4 className="text-[5vh] font-semibold text-center">
           Details will be shared{" "}
           <span className="decoration-yellow-500/50 underline">
             soon{"(ish)"}
           </span>
-        </h4>
-        <div className="space-y-[3vh]">
+        </h4> */}
+        <div className="space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
-            <PhoneIcon className="text-yellow-500 h-7 w-7 animate-pulse" />
-            <p className="text-2xl">{pageInfo.phoneNumber}</p>
+            <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
+            <p className="text-[3vh]">{pageInfo.phoneNumber}</p>
           </div>
           <div className="flex items-center space-x-5 justify-center">
-            <EnvelopeIcon className="text-yellow-500 h-7 w-7 animate-pulse" />
-            <p className="text-2xl">{pageInfo.email}</p>
+            <EnvelopeIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
+            <p className="text-[3vh]">{pageInfo.email}</p>
           </div>
           <div className="flex items-center space-x-5 justify-center">
-            <MapPinIcon className="text-yellow-500 h-7 w-7 animate-pulse" />
-            <p className="text-2xl">{pageInfo.address}</p>
+            <MapPinIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
+            <p className="text-[3vh]">{pageInfo.address}</p>
           </div>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-2 w-full md:w-fit md:mx-auto"
+          className="flex flex-col space-y-2 w-fit h-[20vh] text-[2vh] mx-auto"
         >
           <div className="flex space-x-2">
             <input
@@ -77,7 +77,7 @@ export default function Contact({ pageInfo }: Props) {
           />
           <button
             type="submit"
-            className="bg-teal-500 py-5 px-10 rounded-md text-white font-bold"
+            className="bg-teal-500 py-[3vh] px-10 rounded-md text-white font-bold"
           >
             Submit
           </button>

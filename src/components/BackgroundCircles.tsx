@@ -16,9 +16,9 @@ export default function BackgroundCircles({}: Props) {
       transition={{
         duration: 2.5,
       }}
-      className="absolute w-screen mx-auto top-0"
+      className="absolute z-0  mx-auto top-[37.5vh]"
     >
-      <div className="relative flex justify-center items-center h-screen">
+      <div className="relative flex justify-center items-center">
         <div className="absolute border border-white rounded-full h-[25vh] w-[25vh] animate-ping " />
         <div className="border border-teal-200 opacity-20 rounded-full h-[35vh] w-[35vh] absolute  " />
         <div className="border border-teal-200 opacity-20 rounded-full h-[55vh] w-[55vh] absolute  " />
