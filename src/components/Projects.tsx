@@ -20,7 +20,7 @@ export default function Projects({ projects }: Props) {
       </h3>
       <div className="relative w-screen h-screen pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, i) => {
-          console.log(project);
+          // console.log(project);
           return (
             <div
               key={project._id}

@@ -67,7 +67,6 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
   );
 };
 export default dynamic(() => Promise.resolve(Home), { ssr: false });
-
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const pageInfo: PageInfo = await fetchPageInfo();
   const experiences: Experience[] = await fetchExperiences();
@@ -75,6 +74,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const projects: Project[] = await fetchProjects();
   const socials: Social[] = await fetchSocials();
 
+  console.log(experiences);
   return {
     props: {
       pageInfo,
