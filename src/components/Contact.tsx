@@ -20,12 +20,12 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="h-screen max-w-screen flex relative text-left flex-row justify-center px-10 items-start">
-      <h3 className="absolute top-[7vh] uppercase tracking-[20px] text-white text-[5vh]">
+    <div className="h-screen max-w-screen flex relative text-left flex-col md:flex-row items-center justify-center px-10 md:items-start">
+      <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[5vh]">
         Contact
       </h3>
 
-      <div className="flex flex-col mt-[20vh] max-w-screen justify-start space-y-[5vh] ">
+      <div className="flex flex-col md:mt-[20vh] max-w-screen justify-center md:justify-start space-y-[5vh] ">
         {/* <h4 className="text-[5vh] font-semibold text-center">
           Details will be shared{" "}
           <span className="decoration-yellow-500/50 underline">
@@ -48,9 +48,9 @@ export default function Contact({ pageInfo }: Props) {
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-2 w-fit h-[20vh] text-[2vh] mx-auto"
+          className="flex flex-col space-y-2 w-screen px-5 md:w-fit h-[20vh] text-[2vh] mx-auto"
         >
-          <div className="flex space-x-2">
+          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
             <input
               {...register("name")}
               placeholder="Name"
