@@ -13,7 +13,7 @@ export default function Projects({ projects }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="h-screen relative flex flex-col overflow-hidden text-left max-w-screen justify-end mx-auto items-center"
+      className="h-screen max-w-[100vh] md:max-w-full relative flex flex-col overflow-hidden text-left md:max-w-screen justify-end mx-auto items-center"
     >
       <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[5vh]">
         Projects
@@ -33,7 +33,7 @@ export default function Projects({ projects }: Props) {
                 // viewport={{ once: true }}
                 src={urlFor(project?.image).url()}
                 alt="none available"
-                className="relative md:w-[40vh] rounded-lg"
+                className="relative w-[35vh] md:w-[40vh] rounded-lg"
               />
               <div className="space-y-[3vh] md:px-[5vh]">
                 <h4 className="text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center">

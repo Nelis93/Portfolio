@@ -20,7 +20,7 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="h-screen max-w-screen flex relative text-left flex-col md:flex-row items-center justify-center px-10 md:items-start">
+    <div className="h-screen max-w-[100vh] md:max-w-screen flex relative text-left flex-col md:flex-row items-center justify-center px-10 md:items-start">
       <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[5vh]">
         Contact
       </h3>

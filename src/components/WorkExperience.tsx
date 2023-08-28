@@ -12,7 +12,7 @@ export default function WorkExperience({ experiences }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="h-screen flex flex-col relative overflow-hidden text-lft max-w-full justify-start mx-[10vw] items-center"
+      className="h-screen max-w-[100vh] flex flex-col relative overflow-hidden text-lft md:max-w-full justify-start mx-[10vw] items-center"
     >
       {/* "flex flex-col relative h-screen text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center" */}
       <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[4vh] md:text-[5vh]">
