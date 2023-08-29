@@ -10,7 +10,7 @@ type Props = {
 
 export default function Skill({ skill, directionLeft }: Props) {
   return (
-    <div className="group relative flex cursor-pointer">
+    <div className="group w-[10vh] md:w-[12vh] h-[10vh] md:h-[12vh] relative flex cursor-pointer">
       <motion.img
         initial={{
           x: directionLeft ? -200 : 200,
@@ -19,7 +19,7 @@ export default function Skill({ skill, directionLeft }: Props) {
         transition={{ duration: 1 }}
         whileInView={{ opacity: 1, x: 0 }}
         src={urlFor(skill?.image).url()}
-        className="object-cover w-[10vh] md:w-[12vh] h-[10vh] md:h-[12vh] filter group-hover:grayscale transition duration-300 ease-in-out"
+        className="object-cover w-full h-full filter group-hover:grayscale transition duration-300 ease-in-out"
       />
       <div className="hidden md:block absolute opacity-0 group-hover:opacity-80 transition duration-300 ease-in-out group-hover:bg-white w-[12vh] h-[12vh] rounded z-0">
         <div className="flex items-center justify-center h-full">
