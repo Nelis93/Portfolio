@@ -29,13 +29,12 @@ export default function Skills({ skills }: Props) {
       <h3 className="top-[20vh] md:top-[16vh] absolute uppercase tracking-[3px] text-white text-[3vh]">
         Hover over a skill for current proficiency
       </h3>
-      <div className="relative max-h-[70vh] w-full flex flex-col flex-wrap place-content-center px-[10vh] gap-5 pb-[5vh] md:pb-[15vh]">
+      <div className="relative max-h-[70vh] w-full flex flex-col flex-wrap place-content-center px-[10vh] gap-5 pb-[5vh] md:pb-[12vh]">
         {startSkill(
           skills
             ?.slice(0, skills.length / 2)
             .filter((skill) => skill.webdev)
             .map((skill) => {
-              console.log(skill);
               return <Skill key={skill._id} skill={skill} />;
             })
         )}

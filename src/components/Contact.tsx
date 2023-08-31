@@ -1,7 +1,9 @@
 import React from "react";
 import { PhoneIcon, MapPinIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
+import { SocialIcon } from "react-social-icons";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { PageInfo } from "../../typings";
+import ReactWhatsapp from "react-whatsapp";
 
 type Props = {
   pageInfo: PageInfo;
@@ -46,9 +48,22 @@ export default function Contact({ pageInfo }: Props) {
             <p className="text-[3vh]">{pageInfo.address}</p>
           </div>
         </div>
+        <div className="relative md:hidden mx-auto pt-[10vh]">
+          <ReactWhatsapp
+            element="button"
+            number="0032456314681"
+            message="Hello World!!!"
+          >
+            <SocialIcon
+              network="whatsapp"
+              bgColor="white"
+              style={{ height: "10vh", width: "10vh" }}
+            />
+          </ReactWhatsapp>
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col space-y-2 w-screen px-5 md:w-fit h-[20vh] text-[2vh] mx-auto"
+          className="hidden md:flex flex-col space-y-2 w-screen px-5 md:w-fit h-[20vh] text-[2vh] mx-auto"
         >
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
             <input

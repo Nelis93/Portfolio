@@ -52,7 +52,7 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
           <Contact pageInfo={pageInfo} />
         </section>
         <Link href="#hero">
-          <footer className="invisible md:visible sticky bottom-5 w-full cursor-pointer">
+          <footer className="invisible md:visible sticky bottom-[2.5vh] w-full cursor-pointer">
             <div className="flex items-center justify-center">
               <img
                 className="h-[7.5vh] w-[7.5vh] rounded-full filter grayscale hover:grayscale-0 object-cover object-center"

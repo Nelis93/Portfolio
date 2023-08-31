@@ -32,12 +32,12 @@ export default function About({ pageInfo }: Props) {
         className="relative flex-shrink-0 w-[75vw] h-[30vh] md:w-[50vh] md:h-[60vh] rounded-lg object-cover md:mb-[7vh] mt-[25vh] md:mt-[10vh]"
       />
       <div className="md:space-y-10 pl-10  md:px-10">
-        <h4 className="text-2xl pb-[3vh] pt-[5vh] md:pt-0 md:text-4xl font-semibold">
+        <h4 className="text-[3vh] pb-[3vh] pt-[5vh] md:pt-0 md:text-4xl font-semibold">
           Here is a{" "}
           <span className="underline decoration-yellow-300">little</span>{" "}
           background
         </h4>
-        <p className="text-base pr-10 md:pr-0">
+        <p className="text-[2vh] pr-10 md:pr-0">
           {pageInfo?.backgroundInformation}
         </p>
       </div>
