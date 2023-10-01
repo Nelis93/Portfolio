@@ -51,7 +51,7 @@ export default function Contact({ pageInfo }: Props) {
         <div className="relative md:hidden mx-auto pt-[10vh]">
           <ReactWhatsapp
             element="button"
-            number="0032456314681"
+            number="+32456314681"
             message="Hello World!!!"
           >
             <SocialIcon
