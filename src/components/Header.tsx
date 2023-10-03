@@ -23,7 +23,7 @@ function Header({ socials }: Props) {
         transition={{
           duration: 1.5,
         }}
-        className="flex flex-row items-center"
+        className="flex flex-row space-x-2 items-center"
       >
         {socials.map((social) => {
           return (

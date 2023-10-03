@@ -18,7 +18,7 @@ type Inputs = {
 export default function Contact({ pageInfo }: Props) {
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formdata) => {
-    window.location.href = `mailto:neliseerdekens1@gmail.com?subject=${formdata.subject}&body=${formdata.message} (${formdata.email})`;
+    window.location.href = `mailto:${pageInfo.email}?subject=${formdata.subject}&body=${formdata.message} (${formdata.email})`;
   };
 
   return (
@@ -51,7 +51,7 @@ export default function Contact({ pageInfo }: Props) {
         <div className="relative md:hidden mx-auto pt-[10vh]">
           <ReactWhatsapp
             element="button"
-            number="+32456314681"
+            number={pageInfo.phoneNumber}
             message="Hello World!!!"
           >
             <SocialIcon
