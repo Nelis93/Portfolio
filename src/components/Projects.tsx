@@ -20,17 +20,16 @@ export default function Projects({ projects }: Props) {
       </h3>
       <div className="relative w-screen h-screen px-10 md:px-0 md:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, i) => {
-          // console.log(project);
           return (
             <div
               key={project._id}
               className="w-screen pb-5 md:pb-[10vh] px-[3vh] md:px-[30vh] snap-center flex flex-col flex-shrink-0 space-y-5 items-center justify-end"
             >
               <motion.img
-                // initial={{ y: -300, opacity: 0 }}
-                // transition={{ duration: 1.2 }}
-                // whileInView={{ opacity: 1, y: 0 }}
-                // viewport={{ once: true }}
+                initial={{ y: -300, opacity: 0 }}
+                transition={{ duration: 1.2 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 src={urlFor(project?.image).url()}
                 alt="none available"
                 className="relative w-[35vh] md:w-[40vh] rounded-lg"
@@ -45,7 +44,6 @@ export default function Projects({ projects }: Props) {
                 </h4>
                 <div className="flex items-center space-x-5 justify-center">
                   {project?.technologies.map((tech) => {
-                    // console.log(urlFor(tech?.image.asset._ref).url());
                     return (
                       <img
                         className="h-[5vh] w-[5vh]"

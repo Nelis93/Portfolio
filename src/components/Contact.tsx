@@ -28,12 +28,6 @@ export default function Contact({ pageInfo }: Props) {
       </h3>
 
       <div className="flex flex-col md:mt-[20vh] max-w-screen justify-center md:justify-start space-y-[5vh] ">
-        {/* <h4 className="text-[5vh] font-semibold text-center">
-          Details will be shared{" "}
-          <span className="decoration-yellow-500/50 underline">
-            soon{"(ish)"}
-          </span>
-        </h4> */}
         <div className="space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
