@@ -31,7 +31,7 @@ export default function Contact({ pageInfo }: Props) {
         <div className="space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
-            <p className="text-[3vh]">{pageInfo.phoneNumber}</p>
+            <p className="text-[3vh]">+31 4 159 265 35</p>
           </div>
           <div className="flex items-center space-x-5 justify-center">
             <EnvelopeIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
