@@ -13,17 +13,17 @@ export default function Projects({ projects }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="h-screen max-w-[100vh] md:max-w-full relative flex flex-col overflow-hidden text-left md:max-w-screen justify-end mx-auto items-center"
+      className=" relative h-screen max-w-[100vh] xl:max-w-full flex flex-col justify-end mx-auto items-center"
     >
-      <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[5vh]">
+      <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] xl:tracking-[20px] text-white text-[5vh]">
         Projects
       </h3>
-      <div className="relative w-screen h-screen px-10 md:px-0 md:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
+      <div className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, i) => {
           return (
             <div
               key={project._id}
-              className="w-screen pb-5 md:pb-[10vh] px-[3vh] md:px-[30vh] snap-center flex flex-col flex-shrink-0 space-y-5 items-center justify-end"
+              className="relative w-screen pb-5 md:pb-[12vh] xl:pb-[10vh] px-[3vh] xl:px-[30vh] snap-center flex flex-col flex-shrink-0 space-y-5 items-center justify-end"
             >
               <motion.img
                 initial={{ y: -300, opacity: 0 }}
@@ -32,17 +32,13 @@ export default function Projects({ projects }: Props) {
                 viewport={{ once: true }}
                 src={urlFor(project?.image).url()}
                 alt="none available"
-                className="relative w-[35vh] md:w-[40vh] rounded-lg"
+                className="relative w-[35vh] xl:w-[40vh] rounded-lg"
               />
-              <div className="space-y-[3vh] md:px-[5vh]">
-                <h4 className="text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center">
-                  <span className="hidden md:inline-block underline decoration-yellow-500">
-                    Project {i + 1}
-                    {" :"}
-                  </span>
-                  {" " + project?.title}
+              <div className="space-y-[3vh] xl:px-[5vh]">
+                <h4 className="text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">
+                  {project?.title}
                 </h4>
-                <div className="flex items-center space-x-5 justify-center">
+                <div className="flex items-center space-x-5 justify-center overflow-x-scroll scrollbar-none">
                   {project?.technologies.map((tech) => {
                     return (
                       <img
@@ -54,7 +50,7 @@ export default function Projects({ projects }: Props) {
                     );
                   })}
                 </div>
-                <p className="text-[3vh] h-[25vh] md:max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center">
+                <p className="text-[3vh] h-[25vh] xl:max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center">
                   {project?.summary}
                 </p>
               </div>

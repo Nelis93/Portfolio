@@ -15,9 +15,9 @@ export default function About({ pageInfo }: Props) {
       }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="flex  relative h-screen max-w-[100vh] md:max-w-full flex-col md:flex-row md:px-[20vh] justify-start md:justify-evenly mx-auto items-center"
+      className="flex  relative h-screen max-w-[100vh] xl:max-w-full flex-col xl:flex-row md:px-[10vh] xl:px-[20vh] justify-start xl:justify-evenly mx-auto items-center"
     >
-      <h3 className="absolute w-screen text-center top-[12vh] md:top-[7vh]  uppercase tracking-[20px] text-white text-[5vh]">
+      <h3 className="absolute w-screen text-center top-[12vh] xl:top-[7vh]  uppercase tracking-[20px] text-white text-[5vh]">
         About
       </h3>
       <motion.img
@@ -29,15 +29,15 @@ export default function About({ pageInfo }: Props) {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         src={urlFor(pageInfo?.profilePic).url()}
-        className="relative flex-shrink-0 w-[75vw] h-[30vh] md:w-[50vh] md:h-[60vh] rounded-lg object-cover md:mb-[7vh] mt-[25vh] md:mt-[10vh]"
+        className="relative flex-shrink-0 w-[75vw] h-[30vh] md:w-[50vh] xl:h-[60vh] rounded-lg object-cover xl:mb-[7vh] mt-[25vh] xl:mt-[10vh]"
       />
-      <div className="md:space-y-10 pl-10  md:px-10">
-        <h4 className="text-[3vh] pb-[3vh] pt-[5vh] md:pt-0 md:text-4xl font-semibold">
+      <div className="xl:space-y-10 pl-10  xl:px-10">
+        <h4 className="text-[3vh] pb-[3vh] pt-[5vh] xl:pt-0 xl:text-4xl font-semibold">
           Here is a{" "}
           <span className="underline decoration-yellow-300">little</span>{" "}
           background
         </h4>
-        <p className="text-[2vh] pr-10 md:pr-0">
+        <p className="text-[2vh] pr-10 xl:pr-0">
           {pageInfo?.backgroundInformation}
         </p>
       </div>

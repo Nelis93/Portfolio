@@ -20,23 +20,23 @@ function Hero({ pageInfo }: Props) {
   });
   return (
     <div className="h-screen w-screen relative flex flex-col mx-auto">
-      <div className=" relative min-h-[50vh]  w-screen flex flex-row justify-center">
+      <div className=" relative min-h-[50vh] w-screen flex flex-row justify-center">
         <img
           src={urlFor(pageInfo?.heroImage).url()}
           alt="no"
-          className=" absolute z-0 rounded-full mx-auto top-[25vh]  object-cover w-[25vh] h-[25vh]"
+          className="absolute z-0 rounded-full mx-auto top-[25vh] object-cover w-[25vh] h-[25vh]"
         />
         <BackgroundCircles />
       </div>
       <div className="w-full mx-auto space-y-[2vh] pt-[5vh] z-10">
-        <h2 className="text-[3vh] uppercase text-white tracking-[15px]  text-center">
+        <h2 className="text-[3vh] uppercase text-white tracking-[15px] text-center">
           {pageInfo?.role}
         </h2>
         <h1 className="relative  flex flex-row flex-wrap justify-center text-[5vh] font-semibold text-center">
           <span className="mr-3">{text}</span>
           <Cursor cursorColor="White" />
         </h1>
-        <div className="invisible md:visible flex flex-row justify-center pt-[3vh]">
+        <div className="invisible xl:visible flex flex-row justify-center pt-[3vh]">
           <Link href="#about">
             <button className="heroButton">About</button>
           </Link>

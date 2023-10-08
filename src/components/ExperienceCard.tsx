@@ -9,7 +9,7 @@ type Props = {
 
 export default function ExperienceCard({ experience }: Props) {
   return (
-    <article className="relative max-h-[70vh] flex flex-col flex-shrink-0 w-[80vw] md:w-[25%]  rounded-lg items-center snap-center bg-teal-200 px-2 md:px-[2vh] pt-[2vh] pb-[4vh] opacity-100 md:hover:opacity-100 md:opacity-40 cursor-pointer transition-opacity duration-200">
+    <article className="relative max-h-[70vh] flex flex-col flex-shrink-0 w-[80vw] md:w-[60vw] xl:w-[25%] rounded-lg items-center snap-center bg-teal-200 px-2 xl:px-[2vh] pt-[2vh] pb-[4vh] opacity-100 xl:hover:opacity-100 xl:opacity-40 cursor-pointer transition-opacity duration-200">
       <motion.img
         initial={{
           y: -100,
