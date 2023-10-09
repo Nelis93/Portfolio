@@ -32,7 +32,7 @@ export default function Projects({ projects }: Props) {
                 viewport={{ once: true }}
                 src={urlFor(project?.image).url()}
                 alt="none available"
-                className="relative w-[35vh] xl:w-[40vh] rounded-lg"
+                className="relative w-[35vh] xl:w-[40vh] rounded-lg cursor-none"
               />
               <div className="space-y-[3vh] xl:px-[5vh]">
                 <h4 className="text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">

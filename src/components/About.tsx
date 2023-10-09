@@ -29,7 +29,7 @@ export default function About({ pageInfo }: Props) {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         src={urlFor(pageInfo?.profilePic).url()}
-        className="relative flex-shrink-0 w-[75vw] h-[30vh] md:w-[50vh] xl:h-[60vh] rounded-lg object-cover xl:mb-[7vh] mt-[25vh] xl:mt-[10vh]"
+        className="relative flex-shrink-0 w-[75vw] h-[30vh] md:w-[50vh] xl:h-[60vh] rounded-lg object-cover xl:mb-[7vh] mt-[25vh] xl:mt-[10vh] cursor-none"
       />
       <div className="xl:space-y-10 pl-10  xl:px-10">
         <h4 className="text-[3vh] pb-[3vh] pt-[5vh] xl:pt-0 xl:text-4xl font-semibold">
