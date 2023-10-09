@@ -18,7 +18,7 @@ export default function Projects({ projects }: Props) {
       <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] xl:tracking-[20px] text-white text-[5vh]">
         Projects
       </h3>
-      <div className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
+      <div className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-0 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, i) => {
           return (
             <div
