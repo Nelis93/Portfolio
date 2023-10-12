@@ -10,7 +10,7 @@ type Props = {
 
 export default function Skill({ skill, directionLeft }: Props) {
   return (
-    <div className="group w-[10vh] md:w-[12vh] h-[10vh] md:h-[12vh] relative flex cursor-pointer">
+    <div className="group w-[10vh] md:w-[12vh] h-[10vh] md:h-[12vh] relative flex cursor-none">
       <motion.img
         initial={{
           x: directionLeft ? -200 : 200,

@@ -57,7 +57,7 @@ export default function Contact({ pageInfo }: Props) {
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="hidden md:flex flex-col space-y-2 w-screen px-5 md:w-fit h-[20vh] text-[2vh] mx-auto"
+          className="hidden md:flex flex-col space-y-2 w-screen px-5 md:w-fit h-[40vh] text-[2vh] mx-auto"
         >
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
             <input
