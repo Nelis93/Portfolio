@@ -46,7 +46,7 @@ export default function Contact({ pageInfo }: Props) {
           <ReactWhatsapp
             element="button"
             number={pageInfo.phoneNumber}
-            message="Hello World!!!"
+            message="Hi 🙂"
           >
             <SocialIcon
               network="whatsapp"
