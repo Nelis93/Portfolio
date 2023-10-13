@@ -4,13 +4,14 @@ import { SocialIcon } from "react-social-icons";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { PageInfo } from "../../typings";
 import ReactWhatsapp from "react-whatsapp";
+import PhoneHover from "./PhoneHover";
 
 type Props = {
   pageInfo: PageInfo;
 };
 type Inputs = {
   name: string;
-  email: string;
+  company: string;
   subject: string;
   message: string;
 };
@@ -18,7 +19,7 @@ type Inputs = {
 export default function Contact({ pageInfo }: Props) {
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formdata) => {
-    window.location.href = `mailto:${pageInfo.email}?subject=${formdata.subject}&body=${formdata.message} (${formdata.email})`;
+    window.location.href = `mailto:${pageInfo.email}?subject=${formdata.subject}&body=${formdata.message} (${formdata.company})`;
   };
 
   return (
@@ -31,7 +32,15 @@ export default function Contact({ pageInfo }: Props) {
         <div className="space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
-            <p className="text-[3vh]">+31 4 159 265 35</p>
+            <PhoneHover
+              tooltipContent={
+                <p className="text-lg text-white">
+                  I see you like 🥧... try email instead
+                </p>
+              }
+            >
+              <p className="text-[3vh] cursor-not-allowed">+31 4 159 265 35</p>
+            </PhoneHover>
           </div>
           <div className="flex items-center space-x-5 justify-center">
             <EnvelopeIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
@@ -67,10 +76,10 @@ export default function Contact({ pageInfo }: Props) {
               type="text"
             />
             <input
-              {...register("email")}
-              placeholder="Email"
+              {...register("company")}
+              placeholder="Company"
               className="contactInput"
-              type="email"
+              type="text"
             />
           </div>
           <input
