@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import Tooltip from "./Tooltip.tsx";
+import Tooltip from "./Tooltip";
 
 type Props = {
   tooltipContent: JSX.Element;

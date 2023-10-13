@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import TooltipContainer from "./TooltipContainer.tsx";
+import TooltipContainer from "./TooltipContainer";
 
 type Props = {
   children: JSX.Element;
