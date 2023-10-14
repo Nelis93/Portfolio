@@ -16,6 +16,13 @@ type Inputs = {
   message: string;
 };
 
+const hover = {
+  tooltipContent: `<p className="text-lg text-white">
+      I see you like 🥧... try email instead
+    </p>`,
+  rest: `<p className="text-[3vh] cursor-not-allowed">+31 4 159 265 35</p>`,
+};
+
 export default function Contact({ pageInfo }: Props) {
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formdata) => {
@@ -32,15 +39,7 @@ export default function Contact({ pageInfo }: Props) {
         <div className="space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
-            <PhoneHover
-              tooltipContent={
-                <p className="text-lg text-white">
-                  I see you like 🥧... try email instead
-                </p>
-              }
-            >
-              <p className="text-[3vh] cursor-not-allowed">+31 4 159 265 35</p>
-            </PhoneHover>
+            <PhoneHover {...hover} />
           </div>
           <div className="flex items-center space-x-5 justify-center">
             <EnvelopeIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />

@@ -1,5 +1,5 @@
 type Props = {
-  children: JSX.Element;
+  children: string;
   x: number;
   y: number;
   contentRef: any;

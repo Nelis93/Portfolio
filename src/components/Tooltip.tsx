@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import TooltipContainer from "./TooltipContainer";
 
 type Props = {
-  children: JSX.Element;
+  children: string;
   targetRect: any;
 };
 
