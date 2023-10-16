@@ -1,5 +1,5 @@
 type Props = {
-  children: string;
+  children: any;
   x: number;
   y: number;
   contentRef: any;
@@ -21,7 +21,7 @@ export default function TooltipContainer({
         transform: `translate3d(${x}px, ${y}px, 0)`,
       }}
     >
-      <div ref={contentRef} className="bg-teal-300 px-3 py-2 rounded mx-auto">
+      <div ref={contentRef} className="bg-yellow-500 px-3 py-2 rounded mx-auto">
         {children}
       </div>
     </div>

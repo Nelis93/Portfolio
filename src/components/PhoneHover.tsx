@@ -2,8 +2,8 @@ import { useState, useRef } from "react";
 import Tooltip from "./Tooltip";
 
 type Props = {
-  tooltipContent: string;
-  rest: string;
+  tooltipContent: any;
+  rest: any;
 };
 export default function PhoneHover({ tooltipContent, ...rest }: Props) {
   const [targetRect, setTargetRect]: any = useState(null);
