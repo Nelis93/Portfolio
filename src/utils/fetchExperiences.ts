@@ -11,7 +11,7 @@ const query = groq`
 `;
 export const fetchExperiences = async () => {
   //Thanks to the help of icyJoseph (vercel) I found out that the sanity api is a feature that inhibits
-  //the build in Vercel. The data should be fetched directly from Sanity via the groq query language,
+  // the build in Vercel. The data should be fetched directly from Sanity via the groq query language,
   //using sanityClient(query)
   // const res = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/getExperience`
