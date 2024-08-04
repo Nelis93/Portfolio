@@ -7,7 +7,6 @@ type Props = {
   skill: SkillOne;
   directionLeft?: boolean;
 };
-
 export default function Skill({ skill, directionLeft }: Props) {
   return (
     <div className="group w-[10vh] md:w-[12vh] h-[10vh] md:h-[12vh] relative flex cursor-none">
