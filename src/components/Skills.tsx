@@ -5,7 +5,7 @@ import { Skill as SkillType } from "../../typings";
 type Props = {
   skills: SkillType[];
 };
-///dfas
+///df
 export default function Skills({ skills }: Props) {
   function startSkill(array: any[] | undefined) {
     let newArray = array;
