@@ -2,15 +2,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { PageInfo } from "../../typings";
 // import { urlFor } from "../../sanity";
-import { urlFor } from "sanity";
+import { urlFor } from "../../sanity";
 
 type Props = {
   pageInfo: PageInfo;
 };
 
 export default function About({ pageInfo }: Props) {
+  console.log(urlFor(pageInfo?.profilePic));
   return (
-    
     <motion.div
       initial={{
         opacity: 0,
