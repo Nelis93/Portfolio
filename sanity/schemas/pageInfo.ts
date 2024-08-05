@@ -1,61 +1,63 @@
-import {defineField, defineType} from 'sanity/lib/exports'
+// import {defineField, defineType} from 'sanity/lib/exports'
+import { sanityClient } from "sanity";
+import { defineField, defineType } from "../../node_modules/sanity";
 
 export default defineType({
-  name: 'pageInfo',
-  title: 'PageInfo',
-  type: 'document',
+  name: "pageInfo",
+  title: "PageInfo",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
     }),
     defineField({
-      name: 'role',
-      title: 'Role',
-      type: 'string',
+      name: "role",
+      title: "Role",
+      type: "string",
     }),
     defineField({
-      name: 'heroImage',
-      title: 'Image',
-      type: 'image',
+      name: "heroImage",
+      title: "Image",
+      type: "image",
       options: {
         hotspot: true,
       },
     }),
     defineField({
-      name: 'backgroundInformation',
-      title: 'BackgroundInformation',
-      type: 'text',
+      name: "backgroundInformation",
+      title: "BackgroundInformation",
+      type: "text",
     }),
     defineField({
-      name: 'profilePic',
-      title: 'ProfilePic',
-      type: 'image',
+      name: "profilePic",
+      title: "ProfilePic",
+      type: "image",
       options: {
         hotspot: true,
       },
     }),
     defineField({
-      name: 'phoneNumber',
-      title: 'PhoneNumber',
-      type: 'string',
+      name: "phoneNumber",
+      title: "PhoneNumber",
+      type: "string",
     }),
     defineField({
-      name: 'email',
-      title: 'Email',
-      type: 'string',
+      name: "email",
+      title: "Email",
+      type: "string",
     }),
     defineField({
-      name: 'address',
-      title: 'Address',
-      type: 'string',
+      name: "address",
+      title: "Address",
+      type: "string",
     }),
     defineField({
-      name: 'socials',
-      title: 'Socials',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'social'}}],
+      name: "socials",
+      title: "Socials",
+      type: "array",
+      of: [{ type: "reference", to: { type: "social" } }],
     }),
   ],
-})
+});
