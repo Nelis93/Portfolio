@@ -23,14 +23,17 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "18.0.11",
     "framer-motion": "^11.3.21",
+    "glob": "^11.0.0",
     "next": "^14.2.5",
     "next-sanity": "^9.4.3",
+    "patch-package": "^8.0.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "react-hook-form": "^7.43.8",
     "react-simple-typewriter": "^5.0.1",
     "react-social-icons": "^5.15.0",
     "react-whatsapp": "^0.3.0",
+    "rimraf": "^6.0.1",
     "styled-components": "^6.1.12"
   },
   "devDependencies": {
