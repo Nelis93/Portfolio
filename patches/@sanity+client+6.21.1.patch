@@ -1,0 +1,13 @@
+diff --git a/node_modules/@sanity/client/dist/index.d.ts b/node_modules/@sanity/client/dist/index.d.ts
+index faad511..7850190 100644
+--- a/node_modules/@sanity/client/dist/index.d.ts
++++ b/node_modules/@sanity/client/dist/index.d.ts
+@@ -1315,7 +1315,7 @@ export declare class ObservableSanityClient {
+   fetch<
+     R = Any,
+     Q extends QueryWithoutParams = QueryWithoutParams,
+-    const G extends string = string,
++    G extends string = string,
+   >(query: G, params?: Q | QueryWithoutParams): Observable<ClientReturn<G, R>>
+   /**
+    * Perform a GROQ-query against the configured dataset.
