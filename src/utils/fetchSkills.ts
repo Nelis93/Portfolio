@@ -1,4 +1,3 @@
-// import { Skill } from "../../typings";
 import { groq } from "next-sanity";
 import { sanityClient } from "../../sanity";
 import { Skill } from "../../typings";

@@ -1,4 +1,3 @@
-// import { Project } from "../../typings";
 import { groq } from "next-sanity";
 import { sanityClient } from "../../sanity";
 import { Project } from "../../typings";

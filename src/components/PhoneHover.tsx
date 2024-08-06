@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-// import Tooltip from "./Tooltip";
+import Tooltip from "./Tooltip";
+
 type Props = {
   tooltipContent: any;
   rest: any;
@@ -25,9 +26,9 @@ export default function PhoneHover({ tooltipContent, ...rest }: Props) {
           setTargetRect(null);
         }}
       />
-      {/* {targetRect !== null && (
+      {targetRect !== null && (
         <Tooltip targetRect={targetRect}>{tooltipContent}</Tooltip>
-      )} */}
+      )}
     </>
   );
 }
