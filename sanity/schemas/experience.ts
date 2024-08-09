@@ -1,4 +1,5 @@
-import { defineField, defineType } from "../../node_modules/sanity";
+// import { defineField, defineType } from "../../node_modules/sanity";
+import { defineField, defineType } from "@sanity/types";
 
 export default defineType({
   name: "experience",
