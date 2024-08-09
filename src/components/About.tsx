@@ -38,7 +38,7 @@ export default function About({ pageInfo }: Props) {
           <span className="underline decoration-yellow-300">little</span>{" "}
           background
         </h4>
-        <p className="text-[2vh] pr-10 xl:pr-0">
+        <p className="text-[3vh] pr-10 xl:pr-0">
           {pageInfo?.backgroundInformation}
         </p>
       </div>

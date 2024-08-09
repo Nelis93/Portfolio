@@ -36,5 +36,10 @@ export default defineType({
       title: "LinkToBuild",
       type: "url",
     }),
+    defineField({
+      name: "position",
+      title: "Position",
+      type: "number",
+    }),
   ],
 });
