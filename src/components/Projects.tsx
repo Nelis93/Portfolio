@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Project } from "../../typings";
 import { urlFor } from "../../sanity";
@@ -8,6 +8,31 @@ type Props = {
 };
 
 export default function Projects({ projects }: Props) {
+  console.log(projects.length);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const projectRefs = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    // Scroll the selected project into view when currentIndex changes
+    projectRefs.current[currentIndex]?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+    });
+  }, [currentIndex]);
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex + 1 === projects.length ? 0 : prevIndex + 1
+    );
+  };
+  const handlePrevious = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex - 1 < 0 ? projects.length - 1 : prevIndex - 1
+    );
+  };
+  const handleDotClick = (index: number) => {
+    setCurrentIndex(index);
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -19,12 +44,45 @@ export default function Projects({ projects }: Props) {
         Projects
       </h3>
       <div className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
-        {projects?.map((project, i) => {
+        {projects?.map((project, index) => {
           return (
             <div
-              key={project._id}
-              className="relative w-screen pb-[7vh] md:pb-[12vh] xl:pb-[10vh] px-[3vh] xl:px-[30vh] snap-center flex flex-col flex-shrink-0 space-y-5 items-center justify-end"
+              key={index}
+              ref={(el) => {
+                if (el) {
+                  projectRefs.current[index] = el;
+                }
+              }}
+              className="relative w-screen pb-[7vh] md:pb-[12vh] xl:pb-[10vh] px-[3vh] xl:px-[30vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-3"
             >
+              <div className="absolute z-20 hidden md:flex justify-between w-screen top-[40%]">
+                <div
+                  className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 left-0"
+                  onClick={handlePrevious}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="35"
+                    viewBox="0 96 960 960"
+                    width="35"
+                  >
+                    <path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" />
+                  </svg>
+                </div>
+                <div
+                  className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 right-0"
+                  onClick={handleNext}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="35"
+                    viewBox="0 96 960 960"
+                    width="35"
+                  >
+                    <path d="m304 974-56-57 343-343-343-343 56-57 400 400-400 400Z" />
+                  </svg>
+                </div>
+              </div>
               <motion.img
                 initial={{ y: -300, opacity: 0 }}
                 transition={{ duration: 1.2 }}
@@ -34,8 +92,17 @@ export default function Projects({ projects }: Props) {
                 alt="none available"
                 className="relative w-[35vh] xl:w-[40vh] rounded-lg cursor-none"
               />
-              <div className="space-y-[3vh] xl:px-[5vh]">
-                <h4 className="text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">
+              <div className="hidden md:flex justify-center gap-5 mt-2">
+                {projects.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`size-4 rounded-[50%] hover:cursor-pointer ${currentIndex === idx ? "bg-yellow-500" : "bg-black"}`}
+                    onClick={() => handleDotClick(idx)}
+                  ></div>
+                ))}
+              </div>
+              <div className="space-y-3 xl:px-[5vh]">
+                <h4 className="mb-5 text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">
                   {project?.title}
                 </h4>
                 <div className="flex items-center space-x-5 justify-center overflow-x-scroll scrollbar-none">

@@ -33,7 +33,7 @@ function Header({ socials }: Props) {
               target="blank"
               fgColor="gray"
               bgColor="transparant"
-              style={{ width: "5vh", height: "5vh" }}
+              style={{ width: "6vh", height: "6vh" }}
               className="social-icon"
             />
           );
@@ -60,9 +60,9 @@ function Header({ socials }: Props) {
             network="email"
             fgColor="gray"
             bgColor="transparant"
-            style={{ width: "5vh", height: "5vh" }}
+            style={{ width: "6vh", height: "6vh" }}
           />
-          <p className="uppercase pl-5 hidden md:inline-flex text-base text-gray-400 hover:text-yellow-500">
+          <p className="uppercase pl-5 hidden md:inline-flex text-xl text-gray-400 hover:text-yellow-500">
             get in touch
           </p>
         </motion.div>
