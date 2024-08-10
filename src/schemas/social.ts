@@ -1,6 +1,7 @@
 // import {defineField, defineType} from 'sanity/lib/exports'
 // import {defineField, defineType} from 'sanity'
-import { defineField, defineType } from "../../node_modules/sanity";
+// import { defineField, defineType } from "sa";
+import { defineField, defineType } from "@sanity/types";
 
 export default defineType({
   name: "social",
