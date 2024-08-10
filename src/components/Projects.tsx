@@ -43,6 +43,34 @@ export default function Projects({ projects }: Props) {
       <h3 className="absolute top-[10vh] md:top-[7vh] uppercase tracking-[10px] xl:tracking-[20px] text-white text-[5vh]">
         Projects
       </h3>
+      <div className="absolute z-20 hidden md:flex justify-between w-screen top-[50%]">
+        <div
+          className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 left-0"
+          onClick={handlePrevious}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="35"
+            viewBox="0 100 1000 1000"
+            width="45"
+          >
+            <path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" />
+          </svg>
+        </div>
+        <div
+          className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 right-0"
+          onClick={handleNext}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="35"
+            viewBox="0 96 960 960"
+            width="35"
+          >
+            <path d="m304 974-56-57 343-343-343-343 56-57 400 400-400 400Z" />
+          </svg>
+        </div>
+      </div>
       <div className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, index) => {
           return (
@@ -55,34 +83,6 @@ export default function Projects({ projects }: Props) {
               }}
               className="relative w-screen pb-[7vh] md:pb-[12vh] xl:pb-[10vh] px-[3vh] xl:px-[30vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-3"
             >
-              <div className="absolute z-20 hidden md:flex justify-between w-screen top-[40%]">
-                <div
-                  className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 left-0"
-                  onClick={handlePrevious}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="35"
-                    viewBox="0 96 960 960"
-                    width="35"
-                  >
-                    <path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" />
-                  </svg>
-                </div>
-                <div
-                  className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 right-0"
-                  onClick={handleNext}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="35"
-                    viewBox="0 96 960 960"
-                    width="35"
-                  >
-                    <path d="m304 974-56-57 343-343-343-343 56-57 400 400-400 400Z" />
-                  </svg>
-                </div>
-              </div>
               <motion.img
                 initial={{ y: -300, opacity: 0 }}
                 transition={{ duration: 1.2 }}
