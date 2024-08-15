@@ -33,7 +33,7 @@ export default function ExperienceCard({
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="w-[20vh] h-[20vh] my-[2vh] flex-shrink-0 rounded-full  object-cover object-center"
+        className="w-[10em] h-[10em] my-[1em] flex-shrink-0 rounded-full  object-cover object-center"
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
@@ -41,25 +41,25 @@ export default function ExperienceCard({
         <h4 className="text-[2em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg">
           {experience.jobTitle}
         </h4>
-        <p className="font-bold pl-1 text-[1.5em]">{experience.company}</p>
+        <p className="font-bold pl-1 md:text-[1.5em]">{experience.company}</p>
         <div className="relative flex space-x-4 overflow-x-auto scrollbar-none py-[2.5vh]">
           {experience.technologies.map((tech) => {
             return (
               <img
                 key={tech._id}
                 src={urlFor(tech.image).url()}
-                className="h-[5vh] w-[5vh]"
+                className="h-[2.5em] w-[2.5em]"
               />
             );
           })}
         </div>
-        <p className="uppercase text-[1em] text-gray-400 pb-[2vh]">
+        <p className="uppercase md:text-[1em] text-gray-400 pb-[1.2em]">
           {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"
             : new Date(experience.dateEnded).toDateString()}
         </p>
-        <ul className="space-y-[1vh] h-[15vh] ml-[1vh] text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+        <ul className="overscroll-contain space-y-1 h-[8em] ml-[1vh] md:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
             return <li key={i}>{point}</li>;
           })}

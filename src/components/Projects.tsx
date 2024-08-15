@@ -1,37 +1,39 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Project } from "../../typings";
+import { Project as PJT } from "../../typings";
 import { urlFor } from "../../sanity";
+import Project from "./Project";
 
 type Props = {
-  projects: Project[];
+  projects: PJT[];
 };
 
 export default function Projects({ projects }: Props) {
-  console.log(projects.length);
   const [currentIndex, setCurrentIndex] = useState(0);
   const projectRefs = useRef<HTMLDivElement[]>([]);
+  // const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // Scroll the selected project into view when currentIndex changes
-    projectRefs.current[currentIndex]?.scrollIntoView({
+  const slide = (index: any) => {
+    projectRefs.current[index]?.scrollIntoView({
       behavior: "smooth",
       inline: "center",
     });
-  }, [currentIndex]);
-
+  };
   const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 1 === projects.length ? 0 : prevIndex + 1
-    );
+    const nextIndex =
+      currentIndex + 1 === projects.length ? 0 : currentIndex + 1;
+    setCurrentIndex(nextIndex);
+    slide(nextIndex);
   };
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? projects.length - 1 : prevIndex - 1
-    );
+    const prevIndex =
+      currentIndex - 1 < 0 ? projects.length - 1 : currentIndex - 1;
+    setCurrentIndex(prevIndex);
+    slide(prevIndex);
   };
   const handleDotClick = (index: number) => {
     setCurrentIndex(index);
+    slide(index);
   };
   return (
     <motion.div
@@ -71,57 +73,81 @@ export default function Projects({ projects }: Props) {
           </svg>
         </div>
       </div>
+      <div className="hidden md:flex justify-center gap-5 mt-2">
+        {projects.map((_, idx) => (
+          <div
+            key={idx}
+            className={`size-4 rounded-[50%] hover:cursor-pointer ${currentIndex === idx ? "bg-yellow-500" : "bg-black"}`}
+            onClick={() => handleDotClick(idx)}
+          ></div>
+        ))}
+      </div>
       <div className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80">
         {projects?.map((project, index) => {
           return (
-            <div
-              key={index}
-              ref={(el) => {
+            <Project
+              project={project}
+              index={index}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
+              ref={(el: any) => {
                 if (el) {
+                  console.log(projectRefs);
                   projectRefs.current[index] = el;
                 }
+                setCurrentIndex(index);
               }}
-              className="relative w-screen pb-[7vh] md:pb-[12vh] xl:pb-[10vh] px-[3vh] xl:px-[30vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-3"
-            >
-              <motion.img
-                initial={{ y: -300, opacity: 0 }}
-                transition={{ duration: 1.2 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                src={urlFor(project?.image).url()}
-                alt="none available"
-                className="relative w-[35vh] xl:w-[40vh] rounded-lg cursor-none"
-              />
-              <div className="hidden md:flex justify-center gap-5 mt-2">
-                {projects.map((_, idx) => (
-                  <div
-                    key={idx}
-                    className={`size-4 rounded-[50%] hover:cursor-pointer ${currentIndex === idx ? "bg-yellow-500" : "bg-black"}`}
-                    onClick={() => handleDotClick(idx)}
-                  ></div>
-                ))}
-              </div>
-              <div className="space-y-3 xl:px-[5vh]">
-                <h4 className="mb-5 text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">
-                  {project?.title}
-                </h4>
-                <div className="flex items-center space-x-5 justify-center overflow-x-scroll scrollbar-none">
-                  {project?.technologies.map((tech) => {
-                    return (
-                      <img
-                        className="h-[5vh] w-[5vh]"
-                        key={tech._id}
-                        src={urlFor(tech?.image.asset._ref).url()}
-                        alt=""
-                      />
-                    );
-                  })}
-                </div>
-                <p className="text-[3vh] h-[25vh] xl:max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center">
-                  {project?.summary}
-                </p>
-              </div>
-            </div>
+            />
+            // <div
+            //   key={index}
+            //   ref={(el) => {
+            //     if (el) {
+            //       console.log(projectRefs.current[index]);
+            //       projectRefs.current[index] = el;
+            //     }
+            //   }}
+            //   // onViewportEnter={() => console.log(index)}
+            //   className="relative w-screen pb-[7vh] md:pb-[12vh] xl:pb-[10vh] px-[3vh] xl:px-[30vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-3"
+            // >
+            //   <motion.img
+            //     initial={{ y: -300, opacity: 0 }}
+            //     transition={{ duration: 1.2 }}
+            //     whileInView={{ opacity: 1, y: 0 }}
+            //     viewport={{ once: true }}
+            //     src={urlFor(project?.image).url()}
+            //     alt="none available"
+            //     className="relative w-[35vh] xl:w-[40vh] rounded-lg cursor-none"
+            //   />
+            //   <div className="hidden md:flex justify-center gap-5 mt-2">
+            //     {projects.map((_, idx) => (
+            //       <div
+            //         key={idx}
+            //         className={`size-4 rounded-[50%] hover:cursor-pointer ${currentIndex === idx ? "bg-yellow-500" : "bg-black"}`}
+            //         onClick={() => handleDotClick(idx)}
+            //       ></div>
+            //     ))}
+            //   </div>
+            //   <div className="space-y-3 xl:px-[5vh]">
+            //     <h4 className="mb-5 text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">
+            //       {project?.title}
+            //     </h4>
+            //     <div className="flex items-center space-x-5 justify-center overflow-x-scroll scrollbar-none">
+            //       {project?.technologies.map((tech) => {
+            //         return (
+            //           <img
+            //             className="h-[5vh] w-[5vh]"
+            //             key={tech._id}
+            //             src={urlFor(tech?.image.asset._ref).url()}
+            //             alt=""
+            //           />
+            //         );
+            //       })}
+            //     </div>
+            //     <p className="text-[3vh] h-[25vh] xl:max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center">
+            //       {project?.summary}
+            //     </p>
+            //   </div>
+            // </div>
           );
         })}
       </div>

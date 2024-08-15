@@ -38,8 +38,8 @@ export default function Contact({ pageInfo }: Props) {
         Contact
       </h3>
 
-      <div className="flex flex-col md:mt-[20vh] max-w-screen justify-center md:justify-start space-y-[5vh] ">
-        <div className="space-y-[2vh]">
+      <div className="flex flex-col md:mt-[20vh] max-w-screen justify-center items-center md:justify-start space-y-[5vh] ">
+        <div className="flex flex-col justify-center items-center space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
             <PhoneHover {...hover}>{hover.rest}</PhoneHover>
