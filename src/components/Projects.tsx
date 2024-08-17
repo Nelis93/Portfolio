@@ -68,7 +68,7 @@ export default function Projects({ projects }: Props) {
       <h3 className="absolute top-[10vh] md:top-[7vh] uppercase tracking-[10px] xl:tracking-[20px] text-white text-[5vh]">
         Projects
       </h3>
-      <div className="absolute z-20 h-1 hidden md:flex justify-between w-screen top-[50%]">
+      <div className="absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]">
         {/* Previous Button */}
         <div
           className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 left-0"
@@ -103,19 +103,22 @@ export default function Projects({ projects }: Props) {
         className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80"
         ref={containerRef}
       >
-        {projects?.map((project, index) => {
-          return (
-            <Project
-              projects={projects}
-              project={project}
-              index={index}
-              currentIndex={currentIndex}
-              setCurrentIndex={setCurrentIndex}
-              projectRefs={projectRefs}
-              handleDotClick={handleDotClick}
-            />
-          );
-        })}
+        {projects
+          ?.sort((a, b) => a.position - b.position)
+          .map((project, index) => {
+            return (
+              <Project
+                key={project.position}
+                projects={projects}
+                project={project}
+                index={index}
+                currentIndex={currentIndex}
+                setCurrentIndex={setCurrentIndex}
+                projectRefs={projectRefs}
+                handleDotClick={handleDotClick}
+              />
+            );
+          })}
       </div>
       <div className="w-screen absolute top-[30%] bg-teal-300/10 h-[500px] -skew-y-12"></div>
     </motion.div>

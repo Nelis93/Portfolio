@@ -15,12 +15,12 @@ export default function WorkExperience({ experiences }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="relative h-screen max-w-[100vh] flex flex-col overflow-hidden text-lft xl:max-w-full justify-start mx-[10vw] items-center"
+      className="relative h-screen max-w-[100vh] flex flex-col overflow-hidden text-lft md:max-w-full justify-start md:mx-[10vw] items-center"
     >
       <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[4vh] md:text-[5vh]">
         Experience
       </h3>
-      <div className="w-screen md:w-[60vw] xl:w-[85vw] max-h-[80vh] xl:h-[100%] px-10 md:px-0 mt-[25vh] md:mt-[12vh] flex flex-row justify-start xl:justify-center xl:items-center space-x-5 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+      <div className="w-[100%] max-h-[60vh] sm:max-h-[80vh] md:h-[100%] px-10 md:px-0 mt-[22vh] md:mt-[12vh] flex flex-row justify-start md:justify-center md:items-center sm:space-x-5 space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none md:scrollbar-thin md:scrollbar-track-transparent md:scrollbar-thumb-yellow-500/80">
         {experiences?.map((experience, index) => {
           return (
             <ExperienceCard

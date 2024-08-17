@@ -54,16 +54,16 @@ export default function Project({
         viewport={{ once: true }}
         src={urlFor(project?.image).url()}
         alt="none available"
-        className="relative w-[35vh] xl:w-[40vh] rounded-lg cursor-none"
+        className="relative w-[100%] sm:max-w-[40vh] rounded-lg cursor-none"
       />
-      <div className="relative z-40 hidden md:flex justify-center gap-5 mt-2">
+      <div className="absolute lg:static top-[19vh] md:bottom-[5vh] md:top-auto z-40 flex justify-center gap-5 mt-2">
         {projects.map((_: any, idx: number) => (
           <div
             key={idx}
             className={`size-4 rounded-[50%] hover:cursor-pointer ${
               currentIndex === idx ? "bg-yellow-500" : "bg-black"
             }`}
-            onClick={() => handleDotClick(idx)}
+            onClick={() => window.innerWidth > 1000 && handleDotClick(idx)}
           ></div>
         ))}
       </div>

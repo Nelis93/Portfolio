@@ -63,7 +63,7 @@ export default function ExperienceCard({
         alt="not found"
       />
       <div className="relative pl-[10px]">
-        <h4 className="text-[2em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg">
+        <h4 className="text-[1.8em] md:text-[2em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg">
           {experience.jobTitle}
         </h4>
         <p className="font-bold pl-1 md:text-[1.5em]">{experience.company}</p>

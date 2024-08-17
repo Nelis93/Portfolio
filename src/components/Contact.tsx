@@ -38,7 +38,7 @@ export default function Contact({ pageInfo }: Props) {
         Contact
       </h3>
 
-      <div className="flex flex-col md:mt-[20vh] max-w-screen justify-center items-center md:justify-start space-y-[5vh] ">
+      <div className="flex flex-col md:mt-[40vh] lg:mt-[20vh] max-w-screen justify-center items-center md:justify-start space-y-[5vh] ">
         <div className="flex flex-col justify-center items-center space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
@@ -53,7 +53,7 @@ export default function Contact({ pageInfo }: Props) {
             <p className="text-[3vh]">{pageInfo.address}</p>
           </div>
         </div>
-        <div className="relative md:hidden mx-auto pt-[10vh]">
+        <div className="relative lg:hidden mx-auto pt-[10vh]">
           <ReactWhatsapp
             element="button"
             number={pageInfo.phoneNumber}
@@ -68,9 +68,9 @@ export default function Contact({ pageInfo }: Props) {
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="hidden md:flex flex-col space-y-2 w-screen px-5 md:w-fit h-[40vh] text-[2vh] mx-auto"
+          className="hidden lg:flex flex-col space-y-2 w-screen px-5 lg:w-fit h-[40vh] text-[2vh] mx-auto"
         >
-          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+          <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-2">
             <input
               {...register("name")}
               placeholder="Name"
