@@ -56,8 +56,8 @@ export default function Project({
         alt="none available"
         className="relative w-[35vh] xl:w-[40vh] rounded-lg cursor-none"
       />
-      <div className="hidden md:flex justify-center gap-5 mt-2">
-        {projects.map((_, idx) => (
+      <div className="relative z-40 hidden md:flex justify-center gap-5 mt-2">
+        {projects.map((_: any, idx: number) => (
           <div
             key={idx}
             className={`size-4 rounded-[50%] hover:cursor-pointer ${

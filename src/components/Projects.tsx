@@ -68,7 +68,7 @@ export default function Projects({ projects }: Props) {
       <h3 className="absolute top-[10vh] md:top-[7vh] uppercase tracking-[10px] xl:tracking-[20px] text-white text-[5vh]">
         Projects
       </h3>
-      <div className="absolute z-20 hidden md:flex justify-between w-screen top-[50%]">
+      <div className="absolute z-20 h-1 hidden md:flex justify-between w-screen top-[50%]">
         {/* Previous Button */}
         <div
           className="hover:bg-yellow-500/80 hover:cursor-pointer text-[#fff] p-3 mx-5 rounded-[50%] size-14 left-0"
