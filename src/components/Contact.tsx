@@ -23,7 +23,7 @@ const hover = {
       <br></br> try email instead
     </p>
   ),
-  rest: <p className="text-[3vh] cursor-not-allowed">+31 4 159 265 35</p>,
+  rest: <p className="text-[1em] cursor-not-allowed">+31 4 159 265 35</p>,
 };
 
 export default function Contact({ pageInfo }: Props) {
@@ -33,7 +33,7 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="h-screen max-w-[100vh] md:max-w-[100vw] flex relative text-left flex-col md:flex-row items-center justify-center px-10 md:items-start">
+    <div className="h-screen text-[3vh] max-w-[100vh] md:max-w-[100vw] flex relative text-left flex-col md:flex-row items-center justify-center px-10 md:items-start">
       <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[5vh]">
         Contact
       </h3>
@@ -46,11 +46,11 @@ export default function Contact({ pageInfo }: Props) {
           </div>
           <div className="flex items-center space-x-5 justify-center">
             <EnvelopeIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
-            <p className="text-[3vh]">{pageInfo.email}</p>
+            <p className="text-[1em]">{pageInfo.email}</p>
           </div>
           <div className="flex items-center space-x-5 justify-center">
-            <MapPinIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
-            <p className="text-[3vh]">{pageInfo.address}</p>
+            <MapPinIcon className="text-yellow-500 h-[1em] w-[1em] animate-pulse" />
+            <p className="text-[1em]">{pageInfo.address}</p>
           </div>
         </div>
         <div className="relative lg:hidden mx-auto pt-[10vh]">
@@ -97,7 +97,7 @@ export default function Contact({ pageInfo }: Props) {
           />
           <button
             type="submit"
-            className="bg-teal-500 py-[3vh] px-10 rounded-md text-white font-bold"
+            className="bg-teal-500 py-[1em] px-10 rounded-md text-white font-bold"
           >
             Submit
           </button>
