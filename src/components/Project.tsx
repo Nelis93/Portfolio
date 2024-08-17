@@ -1,36 +1,52 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import { Project as PJT } from "../../typings";
 import { urlFor } from "../../sanity";
 
 type Props = {
+  projects: any;
   project: PJT;
   index: number;
-  currentIndex: number;
+  currentIndex: any;
   setCurrentIndex: any;
-  ref: any;
+  projectRefs: any;
+  handleDotClick: any;
 };
 
 export default function Project({
+  projects,
   project,
   index,
   currentIndex,
   setCurrentIndex,
+  projectRefs,
+  handleDotClick,
 }: Props) {
-  console.log(currentIndex);
+  // Create a ref for each project
+  const ref = useRef<HTMLDivElement | null>(null);
+  // Track if each project is in view
+  const isInView = useInView(ref, {
+    amount: 0.5,
+    once: false,
+  });
+
+  // Update the currentIndex based on which project is in view
+  useEffect(() => {
+    if (isInView) {
+      setCurrentIndex(index);
+    }
+  }, [isInView, index]);
+
   return (
     <motion.div
-      key={currentIndex}
-      //   ref={(el) => {
-      //     if (el) {
-      //       console.log(el);
-      //       console.log(pjtRefs);
-      //       pjtRefs = el;
-      //     }
-      //   }}
-      //   onViewportEnter={(entry) => console.log(entry?.target.attributes)}
+      key={index}
+      ref={(el) => {
+        ref.current = el;
+        projectRefs.current[index] = el;
+      }}
       className="relative w-screen pb-[7vh] md:pb-[12vh] xl:pb-[10vh] px-[3vh] xl:px-[30vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-3"
     >
+      {/* Project Image */}
       <motion.img
         initial={{ y: -300, opacity: 0 }}
         transition={{ duration: 1.2 }}
@@ -40,15 +56,17 @@ export default function Project({
         alt="none available"
         className="relative w-[35vh] xl:w-[40vh] rounded-lg cursor-none"
       />
-      {/* <div className="hidden md:flex justify-center gap-5 mt-2">
-                {projects.map((_, idx) => (
-                <div
-                    key={idx}
-                    className={`size-4 rounded-[50%] hover:cursor-pointer ${currentIndex === idx ? "bg-yellow-500" : "bg-black"}`}
-                    onClick={() => handleDotClick(idx)}
-                ></div>
-                ))}
-            </div> */}
+      <div className="hidden md:flex justify-center gap-5 mt-2">
+        {projects.map((_, idx) => (
+          <div
+            key={idx}
+            className={`size-4 rounded-[50%] hover:cursor-pointer ${
+              currentIndex === idx ? "bg-yellow-500" : "bg-black"
+            }`}
+            onClick={() => handleDotClick(idx)}
+          ></div>
+        ))}
+      </div>
       <div className="space-y-3 xl:px-[5vh]">
         <h4 className="mb-5 text-[5vh] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">
           {project?.title}

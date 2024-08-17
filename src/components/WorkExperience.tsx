@@ -21,7 +21,6 @@ export default function WorkExperience({ experiences }: Props) {
       </h3>
       <div className="w-screen md:w-[60vw] xl:w-[85vw] max-h-[80vh] xl:h-[100%] px-10 md:px-0 mt-[25vh] md:mt-[12vh] flex flex-row justify-start xl:justify-center xl:items-center space-x-5 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
         {experiences?.map((experience, index) => {
-          console.log(index);
           return (
             <ExperienceCard
               key={experience._id}

@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function About({ pageInfo }: Props) {
-  console.log(urlFor(pageInfo?.profilePic));
   return (
     <motion.div
       initial={{
