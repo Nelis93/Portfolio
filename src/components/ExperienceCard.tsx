@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Experience } from "../../typings";
 import { urlFor } from "../../sanity";
 
@@ -8,6 +8,7 @@ type Props = {
   uniqueId: number;
   focus: number;
   setFocus: any;
+  setCurrentIndex: any;
 };
 
 export default function ExperienceCard({
@@ -15,15 +16,39 @@ export default function ExperienceCard({
   uniqueId,
   focus,
   setFocus,
+  setCurrentIndex,
 }: Props) {
+  // Create a ref for each project
+  const ref = useRef<HTMLElement | null>(null);
+  // Track if each project is in view
+  const isInView = useInView(ref, {
+    amount: 0.5,
+    once: false,
+  });
+
+  // Update the currentIndex based on which project is in view
+  useEffect(() => {
+    if (isInView) {
+      console.log(uniqueId, " is in view");
+      setCurrentIndex(uniqueId);
+    }
+  }, [isInView, uniqueId]);
   const handleCardClick = () => {
     console.log(focus, uniqueId);
+    console.log(
+      focus == uniqueId && window.innerWidth > 700
+        ? "expCardFocus"
+        : "expCardReg"
+    );
     setFocus(uniqueId);
   };
   return (
     <article
-      className={`${focus == uniqueId ? "expCardFocus" : "expCardReg"}`}
+      className={`${focus == uniqueId && window.innerWidth > 700 ? "expCardFocus" : "expCardReg"}`}
       onClick={handleCardClick}
+      ref={(el) => {
+        ref.current = el;
+      }}
     >
       <motion.img
         initial={{

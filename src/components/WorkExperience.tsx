@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import ExperienceCard from "./ExperienceCard";
 import { Experience } from "../../typings";
@@ -8,6 +8,8 @@ type Props = {
 
 export default function WorkExperience({ experiences }: Props) {
   const [focus, setFocus] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -15,7 +17,6 @@ export default function WorkExperience({ experiences }: Props) {
       whileInView={{ opacity: 1 }}
       className="relative h-screen max-w-[100vh] flex flex-col overflow-hidden text-lft xl:max-w-full justify-start mx-[10vw] items-center"
     >
-      {/* "flex flex-col relative h-screen text-center md:text-left md:flex-row max-w-7md px-10 justify-evenly mx-auto items-center" */}
       <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[4vh] md:text-[5vh]">
         Experience
       </h3>
@@ -28,9 +29,20 @@ export default function WorkExperience({ experiences }: Props) {
               experience={experience}
               focus={focus}
               setFocus={setFocus}
+              setCurrentIndex={setCurrentIndex}
             />
           );
         })}
+      </div>
+      <div className="relative z-40 flex md:hidden justify-center gap-5 mt-5">
+        {experiences.map((_: any, idx: number) => (
+          <div
+            key={idx}
+            className={`size-4 rounded-[50%] hover:cursor-pointer ${
+              currentIndex === idx ? "bg-yellow-500" : "bg-black"
+            }`}
+          ></div>
+        ))}
       </div>
     </motion.div>
   );

@@ -13,6 +13,6 @@
     @apply relative shadow-lg text-[.8em] xl:text-[1.8vh] xl:h-[90%] flex flex-col flex-shrink-0 xl:w-[30%] rounded-lg items-center snap-center  bg-teal-200 px-2 xl:px-[1em] pt-[1em] pb-[3em] opacity-100 cursor-pointer transition-opacity duration-200;
   }
   .expCardReg {
-    @apply relative text-[14px] xl:text-[1.6vh] xl:h-[80%] flex flex-col flex-shrink-0 xl:w-[25%] rounded-lg items-center snap-center bg-teal-200 px-2 xl:px-[1em] pt-[1em] pb-[3em] opacity-100 xl:hover:opacity-100 xl:opacity-40 cursor-pointer transition-opacity duration-200;
+    @apply relative text-[14px] max-w-[100%] xl:text-[1.6vh] xl:h-[80%] flex flex-col flex-shrink-0 xl:w-[25%] rounded-lg items-center snap-center bg-teal-200 px-2 xl:px-[1em] pt-[1em] pb-[3em] opacity-100 xl:hover:opacity-100 xl:opacity-40 cursor-pointer transition-opacity duration-200;
   }
 }
