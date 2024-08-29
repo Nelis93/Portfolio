@@ -83,7 +83,7 @@ export default function Project({
             );
           })}
         </div>
-        <p className="text-[1.2em] sm:text-[1.5em] lg:text-[1em] sm:px-[3em] lg:px-[.5em] h-[25vh] sm:h-[50vh] xl:max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center">
+        <p className="overscroll-contain text-[1.2em] sm:text-[1.5em] lg:text-[1em] sm:px-[3em] lg:px-[.5em] h-[25vh] sm:h-[50vh] xl:max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center">
           {project?.summary}
         </p>
       </div>

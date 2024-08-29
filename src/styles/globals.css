@@ -13,6 +13,98 @@
     @apply relative shadow-lg text-[1.8vh] h-[90%] flex flex-col flex-shrink-0 w-[30%] rounded-lg items-center snap-center  bg-teal-200 px-[1em] pt-[1em] pb-[3em] opacity-100 cursor-pointer transition-opacity duration-200;
   }
   .expCardReg {
-    @apply relative text-[1em] w-[100%] md:text-[1.6vh] h-[100%] md:h-[80%] flex flex-col flex-shrink-0 md:w-[25%] rounded-lg snap-center bg-teal-200 px-2 md:px-[1em] pt-[1em] pb-[3em] opacity-100 md:hover:opacity-100 md:opacity-40 cursor-pointer transition-opacity duration-200;
+    @apply relative text-[1.6vh] h-[80%] w-[25%] flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 px-[1em] pt-[1em] pb-[3em] hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200;
+  }
+  .expCardReg-small {
+    @apply relative text-[1em] w-[100%] h-[100%] flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 px-2 pb-[3em] opacity-100 transition-opacity duration-200;
+  }
+  .expCardReg-small-flipped {
+    @apply relative text-[1em] w-[100%] h-[100%] flex flex-row flex-shrink-0 rounded-lg snap-center bg-teal-200 px-2 pt-[1em] pb-[3em] opacity-100 transition-opacity duration-200;
+  }
+  .expCardReg-Img {
+    @apply w-[5em] h-[5em] my-[.6em] flex-shrink-0 rounded-full self-center object-cover object-center;
+  }
+  .expCardReg-small-flipped-Img {
+    @apply w-[9em] h-[9em] mr-[1.8em] flex-shrink-0 rounded-full self-start object-cover object-left;
+  }
+  .expCardReg-Title {
+    @apply text-[1.8em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
+  }
+  .expCardReg-small-Title {
+    @apply text-[.8em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
+  }
+  .expCardReg-small-SubTitle {
+    @apply font-bold pl-1 text-[.6em];
+  }
+  .expCardReg-SubTitle {
+    @apply font-bold pl-1 text-[1.5em];
+  }
+  .about {
+    @apply text-[5vh] flex relative h-screen max-w-full flex-row px-[20vh] justify-evenly mx-auto items-center;
+  }
+  .about-small {
+    @apply flex relative h-screen max-w-[100vh] flex-col justify-start mx-auto items-center;
+  }
+  .about-small-flipped {
+    @apply flex relative h-screen max-w-full flex-row px-[1em] justify-evenly mx-auto items-center;
+  }
+  .about-Title {
+    @apply absolute w-screen text-center top-[7vh] uppercase tracking-[20px] text-white text-[1em];
+  }
+  .about-small-Title {
+    @apply absolute w-screen text-center top-[12vh] uppercase tracking-[20px] text-white text-[2em];
+  }
+  .about-small-flipped-Title {
+    @apply absolute w-screen text-center top-[8vh] uppercase tracking-[20px] text-white text-[5vw];
+  }
+  .about-Img {
+    @apply relative flex-shrink-0 w-[50vh] h-[60vh] rounded-lg object-cover mb-[7vh] mt-[10vh] cursor-none;
+  }
+  .about-small-Img {
+    @apply relative flex-shrink-0 w-[75vw] h-[30vh] rounded-lg object-cover mt-[25vh];
+  }
+  .about-small-flipped-Img {
+    @apply relative flex-shrink-0 w-[75vh] h-[30vw] rounded-lg object-cover;
+  }
+  .about-SubTitle {
+    @apply pb-[.8em] pt-0 text-[1em] font-semibold;
+  }
+  .about-small-SubTitle {
+    @apply text-[1.5em] pb-[.8em] pt-[1em] font-semibold;
+  }
+  .about-small-flipped-SubTitle {
+    @apply text-[3vw] pb-[3vw] pt-[1vw] font-semibold;
+  }
+  .experience-Title {
+    @apply absolute top-[7vh] uppercase tracking-[20px] text-white text-[1em];
+  }
+  .experience-small-Title {
+    @apply absolute top-[12vh] uppercase tracking-[10px] text-white text-[.8em];
+  }
+  .experience-small-flipped-Title {
+    @apply absolute top-[4vw] uppercase tracking-[10px] text-white text-[4vw];
+  }
+  .skills {
+    @apply text-[5vh] h-screen flex relative
+    flex-col text-left max-w-[2000px]
+    px-5 justify-end space-y-5 mx-auto items-center;
+  }
+  .skills-small {
+    @apply text-[5vh] h-screen max-w-[100vh] flex relative
+    flex-col text-center w-screen justify-end mx-auto items-center;
+  }
+  .skills-small-flipped {
+    @apply text-[5vw] h-screen max-w-[100vh] flex relative
+    flex-col text-center w-screen justify-end mx-auto items-center;
+  }
+
+  .skills-Title {
+    @apply top-[7vh] absolute uppercase tracking-[20px] text-white text-[1em];
+  }
+  .skills-small-Title {
+    @apply top-[12vh] absolute uppercase tracking-[20px] text-white text-[1em];
+  }
+  .skills-small-flipped-Title {
+    @apply top-[12vh] absolute uppercase tracking-[20px] text-white text-[.8em];
   }
 }

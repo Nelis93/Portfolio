@@ -44,7 +44,7 @@ export default function ExperienceCard({
   };
   return (
     <article
-      className={`${focus == uniqueId && window.innerWidth > 700 ? "expCardFocus" : "expCardReg"}`}
+      className={`${focus == uniqueId && window.innerWidth > 700 ? "expCardFocus" : "expCardReg-small sm:expCardReg-small-flipped md:expCardReg"}`}
       onClick={handleCardClick}
       ref={(el) => {
         ref.current = el;
@@ -58,33 +58,35 @@ export default function ExperienceCard({
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="w-[10em] h-[10em] my-[1em] flex-shrink-0 rounded-full self-center object-cover object-center"
+        className="expCardReg-Img sm:expCardReg-small-flipped-Img md:expCardReg-Img"
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
-      <div className="relative pl-[10px]">
-        <h4 className="text-[1.6em] sm:text-[2em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg">
+      <div className="relative pl-[10px] sm:space-y-2 md:space-y-0">
+        <h4 className="expCardReg-small-Title sm:expCardReg-Title">
           {experience.jobTitle}
         </h4>
-        <p className="font-bold pl-1 md:text-[1.5em]">{experience.company}</p>
-        <div className="relative flex space-x-[1.5em] overflow-x-auto scrollbar-none py-[2.5vh]">
+        <p className="expCardReg-small-SubTitle sm:expCardReg-SubTitle">
+          {experience.company}
+        </p>
+        <div className="relative flex space-x-[.5em] overflow-x-auto scrollbar-none py-[2.5vh]">
           {experience.technologies.map((tech) => {
             return (
               <img
                 key={tech._id}
                 src={urlFor(tech.image).url()}
-                className="h-[2em] w-[2em] sm:h-[2.5em] sm:w-[2.5em]"
+                className="h-[1em] w-[1em] sm:h-[5vw] sm:w-[5vw] md:h-[2.5em] md:w-[2.5em]"
               />
             );
           })}
         </div>
-        <p className="uppercase text-[.8em] sm:text-[1em] text-gray-400 pb-[1.2em]">
+        <p className="uppercase text-[.4em] sm:text-[1em] text-gray-400 pb-[1.2em]">
           {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"
             : new Date(experience.dateEnded).toDateString()}
         </p>
-        <ul className="hidden sm:block overscroll-contain space-y-1 h-[8em] ml-[1vh] md:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+        <ul className="hidden md:block overscroll-contain space-y-1 h-[8em] ml-[1vh] md:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
             return <li key={i}>{point}</li>;
           })}

@@ -15,9 +15,9 @@ export default function About({ pageInfo }: Props) {
       }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="flex  relative h-screen max-w-[100vh] sm:max-w-full flex-col sm:flex-row sm:px-[20vh] justify-start sm:justify-evenly mx-auto items-center"
+      className="about-small sm:about-small-flipped md:about"
     >
-      <h3 className="absolute w-screen text-center top-[12vh] xl:top-[7vh] uppercase tracking-[20px] text-white text-[5vh]">
+      <h3 className="about-small-Title sm:about-small-flipped-Title md:about-Title">
         About
       </h3>
       <motion.img
@@ -29,15 +29,15 @@ export default function About({ pageInfo }: Props) {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         src={urlFor(pageInfo?.profilePic).url()}
-        className="relative flex-shrink-0 w-[75vw] h-[30vh] sm:w-[50vh] sm:h-[60vh] rounded-lg object-cover sm:mb-[7vh] mt-[25vh] sm:mt-[10vh] cursor-none"
+        className="about-small-Img sm:about-small-flipped-Img md:about-Img"
       />
       <div className="xl:space-y-10 pl-10  xl:px-10">
-        <h4 className="text-[3vh] pb-[3vh] pt-[5vh] xl:pt-0 xl:text-4xl font-semibold">
+        <h4 className="about-small-SubTitle sm:about-small-flipped-SubTitle md:about-SubTitle">
           Here is a{" "}
           <span className="underline decoration-yellow-300">little</span>{" "}
           background
         </h4>
-        <p className="text-[3vh] pr-10 xl:pr-0">
+        <p className="text-[3vh] sm:text-[2.5vw] md:text-[3vh] pr-10 sm:pr-0">
           {pageInfo?.backgroundInformation}
         </p>
       </div>

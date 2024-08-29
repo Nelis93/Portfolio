@@ -19,11 +19,9 @@ export default function Skills({ skills }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="h-screen max-w-[100vh] flex relative
-      flex-col text-center md:text-left w-screen md:max-w-[2000px]
-      md:px-5 justify-end md:space-y-5 mx-auto items-center"
+      className="skills-small sm:skills-small-flipped md:skills"
     >
-      <h3 className="top-[12vh] md:top-[7vh] absolute uppercase tracking-[20px] text-white text-[5vh]">
+      <h3 className="skills-small-Title sm:skills-small-flipped-Title md:skills-Title">
         skills
       </h3>
       <h3
