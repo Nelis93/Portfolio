@@ -15,12 +15,12 @@ export default function WorkExperience({ experiences }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="relative text-[5vh] h-screen max-w-[100vh] flex flex-col overflow-hidden sm:max-w-full justify-start md:mx-[10vw] items-center"
+      className="experience-small sm:experience-small-flipped md:experience"
     >
       <h3 className="experience-small-Title sm:experience-small-flipped-Title md:experience-Title">
         Experience
       </h3>
-      <div className="w-[100%] max-h-[60vh] sm:max-h-[80vh] md:h-[100%] px-10 md:px-0 mt-[22vh] md:mt-[12vh] flex flex-row justify-start md:justify-center md:items-center sm:space-x-5 space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none md:scrollbar-thin md:scrollbar-track-transparent md:scrollbar-thumb-yellow-500/80">
+      <div className="experience-small-Container sm:experience-small-flipped-Container md:experience-Container">
         {experiences?.map((experience, index) => {
           return (
             <ExperienceCard
@@ -34,7 +34,7 @@ export default function WorkExperience({ experiences }: Props) {
           );
         })}
       </div>
-      <div className="relative z-40 flex md:hidden justify-center gap-5 mt-5">
+      <div className="relative z-40 flex md:hidden justify-center items-start gap-5 mt-5 sm:pb-4">
         {experiences.map((_: any, idx: number) => (
           <div
             key={idx}

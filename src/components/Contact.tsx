@@ -33,19 +33,19 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="h-screen text-[3vh] max-w-[100vh] sm:max-w-[100vw] flex relative text-left flex-col md:flex-row items-center justify-center px-10 md:items-start">
-      <h3 className="absolute top-[12vh] md:top-[7vh] uppercase tracking-[10px] md:tracking-[20px] text-white text-[5vh]">
+    <div className="contact-small sm:contact-small-flipped md:contact">
+      <h3 className="contact-small-Title sm:contact-small-flipped-Title md:contact-Title">
         Contact
       </h3>
 
-      <div className="flex flex-col md:mt-[40vh] lg:mt-[20vh] max-w-screen justify-center items-center md:justify-start space-y-[5vh] ">
+      <div className="contact-small-Details sm:contact-small-flipped-Details md:contact-Details">
         <div className="flex flex-col justify-center items-center space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
-            <PhoneIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
+            <PhoneIcon className="text-yellow-500 h-[1em] w-[1em] animate-pulse" />
             <PhoneHover {...hover}>{hover.rest}</PhoneHover>
           </div>
           <div className="flex items-center space-x-5 justify-center">
-            <EnvelopeIcon className="text-yellow-500 h-[3vh] w-[3vh] animate-pulse" />
+            <EnvelopeIcon className="text-yellow-500 h-[1em] w-[1em] animate-pulse" />
             <p className="text-[1em]">{pageInfo.email}</p>
           </div>
           <div className="flex items-center space-x-5 justify-center">
@@ -53,7 +53,7 @@ export default function Contact({ pageInfo }: Props) {
             <p className="text-[1em]">{pageInfo.address}</p>
           </div>
         </div>
-        <div className="relative lg:hidden mx-auto pt-[10vh]">
+        <div className="relative lg:hidden mx-auto pt-[10vh] sm:pt-0">
           <ReactWhatsapp
             element="button"
             number={pageInfo.phoneNumber}
@@ -62,7 +62,7 @@ export default function Contact({ pageInfo }: Props) {
             <SocialIcon
               network="whatsapp"
               bgColor="white"
-              style={{ height: "10vh", width: "10vh" }}
+              style={{ height: "2em", width: "2em" }}
             />
           </ReactWhatsapp>
         </div>

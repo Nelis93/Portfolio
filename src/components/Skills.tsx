@@ -24,16 +24,10 @@ export default function Skills({ skills }: Props) {
       <h3 className="skills-small-Title sm:skills-small-flipped-Title md:skills-Title">
         skills
       </h3>
-      <h3
-        className="hidden md:block top-[16vh] absolute uppercase tracking-[3px] text-white text-[3vh]
-      text-center"
-      >
+      <h3 className="hidden md:skills-SubTitle">
         Hover over a skill for current proficiency
       </h3>
-      <div
-        className="relative max-h-[70vh] w-full flex flex-col flex-wrap
-      place-content-center px-[10vh] gap-5 mb-[3vh] md:mb-0 pb-[8vh] md:pb-[12vh]"
-      >
+      <div className="skills-small-Grid sm:skills-small-flipped-Grid md:skills-Grid">
         {startSkill(
           skills
             ?.slice(0, skills.length / 2)

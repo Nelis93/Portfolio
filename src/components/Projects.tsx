@@ -63,9 +63,9 @@ export default function Projects({ projects }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="relative h-screen max-w-[100vh] xl:max-w-full flex flex-col justify-end mx-auto items-center"
+      className="projects-small sm:projects-small-flipped md:projects"
     >
-      <h3 className="absolute top-[10vh] md:top-[7vh] uppercase tracking-[10px] xl:tracking-[20px] text-white text-[5vh]">
+      <h3 className="projects-small-Title sm:projects-small-flipped-Title md:projects-Title">
         Projects
       </h3>
       <div className="absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]">
@@ -100,7 +100,7 @@ export default function Projects({ projects }: Props) {
       </div>
       {/* Projects Carousel */}
       <div
-        className="relative w-screen h-screen px-10 xl:px-0 xl:pt-[20vh] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80"
+        className="projects-small-Carousel sm:projects-small-flipped-Carousel md:projects-Carousel"
         ref={containerRef}
       >
         {projects
@@ -120,7 +120,7 @@ export default function Projects({ projects }: Props) {
             );
           })}
       </div>
-      <div className="w-screen absolute top-[30%] bg-teal-300/10 h-[500px] -skew-y-12"></div>
+      <div className="hidden md:block w-screen absolute top-[30%] bg-teal-300/10 h-[500px] -skew-y-12"></div>
     </motion.div>
   );
 }

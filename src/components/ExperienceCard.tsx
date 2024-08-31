@@ -58,7 +58,7 @@ export default function ExperienceCard({
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="expCardReg-Img sm:expCardReg-small-flipped-Img md:expCardReg-Img"
+        className="expCardReg-small-Img sm:expCardReg-small-flipped-Img md:expCardReg-Img"
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
@@ -69,7 +69,7 @@ export default function ExperienceCard({
         <p className="expCardReg-small-SubTitle sm:expCardReg-SubTitle">
           {experience.company}
         </p>
-        <div className="relative flex space-x-[.5em] overflow-x-auto scrollbar-none py-[2.5vh]">
+        <div className="relative flex space-x-[1em] overflow-x-auto scrollbar-none py-[2.5vh]">
           {experience.technologies.map((tech) => {
             return (
               <img
@@ -86,7 +86,7 @@ export default function ExperienceCard({
             ? "present"
             : new Date(experience.dateEnded).toDateString()}
         </p>
-        <ul className="hidden md:block overscroll-contain space-y-1 h-[8em] ml-[1vh] md:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+        <ul className="hidden md:block overscroll-contain space-y-1 max-h-[30%] ml-[1vh] md:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
             return <li key={i}>{point}</li>;
           })}

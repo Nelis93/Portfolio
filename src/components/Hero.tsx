@@ -19,24 +19,24 @@ function Hero({ pageInfo }: Props) {
     delaySpeed: 3000,
   });
   return (
-    <div className="h-screen w-screen relative flex flex-col mx-auto">
-      <div className=" relative min-h-[50vh] w-screen flex flex-row justify-center">
+    <div className="text-[5vh] h-screen w-screen relative flex flex-col mx-auto">
+      <div className=" relative min-h-[10em] w-screen flex flex-row justify-center">
         <img
           src={urlFor(pageInfo?.heroImage).url()}
           alt="no"
-          className="absolute z-0 rounded-full mx-auto top-[25vh] object-cover w-[25vh] h-[25vh] cursor-none"
+          className="absolute z-0 rounded-full mx-auto top-[5em] object-cover w-[5em] h-[5em] cursor-none"
         />
         <BackgroundCircles />
       </div>
-      <div className="w-full mx-auto space-y-[2vh] pt-[5vh] z-10">
-        <h2 className="text-[3vh] uppercase text-white tracking-[15px] text-center">
+      <div className="w-full mx-auto space-y-[.4em] pt-[1em] z-10">
+        <h2 className="text-[.8em] uppercase text-white tracking-[15px] text-center">
           {pageInfo?.role}
         </h2>
-        <h1 className="relative  flex flex-row flex-wrap justify-center text-[5vh] font-semibold text-center">
+        <h1 className="relative flex flex-row flex-wrap justify-center text-[1em] font-semibold text-center">
           <span className="mr-3">{text}</span>
           <Cursor cursorColor="White" />
         </h1>
-        <div className="invisible xl:visible flex flex-row justify-center pt-[3vh]">
+        <div className="invisible xl:visible flex flex-row justify-center pt-[.8em]">
           <Link href="#about">
             <button className="heroButton">About</button>
           </Link>

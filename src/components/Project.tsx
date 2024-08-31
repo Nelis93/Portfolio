@@ -44,7 +44,7 @@ export default function Project({
         ref.current = el;
         projectRefs.current[index] = el;
       }}
-      className="text-[3vh] relative w-screen pb-[7vh] md:pb-[12vh] px-[3vh] xl:px-[20vh] snap-center flex flex-col flex-shrink-0 items-center sm:mt-[7em] lg:mt-0 justify-end sm:justify-start lg:justify-end space-y-1 xl:space-y-3"
+      className="project-small sm:project-small-flipped md:project"
     >
       {/* Project Image */}
       <motion.img
@@ -54,28 +54,28 @@ export default function Project({
         viewport={{ once: true }}
         src={urlFor(project?.image).url()}
         alt="none available"
-        className="sm:hidden lg:block relative w-[90%] sm:max-w-[40vh] rounded-lg cursor-none"
+        className="project-small-Img sm:project-small-flipped-Img md:project-Img"
       />
-      <div className="absolute lg:static top-[18vh] md:bottom-[5vh] md:top-auto z-40 flex justify-center gap-5 mt-2">
+      <div className="project-small-Dots sm:project-small-flipped-Dots md:project-Dots">
         {projects.map((_: any, idx: number) => (
           <div
             key={idx}
-            className={`size-[.8em] rounded-[50%] hover:cursor-pointer ${
+            className={`size-[.8em] rounded-[50%] lg:hover:cursor-pointer ${
               currentIndex === idx ? "bg-yellow-500" : "bg-black"
             }`}
             onClick={() => window.innerWidth > 1000 && handleDotClick(idx)}
           ></div>
         ))}
       </div>
-      <div className="space-y-3 xl:px-[5vh]">
-        <h4 className="mb-[.5em] text-[1.8em] max-h-[7vh] overflow-y-hidden font-semibold text-center underline decoration-yellow-500">
+      <div className="space-y-3 xl:px-[1.5em]">
+        <h4 className="mb-[.5em] text-[1.8em] md:max-h-[7vh] text-ellipsis line-clamp-1 overflow-hidden font-semibold text-center underline decoration-yellow-500">
           {project?.title}
         </h4>
         <div className="flex items-center space-x-5 justify-center overflow-x-scroll scrollbar-none">
           {project?.technologies.map((tech) => {
             return (
               <img
-                className="h-[5vh] w-[5vh]"
+                className="h-[1.5em] w-[1.5em]"
                 key={tech._id}
                 src={urlFor(tech?.image.asset._ref).url()}
                 alt=""
@@ -83,7 +83,7 @@ export default function Project({
             );
           })}
         </div>
-        <p className="overscroll-contain text-[1.2em] sm:text-[1.5em] lg:text-[1em] sm:px-[3em] lg:px-[.5em] h-[25vh] sm:h-[50vh] xl:max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center">
+        <p className="project-small-Sum sm:project-small-flipped-Sum md:project-Sum">
           {project?.summary}
         </p>
       </div>
