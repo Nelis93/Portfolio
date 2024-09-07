@@ -36,7 +36,7 @@ function Hero({ pageInfo }: Props) {
           <span className="mr-3">{text}</span>
           <Cursor cursorColor="White" />
         </h1>
-        <div className="invisible xl:visible flex flex-row justify-center pt-[.8em]">
+        <div className="invisible lg:visible flex flex-row justify-center pt-[.8em]">
           <Link href="#about">
             <button className="heroButton">About</button>
           </Link>

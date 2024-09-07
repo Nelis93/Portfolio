@@ -19,7 +19,7 @@
     @apply relative text-[1em] w-full h-full flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 px-2 pb-[3em] opacity-100 transition-opacity duration-200;
   }
   .expCardReg-small-flipped {
-    @apply relative text-[1em] w-[100%] h-[95%] flex flex-row flex-shrink-0 rounded-lg snap-center bg-teal-200 px-2 pt-[1em] pb-[3em] opacity-100 transition-opacity duration-200;
+    @apply relative text-[1em] max-w-full h-full flex flex-row flex-shrink-0 rounded-lg snap-center bg-teal-200 px-2 pt-[1em] pb-[3em] opacity-100 transition-opacity duration-200;
   }
   .expCardReg-Img {
     @apply w-[12em] h-[12em] my-[.6em] flex-shrink-0 rounded-full self-center object-cover object-center;
@@ -34,13 +34,13 @@
     @apply text-[1.8em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
   }
   .expCardReg-small-Title {
-    @apply text-[.8em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
+    @apply text-[.6em] text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
   }
   .expCardReg-small-SubTitle {
-    @apply font-bold pl-1 text-[.6em];
+    @apply font-bold pl-1 text-[.5em];
   }
   .expCardReg-SubTitle {
-    @apply font-bold pl-1 text-[1.5em];
+    @apply font-bold pl-1 text-[1.4em];
   }
   .about {
     @apply text-[5vh] flex relative h-screen max-w-full flex-row px-[20vh] justify-evenly mx-auto items-center;
@@ -58,7 +58,7 @@
     @apply absolute w-screen text-center top-[12vh] uppercase tracking-[20px] text-white text-[2em];
   }
   .about-small-flipped-Title {
-    @apply absolute w-screen text-center top-[8vh] uppercase tracking-[20px] text-white text-[5vw];
+    @apply absolute w-screen text-center top-[8vh] uppercase tracking-[20px] text-white text-[4vw];
   }
   .about-Img {
     @apply relative flex-shrink-0 w-[50vh] h-[60vh] rounded-lg object-cover mb-[7vh] mt-[10vh] cursor-none;
@@ -67,7 +67,7 @@
     @apply relative flex-shrink-0 w-[75vw] h-[30vh] rounded-lg object-cover mt-[25vh];
   }
   .about-small-flipped-Img {
-    @apply relative flex-shrink-0 w-[75vh] h-[30vw] rounded-lg object-cover;
+    @apply relative flex-shrink-0 w-[70vh] h-[25vw] rounded-lg object-cover;
   }
   .about-SubTitle {
     @apply pb-[.8em] pt-0 text-[1em] font-semibold;
@@ -76,7 +76,7 @@
     @apply text-[1.5em] pb-[.8em] pt-[1em] font-semibold;
   }
   .about-small-flipped-SubTitle {
-    @apply text-[3vw] pb-[3vw] pt-[1vw] font-semibold;
+    @apply text-[3vw] pb-[3vw] pt-[2vw] font-semibold;
   }
   .experience {
     @apply relative text-[5vh] h-screen flex flex-col overflow-hidden justify-start mx-[10vw] items-center;
@@ -97,13 +97,13 @@
     @apply absolute top-[4vw] uppercase tracking-[10px] text-white text-[4vw];
   }
   .experience-Container {
-    @apply w-[100%] h-[100%] px-0 mt-[15vh] flex flex-row justify-center items-center space-x-5 overflow-y-hidden overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80;
+    @apply w-full h-full px-0 mt-[15vh] mb-[10vh] flex flex-row justify-center items-center space-x-5 overflow-y-hidden overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80;
   }
   .experience-small-Container {
-    @apply w-[100%] max-h-[60vh] px-10 mt-[22vh] flex flex-row justify-start space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
+    @apply w-full max-h-[60vh] px-10 mt-[22vh] flex flex-row justify-start space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
   }
   .experience-small-flipped-Container {
-    @apply w-[100%] max-h-[75vh] px-10 mt-[22vh] flex flex-row justify-start space-x-5 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
+    @apply max-h-none w-[80%] h-full mt-[25vh] flex flex-row justify-start items-start space-x-10 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
   }
   .skills {
     @apply text-[5vh] h-screen flex relative
@@ -148,10 +148,10 @@
     @apply text-[5vh] w-[10vh] h-[10vh] relative flex cursor-none;
   }
   .projects {
-    @apply text-[5vh] relative h-screen max-w-full flex flex-col justify-end mx-auto items-center;
+    @apply text-[5vh] relative h-screen max-w-full flex flex-col justify-center mx-auto items-center;
   }
   .projects-small {
-    @apply text-[5vh] relative h-screen max-w-[100vh] flex flex-col justify-end mx-auto items-center;
+    @apply text-[5vh] relative h-screen flex flex-col justify-end mx-auto items-center;
   }
   .projects-small-flipped {
     @apply text-[5vw] relative h-screen max-w-full flex flex-col justify-end mx-auto items-center;
@@ -166,7 +166,7 @@
     @apply text-[1em] absolute top-[7vh] uppercase tracking-[10px] text-white;
   }
   .projects-Carousel {
-    @apply relative w-screen h-screen px-0 pt-[4em] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
+    @apply relative w-screen h-screen px-0 pt-[2em] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
   }
   .projects-small-Carousel {
     @apply relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none;
@@ -175,40 +175,40 @@
     @apply relative w-screen h-screen px-10 flex mt-[2em] overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
   }
   .project {
-    @apply text-[3vh] relative w-screen pb-[12vh] px-[20vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-3;
+    @apply text-[3vh] relative w-screen pb-[12vh] pl-[10em] pr-[5em] snap-center grid gap-x-5 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
   }
   .project-small {
-    @apply text-[3vh] relative w-screen pb-[7vh] px-[3vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-1;
+    @apply text-[3vh] relative w-screen pb-[5vh] px-[3vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4;
   }
   .project-small-flipped {
-    @apply text-[3vw] relative w-screen px-[3vw] snap-center flex flex-row flex-shrink-0 items-center justify-end space-y-1;
+    @apply text-[3vw] relative w-screen px-[3vw] snap-center flex flex-col flex-wrap flex-shrink-0 items-center justify-start space-y-3;
   }
   .project-Img {
-    @apply block relative max-w-[40vh] rounded-lg cursor-none;
+    @apply bg-red-500 h-auto block w-full relative row-span-8 col-span-2 justify-self-center object-contain rounded-lg cursor-none;
   }
   .project-small-Img {
-    @apply block relative w-[75%] rounded-lg cursor-none;
+    @apply block relative w-[12em] rounded-lg cursor-none;
   }
   .project-small-flipped-Img {
-    @apply block relative w-[70vh] rounded-lg cursor-none;
+    @apply block relative w-[12em] h-full rounded-lg cursor-none;
   }
   .project-Dots {
-    @apply static top-[6em] z-40 flex justify-center gap-5 mt-2;
+    @apply static top-0 row-span-2  col-span-2 z-40 flex justify-center self-start gap-5;
   }
   .project-small-Dots {
     @apply absolute top-[6em] z-40 flex justify-center gap-5 mt-2;
   }
   .project-small-flipped-Dots {
-    @apply absolute bottom-[2em] top-auto left-[3em] z-40 flex justify-center gap-5 mt-2;
+    @apply absolute bottom-[1em] top-auto left-[3em] z-40 flex justify-center gap-5 mt-2;
   }
   .project-Sum {
-    @apply overscroll-y-contain text-[1em] px-[.5em] h-[25vh] max-h-[20vh] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-center;
+    @apply overscroll-y-contain text-[1em] w-full row-span-8 col-span-3 h-full pt-[1em] pl-[2em] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-left;
   }
   .project-small-Sum {
-    @apply overscroll-y-contain text-[1.2em] h-[25vh] overflow-y-auto scrollbar-none;
+    @apply overscroll-y-contain text-[1em] h-[25vh] text-center overflow-y-auto scrollbar-none;
   }
   .project-small-flipped-Sum {
-    @apply overscroll-y-contain text-[1em] px-[1em] h-[35vh] overflow-y-auto scrollbar-none;
+    @apply overscroll-y-contain self-end w-[60%] text-[1em] px-[1em] h-[35vh] overflow-y-auto scrollbar-none;
   }
   .contact {
     @apply h-screen text-[5vh] max-w-full flex relative text-left flex-row justify-center px-10 items-start;
@@ -226,7 +226,7 @@
     @apply text-[1em] absolute top-[12vh] uppercase tracking-[10px] text-white;
   }
   .contact-small-flipped-Title {
-    @apply text-[1em] absolute top-[7vw] uppercase tracking-[10px] text-white;
+    @apply text-[1em] absolute top-[5vw] uppercase tracking-[10px] text-white;
   }
   .contact-Details {
     @apply text-[.7em] flex flex-col mt-[20vh] max-w-full items-center justify-start space-y-[1em];
@@ -235,6 +235,6 @@
     @apply text-[.7em] flex flex-col max-w-full justify-center items-center space-y-[1em];
   }
   .contact-small-flipped-Details {
-    @apply text-[.7em] flex flex-col mt-[20vw] max-w-full justify-center items-center space-y-[1em];
+    @apply text-[.5em] flex flex-col mt-[7em] max-w-full justify-center items-center space-y-[1em];
   }
 }

@@ -44,7 +44,7 @@ export default function ExperienceCard({
   };
   return (
     <article
-      className={`${focus == uniqueId && window.innerWidth > 700 ? "expCardFocus" : "expCardReg-small sm:expCardReg-small-flipped md:expCardReg"}`}
+      className={`${focus == uniqueId && window.innerWidth > 700 ? "expCardReg-small-flipped lg:expCardFocus" : "expCardReg-small sm:expCardReg-small-flipped lg:expCardReg"}`}
       onClick={handleCardClick}
       ref={(el) => {
         ref.current = el;
@@ -58,24 +58,24 @@ export default function ExperienceCard({
         transition={{ duration: 1.2 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="expCardReg-small-Img sm:expCardReg-small-flipped-Img md:expCardReg-Img"
+        className="expCardReg-small-Img sm:expCardReg-small-flipped-Img lg:expCardReg-Img"
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
-      <div className="relative pl-[10px] sm:space-y-2 md:space-y-0">
+      <div className="relative pl-[10px] sm:space-y-2 lg:space-y-0">
         <h4 className="expCardReg-small-Title sm:expCardReg-Title">
           {experience.jobTitle}
         </h4>
         <p className="expCardReg-small-SubTitle sm:expCardReg-SubTitle">
           {experience.company}
         </p>
-        <div className="relative flex space-x-[1em] overflow-x-auto scrollbar-none py-[2.5vh]">
+        <div className="relative flex space-x-[.5em] overflow-x-auto scrollbar-none py-[2.5vh]">
           {experience.technologies.map((tech) => {
             return (
               <img
                 key={tech._id}
                 src={urlFor(tech.image).url()}
-                className="h-[1em] w-[1em] sm:h-[5vw] sm:w-[5vw] md:h-[2.5em] md:w-[2.5em]"
+                className="h-[1em] w-[1em] sm:h-[5vw] sm:w-[5vw] lg:h-[2.5em] lg:w-[2.5em]"
               />
             );
           })}
@@ -86,7 +86,7 @@ export default function ExperienceCard({
             ? "present"
             : new Date(experience.dateEnded).toDateString()}
         </p>
-        <ul className="hidden md:block overscroll-contain space-y-1 max-h-[30%] ml-[1vh] md:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+        <ul className="hidden lg:block overscroll-contain space-y-1 max-h-[30%] ml-[1vh] lg:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
             return <li key={i}>{point}</li>;
           })}

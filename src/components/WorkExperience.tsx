@@ -15,12 +15,12 @@ export default function WorkExperience({ experiences }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="experience-small sm:experience-small-flipped md:experience"
+      className="experience-small sm:experience-small-flipped lg:experience"
     >
-      <h3 className="experience-small-Title sm:experience-small-flipped-Title md:experience-Title">
+      <h3 className="experience-small-Title sm:experience-small-flipped-Title lg:experience-Title">
         Experience
       </h3>
-      <div className="experience-small-Container sm:experience-small-flipped-Container md:experience-Container">
+      <div className="experience-small-Container sm:experience-small-flipped-Container lg:experience-Container">
         {experiences?.map((experience, index) => {
           return (
             <ExperienceCard
@@ -34,7 +34,7 @@ export default function WorkExperience({ experiences }: Props) {
           );
         })}
       </div>
-      <div className="relative z-40 flex md:hidden justify-center items-start gap-5 mt-5 sm:pb-4">
+      <div className="relative z-40 flex lg:hidden justify-center items-start gap-5 mt-5 sm:pb-4">
         {experiences.map((_: any, idx: number) => (
           <div
             key={idx}

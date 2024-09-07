@@ -63,9 +63,9 @@ export default function Projects({ projects }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="projects-small sm:projects-small-flipped md:projects"
+      className="projects-small sm:projects-small-flipped lg:projects"
     >
-      <h3 className="projects-small-Title sm:projects-small-flipped-Title md:projects-Title">
+      <h3 className="projects-small-Title sm:projects-small-flipped-Title lg:projects-Title">
         Projects
       </h3>
       <div className="absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]">
@@ -100,7 +100,7 @@ export default function Projects({ projects }: Props) {
       </div>
       {/* Projects Carousel */}
       <div
-        className="projects-small-Carousel sm:projects-small-flipped-Carousel md:projects-Carousel"
+        className="projects-small-Carousel sm:projects-small-flipped-Carousel lg:projects-Carousel"
         ref={containerRef}
       >
         {projects
@@ -120,7 +120,7 @@ export default function Projects({ projects }: Props) {
             );
           })}
       </div>
-      <div className="hidden md:block w-screen absolute top-[30%] bg-teal-300/10 h-[500px] -skew-y-12"></div>
+      <div className="hidden lg:block w-screen absolute top-[30%] bg-teal-300/10 h-[500px] -skew-y-12"></div>
     </motion.div>
   );
 }

@@ -44,7 +44,7 @@ export default function Project({
         ref.current = el;
         projectRefs.current[index] = el;
       }}
-      className="project-small sm:project-small-flipped md:project"
+      className="project-small sm:project-small-flipped lg:project"
     >
       {/* Project Image */}
       <motion.img
@@ -54,9 +54,9 @@ export default function Project({
         viewport={{ once: true }}
         src={urlFor(project?.image).url()}
         alt="none available"
-        className="project-small-Img sm:project-small-flipped-Img md:project-Img"
+        className="project-small-Img sm:project-small-flipped-Img lg:project-Img"
       />
-      <div className="project-small-Dots sm:project-small-flipped-Dots md:project-Dots">
+      <div className="project-small-Dots sm:project-small-flipped-Dots lg:project-Dots">
         {projects.map((_: any, idx: number) => (
           <div
             key={idx}
@@ -67,26 +67,26 @@ export default function Project({
           ></div>
         ))}
       </div>
-      <div className="space-y-3 xl:px-[1.5em]">
-        <h4 className="mb-[.5em] text-[1.8em] md:max-h-[7vh] text-ellipsis line-clamp-1 overflow-hidden font-semibold text-center underline decoration-yellow-500">
-          {project?.title}
-        </h4>
-        <div className="flex items-center space-x-5 justify-center overflow-x-scroll scrollbar-none">
-          {project?.technologies.map((tech) => {
-            return (
-              <img
-                className="h-[1.5em] w-[1.5em]"
-                key={tech._id}
-                src={urlFor(tech?.image.asset._ref).url()}
-                alt=""
-              />
-            );
-          })}
-        </div>
-        <p className="project-small-Sum sm:project-small-flipped-Sum md:project-Sum">
-          {project?.summary}
-        </p>
+      {/* <div className="space-y-3 xl:px-[1.5em]"> */}
+      <h4 className="mb-[.5em] text-[1.8em] col-span-2 justify-self-center self-end text-ellipsis line-clamp-1 overflow-hidden font-semibold text-center underline decoration-yellow-500">
+        {project?.title}
+      </h4>
+      <div className="flex items-center space-x-5 col-span-2 justify-self-center self-end justify-center overflow-x-scroll scrollbar-none">
+        {project?.technologies.map((tech) => {
+          return (
+            <img
+              className="h-[1.5em] w-[1.5em]"
+              key={tech._id}
+              src={urlFor(tech?.image.asset._ref).url()}
+              alt=""
+            />
+          );
+        })}
       </div>
+      <p className="project-small-Sum sm:project-small-flipped-Sum lg:project-Sum">
+        {project?.summary}
+      </p>
+      {/* </div> */}
     </motion.div>
   );
 }
