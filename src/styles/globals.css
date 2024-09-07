@@ -166,13 +166,13 @@
     @apply text-[1em] absolute top-[7vh] uppercase tracking-[10px] text-white;
   }
   .projects-Carousel {
-    @apply relative w-screen h-screen px-0 pt-[2em] flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
+    @apply relative w-screen h-screen px-0 pt-[2em] mt-auto flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
   }
   .projects-small-Carousel {
     @apply relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none;
   }
   .projects-small-flipped-Carousel {
-    @apply relative w-screen h-screen px-10 flex mt-[2em] overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
+    @apply relative w-screen h-screen px-10 flex pt-[3em] overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
   }
   .project {
     @apply text-[3vh] relative w-screen pb-[12vh] pl-[10em] pr-[5em] snap-center grid gap-x-5 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
@@ -181,16 +181,16 @@
     @apply text-[3vh] relative w-screen pb-[5vh] px-[3vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4;
   }
   .project-small-flipped {
-    @apply text-[3vw] relative w-screen px-[3vw] snap-center flex flex-col flex-wrap flex-shrink-0 items-center justify-start space-y-3;
+    @apply text-[3vw] relative w-screen px-[3vw] snap-center grid gap-x-10 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
   }
   .project-Img {
-    @apply bg-red-500 h-auto block w-full relative row-span-8 col-span-2 justify-self-center object-contain rounded-lg cursor-none;
+    @apply h-auto block w-full relative row-span-8 col-span-2 justify-self-center object-contain rounded-lg cursor-none;
   }
   .project-small-Img {
     @apply block relative w-[12em] rounded-lg cursor-none;
   }
   .project-small-flipped-Img {
-    @apply block relative w-[12em] h-full rounded-lg cursor-none;
+    @apply h-auto w-full relative row-span-8 col-span-2 justify-self-center object-contain rounded-lg cursor-none;
   }
   .project-Dots {
     @apply static top-0 row-span-2  col-span-2 z-40 flex justify-center self-start gap-5;
@@ -199,7 +199,7 @@
     @apply absolute top-[6em] z-40 flex justify-center gap-5 mt-2;
   }
   .project-small-flipped-Dots {
-    @apply absolute bottom-[1em] top-auto left-[3em] z-40 flex justify-center gap-5 mt-2;
+    @apply static top-0 row-span-2  col-span-2 z-40 flex justify-center self-end gap-5;
   }
   .project-Sum {
     @apply overscroll-y-contain text-[1em] w-full row-span-8 col-span-3 h-full pt-[1em] pl-[2em] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-left;
@@ -208,7 +208,7 @@
     @apply overscroll-y-contain text-[1em] h-[25vh] text-center overflow-y-auto scrollbar-none;
   }
   .project-small-flipped-Sum {
-    @apply overscroll-y-contain self-end w-[60%] text-[1em] px-[1em] h-[35vh] overflow-y-auto scrollbar-none;
+    @apply overscroll-y-contain text-[.8em] text-left w-full row-span-6 col-span-3 h-full overflow-y-auto scrollbar-none;
   }
   .contact {
     @apply h-screen text-[5vh] max-w-full flex relative text-left flex-row justify-center px-10 items-start;
@@ -235,6 +235,6 @@
     @apply text-[.7em] flex flex-col max-w-full justify-center items-center space-y-[1em];
   }
   .contact-small-flipped-Details {
-    @apply text-[.5em] flex flex-col mt-[7em] max-w-full justify-center items-center space-y-[1em];
+    @apply text-[.4em] flex flex-col mt-[7em] max-w-full justify-center items-center space-y-[1em];
   }
 }
