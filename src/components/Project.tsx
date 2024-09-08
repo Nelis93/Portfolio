@@ -54,7 +54,7 @@ export default function Project({
         viewport={{ once: true }}
         src={urlFor(project?.image).url()}
         alt="none available"
-        className="project-small-Img sm:project-small-flipped-Img lg:project-Img"
+        className="project-small-Img sm:project-small-flipped-Img"
       />
       <div className="project-small-Dots sm:project-small-flipped-Dots lg:project-Dots">
         {projects.map((_: any, idx: number) => (

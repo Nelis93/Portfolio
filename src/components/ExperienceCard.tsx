@@ -44,7 +44,7 @@ export default function ExperienceCard({
   };
   return (
     <article
-      className={`${focus == uniqueId && window.innerWidth > 700 ? "expCardReg-small-flipped lg:expCardFocus" : "expCardReg-small sm:expCardReg-small-flipped lg:expCardReg"}`}
+      className={`expCardReg-small sm:expCardReg-small-flipped ${focus == uniqueId ? "lg:expCardFocus" : "lg:expCardReg"}`}
       onClick={handleCardClick}
       ref={(el) => {
         ref.current = el;
@@ -69,7 +69,7 @@ export default function ExperienceCard({
         <p className="expCardReg-small-SubTitle sm:expCardReg-SubTitle">
           {experience.company}
         </p>
-        <div className="relative flex space-x-[.5em] overflow-x-auto scrollbar-none py-[2.5vh]">
+        <div className="relative flex space-x-5 overflow-x-auto scrollbar-none py-[2.5vh]">
           {experience.technologies.map((tech) => {
             return (
               <img
@@ -80,7 +80,7 @@ export default function ExperienceCard({
             );
           })}
         </div>
-        <p className="uppercase text-[.4em] sm:text-[1em] text-gray-400 pb-[1.2em]">
+        <p className="uppercase text-[.4em] sm:text-[1em] text-gray-400 pb-[1.2em] sm:pb-0 lg:pb-[1em]">
           {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"

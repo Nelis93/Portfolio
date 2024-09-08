@@ -29,7 +29,7 @@ function Hero({ pageInfo }: Props) {
         <BackgroundCircles />
       </div>
       <div className="w-full mx-auto space-y-[.4em] pt-[1em] z-10">
-        <h2 className="text-[.8em] uppercase text-white tracking-[15px] text-center">
+        <h2 className="text-[.8em] sm:text-[1em] lg:text-[.8em] uppercase text-white tracking-[15px] text-center">
           {pageInfo?.role}
         </h2>
         <h1 className="relative flex flex-row flex-wrap justify-center text-[1em] font-semibold text-center">

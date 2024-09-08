@@ -13,228 +13,220 @@
     @apply relative overflow-y-hidden shadow-lg text-[.36em] h-[90%] w-[30%] flex flex-col flex-shrink-0 rounded-lg items-center snap-center  bg-teal-200 px-[1em] pt-[1em] pb-[3em] opacity-100 cursor-pointer transition-opacity duration-200;
   }
   .expCardReg {
-    @apply relative overflow-y-hidden text-[.33em] h-[80%] w-[25%] flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 px-[1em] pt-[1em] pb-[3em] hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200;
+    @apply overflow-y-hidden text-[.33em] h-[80%] w-[25%] max-w-none flex-col px-[1em] py-0 hover:opacity-100 opacity-40 cursor-pointer;
   }
   .expCardReg-small {
     @apply relative text-[1em] w-full h-full flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 px-2 pb-[3em] opacity-100 transition-opacity duration-200;
   }
   .expCardReg-small-flipped {
-    @apply relative text-[1em] max-w-full h-full flex flex-row flex-shrink-0 rounded-lg snap-center bg-teal-200 px-2 pt-[1em] pb-[3em] opacity-100 transition-opacity duration-200;
+    @apply max-w-full flex-row py-[1em];
   }
   .expCardReg-Img {
-    @apply w-[12em] h-[12em] my-[.6em] flex-shrink-0 rounded-full self-center object-cover object-center;
+    @apply w-[12em] h-[12em] mr-0 self-center object-center;
   }
   .expCardReg-small-Img {
     @apply w-[5em] h-[5em] my-[.6em] flex-shrink-0 rounded-full self-center object-cover object-center;
   }
   .expCardReg-small-flipped-Img {
-    @apply w-[9em] h-[9em] mr-[1.8em] flex-shrink-0 rounded-full self-start object-cover object-left;
+    @apply w-[9em] h-[9em] mr-[1.8em] self-start object-left;
   }
   .expCardReg-Title {
-    @apply text-[1.8em] pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
+    @apply text-[1.8em];
   }
   .expCardReg-small-Title {
     @apply text-[.6em] text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
   }
+  .expCardReg-SubTitle {
+    @apply text-[1.4em];
+  }
   .expCardReg-small-SubTitle {
     @apply font-bold pl-1 text-[.5em];
   }
-  .expCardReg-SubTitle {
-    @apply font-bold pl-1 text-[1.4em];
-  }
   .about {
-    @apply text-[5vh] flex relative h-screen max-w-full flex-row px-[20vh] justify-evenly mx-auto items-center;
+    @apply text-[5vh] px-[20vh];
   }
   .about-small {
     @apply flex relative h-screen max-w-[100vh] flex-col justify-start mx-auto items-center;
   }
   .about-small-flipped {
-    @apply flex relative h-screen max-w-full flex-row px-[1em] justify-evenly mx-auto items-center;
+    @apply max-w-full flex-row px-[1em] justify-evenly;
   }
   .about-Title {
-    @apply absolute w-screen text-center top-[7vh] uppercase tracking-[20px] text-white text-[1em];
+    @apply top-[7vh] text-[1em];
   }
   .about-small-Title {
     @apply absolute w-screen text-center top-[12vh] uppercase tracking-[20px] text-white text-[2em];
   }
   .about-small-flipped-Title {
-    @apply absolute w-screen text-center top-[8vh] uppercase tracking-[20px] text-white text-[4vw];
+    @apply top-[8vh] text-[4vw];
   }
   .about-Img {
-    @apply relative flex-shrink-0 w-[50vh] h-[60vh] rounded-lg object-cover mb-[7vh] mt-[10vh] cursor-none;
+    @apply w-[50vh] h-[60vh] mb-[7vh] mt-[10vh] cursor-none;
   }
   .about-small-Img {
     @apply relative flex-shrink-0 w-[75vw] h-[30vh] rounded-lg object-cover mt-[25vh];
   }
   .about-small-flipped-Img {
-    @apply relative flex-shrink-0 w-[70vh] h-[25vw] rounded-lg object-cover;
+    @apply w-[70vh] h-[25vw];
   }
   .about-SubTitle {
-    @apply pb-[.8em] pt-0 text-[1em] font-semibold;
+    @apply text-[1em] pb-[.8em] pt-0;
   }
   .about-small-SubTitle {
     @apply text-[1.5em] pb-[.8em] pt-[1em] font-semibold;
   }
   .about-small-flipped-SubTitle {
-    @apply text-[3vw] pb-[3vw] pt-[2vw] font-semibold;
+    @apply text-[3vw] pb-[3vw] pt-[2vw];
   }
   .experience {
-    @apply relative text-[5vh] h-screen flex flex-col overflow-hidden justify-start mx-[10vw] items-center;
+    @apply mx-[10vw];
   }
   .experience-small {
     @apply relative text-[5vh] h-screen flex flex-col overflow-hidden justify-start items-center;
   }
   .experience-small-flipped {
-    @apply relative text-[5vh] h-screen flex flex-col overflow-hidden max-w-full justify-start items-center;
+    @apply max-w-full;
   }
   .experience-Title {
-    @apply absolute top-[7vh] uppercase tracking-[20px] text-white text-[1em];
+    @apply text-[1em] top-[7vh] tracking-[20px];
   }
   .experience-small-Title {
-    @apply absolute top-[12vh] uppercase tracking-[10px] text-white text-[.8em];
+    @apply text-[.8em] absolute top-[12vh] uppercase tracking-[10px] text-white;
   }
   .experience-small-flipped-Title {
-    @apply absolute top-[4vw] uppercase tracking-[10px] text-white text-[4vw];
+    @apply text-[4vw] top-[4vw];
   }
   .experience-Container {
-    @apply w-full h-full px-0 mt-[15vh] mb-[10vh] flex flex-row justify-center items-center space-x-5 overflow-y-hidden overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80;
+    @apply w-full h-full px-0 mt-[15vh] mb-[10vh] justify-center items-center space-x-5 overflow-y-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80;
   }
   .experience-small-Container {
     @apply w-full max-h-[60vh] px-10 mt-[22vh] flex flex-row justify-start space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
   }
   .experience-small-flipped-Container {
-    @apply max-h-none w-[80%] h-full mt-[25vh] flex flex-row justify-start items-start space-x-10 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
+    @apply w-[85%] max-h-none h-fit mt-[25vh] items-start space-x-10;
   }
   .skills {
-    @apply text-[5vh] h-screen flex relative
-    flex-col text-left max-w-[2000px]
-    px-5 justify-end space-y-5 mx-auto items-center;
+    @apply text-[5vh] text-left max-w-[2000px] px-5 space-y-5;
   }
   .skills-small {
-    @apply text-[5vh] h-screen max-w-[100vh] flex relative
-    flex-col text-center w-screen justify-end mx-auto items-center;
+    @apply text-[5vh] h-screen max-w-[100vh] flex relative flex-col text-center w-screen justify-end mx-auto items-center;
   }
   .skills-small-flipped {
-    @apply text-[5vw] h-screen max-w-[100vh] flex relative
-    flex-col text-center w-screen justify-end mx-auto items-center;
+    @apply text-[5vw];
   }
-
   .skills-Title {
-    @apply top-[7vh] absolute uppercase tracking-[20px] text-white text-[1em];
+    @apply text-[1em] top-[7vh];
   }
   .skills-small-Title {
-    @apply top-[12vh] absolute uppercase tracking-[20px] text-white text-[1em];
+    @apply text-[1em] top-[12vh] absolute uppercase tracking-[20px] text-white;
   }
   .skills-small-flipped-Title {
-    @apply top-[12vh] absolute uppercase tracking-[20px] text-white text-[.8em];
+    @apply text-[.8em];
   }
   .skills-SubTitle {
     @apply block top-[5em] absolute uppercase tracking-[3px] text-white text-[.6em]
     text-center;
   }
   .skills-Grid {
-    @apply relative max-h-[70vh] w-fit grid grid-cols-4 grid-flow-dense place-content-center px-[10vh] gap-5 mb-0 pb-[12vh];
+    @apply w-fit grid grid-cols-4 grid-flow-dense mb-0 pb-[12vh];
   }
   .skills-small-Grid {
     @apply relative max-h-[70vh] w-full flex flex-col flex-wrap place-content-center px-[10vh] gap-5 mb-[3vh] pb-[8vh];
   }
   .skills-small-flipped-Grid {
-    @apply relative max-h-[70vh] w-full flex flex-row flex-wrap place-content-center px-[10vh] gap-5 mb-[3vh] pb-[8vh];
+    @apply flex-row;
   }
   .skill {
-    @apply text-[5vh] w-[12vh] h-[12vh] relative flex cursor-none;
+    @apply w-[12vh] h-[12vh];
   }
   .skill-small {
     @apply text-[5vh] w-[10vh] h-[10vh] relative flex cursor-none;
   }
   .projects {
-    @apply text-[5vh] relative h-screen max-w-full flex flex-col justify-center mx-auto items-center;
+    @apply text-[5vh] justify-center;
   }
   .projects-small {
     @apply text-[5vh] relative h-screen flex flex-col justify-end mx-auto items-center;
   }
   .projects-small-flipped {
-    @apply text-[5vw] relative h-screen max-w-full flex flex-col justify-end mx-auto items-center;
+    @apply text-[5vw] max-w-full;
   }
   .projects-Title {
-    @apply text-[1em] absolute top-[7vh] uppercase tracking-[20px] text-white;
+    @apply text-[1em];
   }
   .projects-small-Title {
     @apply text-[1em] absolute top-[10vh] uppercase tracking-[10px] text-white;
   }
   .projects-small-flipped-Title {
-    @apply text-[1em] absolute top-[7vh] uppercase tracking-[10px] text-white;
+    @apply text-[.8em] top-[7vh];
   }
   .projects-Carousel {
-    @apply relative w-screen h-screen px-0 pt-[2em] mt-auto flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
+    @apply px-0 pt-[5em] scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
   }
   .projects-small-Carousel {
     @apply relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none;
   }
   .projects-small-flipped-Carousel {
-    @apply relative w-screen h-screen px-10 flex pt-[3em] overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
+    @apply pt-[3em];
   }
   .project {
-    @apply text-[3vh] relative w-screen pb-[12vh] pl-[10em] pr-[5em] snap-center grid gap-x-5 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
+    @apply text-[3vh] pb-[12vh] pl-[10em] pr-[5em] gap-x-5;
   }
   .project-small {
     @apply text-[3vh] relative w-screen pb-[5vh] px-[3vh] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4;
   }
   .project-small-flipped {
-    @apply text-[3vw] relative w-screen px-[3vw] snap-center grid gap-x-10 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
-  }
-  .project-Img {
-    @apply h-auto block w-full relative row-span-8 col-span-2 justify-self-center object-contain rounded-lg cursor-none;
+    @apply text-[3vw] px-[3vw] grid gap-x-10 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
   }
   .project-small-Img {
     @apply block relative w-[12em] rounded-lg cursor-none;
   }
   .project-small-flipped-Img {
-    @apply h-auto w-full relative row-span-8 col-span-2 justify-self-center object-contain rounded-lg cursor-none;
+    @apply h-auto w-full row-span-8 col-span-2 justify-self-center object-contain;
   }
   .project-Dots {
-    @apply static top-0 row-span-2  col-span-2 z-40 flex justify-center self-start gap-5;
+    @apply self-start;
   }
   .project-small-Dots {
     @apply absolute top-[6em] z-40 flex justify-center gap-5 mt-2;
   }
   .project-small-flipped-Dots {
-    @apply static top-0 row-span-2  col-span-2 z-40 flex justify-center self-end gap-5;
+    @apply static top-0 row-span-2 col-span-2 z-40 self-end;
   }
   .project-Sum {
-    @apply overscroll-y-contain text-[1em] w-full row-span-8 col-span-3 h-full pt-[1em] pl-[2em] overflow-y-auto scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-left;
+    @apply text-[1em] row-span-8 pt-[1em] pl-[2em] scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-left;
   }
   .project-small-Sum {
     @apply overscroll-y-contain text-[1em] h-[25vh] text-center overflow-y-auto scrollbar-none;
   }
   .project-small-flipped-Sum {
-    @apply overscroll-y-contain text-[.8em] text-left w-full row-span-6 col-span-3 h-full overflow-y-auto scrollbar-none;
+    @apply text-[.8em] text-left w-full h-full row-span-6 col-span-3;
   }
   .contact {
-    @apply h-screen text-[5vh] max-w-full flex relative text-left flex-row justify-center px-10 items-start;
+    @apply text-[5vh];
   }
   .contact-small {
-    @apply h-screen text-[5vh] max-w-full flex relative text-left flex-col items-center justify-center px-10;
+    @apply text-[5vh] h-screen max-w-full flex relative text-left flex-col items-center justify-center px-10;
   }
   .contact-small-flipped {
-    @apply h-screen text-[5vw] max-w-full flex relative text-left flex-row justify-center px-10 items-start;
+    @apply text-[5vw] flex-row items-start;
   }
   .contact-Title {
-    @apply text-[1em] absolute top-[7vh] uppercase tracking-[20px] text-white;
+    @apply text-[1em] top-[7vh] tracking-[20px];
   }
   .contact-small-Title {
     @apply text-[1em] absolute top-[12vh] uppercase tracking-[10px] text-white;
   }
   .contact-small-flipped-Title {
-    @apply text-[1em] absolute top-[5vw] uppercase tracking-[10px] text-white;
+    @apply text-[.8em] top-[5vw];
   }
   .contact-Details {
-    @apply text-[.7em] flex flex-col mt-[20vh] max-w-full items-center justify-start space-y-[1em];
+    @apply text-[.7em] mt-[20vh] justify-start;
   }
   .contact-small-Details {
     @apply text-[.7em] flex flex-col max-w-full justify-center items-center space-y-[1em];
   }
   .contact-small-flipped-Details {
-    @apply text-[.4em] flex flex-col mt-[7em] max-w-full justify-center items-center space-y-[1em];
+    @apply text-[.5em] mt-[7em];
   }
 }
