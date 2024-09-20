@@ -53,8 +53,8 @@ export interface Experience extends SanityBody {
 }
 
 export interface Project extends SanityBody {
-  title: string;
   _type: "project";
+  title: string;
   image: Image;
   linkToBuild: string;
   summary: string;
@@ -65,4 +65,14 @@ export interface Social extends SanityBody {
   _type: "social";
   title: string;
   url: string;
+}
+export interface GalleryImage extends SanityBody {
+  _type: "galleryImage";
+  title: string;
+  description: string;
+  image: Image;
+  location: Location;
+  date: Date;
+  people: string[];
+  position: number;
 }

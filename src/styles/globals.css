@@ -229,4 +229,13 @@
   .contact-small-flipped-Details {
     @apply text-[.5em] mt-[7em];
   }
+  .gallery {
+    @apply text-[5vh] px-[1em];
+  }
+  .gallery-small {
+    @apply flex relative h-screen max-w-[100vh] flex-col justify-start mx-auto items-center;
+  }
+  .gallery-small-flipped {
+    @apply max-w-full flex-row px-[1em] justify-evenly;
+  }
 }
