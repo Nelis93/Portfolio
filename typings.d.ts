@@ -70,8 +70,8 @@ export interface GalleryImage extends SanityBody {
   _type: "galleryImage";
   title: string;
   description: string;
-  image: Image;
-  location: Location;
+  actualImage: Image;
+  location: string;
   date: Date;
   people: string[];
   position: number;
