@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 interface SanityBody {
   _createdAt: string;
   _id: string;
@@ -65,6 +67,8 @@ export interface Social extends SanityBody {
   _type: "social";
   title: string;
   url: string;
+  tag: string;
+  position: number;
 }
 export interface GalleryImage extends SanityBody {
   _type: "galleryImage";

@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { GalleryImage } from "../../typings";
 import { urlFor } from "../../sanity";
+import { TfiNewWindow, TfiClose } from "react-icons/tfi";
+import { IconContext } from "react-icons";
 
 type Props = {
   image: GalleryImage;
@@ -27,31 +29,83 @@ export default function GalleryImageCard({
     amount: 0.5,
     once: false,
   });
-
+  const [selected, setSelected] = useState(-1);
+  const [styleToggle, setStyleToggle] = useState({
+    card: "group galleryImageCardReg-small sm:galleryImageCardReg-small-flipped lg:galleryImageCardReg",
+    image:
+      "galleryImageCardReg-small-Img sm:galleryImageCardReg-small-flipped-Img lg:galleryImageCardReg-Img",
+    text: "galleryImageCardReg-small-FlipSide sm:galleryImageCardReg-small-flipped-FlipSide lg:galleryImageCardReg-FlipSide",
+  });
   // Update the currentIndex based on which project is in view
-  useEffect(() => {
-    if (isInView) {
-      console.log(uniqueId, " is in view");
-      setCurrentIndex(uniqueId);
-    }
-  }, [isInView, uniqueId]);
+  // useEffect(() => {
+  //   if (isInView) {
+  //     console.log(uniqueId, " is in view");
+  //     setCurrentIndex(uniqueId);
+  //   }
+  // }, [isInView, uniqueId]);
+  const handleStyleToggle = (mode: string) => {
+    const toggle = (mode: string) => {
+      if (mode == "on") {
+        return {
+          from: "lg:galleryImageCardReg",
+          to: "lg:galleryImageCardFocus",
+        };
+      }
+      return { from: "lg:galleryImageCardFocus", to: "lg:galleryImageCardReg" };
+    };
+    setStyleToggle((prevState) => ({
+      card: prevState.card.replaceAll(toggle(mode).from, toggle(mode).to), // New class for card
+      image: prevState.image.replaceAll(toggle(mode).from, toggle(mode).to), // New class for image
+      text: prevState.text.replaceAll(toggle(mode).from, toggle(mode).to), // New class for text
+    }));
+  };
+  const handleDeselect = () => {
+    handleStyleToggle("off");
+    setSelected(-1);
+  };
   //the button should enlarge the photo to take up the whole screen. The info can be displayed on the side in a nice font
-  const handleButtonClick = () => {};
+  const handleButtonClick = (event: any) => {
+    console.log("Buttonclick: ", event.target.parentElement);
+    event.stopPropagation();
+    if (selected != uniqueId) {
+      handleStyleToggle("on");
+      setSelected(uniqueId);
+      return;
+    }
+    handleDeselect();
+  };
+  const handleClickOutside = (event: any) => {
+    // Check if the click is outside the motion.div (ref.current)
+    if (ref.current != event.target.parentElement) {
+      console.log("clicked outside");
+      handleDeselect();
+      return;
+    }
+    console.log("clicked inside");
+  };
+
+  useEffect(() => {
+    // Attach the event listener to the whole document
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  //the button should return the user to the regular overview, the function should also be invoked when the user
+  //clicks outside the range of the image
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
-  const handleCardClick = () => {
-    console.log(focus, uniqueId);
-    console.log(
-      focus == uniqueId && window.innerWidth > 700
-        ? "galleryImageCardFocus"
-        : "galleryImageCardReg"
-    );
-    setFocus(uniqueId);
+  const handleCardClick = (event: any) => {
+    console.log("cardclick:", selected != uniqueId, selected, uniqueId);
+    uniqueId !== selected &&
+      setFocus((current: any) => (current == uniqueId ? -1 : uniqueId));
+    event.stopPropagation();
   };
   return (
     <motion.div
-      //   className={`galleryImageCardReg-small sm:galleryImageCardReg-small-flipped ${focus == uniqueId ? "lg:galleryImageCardFocus" : "lg:galleryImageCardReg"}`}
+      className={styleToggle.card}
       key={image._id}
-      className="relative group w-full h-auto"
       initial={{ opacity: 0, y: 20 }}
       animate={controls}
       whileInView={{ opacity: 1, y: 0 }}
@@ -62,13 +116,28 @@ export default function GalleryImageCard({
         ref.current = el;
       }}
     >
+      <IconContext.Provider
+        value={{
+          style: {
+            position: "absolute",
+            zIndex: "10",
+            right: "0",
+          },
+          className: "social-icon absolute z-20 bg-black rounded-full",
+          attr: {
+            onClick: handleButtonClick,
+          },
+        }}
+      >
+        {selected == uniqueId ? <TfiClose /> : <TfiNewWindow />}
+      </IconContext.Provider>
       <motion.img
-        className={`${focus == uniqueId ? "hidden" : "galleryImageCardReg-small-Img sm:galleryImageCardReg-small-flipped-Img lg:galleryImageCardReg-Img"}`}
+        className={`${focus == uniqueId && selected != uniqueId ? "hidden" : styleToggle.image}`}
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
       />
       <div
-        className={`${focus != uniqueId ? "hidden" : "galleryImageCardReg-small-FlipSide sm:galleryImageCardReg-small-flipped-FlipSide lg:galleryImageCardReg-FlipSide"}`}
+        className={`${focus != uniqueId && selected != uniqueId ? "hidden" : styleToggle.text}`}
       >
         <h4 className="text-[.7em] font-bold">{image.title}</h4>
 

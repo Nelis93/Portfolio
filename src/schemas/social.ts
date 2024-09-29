@@ -19,5 +19,15 @@ export default defineType({
       title: "Url",
       type: "url",
     }),
+    defineField({
+      name: "tag",
+      title: "Tag",
+      type: "string",
+    }),
+    defineField({
+      name: "position",
+      title: "Position",
+      type: "number",
+    }),
   ],
 });
