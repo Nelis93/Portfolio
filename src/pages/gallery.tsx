@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import type { GetStaticProps } from "next";
 import { GalleryImage, Social } from "../../typings";
 import { fetchGalleryImages } from "../utils/fetchGalleryImages";
@@ -22,6 +22,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const controls = useAnimation();
   const [focus, setFocus] = useState(-1);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const loadMoreImages = () => {
     setLoading(true);
@@ -51,9 +52,11 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     >
       <Header socials={socials} />
       <section className="gallery-small sm:gallery-small-flipped lg:gallery">
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-col-dense gap-4">
           {displayedImages.map((image, index) => (
             <GalleryImageCard
+              galleryLength={galleryImages.length - 1}
               key={image._id}
               uniqueId={index}
               image={image}
@@ -61,6 +64,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               setFocus={setFocus}
               setCurrentIndex={setCurrentIndex}
               controls={controls}
+              galleryRefs={galleryRefs}
             />
           ))}
         </div>

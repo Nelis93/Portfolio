@@ -242,7 +242,7 @@
     @apply h-auto cursor-pointer;
   }
   .galleryImageCardFocus {
-    @apply absolute z-20 bg-black grid grid-cols-4 h-fit m-[2em] border-red-300 border-8 w-fit cursor-default;
+    @apply absolute z-20 bg-black overflow-clip h-auto max-w-[75vw] max-h-[75vh] m-auto justify-self-center border-red-300 border-8 w-fit cursor-default;
   }
   .galleryImageCardReg-small {
     @apply flex relative w-auto h-auto;
@@ -254,26 +254,26 @@
     @apply w-full h-auto rounded-lg object-contain self-start transition-opacity duration-200 ease-in-out group-hover:opacity-80;
   }
   .galleryImageCardFocus-Img {
-    @apply relative w-auto h-auto col-span-3 object-contain;
+    @apply relative w-auto max-w-[50%]  h-fit max-h-[73vh] object-contain transition-none group-hover:opacity-100;
   }
   .galleryImageCardReg-small-Img {
     @apply w-full h-auto rounded-lg object-cover;
   }
-  /* .galleryImageCardReg-small-flipped-Img {
+  .galleryImageCardReg-small-flipped-Img {
     @apply w-full h-auto rounded-lg object-cover transition-opacity duration-200 ease-in-out group-hover:opacity-80;
-  } */
+  }
   .galleryImageCardReg-FlipSide {
-    @apply transition-all duration-300 border-red-500;
+    @apply transition-all duration-300 border-white;
   }
   .galleryImageCardFocus-FlipSide {
-    @apply relative col-span-1 w-auto h-auto transition-none border-0 border-red-500;
+    @apply relative flex w-auto h-auto transition-none border-none p-[2em];
   }
   .galleryImageCardReg-small-FlipSide {
     @apply absolute top-0 border-4 border-white left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-5;
   }
-  /* .galleryImageCardReg-small-flipped-FlipSide {
-    @apply absolute top-0 border-4 border-red-500 left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-5 transition-all duration-300;
-  } */
+  .galleryImageCardReg-small-flipped-FlipSide {
+    @apply absolute top-2 border-4 border-red-500 left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-5 transition-all duration-300;
+  }
   .social-icon {
     @apply hover:bg-white size-[1.2em] hover:rounded-[50px] p-[7px] text-gray-500;
   }

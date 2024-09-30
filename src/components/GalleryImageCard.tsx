@@ -12,6 +12,8 @@ type Props = {
   setFocus: any;
   setCurrentIndex: any;
   controls: any;
+  galleryRefs: any;
+  galleryLength: number
 };
 
 export default function GalleryImageCard({
@@ -23,6 +25,7 @@ export default function GalleryImageCard({
   controls,
 }: Props) {
   // Create a ref for each project
+  
   const ref = useRef<HTMLElement | null>(null);
   // Track if each project is in view
   const isInView = useInView(ref, {
@@ -43,9 +46,25 @@ export default function GalleryImageCard({
   //     setCurrentIndex(uniqueId);
   //   }
   // }, [isInView, uniqueId]);
+  // const handleStyleToggle = (mode: string) => {
+  //   const toggle = (mode: string) => {
+  //     if (mode == "on") {
+  //       return {
+  //         from: "lg:galleryImageCardReg",
+  //         to: "lg:galleryImageCardFocus",
+  //       };
+  //     }
+  //     return { from: "lg:galleryImageCardFocus", to: "lg:galleryImageCardReg" };
+  //   };
+  //   setStyleToggle((prevState) => ({
+  //     card: prevState.card.replaceAll(toggle(mode).from, toggle(mode).to), // New class for card
+  //     image: prevState.image.replaceAll(toggle(mode).from, toggle(mode).to), // New class for image
+  //     text: prevState.text.replaceAll(toggle(mode).from, toggle(mode).to), // New class for text
+  //   }));
+  // };
   const handleStyleToggle = (mode: string) => {
-    const toggle = (mode: string) => {
-      if (mode == "on") {
+    const cardToggle = (mode: string) => {
+      if (mode === "on") {
         return {
           from: "lg:galleryImageCardReg",
           to: "lg:galleryImageCardFocus",
@@ -53,30 +72,55 @@ export default function GalleryImageCard({
       }
       return { from: "lg:galleryImageCardFocus", to: "lg:galleryImageCardReg" };
     };
+  
+    const imageToggle = (mode: string) => {
+      if (mode === "on") {
+        return {
+          from: "lg:galleryImageCardReg-Img",
+          to: "lg:galleryImageCardFocus-Img",
+        };
+      }
+      return { from: "lg:galleryImageCardFocus-Img", to: "lg:galleryImageCardReg-Img" };
+    };
+  
+    const textToggle = (mode: string) => {
+      if (mode === "on") {
+        return {
+          from: "lg:galleryImageCardReg-FlipSide",
+          to: "lg:galleryImageCardFocus-FlipSide",
+        };
+      }
+      return { from: "lg:galleryImageCardFocus-FlipSide", to: "lg:galleryImageCardReg-FlipSide" };
+    };
+  
     setStyleToggle((prevState) => ({
-      card: prevState.card.replaceAll(toggle(mode).from, toggle(mode).to), // New class for card
-      image: prevState.image.replaceAll(toggle(mode).from, toggle(mode).to), // New class for image
-      text: prevState.text.replaceAll(toggle(mode).from, toggle(mode).to), // New class for text
+      card: prevState.card.replaceAll(cardToggle(mode).from, cardToggle(mode).to), // New class for card
+      image: prevState.image.replaceAll(imageToggle(mode).from, imageToggle(mode).to), // New class for image
+      text: prevState.text.replaceAll(textToggle(mode).from, textToggle(mode).to), // New class for text
     }));
   };
+  
   const handleDeselect = () => {
     handleStyleToggle("off");
     setSelected(-1);
   };
   //the button should enlarge the photo to take up the whole screen. The info can be displayed on the side in a nice font
   const handleButtonClick = (event: any) => {
-    console.log("Buttonclick: ", event.target.parentElement);
+    console.log("Buttonclick: ", event.target.parentElement.lastChild.classList);
     event.stopPropagation();
     if (selected != uniqueId) {
+      console.log('selected is not uniqueId');
       handleStyleToggle("on");
       setSelected(uniqueId);
       return;
     }
+    console.log('selected IS uniqueId');
     handleDeselect();
   };
   const handleClickOutside = (event: any) => {
     // Check if the click is outside the motion.div (ref.current)
-    if (ref.current != event.target.parentElement) {
+    event.stopPropagation();
+    if (ref.current != event.target.parentElement && !ref.current?.contains(event.target)) {
       console.log("clicked outside");
       handleDeselect();
       return;
@@ -97,10 +141,10 @@ export default function GalleryImageCard({
   //clicks outside the range of the image
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleCardClick = (event: any) => {
+    event.stopPropagation();
     console.log("cardclick:", selected != uniqueId, selected, uniqueId);
     uniqueId !== selected &&
       setFocus((current: any) => (current == uniqueId ? -1 : uniqueId));
-    event.stopPropagation();
   };
   return (
     <motion.div
@@ -116,6 +160,7 @@ export default function GalleryImageCard({
         ref.current = el;
       }}
     >
+      
       <IconContext.Provider
         value={{
           style: {
@@ -123,7 +168,7 @@ export default function GalleryImageCard({
             zIndex: "10",
             right: "0",
           },
-          className: "social-icon absolute z-20 bg-black rounded-full",
+          className: "social-icon absolute z-20 bg-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
           },
