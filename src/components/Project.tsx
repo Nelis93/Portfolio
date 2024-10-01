@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Project as PJT } from "../../typings";
 import { urlFor } from "../../sanity";
+import Dots from "./Dots";
+
 
 type Props = {
   projects: any;
@@ -10,7 +12,6 @@ type Props = {
   currentIndex: any;
   setCurrentIndex: any;
   projectRefs: any;
-  handleDotClick: any;
 };
 
 export default function Project({
@@ -20,7 +21,6 @@ export default function Project({
   currentIndex,
   setCurrentIndex,
   projectRefs,
-  handleDotClick,
 }: Props) {
   // Create a ref for each project
   const ref = useRef<HTMLDivElement | null>(null);
@@ -56,18 +56,7 @@ export default function Project({
         alt="none available"
         className="project-small-Img sm:project-small-flipped-Img"
       />
-      <div className="project-small-Dots sm:project-small-flipped-Dots lg:project-Dots">
-        {projects.map((_: any, idx: number) => (
-          <div
-            key={idx}
-            className={`size-[.8em] rounded-[50%] lg:hover:cursor-pointer ${
-              currentIndex === idx ? "bg-yellow-500" : "bg-black"
-            }`}
-            onClick={() => window.innerWidth > 1000 && handleDotClick(idx)}
-          ></div>
-        ))}
-      </div>
-      {/* <div className="space-y-3 xl:px-[1.5em]"> */}
+      <Dots items={projects} refs={projectRefs} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} style={"project-small-Dots sm:project-small-flipped-Dots lg:project-Dots"}/>      
       <h4 className="mb-[.5em] sm:pb-2 text-[1.5em] lg:text-[1.8em] sm:row-span-2 lg:row-span-1 col-span-2 justify-self-center sm:self-end text-ellipsis line-clamp-1 overflow-hidden font-semibold text-center underline decoration-yellow-500">
         {project?.title}
       </h4>

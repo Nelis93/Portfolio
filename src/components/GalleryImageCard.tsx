@@ -4,35 +4,37 @@ import { GalleryImage } from "../../typings";
 import { urlFor } from "../../sanity";
 import { TfiNewWindow, TfiClose } from "react-icons/tfi";
 import { IconContext } from "react-icons";
+import Dots from "./Dots";
 
 type Props = {
   image: GalleryImage;
   uniqueId: number;
-  focus: number;
-  setFocus: any;
-  setCurrentIndex: any;
   controls: any;
   galleryRefs: any;
-  galleryLength: number
+  images: any
+  selected: any;
+  setSelected: any;
 };
 
 export default function GalleryImageCard({
+  images,
   image,
   uniqueId,
-  focus,
-  setFocus,
-  setCurrentIndex,
   controls,
+  galleryRefs,
+  selected,
+  setSelected
 }: Props) {
   // Create a ref for each project
   
+  const [focus, setFocus] = useState(-1);
   const ref = useRef<HTMLElement | null>(null);
   // Track if each project is in view
   const isInView = useInView(ref, {
     amount: 0.5,
     once: false,
   });
-  const [selected, setSelected] = useState(-1);
+  
   const [styleToggle, setStyleToggle] = useState({
     card: "group galleryImageCardReg-small sm:galleryImageCardReg-small-flipped lg:galleryImageCardReg",
     image:
@@ -46,25 +48,12 @@ export default function GalleryImageCard({
   //     setCurrentIndex(uniqueId);
   //   }
   // }, [isInView, uniqueId]);
-  // const handleStyleToggle = (mode: string) => {
-  //   const toggle = (mode: string) => {
-  //     if (mode == "on") {
-  //       return {
-  //         from: "lg:galleryImageCardReg",
-  //         to: "lg:galleryImageCardFocus",
-  //       };
-  //     }
-  //     return { from: "lg:galleryImageCardFocus", to: "lg:galleryImageCardReg" };
-  //   };
-  //   setStyleToggle((prevState) => ({
-  //     card: prevState.card.replaceAll(toggle(mode).from, toggle(mode).to), // New class for card
-  //     image: prevState.image.replaceAll(toggle(mode).from, toggle(mode).to), // New class for image
-  //     text: prevState.text.replaceAll(toggle(mode).from, toggle(mode).to), // New class for text
-  //   }));
-  // };
-  const handleStyleToggle = (mode: string) => {
-    const cardToggle = (mode: string) => {
-      if (mode === "on") {
+  useEffect(()=>{
+    handleStyleToggle(selected === uniqueId)
+  },[selected])
+  const handleStyleToggle = (mode: boolean) => {
+    const cardToggle = (mode: boolean) => {
+      if (mode) {
         return {
           from: "lg:galleryImageCardReg",
           to: "lg:galleryImageCardFocus",
@@ -73,8 +62,8 @@ export default function GalleryImageCard({
       return { from: "lg:galleryImageCardFocus", to: "lg:galleryImageCardReg" };
     };
   
-    const imageToggle = (mode: string) => {
-      if (mode === "on") {
+    const imageToggle = (mode: boolean) => {
+      if (mode) {
         return {
           from: "lg:galleryImageCardReg-Img",
           to: "lg:galleryImageCardFocus-Img",
@@ -83,8 +72,8 @@ export default function GalleryImageCard({
       return { from: "lg:galleryImageCardFocus-Img", to: "lg:galleryImageCardReg-Img" };
     };
   
-    const textToggle = (mode: string) => {
-      if (mode === "on") {
+    const textToggle = (mode: boolean) => {
+      if (mode) {
         return {
           from: "lg:galleryImageCardReg-FlipSide",
           to: "lg:galleryImageCardFocus-FlipSide",
@@ -101,7 +90,6 @@ export default function GalleryImageCard({
   };
   
   const handleDeselect = () => {
-    handleStyleToggle("off");
     setSelected(-1);
   };
   //the button should enlarge the photo to take up the whole screen. The info can be displayed on the side in a nice font
@@ -110,33 +98,32 @@ export default function GalleryImageCard({
     event.stopPropagation();
     if (selected != uniqueId) {
       console.log('selected is not uniqueId');
-      handleStyleToggle("on");
       setSelected(uniqueId);
       return;
     }
     console.log('selected IS uniqueId');
     handleDeselect();
   };
-  const handleClickOutside = (event: any) => {
-    // Check if the click is outside the motion.div (ref.current)
-    event.stopPropagation();
-    if (ref.current != event.target.parentElement && !ref.current?.contains(event.target)) {
-      console.log("clicked outside");
-      handleDeselect();
-      return;
-    }
-    console.log("clicked inside");
-  };
+  // const handleClickOutside = (event: any) => {
+  //   // Check if the click is outside the motion.div (ref.current)
+  //   event.stopPropagation();
+  //   if (ref.current != event.target.parentElement && !ref.current?.contains(event.target)) {
+  //     console.log("clicked outside");
+  //     handleDeselect();
+  //     return;
+  //   }
+  //   console.log("clicked inside");
+  // };
 
-  useEffect(() => {
-    // Attach the event listener to the whole document
-    document.addEventListener("mousedown", handleClickOutside);
+  // useEffect(() => {
+  //   // Attach the event listener to the whole document
+  //   document.addEventListener("mousedown", handleClickOutside);
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  //   // Cleanup the event listener on component unmount
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
   //the button should return the user to the regular overview, the function should also be invoked when the user
   //clicks outside the range of the image
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
@@ -158,6 +145,7 @@ export default function GalleryImageCard({
       onClick={handleCardClick}
       ref={(el) => {
         ref.current = el;
+        galleryRefs.current[uniqueId] = el;
       }}
     >
       
@@ -180,7 +168,7 @@ export default function GalleryImageCard({
         className={`${focus == uniqueId && selected != uniqueId ? "hidden" : styleToggle.image}`}
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
-      />
+        />
       <div
         className={`${focus != uniqueId && selected != uniqueId ? "hidden" : styleToggle.text}`}
       >
@@ -189,6 +177,7 @@ export default function GalleryImageCard({
         {/* insert button to enlarge */}
         <p className="text-[.5em]">{image.description}</p>
         <p className="text-[.5em] italic self-end">{image.location}</p>
+      <Dots items={images} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={`${selected == uniqueId ? "absolute bottom-0 self-center border-red-500 border-4 z-40 flex justify-center gap-5" : "hidden"}`} />      
       </div>
     </motion.div>
   );

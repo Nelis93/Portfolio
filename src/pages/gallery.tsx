@@ -7,6 +7,7 @@ import { useAnimation } from "framer-motion";
 import GalleryImageCard from "@/components/GalleryImageCard";
 import Header from "@/components/Header";
 import { fetchSocials } from "../utils/fetchSocials";
+import Slider from "@/components/Slider";
 
 type Props = {
   galleryImages: GalleryImage[];
@@ -20,9 +21,9 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const controls = useAnimation();
-  const [focus, setFocus] = useState(-1);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [selected, setSelected] = useState(-1);
 
   const loadMoreImages = () => {
     setLoading(true);
@@ -50,21 +51,20 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       translate="no"
       className="bg-black text-white w-screen h-screen p-4 overflow-auto"
     >
+      {selected > -1 && <Slider items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"absolute z-50 flex justify-between w-screen top-[40vh]"}/>}
       <Header socials={socials} />
       <section className="gallery-small sm:gallery-small-flipped lg:gallery">
-        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-col-dense gap-4">
           {displayedImages.map((image, index) => (
             <GalleryImageCard
-              galleryLength={galleryImages.length - 1}
               key={image._id}
               uniqueId={index}
+              images={galleryImages}
               image={image}
-              focus={focus}
-              setFocus={setFocus}
-              setCurrentIndex={setCurrentIndex}
               controls={controls}
               galleryRefs={galleryRefs}
+              selected={selected}
+              setSelected={setSelected}
             />
           ))}
         </div>
