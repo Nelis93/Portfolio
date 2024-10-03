@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import { fetchSocials } from "../utils/fetchSocials";
 import Slider from "@/components/Slider";
 import FocusedImageCard from "@/components/FocusedImageCard";
+import Dots from '@/components/Dots';
 
 type Props = {
   galleryImages: GalleryImage[];
@@ -53,7 +54,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   return (
     <main
       translate="no"
-      className="relative bg-black text-white w-screen h-screen p-4 overflow-auto"
+      className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-4 overflow-auto"
     >
       <Header socials={socials} />
       <section className="relative flex gallery-small sm:gallery-small-flipped lg:gallery">
@@ -75,22 +76,23 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         </div>
         {loading && <p className="text-white">Loading more images...</p>}
       </section>
-        {selected > -1 && 
-      <section className="absolute top-0 z-50 h-full w-full bg-white">
-        <Slider items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"absolute z-50 flex justify-between w-screen top-[40vh]"}/>
-      <div className="projects-small-Carousel sm:projects-small-flipped-Carousel lg:projects-Carousel"
-        ref={containerRef}>
-          {displayedImages.map((image, index) => (
-            <FocusedImageCard
-            key={image._id}
-            uniqueId={index}
-            images={galleryImages}
-            image={image}
-            galleryRefs={galleryRefs}
-            selected={selected}
-            setSelected={setSelected}
-            />
-          ))}
+      {selected > -1 && 
+      <section className="fixed flex flex-col text-[5vh] z-10 top-0 justify-center w-[70vw] max-w-[1800px] h-screen  overflow-x-hidden scrollbar-none items-center bg-white">
+        <Slider items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed z-20 flex justify-between w-screen max-w-[2000px] top-[40vh]"}/>
+        <Dots items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed bottom-[2vh] justify-self-center z-20 flex gap-5"} />      
+        <div className="relative w-max mx-auto h-[80vh] overflow-x-scroll scrollbar-none  flex flex-row  snap-x  snap-mandatory items-start justify-start"
+          ref={containerRef}>
+            {displayedImages.map((image, index) => (
+              <FocusedImageCard
+              key={image._id}
+              uniqueId={index}
+              images={galleryImages}
+              image={image}
+              galleryRefs={galleryRefs}
+              selected={selected}
+              setSelected={setSelected}
+              />
+            ))}
         </div>
       </section>
 }

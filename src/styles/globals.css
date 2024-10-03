@@ -182,7 +182,7 @@
     @apply block relative w-[12em] rounded-lg cursor-none;
   }
   .project-small-flipped-Img {
-    @apply h-auto w-full row-span-8 col-span-2 justify-self-center object-contain;
+    @apply h-auto w-full row-span-10 col-span-2 justify-self-center object-contain;
   }
   .project-Dots {
     @apply self-start;
@@ -230,7 +230,7 @@
     @apply text-[.5em] mt-[7em];
   }
   .gallery {
-    @apply text-[5vh] px-[20vh];
+    @apply text-[5vh] px-[20vh] max-w-[1800px];
   }
   .gallery-small {
     @apply relative h-screen max-w-[100vh] mx-auto;
@@ -239,7 +239,7 @@
     @apply max-w-full px-[1em];
   }
   .galleryImageCardReg {
-    @apply h-auto cursor-pointer;
+    @apply h-auto max-h-[80vh] cursor-pointer;
   }
   .galleryImageCardFocus {
     @apply absolute z-20 bg-black overflow-clip h-auto max-w-[75vw] max-h-[75vh] m-auto justify-self-center border-red-300 border-8 w-fit cursor-default transition-opacity duration-200 ease-in-out;
@@ -269,10 +269,10 @@
     @apply relative flex w-auto h-auto transition-none border-none p-[2em];
   }
   .galleryImageCardReg-small-FlipSide {
-    @apply absolute top-0 border-4 border-white left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-5;
+    @apply absolute top-0 border-4 border-white left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5;
   }
   .galleryImageCardReg-small-flipped-FlipSide {
-    @apply absolute top-2 border-4 border-red-500 left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-5 transition-all duration-300;
+    @apply absolute border-4 border-red-500 left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-5 transition-all duration-300;
   }
   .social-icon {
     @apply hover:bg-white size-[1.2em] hover:rounded-[50px] p-[7px] text-gray-500;

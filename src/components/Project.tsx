@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Project as PJT } from "../../typings";
 import { urlFor } from "../../sanity";
-import Dots from "./Dots";
+
 
 
 type Props = {
@@ -56,7 +56,7 @@ export default function Project({
         alt="none available"
         className="project-small-Img sm:project-small-flipped-Img"
       />
-      <Dots items={projects} refs={projectRefs} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} style={"project-small-Dots sm:project-small-flipped-Dots lg:project-Dots"}/>      
+      
       <h4 className="mb-[.5em] sm:pb-2 text-[1.5em] lg:text-[1.8em] sm:row-span-2 lg:row-span-1 col-span-2 justify-self-center sm:self-end text-ellipsis line-clamp-1 overflow-hidden font-semibold text-center underline decoration-yellow-500">
         {project?.title}
       </h4>

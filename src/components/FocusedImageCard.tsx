@@ -1,7 +1,6 @@
 import React, {useRef, useEffect} from 'react'
 import {motion, useInView} from 'framer-motion'
 import { urlFor } from "../../sanity";
-import Dots from './Dots';
 import { GalleryImage } from "../../typings";
 import { TfiClose } from "react-icons/tfi";
 import { IconContext } from "react-icons";
@@ -56,7 +55,7 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
     // }, []);
   return (
     <motion.div
-      className="project-small sm:project-small-flipped lg:project"
+      className="relative w-[70vw] max-w-[1500px] mx-auto border-4 h-full grid grid-cols-5 grid-rows-10 flex-wrap"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
@@ -72,7 +71,7 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
             zIndex: "10",
             right: "0",
           },
-          className: "social-icon absolute z-20 bg-black rounded-full hover:cursor-pointer",
+          className: "social-icon fixed z-20 bg-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
           },
@@ -81,7 +80,7 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
         <TfiClose />
       </IconContext.Provider>
       <motion.img
-        className="project-small-Img sm:project-small-flipped-Img"
+        className="relative rounded-lg cursor-none h-full w-auto col-span-3 row-span-10 justify-self-start self-start place-items-start items-start object-contain"
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
         initial={{ x: 300 }}
@@ -90,17 +89,13 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
         transition={{ duration: 0.5 }}
       />
       <div
-        className="galleryImageCardFocus-FlipSide"
+        className="relative flex flex-col h-full w-auto text-black px-[1em] pt-[1em] space-y-[1em] col-span-2 row-span-10"
       >
         <h4 className="text-[.7em] font-bold">{image.title}</h4>
-
-        {/* insert button to enlarge */}
         <p className="text-[.5em]">{image.description}</p>
         <p className="text-[.5em] italic self-end">{image.location}</p>
-        <Dots items={images} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"absolute bottom-0 self-center border-red-500 border-4 z-40 flex justify-center gap-5"} />      
+        
       </div>
-      {/* <Slider items={images} refs={galleryRefs} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} style={"absolute z-50 flex justify-between w-screen top-[40vh]"}/> */}
-      {/* Implement next/previous controls */}
     </motion.div>
   )
 }

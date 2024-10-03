@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Project as PJT } from "../../typings";
 import Project from "./Project";
 import Slider from "./Slider";
+import Dots from "./Dots";
 
 type Props = {
   projects: PJT[];
@@ -25,6 +26,7 @@ export default function Projects({ projects }: Props) {
       </h3>
       
       <Slider items={projects} refs={projectRefs} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} style={"absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]"}/>
+      <Dots items={projects} refs={projectRefs} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} style={"absolute bottom-[2vh] left-[20vw] justify-self-center z-40 flex gap-5"}/>      
       {/* Projects Carousel */}
       <div
         className="projects-small-Carousel sm:projects-small-flipped-Carousel lg:projects-Carousel"
