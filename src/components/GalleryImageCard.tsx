@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { motion } from "framer-motion";
 import { GalleryImage } from "../../typings";
 import { urlFor } from "../../sanity";
@@ -30,16 +30,21 @@ export default function GalleryImageCard({
   setFocus
 }: Props) {
   
-
+  const [elHeight, setElHeight] = useState(0)
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleCardClick = (event: any) => {
     event.stopPropagation();
     // console.log("cardclick:", focus != uniqueId, focus, uniqueId);
+    console.log(event.target.offsetHeight)
       setFocus((current: any) => (current == uniqueId ? -1 : uniqueId));
   };
   const handleButtonClick = (event: any) => {
     event.stopPropagation();
     setSelected(uniqueId)
+  }
+  const testevent = (event: any) => {
+    setElHeight(event.target.offsetHeight)
+    console.log(event.target.offsetHeight)
   }
   return (
     <motion.div
@@ -66,7 +71,7 @@ export default function GalleryImageCard({
             zIndex: "10",
             right: "0",
           },
-          className: "social-icon absolute z-20 bg-black rounded-full hover:cursor-pointer",
+          className: "social-icon z-40 bg-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick
           },
@@ -77,15 +82,16 @@ export default function GalleryImageCard({
       {focus !== uniqueId &&
       <motion.img
         // className={styleToggle.image}
-        className="galleryImageCardReg-small-Img sm:galleryImageCardReg-small-flipped-Img lg:galleryImageCardReg-Img"
+        className={`${"h-[" + elHeight + "px]"} galleryImageCardReg-small-Img sm:galleryImageCardReg-small-flipped-Img lg:galleryImageCardReg-Img`}
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
+        onLoad={testevent}
         />
       }
       {focus === uniqueId &&
       <div
         // className={styleToggle.text}
-        className="galleryImageCardReg-small-FlipSide sm:galleryImageCardReg-small-flipped-FlipSide lg:galleryImageCardReg-FlipSide"
+        className={`${"max-h-[" + elHeight + "px]"} galleryImageCardReg-small-FlipSide sm:galleryImageCardReg-small-flipped-FlipSide lg:galleryImageCardReg-FlipSide`}
       >
         <h4 className="text-[.7em] font-bold">{image.title}</h4>
 

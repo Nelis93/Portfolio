@@ -37,7 +37,7 @@ export default function Slider ({items, refs, currentIndex, setCurrentIndex, sty
         {/* Previous Button */}
         <IconContext.Provider
             value={{
-                className: "hover:bg-yellow-500/80 hover:cursor-pointer p-3 mx-5 rounded-[50%] size-14 left-0",
+                className: "absolute opacity-100 hover:bg-yellow-500/80 z-50 bg-gray-500 hover:cursor-pointer p-3 mx-5 rounded-[50%] size-14 left-0",
                 attr: {onClick: handlePrevious}
             }}
           >
@@ -46,7 +46,7 @@ export default function Slider ({items, refs, currentIndex, setCurrentIndex, sty
         {/* Next Button */}
         <IconContext.Provider
             value={{
-                className: "hover:bg-yellow-500/80 hover:cursor-pointer p-3 mx-5 rounded-[50%] size-14 right-0",
+                className: "absolute opacity-100 hover:bg-yellow-500/80 z-50 bg-gray-500 hover:cursor-pointer p-3 mx-5 rounded-[50%] size-14 right-0",
                 attr: {onClick: handleNext}
             }}
             >

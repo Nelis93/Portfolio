@@ -34,12 +34,6 @@ export default function ExperienceCard({
     }
   }, [isInView, uniqueId]);
   const handleCardClick = () => {
-    console.log(focus, uniqueId);
-    console.log(
-      focus == uniqueId && window.innerWidth > 700
-        ? "expCardFocus"
-        : "expCardReg"
-    );
     setFocus(uniqueId);
   };
   return (

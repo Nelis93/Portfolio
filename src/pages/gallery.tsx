@@ -77,10 +77,10 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         {loading && <p className="text-white">Loading more images...</p>}
       </section>
       {selected > -1 && 
-      <section className="fixed flex flex-col text-[5vh] z-10 top-0 justify-center w-[70vw] max-w-[1800px] h-screen  overflow-x-hidden scrollbar-none items-center bg-white">
-        <Slider items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed z-20 flex justify-between w-screen max-w-[2000px] top-[40vh]"}/>
-        <Dots items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed bottom-[2vh] justify-self-center z-20 flex gap-5"} />      
-        <div className="relative w-max mx-auto h-[80vh] overflow-x-scroll scrollbar-none  flex flex-row  snap-x  snap-mandatory items-start justify-start"
+      <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-[70vw] max-w-[1800px] h-screen  overflow-x-hidden scrollbar-none items-center">
+        <Slider items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed z-20 flex flex-row justify-between items-center h-full bg-opacity-50 bg-black  w-screen max-w-[2000px]"}/>
+        <Dots items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed bottom-[2vh] justify-self-center z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"} />      
+        <div className="relative z-30 bg-black text-white w-max mx-auto h-[80vh] overflow-x-scroll scrollbar-none  flex flex-row  snap-x  snap-mandatory items-start justify-start"
           ref={containerRef}>
             {displayedImages.map((image, index) => (
               <FocusedImageCard

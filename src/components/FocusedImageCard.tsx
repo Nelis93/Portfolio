@@ -55,7 +55,7 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
     // }, []);
   return (
     <motion.div
-      className="relative w-[70vw] max-w-[1500px] mx-auto border-4 h-full grid grid-cols-5 grid-rows-10 flex-wrap"
+      className="relative w-[70vw] z-50 max-w-[1500px] mx-auto border-4 rounded-xl border-gray-500 h-full grid grid-cols-5 grid-rows-10 flex-wrap"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
@@ -71,7 +71,7 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
             zIndex: "10",
             right: "0",
           },
-          className: "social-icon fixed z-20 bg-black rounded-full hover:cursor-pointer",
+          className: "social-icon z-40 bg-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
           },
@@ -80,7 +80,7 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
         <TfiClose />
       </IconContext.Provider>
       <motion.img
-        className="relative rounded-lg cursor-none h-full w-auto col-span-3 row-span-10 justify-self-start self-start place-items-start items-start object-contain"
+        className="relative rounded-lg cursor-none h-fit max-h-full w-auto col-span-3 row-span-10 justify-self-start self-start place-items-start items-start object-contain"
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
         initial={{ x: 300 }}
@@ -89,7 +89,7 @@ export default function FocusedImageCard({ image, images, galleryRefs, selected,
         transition={{ duration: 0.5 }}
       />
       <div
-        className="relative flex flex-col h-full w-auto text-black px-[1em] pt-[1em] space-y-[1em] col-span-2 row-span-10"
+        className="relative flex flex-col h-full w-auto px-[1em] pt-[1em] space-y-[1em] col-span-2 row-span-10"
       >
         <h4 className="text-[.7em] font-bold">{image.title}</h4>
         <p className="text-[.5em]">{image.description}</p>

@@ -23,7 +23,7 @@ function Header({ socials }: Props) {
     FaHome: FaHome,
   };
   return (
-    <header className="text-[5vh] w-screen sm:text-[5vw] lg:text-[5vh] sticky top-0 p-5 flex items-start justify-between z-20">
+    <header className="text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] sticky top-0 p-5 flex items-start justify-between z-20">
       <motion.div
         initial={{
           x: -500,

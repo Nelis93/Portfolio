@@ -182,10 +182,10 @@
     @apply block relative w-[12em] rounded-lg cursor-none;
   }
   .project-small-flipped-Img {
-    @apply h-auto w-full row-span-10 col-span-2 justify-self-center object-contain;
+    @apply h-auto w-full row-span-8 col-span-2 justify-self-center object-contain;
   }
   .project-Dots {
-    @apply self-start;
+    @apply self-start ;
   }
   .project-small-Dots {
     @apply absolute top-[6em] z-40 flex justify-center gap-5 mt-2;
@@ -230,7 +230,7 @@
     @apply text-[.5em] mt-[7em];
   }
   .gallery {
-    @apply text-[5vh] px-[20vh] max-w-[1800px];
+    @apply text-[5vh] px-[20vh];
   }
   .gallery-small {
     @apply relative h-screen max-w-[100vh] mx-auto;
@@ -239,7 +239,7 @@
     @apply max-w-full px-[1em];
   }
   .galleryImageCardReg {
-    @apply h-auto max-h-[80vh] cursor-pointer;
+    @apply h-auto max-h-[75vh] cursor-pointer;
   }
   .galleryImageCardFocus {
     @apply absolute z-20 bg-black overflow-clip h-auto max-w-[75vw] max-h-[75vh] m-auto justify-self-center border-red-300 border-8 w-fit cursor-default transition-opacity duration-200 ease-in-out;
