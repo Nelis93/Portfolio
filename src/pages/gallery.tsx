@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import { fetchSocials } from "../utils/fetchSocials";
 import Slider from "@/components/Slider";
 import FocusedImageCard from "@/components/FocusedImageCard";
-import Dots from '@/components/Dots';
+import Dots from "@/components/Dots";
 
 type Props = {
   galleryImages: GalleryImage[];
@@ -27,6 +27,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
   const [focus, setFocus] = useState(-1);
+  const [maxHeight, setMaxHeight] = useState(0);
 
   const loadMoreImages = () => {
     setLoading(true);
@@ -48,9 +49,9 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading]);
-  useEffect(()=>{
-    console.log(selected)
-  },[selected])
+  useEffect(() => {
+    console.log(selected);
+  }, [selected]);
   return (
     <main
       translate="no"
@@ -61,41 +62,59 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-flow-col-dense gap-4">
           {displayedImages.map((image, index) => (
             <GalleryImageCard
-            key={image._id}
-            uniqueId={index}
-            images={galleryImages}
-            image={image}
-            controls={controls}
-            galleryRefs={galleryRefs}
-            selected={selected}
-            setSelected={setSelected}
-            focus={focus}
-            setFocus={setFocus}
+              key={image._id}
+              uniqueId={index}
+              image={image}
+              controls={controls}
+              galleryRefs={galleryRefs}
+              setSelected={setSelected}
+              focus={focus}
+              setFocus={setFocus}
+              maxHeight={maxHeight}
+              setMaxHeight={setMaxHeight}
             />
           ))}
         </div>
         {loading && <p className="text-white">Loading more images...</p>}
       </section>
-      {selected > -1 && 
-      <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-[70vw] max-w-[1800px] h-screen  overflow-x-hidden scrollbar-none items-center">
-        <Slider items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed z-20 flex flex-row justify-between items-center h-full bg-opacity-50 bg-black  w-screen max-w-[2000px]"}/>
-        <Dots items={galleryImages} refs={galleryRefs} currentIndex={selected} setCurrentIndex={setSelected} style={"fixed bottom-[2vh] justify-self-center z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"} />      
-        <div className="relative z-30 bg-black text-white w-max mx-auto h-[80vh] overflow-x-scroll scrollbar-none  flex flex-row  snap-x  snap-mandatory items-start justify-start"
-          ref={containerRef}>
+      {selected > -1 && (
+        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-[70vw] max-w-[1800px] h-screen  overflow-x-hidden scrollbar-none items-center">
+          <Slider
+            items={galleryImages}
+            refs={galleryRefs}
+            currentIndex={selected}
+            setCurrentIndex={setSelected}
+            style={
+              "fixed z-20 flex flex-row justify-between items-center h-full bg-opacity-50 bg-black  w-screen max-w-[2000px]"
+            }
+          />
+          <Dots
+            items={galleryImages}
+            refs={galleryRefs}
+            currentIndex={selected}
+            setCurrentIndex={setSelected}
+            style={
+              "fixed bottom-[2vh] justify-self-center z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"
+            }
+          />
+          <div
+            className="relative z-30 bg-black text-white w-max mx-auto h-[80vh] overflow-x-scroll scrollbar-none  flex flex-row  snap-x  snap-mandatory items-start justify-start"
+            ref={containerRef}
+          >
             {displayedImages.map((image, index) => (
               <FocusedImageCard
-              key={image._id}
-              uniqueId={index}
-              images={galleryImages}
-              image={image}
-              galleryRefs={galleryRefs}
-              selected={selected}
-              setSelected={setSelected}
+                key={image._id}
+                uniqueId={index}
+                images={galleryImages}
+                image={image}
+                galleryRefs={galleryRefs}
+                selected={selected}
+                setSelected={setSelected}
               />
             ))}
-        </div>
-      </section>
-}
+          </div>
+        </section>
+      )}
     </main>
   );
 };
