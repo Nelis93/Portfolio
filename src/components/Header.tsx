@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import {
   FaLinkedinIn,
   FaFacebookF,
@@ -16,12 +17,21 @@ type Props = {
 };
 
 function Header({ socials }: Props) {
+  const router = useRouter();
+  const [isGalleryPage, setIsGalleryPage] = useState(false);
+
+  useEffect(() => {
+    setIsGalleryPage(router.pathname.includes("gallery"));
+  }, [router.pathname]);
+
+  // Define the icon map for general use
   const iconMap: { [key: string]: React.ElementType } = {
     FaLinkedinIn: FaLinkedinIn,
     FaFacebookF: FaFacebookF,
     FaCameraRetro: FaCameraRetro,
     FaHome: FaHome,
   };
+
   return (
     <header className="text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] sticky top-0 p-5 flex items-start justify-between z-20">
       <motion.div
@@ -41,10 +51,14 @@ function Header({ socials }: Props) {
       >
         {socials
           .sort((a, b) => a.position - b.position)
+          .filter((social) => {
+            const taggie = isGalleryPage ? "FaCameraRetro" : "FaHome";
+            return social.tag != taggie;
+          })
           .map((social) => {
-            const IconComponent = iconMap[social.tag];
+            let IconComponent = iconMap[social.tag];
             return (
-              <Link href={social.url}>
+              <Link key={social._id} href={social.url}>
                 <IconContext.Provider
                   value={{
                     className: "social-icon",
@@ -56,6 +70,7 @@ function Header({ socials }: Props) {
             );
           })}
       </motion.div>
+
       <Link href="#contact">
         <motion.div
           initial={{

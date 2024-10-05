@@ -62,7 +62,12 @@ export default function GalleryImageCard({
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleCardClick = (event: any) => {
     event.stopPropagation();
-    setFocus((current: any) => (current == uniqueId ? -1 : uniqueId));
+    if (window.innerWidth > 1000) {
+      setFocus((current: any) => (current == uniqueId ? -1 : uniqueId));
+      return;
+    }
+    console.log("uniqueId", uniqueId);
+    setSelected(uniqueId);
   };
 
   const handleButtonClick = (event: any) => {
@@ -72,7 +77,8 @@ export default function GalleryImageCard({
 
   return (
     <motion.div
-      className="group galleryImageCardReg-small sm:galleryImageCardReg-small-flipped lg:galleryImageCardReg"
+      // className="group galleryImageCardReg-small sm:galleryImageCardReg-small-flipped lg:galleryImageCardReg"
+      className={`group flex relative w-full sm:min-h-[60vh] h-auto sm:h-fit lg:h-[${maxHeight + "vh"}] lg:max-h-[75vh] lg:cursor-pointer lg:overflow-auto lg:border-none lg:w-full`}
       key={image._id}
       animate={{ rotateY: focus != uniqueId ? 360 : 0 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -83,17 +89,16 @@ export default function GalleryImageCard({
       ref={(el) => {
         galleryRefs.current[uniqueId] = el;
       }}
-      style={{ height: `${maxHeight}vh` }} // Use maxHeight to set card height
     >
       <IconContext.Provider
         value={{
-          style: {
-            position: "absolute",
-            zIndex: "10",
-            right: "0",
-          },
+          // style: {
+          //   position: "absolute",
+          //   zIndex: "10",
+          //   right: "0"
+          // },
           className:
-            "social-icon z-40 bg-black rounded-full hover:cursor-pointer",
+            "social-icon absolute hidden lg:block z-40 right-0 bg-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
           },
@@ -103,7 +108,8 @@ export default function GalleryImageCard({
       </IconContext.Provider>
       {focus !== uniqueId && (
         <motion.img
-          className="galleryImageCardReg-small-Img sm:galleryImageCardReg-small-flipped-Img lg:galleryImageCardReg-Img"
+          // className="galleryImageCardReg-small-Img sm:galleryImageCardReg-small-flipped-Img lg:galleryImageCardReg-Img"
+          className="w-full h-fit sm:h-auto rounded-lg object-cover sm:transition-opacity sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80 lg:w-full lg:h-auto"
           src={urlFor(image.actualImage)?.url()}
           alt={image.title}
           onLoad={handleImageLoad} // Trigger height calculation on load
@@ -111,7 +117,7 @@ export default function GalleryImageCard({
       )}
 
       {focus === uniqueId && (
-        <div className="galleryImageCardReg-small-FlipSide sm:galleryImageCardReg-small-flipped-FlipSide lg:galleryImageCardReg-FlipSide">
+        <div className="hidden lg:galleryImageCardReg-FlipSide">
           <h4 className="text-[.7em] font-bold">{image.title}</h4>
           <p className="text-[.5em]">{image.description}</p>
           <p className="text-[.5em] italic self-end">{image.location}</p>

@@ -20,7 +20,7 @@ export default function Skill({ skill, directionLeft }: Props) {
         src={urlFor(skill?.image).url()}
         className="object-cover w-full h-full filter group-hover:grayscale transition duration-300 ease-in-out"
       />
-      <div className="hidden md:block absolute opacity-0 group-hover:opacity-80 transition duration-300 ease-in-out group-hover:bg-white w-[12vh] h-[12vh] rounded z-0">
+      <div className="hidden md:block absolute opacity-0 group-hover:opacity-80 transition duration-300 ease-in-out group-hover:bg-white size-full rounded z-0">
         <div className="flex items-center justify-center h-full">
           <p className="text-[1em] font-bold text-gray-500 opacity-100">
             {skill?.progress}%

@@ -106,7 +106,7 @@
     @apply w-[85%] max-h-none h-fit mt-[25vh] items-start space-x-10;
   }
   .skills {
-    @apply text-[5vh] text-left max-w-[2000px] px-5 space-y-5;
+    @apply text-[5vh] text-left justify-center max-w-[2000px] px-5 space-y-5;
   }
   .skills-small {
     @apply text-[5vh] h-screen max-w-[100vh] flex relative flex-col text-center w-screen justify-end mx-auto items-center;
@@ -118,17 +118,17 @@
     @apply text-[1em] top-[7vh];
   }
   .skills-small-Title {
-    @apply text-[1em] top-[12vh] absolute uppercase tracking-[20px] text-white;
+    @apply absolute text-[1em] top-[12vh] uppercase tracking-[20px] text-white;
   }
   .skills-small-flipped-Title {
     @apply text-[.8em];
   }
   .skills-SubTitle {
-    @apply block top-[5em] absolute uppercase tracking-[3px] text-white text-[.6em]
+    @apply absolute block top-[5em] uppercase tracking-[3px] text-white text-[.6em]
     text-center;
   }
   .skills-Grid {
-    @apply w-fit grid grid-cols-4 grid-flow-dense mb-0 pb-[12vh];
+    @apply w-fit grid grid-cols-4 gap-x-10 grid-flow-dense mb-0 pb-0 pt-[5vh];
   }
   .skills-small-Grid {
     @apply relative max-h-[70vh] w-full flex flex-col flex-wrap place-content-center px-[10vh] gap-5 mb-[3vh] pb-[8vh];
@@ -137,10 +137,10 @@
     @apply flex-row;
   }
   .skill {
-    @apply w-[12vh] h-[12vh];
+    @apply size-[5vw];
   }
   .skill-small {
-    @apply text-[5vh] w-[10vh] h-[10vh] relative flex cursor-none;
+    @apply text-[5vh] size-[10vh] relative flex cursor-none;
   }
   .projects {
     @apply text-[5vh] justify-center;
@@ -230,49 +230,40 @@
     @apply text-[.5em] mt-[7em];
   }
   .gallery {
-    @apply text-[5vh] px-[20vh];
+    @apply text-[5vh] px-[20vh] h-screen;
   }
   .gallery-small {
-    @apply relative h-screen max-w-[100vh] mx-auto;
+    @apply relative flex h-auto overflow-scroll scrollbar-none max-w-[100vh] mx-auto;
   }
   .gallery-small-flipped {
-    @apply max-w-full px-[1em];
+    @apply max-w-[80vw]  px-[1em];
   }
   .galleryImageCardReg {
-    @apply max-h-[75vh] cursor-pointer;
+    @apply max-h-[75vh] cursor-pointer overflow-auto border-none max-w-none;
   }
-  .galleryImageCardFocus {
+  /* .galleryImageCardFocus {
     @apply absolute z-20 bg-black overflow-clip h-auto max-w-[75vw] max-h-[75vh] m-auto justify-self-center border-red-300 border-8 w-fit cursor-default transition-opacity duration-200 ease-in-out;
-  }
+  } */
   .galleryImageCardReg-small {
     @apply flex relative w-auto h-auto;
   }
-  /* .galleryImageCardReg-small-flipped {
-    @apply;
-  } */
+  .galleryImageCardReg-small-flipped {
+    @apply w-fit max-w-[40%] max-h-[75vh] overflow-clip h-fit border-2 border-white;
+  }
   .galleryImageCardReg-Img {
-    @apply relative w-full h-auto rounded-lg object-contain self-start transition-opacity duration-200 ease-in-out group-hover:opacity-80;
+    @apply relative w-full h-auto self-start;
   }
-  .galleryImageCardFocus-Img {
+  /* .galleryImageCardFocus-Img {
     @apply relative w-auto max-w-[50%] h-fit max-h-[73vh] object-contain transition-none group-hover:opacity-100;
-  }
+  } */
   .galleryImageCardReg-small-Img {
     @apply w-full h-auto rounded-lg object-cover;
   }
   .galleryImageCardReg-small-flipped-Img {
-    @apply w-full h-auto rounded-lg object-cover transition-opacity duration-200 ease-in-out group-hover:opacity-80;
+    @apply h-fit object-contain transition-opacity duration-200 ease-in-out group-hover:opacity-80;
   }
   .galleryImageCardReg-FlipSide {
     @apply transition-all duration-300 border-white;
-  }
-  .galleryImageCardFocus-FlipSide {
-    @apply relative flex w-auto h-auto transition-none border-none p-[2em];
-  }
-  .galleryImageCardReg-small-FlipSide {
-    @apply absolute top-0 border-4 border-white left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5;
-  }
-  .galleryImageCardReg-small-flipped-FlipSide {
-    @apply relative border-4 border-red-500 left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-5 transition-all duration-300;
   }
   .social-icon {
     @apply hover:bg-white size-[1.2em] hover:rounded-[50px] p-[7px] text-gray-500;
