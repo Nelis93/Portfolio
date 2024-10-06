@@ -13,7 +13,7 @@ type Props = {
   setSelected: any;
   galleryRefs: any;
 };
-// Create a ref for each project
+// Create a ref for each image
 
 export default function FocusedImageCard({
   image,
@@ -22,28 +22,18 @@ export default function FocusedImageCard({
   uniqueId,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
-  // Track if each project is in view
+  // Track if each image is in view
   const isInView = useInView(ref, {
     amount: 0.5,
     once: false,
   });
-  // Update the currentIndex based on which project is in view
-  // useEffect(() => {
-  //   if (isInView && galleryRefs.current[uniqueId]) {
-  //     // console.log(
-  //     //   uniqueId,
-  //     //   " is in view",
-  //     //   galleryRefs.current[uniqueId],
-  //     //   " ref"
-  //     // );
-  //     setSelected(uniqueId);
-  //     galleryRefs.current[uniqueId]?.scrollIntoView({
-  //       behavior: "smooth",
-  //       block: "nearest", // Adjust this to 'center' if you want it to center vertically
-  //       inline: "center",
-  //     });
-  //   }
-  // }, [isInView, uniqueId, galleryRefs]);
+  // Update the currentIndex based on which image is in view
+  useEffect(() => {
+    if (isInView) {
+      setSelected(uniqueId);
+    }
+  }, [isInView, uniqueId]);
+
   const handleButtonClick = (event: any) => {
     event.stopPropagation();
     setSelected(-1);
@@ -70,7 +60,7 @@ export default function FocusedImageCard({
   // }, []);
   return (
     <motion.div
-      className="relative flex flex-col w-screen sm:w-[70vw] z-50 max-w-[1500px] sm:mx-auto border-4 rounded-xl border-gray-500 h-[90vh] sm:h-full sm:grid grid-cols-5 grid-rows-10 sm:flex-wrap"
+      className="relative flex flex-col w-screen sm:w-[70vw] z-50 snap-center max-w-[1500px] sm:mx-auto border-4 rounded-xl border-gray-500 h-[90vh] sm:h-full sm:grid grid-cols-5 grid-rows-10 sm:flex-wrap"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
@@ -83,7 +73,7 @@ export default function FocusedImageCard({
       <IconContext.Provider
         value={{
           className:
-            "social-icon sm:size-[2em] absolute right-0 z-40 bg-black rounded-full hover:cursor-pointer",
+            "social-icon sm:size-[2em] lg:size-[1.2em] absolute right-0 z-40 bg-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
           },

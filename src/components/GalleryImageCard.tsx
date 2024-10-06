@@ -29,27 +29,10 @@ export default function GalleryImageCard({
   setMaxHeight, // New prop to set max height
 }: Props) {
   const [imageHeight, setImageHeight] = useState(0);
-  // useEffect(() => {
-  //   console.log(galleryRefs.current[uniqueId].lastChild.offsetHeight);
-  //   const calculateHeightInVH = () => {
-  //     if (elementRef.current) {
-  //       const elementHeightPx = elementRef.current.offsetHeight;
-  //       const viewportHeightPx = window.innerHeight;
-  //       const heightInVH = (elementHeightPx / viewportHeightPx) * 100;
-  //       setElementHeightVH(heightInVH);
-  //     }
-  //   };
 
-  //   // Calculate on component mount
-  //   calculateHeightInVH();
-
-  //   // Recalculate on window resize
-  //   window.addEventListener("resize", calculateHeightInVH);
-  //   return () => window.removeEventListener("resize", calculateHeightInVH);
-  // }, []);
-  // This function handles image loading and updates max height
   const handleImageLoad = (event: any) => {
     const height = event.target.offsetHeight;
+    console.log(height);
     const heightInVH = (height / window.innerHeight) * 100;
     setImageHeight(heightInVH);
 
@@ -77,8 +60,7 @@ export default function GalleryImageCard({
 
   return (
     <motion.div
-      // className="group galleryImageCardReg-small sm:galleryImageCardReg-small-flipped lg:galleryImageCardReg"
-      className={`group flex relative w-full sm:min-h-[60vh] h-auto sm:h-fit lg:h-[${maxHeight + "vh"}] lg:max-h-[75vh] lg:cursor-pointer lg:overflow-auto lg:border-none lg:w-full`}
+      className="relative w-full h-auto sm:h-fit lg:max-h-[75vh]  lg:cursor-pointer  lg:w-full"
       key={image._id}
       animate={{ rotateY: focus != uniqueId ? 360 : 0 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -89,16 +71,14 @@ export default function GalleryImageCard({
       ref={(el) => {
         galleryRefs.current[uniqueId] = el;
       }}
+      style={{
+        height: `${window.innerWidth > 2000 ? maxHeight : imageHeight}vh`,
+      }}
     >
       <IconContext.Provider
         value={{
-          // style: {
-          //   position: "absolute",
-          //   zIndex: "10",
-          //   right: "0"
-          // },
           className:
-            "social-icon absolute hidden lg:block z-40 right-0 bg-black rounded-full hover:cursor-pointer",
+            "social-icon absolute hidden lg:block z-20 right-0 bg-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
           },
@@ -109,7 +89,7 @@ export default function GalleryImageCard({
       {focus !== uniqueId && (
         <motion.img
           // className="galleryImageCardReg-small-Img sm:galleryImageCardReg-small-flipped-Img lg:galleryImageCardReg-Img"
-          className="w-full h-fit sm:h-auto rounded-lg object-cover sm:transition-opacity sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80 lg:w-full lg:h-auto"
+          className="relative w-full h-fit  sm:h-auto rounded-lg object-cover lg:object-contain sm:transition-opacity sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80"
           src={urlFor(image.actualImage)?.url()}
           alt={image.title}
           onLoad={handleImageLoad} // Trigger height calculation on load
@@ -117,10 +97,14 @@ export default function GalleryImageCard({
       )}
 
       {focus === uniqueId && (
-        <div className="hidden lg:galleryImageCardReg-FlipSide">
-          <h4 className="text-[.7em] font-bold">{image.title}</h4>
-          <p className="text-[.5em]">{image.description}</p>
-          <p className="text-[.5em] italic self-end">{image.location}</p>
+        <div className="relative hidden border-4 border-white left-0 w-full h-full rounded-lg p-4 lg:flex flex-col justify-start items-center space-y-5 pt-6 transition-all duration-300">
+          <h4 className="text-[.7em] lg:text-[.5em] font-bold">
+            {image.title}
+          </h4>
+          <p className="text-[.5em] lg:text-[.4em]">{image.description}</p>
+          <p className="absolute text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
+            {image.location}
+          </p>
         </div>
       )}
     </motion.div>

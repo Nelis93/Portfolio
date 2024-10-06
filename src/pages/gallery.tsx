@@ -49,17 +49,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading]);
-  useEffect(() => {
-    console.log(selected);
-    galleryRefs.current[selected]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest", // Adjust this to 'center' if you want it to center vertically
-      inline: "center",
-    });
-  }, [selected]);
-  const getPic = (event: any) => {
-    // console.log(event.target, galleryRefs.current[selected]);
-  };
+
   return (
     <main
       translate="no"
@@ -89,7 +79,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         {loading && <p className="text-white">Loading more images...</p>}
       </section>
       {selected > -1 && (
-        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center sm:w-[70vw] sm:max-w-[1800px] h-screen overflow-x-hidden  scrollbar-none items-start sm:items-center">
+        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-full sm:w-[70vw] sm:max-w-[1800px] h-screen overflow-x-scroll  scrollbar-none items-start sm:items-center">
           <Slider
             items={galleryImages}
             refs={galleryRefs}
@@ -105,13 +95,12 @@ const Gallery = ({ galleryImages, socials }: Props) => {
             currentIndex={selected}
             setCurrentIndex={setSelected}
             style={
-              "fixed top-0 sm:bottom-[2vh] justify-self-center z-40 sm:z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"
+              "fixed bottom-0 self-center sm:bottom-[2vh] sm:top-auto justify-self-center z-40 sm:z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"
             }
           />
           <div
-            className="relative z-30 bg-black text-white w-max sm:mx-auto sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none items-start justify-center sm:justify-start"
+            className="relative z-30 bg-black text-white w-max sm:mx-auto sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-mandatory scrollbar-none items-start justify-center sm:justify-start"
             ref={containerRef}
-            onLoad={getPic}
           >
             {displayedImages.map((image, index) => (
               <FocusedImageCard

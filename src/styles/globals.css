@@ -239,7 +239,7 @@
     @apply max-w-[80vw]  px-[1em];
   }
   .galleryImageCardReg {
-    @apply max-h-[75vh] cursor-pointer overflow-auto border-none max-w-none;
+    @apply cursor-pointer overflow-auto max-w-none;
   }
   /* .galleryImageCardFocus {
     @apply absolute z-20 bg-black overflow-clip h-auto max-w-[75vw] max-h-[75vh] m-auto justify-self-center border-red-300 border-8 w-fit cursor-default transition-opacity duration-200 ease-in-out;
@@ -263,7 +263,7 @@
     @apply h-fit object-contain transition-opacity duration-200 ease-in-out group-hover:opacity-80;
   }
   .galleryImageCardReg-FlipSide {
-    @apply transition-all duration-300 border-white;
+    @apply absolute border-4 border-white left-0 w-full h-full rounded-lg p-4 flex flex-col justify-start items-center space-y-5 pt-6 transition-all duration-300;
   }
   .social-icon {
     @apply hover:bg-white size-[1.2em] hover:rounded-[50px] p-[7px] text-gray-500;
