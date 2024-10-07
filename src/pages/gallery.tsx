@@ -58,9 +58,9 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       <Header socials={socials} />
       <section
         // className="gallery-small sm:gallery-small-flipped lg:gallery"
-        className="relative flex h-auto overflow-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen"
+        className="relative flex h-auto overflow-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-full">
           {displayedImages.map((image, index) => (
             <GalleryImageCard
               key={image._id}

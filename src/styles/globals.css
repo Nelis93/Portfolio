@@ -241,9 +241,6 @@
   .galleryImageCardReg {
     @apply cursor-pointer overflow-auto max-w-none;
   }
-  /* .galleryImageCardFocus {
-    @apply absolute z-20 bg-black overflow-clip h-auto max-w-[75vw] max-h-[75vh] m-auto justify-self-center border-red-300 border-8 w-fit cursor-default transition-opacity duration-200 ease-in-out;
-  } */
   .galleryImageCardReg-small {
     @apply flex relative w-auto h-auto;
   }
@@ -253,9 +250,6 @@
   .galleryImageCardReg-Img {
     @apply relative w-full h-auto self-start;
   }
-  /* .galleryImageCardFocus-Img {
-    @apply relative w-auto max-w-[50%] h-fit max-h-[73vh] object-contain transition-none group-hover:opacity-100;
-  } */
   .galleryImageCardReg-small-Img {
     @apply w-full h-auto rounded-lg object-cover;
   }
