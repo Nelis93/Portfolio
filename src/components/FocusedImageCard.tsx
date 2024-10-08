@@ -60,7 +60,7 @@ export default function FocusedImageCard({
   // }, []);
   return (
     <motion.div
-      className="relative flex flex-col w-screen sm:w-[70vw] z-50 snap-center max-w-[1500px] sm:mx-auto border-4 rounded-xl border-gray-500 h-[90vh] sm:h-full sm:grid grid-cols-5 grid-rows-10 sm:flex-wrap"
+      className="relative flex flex-col w-screen sm:w-[70vw] z-50 snap-center  sm:mx-auto border-4 rounded-xl border-gray-500 h-[85vh] sm:h-full sm:grid grid-cols-5 grid-rows-10 sm:flex-wrap"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
@@ -73,7 +73,7 @@ export default function FocusedImageCard({
       <IconContext.Provider
         value={{
           className:
-            "social-icon sm:size-[2em] lg:size-[1.2em] absolute right-0 z-40 bg-black rounded-full hover:cursor-pointer",
+            "social-icon sm:size-[2em] lg:size-[1.2em] absolute right-0 z-40 bg-black hover:bg-gray-500 hover:fill-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
           },
@@ -91,11 +91,11 @@ export default function FocusedImageCard({
         transition={{ duration: 0.5 }}
       />
       <div className="relative flex flex-col h-full w-auto px-[1em] pt-[1em] space-y-[1em] col-span-2 row-span-10">
-        <h4 className="text-[.9em] lg:text-[.7em] font-bold">{image.title}</h4>
+        <h4 className="absolute bottom-[2em] sm:relative sm:bottom-auto text-[.8em] sm:text-[.9em] lg:text-[.7em] font-bold">{image.title}</h4>
         <p className="hidden sm:block text-[.7em] lg:text-[.5em]">
           {image.description}
         </p>
-        <p className="absolute text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
+        <p className="absolute text-[.6em] sm:text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
           {image.location}
         </p>
       </div>

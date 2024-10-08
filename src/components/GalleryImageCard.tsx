@@ -30,8 +30,27 @@ export default function GalleryImageCard({
 }: Props) {
   const [imageHeight, setImageHeight] = useState(0);
   // const [isAnimating, setIsAnimating] = useState(false)
-  const [iconPosition, setIconPosition] = useState("none");
+  const [iconPosition, setIconPosition] = useState({distance: 0, transform: "none"});
 
+  const handlePosition = (event: any) => {
+    const intendedFlipWidth = event.target.parentElement.offsetWidth - event.target.parentElement.firstChild.clientWidth;
+    console.log(intendedFlipWidth);
+    setIconPosition((current) => {
+      return {distance: intendedFlipWidth, transform: current.transform}
+  })
+  } 
+  useEffect(() => {
+    if(focus == uniqueId){
+      setIconPosition((current) => {
+        return {distance: current.distance, transform: `rotateY(180deg) translateX(${current.distance}px)`}
+      })
+      return
+    }
+    setIconPosition((current) => {
+      return {distance: current.distance, transform: "none"}
+    })
+    return
+  },[focus])
   const handleImageLoad = (event: any) => {
     const height = event.target.offsetHeight;
     console.log(height);
@@ -46,17 +65,12 @@ export default function GalleryImageCard({
 
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleCardClick = (event: any) => {
-    const intendedFlipWidth = event.target.parentElement.offsetWidth - event.target.parentElement.firstChild.clientWidth
-    console.log(intendedFlipWidth)
     event.stopPropagation();
     if (window.innerWidth > 1000) {
         setFocus((current: any) => { 
           if(current == uniqueId) {
-            setIconPosition("none")
             return -1
           } 
-          // setIconPosition((current: any) => (current == "none" ? `rotateY(180deg) translateX(${intendedFlipWidth}px)`: "none"))
-          setIconPosition(`rotateY(180deg) translateX(${intendedFlipWidth}px)`)
           return uniqueId
         })
         return;
@@ -95,6 +109,7 @@ export default function GalleryImageCard({
           transformStyle: "preserve-3d"
 
         }}
+        onLoad={handlePosition}
       >
         <IconContext.Provider
           value={{
@@ -105,12 +120,9 @@ export default function GalleryImageCard({
             },
             style: {
               "transitionProperty": "transform",
-              // "transitionDuration":".6s",
               "transitionDelay":".6s",
               "transitionTimingFunction": "ease-in-out",
-              // "right": `${iconPosition.right}`,
-              // "left":`${iconPosition.left}`,
-              "transform": `${iconPosition}`,
+              "transform": `${iconPosition.transform}`,
               "transformStyle": "preserve-3d"
     
             }

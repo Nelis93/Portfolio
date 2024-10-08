@@ -58,7 +58,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       <Header socials={socials} />
       <section
         // className="gallery-small sm:gallery-small-flipped lg:gallery"
-        className="relative flex h-auto overflow-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full"
+        className="relative flex h-auto overflow-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-full">
           {displayedImages.map((image, index) => (
@@ -79,14 +79,14 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         {loading && <p className="text-white">Loading more images...</p>}
       </section>
       {selected > -1 && (
-        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-full sm:w-[70vw] sm:max-w-[1800px] h-screen overflow-x-scroll  scrollbar-none items-start sm:items-center">
+        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen overflow-x-scroll  scrollbar-none items-start sm:items-center">
           <Slider
             items={galleryImages}
             refs={galleryRefs}
             currentIndex={selected}
             setCurrentIndex={setSelected}
             style={
-              "fixed z-20 hidden sm:flex flex-row justify-between items-center h-full bg-opacity-50 bg-black  w-screen max-w-[2000px]"
+              "fixed z-20 hidden sm:flex flex-row justify-between items-center h-full bg-opacity-50 bg-black w-screen"
             }
           />
           <Dots
@@ -95,11 +95,11 @@ const Gallery = ({ galleryImages, socials }: Props) => {
             currentIndex={selected}
             setCurrentIndex={setSelected}
             style={
-              "fixed bottom-0 self-center sm:bottom-[2vh] sm:top-auto justify-self-center z-40 sm:z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"
+              "fixed bottom-[.2em] self-center sm:bottom-[2vh] sm:top-auto justify-self-center z-40 sm:z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"
             }
           />
           <div
-            className="relative z-30 bg-black text-white w-max sm:mx-auto sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-mandatory scrollbar-none items-start justify-center sm:justify-start"
+            className="relative z-30 bg-black text-white w-max sm:mx-auto mb-2 sm:mb-0 sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none items-start justify-center sm:justify-start"
             ref={containerRef}
           >
             {displayedImages.map((image, index) => (

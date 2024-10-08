@@ -71,7 +71,7 @@ function Header({ socials }: Props) {
           })}
       </motion.div>
 
-      <Link href="#contact">
+      <Link href="/#contact">
         <motion.div
           initial={{
             x: 500,
