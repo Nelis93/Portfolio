@@ -11,6 +11,7 @@ import { IconContext } from "react-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Social } from "../../typings";
+import DropDownFilter from "./DropDownFilter";
 
 type Props = {
   socials: Social[];
@@ -19,6 +20,7 @@ type Props = {
 function Header({ socials }: Props) {
   const router = useRouter();
   const [isGalleryPage, setIsGalleryPage] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
 
   useEffect(() => {
     setIsGalleryPage(router.pathname.includes("gallery"));
@@ -58,10 +60,10 @@ function Header({ socials }: Props) {
           .map((social) => {
             let IconComponent = iconMap[social.tag];
             return (
-              <Link key={social._id} href={social.url}>
+              <Link key={social._id} href={social.url} className="social-icon">
                 <IconContext.Provider
                   value={{
-                    className: "social-icon",
+                    className: "h-[75%]",
                   }}
                 >
                   <IconComponent />
@@ -70,8 +72,7 @@ function Header({ socials }: Props) {
             );
           })}
       </motion.div>
-
-      <Link href="/#contact">
+        <DropDownFilter selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter}/>
         <motion.div
           initial={{
             x: 500,
@@ -87,18 +88,19 @@ function Header({ socials }: Props) {
           }}
           className="flex flex-row items-center text-gray-300 cursor-pointer"
         >
+          <Link href="/#contact" className="social-icon">
           <IconContext.Provider
             value={{
-              className: "social-icon",
+              className: "h-[75%]",
             }}
           >
             <FaEnvelope />
           </IconContext.Provider>
-          <p className="uppercase pl-5 hidden lg:inline-flex text-[.5em] text-gray-400 hover:text-yellow-500">
-            get in touch
-          </p>
-        </motion.div>
       </Link>
+          <Link href="/#contact" className="uppercase pl-5 hidden lg:inline-flex text-[.5em] text-gray-400 hover:text-yellow-500">
+            get in touch
+          </Link>
+        </motion.div>
     </header>
   );
 }

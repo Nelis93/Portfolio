@@ -33,6 +33,7 @@ export default function GalleryImageCard({
   const [iconPosition, setIconPosition] = useState({distance: 0, transform: "none"});
 
   const handlePosition = (event: any) => {
+    console.log(event.target.parentElement.firstChild)
     const intendedFlipWidth = event.target.parentElement.offsetWidth - event.target.parentElement.firstChild.clientWidth;
     console.log(intendedFlipWidth);
     setIconPosition((current) => {
@@ -111,28 +112,33 @@ export default function GalleryImageCard({
         }}
         onLoad={handlePosition}
       >
+        <div className="hidden lg:flex right-0 justify-center items-center hover:bg-white bg-black size-[1.4em] pb-1 pl-1 rounded-[50px]  text-gray-500" style={{
+              position: "absolute",
+              zIndex: "20",
+              transitionProperty : "transform",
+              transitionDelay :".6s",
+              transitionTimingFunction : "ease-in-out",
+              transform : `${iconPosition.transform}`,
+              transformStyle : "preserve-3d"
+    
+            }} onClick={handleButtonClick}>
         <IconContext.Provider
           value={{
             className:
-              "social-icon absolute hidden lg:block z-20 right-0 bg-black rounded-full hover:cursor-pointer",
-            attr: {
-              onClick: handleButtonClick,
-            },
-            style: {
-              "transitionProperty": "transform",
-              "transitionDelay":".6s",
-              "transitionTimingFunction": "ease-in-out",
-              "transform": `${iconPosition.transform}`,
-              "transformStyle": "preserve-3d"
-    
-            }
+              "size-[.8em]",
+            // attr: {
+            //   onClick: handleButtonClick,
+            // },
+            
           }}
         >
           <TfiNewWindow />
         </IconContext.Provider>
+        </div>
           <motion.img
-            className="relative lg:absolute w-full h-fit lg:w-auto  sm:h-auto rounded-lg" 
-            // object-cover lg:object-contain sm:transition-opacity  sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80"
+            className="relative lg:absolute w-full h-fit lg:w-auto sm:h-auto rounded-lg "
+            //  sm:transition-opacity  sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80" 
+            // object-cover lg:object-contain "
             src={urlFor(image.actualImage)?.url()}
             alt={image.title}
             onLoad={handleImageLoad} // Trigger height calculation on load
