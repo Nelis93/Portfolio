@@ -22,14 +22,24 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   ); // Initial images
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  
+
   const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
   const [focus, setFocus] = useState(-1);
   const [maxHeight, setMaxHeight] = useState(0);
-  const [selectedFilter, setSelectedFilter] = useState<object>({countries: [], dates: []});
+  const [selectedFilter, setSelectedFilter] = useState<{
+    countries: string[];
+    dates: string[];
+  }>({
+    countries: [],
+    dates: [],
+  });
+  useEffect(() => {
+    // console.log(galleryRefs.current[selected]);
+    selected > -1 && galleryRefs.current[selected]?.scrollIntoView();
+  }, [selected]);
   const loadMoreImages = () => {
     setLoading(true);
     const nextImages = galleryImages.slice(page * 10, (page + 1) * 10); // Adjust the slice for pagination
@@ -56,36 +66,40 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       translate="no"
       className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-2 sm:p-4 lg:p-8 overflow-y-scroll overflow-auto"
     >
-      <Header socials={socials} setSelectedFilter={setSelectedFilter}/>
+      <Header socials={socials} setSelectedFilter={setSelectedFilter} />
       <section
         // className="gallery-small sm:gallery-small-flipped lg:gallery"
         className="relative flex h-auto overflow-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-full lg:pt-[10vh]">
           {displayedImages
-          .filter((image) => {
-            console.log(image?.dateTaken.split('-')[0])
-            const countries = selectedFilter?.countries
-            return countries.length > 0 ? countries.includes(image.location.split(' ')[1]) : image
-          })
-          .filter((image) => {
-            const dates = selectedFilter?.dates
-            return dates.length > 0 ? dates.includes(image?.dateTaken.split('-')[0]) : image
-          })
-          .map((image, index) => (
-            <GalleryImageCard
-              key={image._id}
-              uniqueId={index}
-              image={image}
-              controls={controls}
-              galleryRefs={galleryRefs}
-              setSelected={setSelected}
-              focus={focus}
-              setFocus={setFocus}
-              maxHeight={maxHeight}
-              setMaxHeight={setMaxHeight}
-            />
-          ))}
+            .filter((image) => {
+              // console.log(image?.dateTaken.toString().split("-")[0]);
+              const countries = selectedFilter?.countries;
+              return countries.length > 0
+                ? countries.includes(image.location.split(" ")[1])
+                : image;
+            })
+            .filter((image) => {
+              const dates = selectedFilter?.dates;
+              return dates.length > 0
+                ? dates.includes(image?.dateTaken.toString().split("-")[0])
+                : image;
+            })
+            .map((image, index) => (
+              <GalleryImageCard
+                key={image._id}
+                uniqueId={index}
+                image={image}
+                controls={controls}
+                galleryRefs={galleryRefs}
+                setSelected={setSelected}
+                focus={focus}
+                setFocus={setFocus}
+                maxHeight={maxHeight}
+                setMaxHeight={setMaxHeight}
+              />
+            ))}
         </div>
         {loading && <p className="text-white">Loading more images...</p>}
       </section>

@@ -22,6 +22,7 @@ export default function FocusedImageCard({
   uniqueId,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
+
   // Track if each image is in view
   const isInView = useInView(ref, {
     amount: 0.5,
@@ -60,7 +61,7 @@ export default function FocusedImageCard({
   // }, []);
   return (
     <motion.div
-      className="relative flex flex-col w-screen sm:w-[70vw] z-50 snap-center  sm:mx-auto border-4 rounded-xl border-gray-500 h-[85vh] sm:h-full sm:grid grid-cols-5 grid-rows-10 sm:flex-wrap"
+      className="relative flex flex-col w-screen sm:w-[70vw] z-50 snap-center sm:mx-auto border-4 rounded-xl border-gray-500 h-[85vh] sm:h-full sm:grid grid-cols-5 grid-rows-10 sm:flex-wrap"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
@@ -85,13 +86,15 @@ export default function FocusedImageCard({
         className="relative rounded-lg cursor-none h-fit max-h-full w-auto col-span-3 row-span-10 justify-self-start self-start place-items-start items-start object-contain"
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
-        initial={{ x: 300 }}
-        animate={{ x: 0 }}
-        exit={{ x: -300 }}
-        transition={{ duration: 0.5 }}
+        // initial={{ x: 300 }}
+        // animate={{ x: 0 }}
+        // exit={{ x: -300 }}
+        // transition={{ duration: 0.5 }}
       />
       <div className="relative flex flex-col h-full w-auto px-[1em] pt-[1em] space-y-[1em] col-span-2 row-span-10">
-        <h4 className="absolute bottom-[2em] sm:relative sm:bottom-auto text-[.8em] sm:text-[.9em] lg:text-[.7em] font-bold">{image.title}</h4>
+        <h4 className="absolute bottom-[2em] sm:relative sm:bottom-auto text-[.8em] sm:text-[.9em] lg:text-[.7em] font-bold">
+          {image.title}
+        </h4>
         <p className="hidden sm:block text-[.7em] lg:text-[.5em]">
           {image.description}
         </p>

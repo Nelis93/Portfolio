@@ -39,14 +39,14 @@ export default function Contact({ pageInfo }: Props) {
       </h3>
 
       <div className="contact-small-Details sm:contact-small-flipped-Details lg:contact-Details">
-        <div className="flex flex-col justify-center items-center space-y-[2vh]">
+        <div className="flex flex-col break-all justify-center items-center space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[1em] w-[1em] animate-pulse" />
             <PhoneHover {...hover}>{hover.rest}</PhoneHover>
           </div>
           <div className="flex items-center space-x-5 justify-center">
             <EnvelopeIcon className="text-yellow-500 h-[1em] w-[1em] animate-pulse" />
-            <p className="text-[1em]">{pageInfo.email}</p>
+            <p className="text-[1em] ">{pageInfo.email}</p>
           </div>
           <div className="flex items-center space-x-5 justify-center">
             <MapPinIcon className="text-yellow-500 h-[1em] w-[1em] animate-pulse" />

@@ -206,7 +206,7 @@
     @apply text-[5vh];
   }
   .contact-small {
-    @apply text-[5vh] h-screen max-w-full flex relative text-left flex-col items-center justify-center px-10;
+    @apply text-[5vh] h-screen max-w-full flex relative text-left flex-col items-center justify-center px-4 sm:px-10;
   }
   .contact-small-flipped {
     @apply text-[5vw] flex-row items-start;

@@ -30,28 +30,36 @@ export default function GalleryImageCard({
 }: Props) {
   const [imageHeight, setImageHeight] = useState(0);
   // const [isAnimating, setIsAnimating] = useState(false)
-  const [iconPosition, setIconPosition] = useState({distance: 0, transform: "none"});
+  const [iconPosition, setIconPosition] = useState({
+    distance: 0,
+    transform: "none",
+  });
 
   const handlePosition = (event: any) => {
-    console.log(event.target.parentElement.firstChild)
-    const intendedFlipWidth = event.target.parentElement.offsetWidth - event.target.parentElement.firstChild.clientWidth;
+    console.log(event.target.parentElement.firstChild);
+    const intendedFlipWidth =
+      event.target.parentElement.offsetWidth -
+      event.target.parentElement.firstChild.clientWidth;
     console.log(intendedFlipWidth);
     setIconPosition((current) => {
-      return {distance: intendedFlipWidth, transform: current.transform}
-  })
-  } 
+      return { distance: intendedFlipWidth, transform: current.transform };
+    });
+  };
   useEffect(() => {
-    if(focus == uniqueId){
+    if (focus == uniqueId) {
       setIconPosition((current) => {
-        return {distance: current.distance, transform: `rotateY(180deg) translateX(${current.distance}px)`}
-      })
-      return
+        return {
+          distance: current.distance,
+          transform: `rotateY(180deg) translateX(${current.distance}px)`,
+        };
+      });
+      return;
     }
     setIconPosition((current) => {
-      return {distance: current.distance, transform: "none"}
-    })
-    return
-  },[focus])
+      return { distance: current.distance, transform: "none" };
+    });
+    return;
+  }, [focus]);
   const handleImageLoad = (event: any) => {
     const height = event.target.offsetHeight;
     console.log(height);
@@ -68,17 +76,16 @@ export default function GalleryImageCard({
   const handleCardClick = (event: any) => {
     event.stopPropagation();
     if (window.innerWidth > 1000) {
-        setFocus((current: any) => { 
-          if(current == uniqueId) {
-            return -1
-          } 
-          return uniqueId
-        })
-        return;
+      setFocus((current: any) => {
+        if (current == uniqueId) {
+          return -1;
+        }
+        return uniqueId;
+      });
+      return;
     }
-        setSelected(uniqueId);
-    }
-
+    setSelected(uniqueId);
+  };
 
   const handleButtonClick = (event: any) => {
     event.stopPropagation();
@@ -86,16 +93,16 @@ export default function GalleryImageCard({
   };
 
   return (
-    <div  
-      style={{ 
+    <div
+      style={{
         height: `${window.innerWidth > 1024 ? maxHeight : imageHeight}vh`,
-        perspective: "1000px"
-      }} 
-      key={image._id} 
-      className="group relative w-full lg:max-h-[75vh]  lg:cursor-pointer" 
-      onClick={handleCardClick}>
+        perspective: "1000px",
+      }}
+      key={image._id}
+      className="group relative w-full lg:max-h-[75vh]  lg:cursor-pointer"
+      onClick={handleCardClick}
+    >
       <motion.div
-        
         className="relative h-full w-auto"
         animate={{ rotateY: focus != uniqueId ? 0 : 180 }}
         initial={false}
@@ -107,61 +114,58 @@ export default function GalleryImageCard({
         }}
         style={{
           transition: "transform 0.6s",
-          transformStyle: "preserve-3d"
-
+          transformStyle: "preserve-3d",
         }}
         onLoad={handlePosition}
       >
-        <div className="hidden lg:flex right-0 justify-center items-center hover:bg-white bg-black size-[1.4em] pb-1 pl-1 rounded-[50px]  text-gray-500" style={{
-              position: "absolute",
-              zIndex: "20",
-              transitionProperty : "transform",
-              transitionDelay :".6s",
-              transitionTimingFunction : "ease-in-out",
-              transform : `${iconPosition.transform}`,
-              transformStyle : "preserve-3d"
-    
-            }} onClick={handleButtonClick}>
-        <IconContext.Provider
-          value={{
-            className:
-              "size-[.8em]",
-            // attr: {
-            //   onClick: handleButtonClick,
-            // },
-            
+        <div
+          className="hidden lg:flex right-0 justify-center items-center  size-[1.4em]  rounded-[50px]  text-gray-500"
+          style={{
+            position: "absolute",
+            zIndex: "20",
+            transitionProperty: "transform",
+            transitionDelay: ".6s",
+            transitionTimingFunction: "ease-in-out",
+            transform: `${iconPosition.transform}`,
+            transformStyle: "preserve-3d",
           }}
+          onClick={handleButtonClick}
         >
-          <TfiNewWindow />
-        </IconContext.Provider>
+          <IconContext.Provider
+            value={{
+              className: "social-icon size-full p-3 bg-black",
+            }}
+          >
+            <TfiNewWindow />
+          </IconContext.Provider>
         </div>
-          <motion.img
-            className="relative lg:absolute w-full h-fit lg:w-auto sm:h-auto rounded-lg "
-            //  sm:transition-opacity  sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80" 
-            // object-cover lg:object-contain "
-            src={urlFor(image.actualImage)?.url()}
-            alt={image.title}
-            onLoad={handleImageLoad} // Trigger height calculation on load
-            style={{
-              backfaceVisibility: "hidden"
-            }}
-          />
+        <motion.img
+          className="relative lg:absolute w-full h-fit lg:w-auto sm:h-auto rounded-lg "
+          //  sm:transition-opacity  sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80"
+          // object-cover lg:object-contain "
+          src={urlFor(image.actualImage)?.url()}
+          alt={image.title}
+          onLoad={handleImageLoad} // Trigger height calculation on load
+          style={{
+            backfaceVisibility: "hidden",
+          }}
+        />
 
-
-          <div 
-            style={{
-              transform: "rotateY(180deg)",
-              backfaceVisibility: "hidden"
-            }}
-            className="absolute hidden border-4 border-white left-0 w-full h-full rounded-lg p-4 lg:flex flex-col justify-start items-center space-y-5 pt-6 transition-all duration-300">
-            <h4 className="text-[.7em] lg:text-[.5em] font-bold">
-              {image.title}
-            </h4>
-            <p className="text-[.5em] lg:text-[.4em]">{image.description}</p>
-            <p className="absolute text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
-              {image.location}
-            </p>
-          </div>
+        <div
+          style={{
+            transform: "rotateY(180deg)",
+            backfaceVisibility: "hidden",
+          }}
+          className="absolute hidden border-4 border-white left-0 w-full h-full rounded-lg p-4 lg:flex flex-col justify-start items-center space-y-5 pt-6 transition-all duration-300"
+        >
+          <h4 className="text-[.7em] lg:text-[.5em] font-bold">
+            {image.title}
+          </h4>
+          <p className="text-[.5em] lg:text-[.4em]">{image.description}</p>
+          <p className="absolute text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
+            {image.location}
+          </p>
+        </div>
       </motion.div>
     </div>
   );
