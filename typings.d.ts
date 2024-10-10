@@ -76,7 +76,7 @@ export interface GalleryImage extends SanityBody {
   description: string;
   actualImage: Image;
   location: string;
-  date: Date;
+  dateTaken: Date;
   people: string[];
   position: number;
 }

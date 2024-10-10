@@ -15,12 +15,13 @@ import DropDownFilter from "./DropDownFilter";
 
 type Props = {
   socials: Social[];
+  setSelectedFilter: any
 };
 
-function Header({ socials }: Props) {
+function Header({ socials, setSelectedFilter }: Props) {
   const router = useRouter();
   const [isGalleryPage, setIsGalleryPage] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+  
 
   useEffect(() => {
     setIsGalleryPage(router.pathname.includes("gallery"));
@@ -72,7 +73,7 @@ function Header({ socials }: Props) {
             );
           })}
       </motion.div>
-        <DropDownFilter selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter}/>
+        <DropDownFilter setSelectedFilter={setSelectedFilter}/>
         <motion.div
           initial={{
             x: 500,
