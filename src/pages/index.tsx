@@ -34,7 +34,7 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
       <Head>
         <title>{pageInfo?.title} Portfolio</title>
       </Head>
-      <Header socials={socials} />
+      <Header socials={socials} setSelectedFilter={''}/>
       <section id="hero" className="snap-start">
         <Hero pageInfo={pageInfo} />
       </section>
