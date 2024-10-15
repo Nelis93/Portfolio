@@ -13,7 +13,7 @@ type Props = {
   setSelected: any;
   focus: any;
   setFocus: any;
-  maxHeight: number;
+  maxHeight: any;
   setMaxHeight: any;
 };
 
@@ -36,11 +36,9 @@ export default function GalleryImageCard({
   });
 
   const handlePosition = (event: any) => {
-    console.log(event.target.parentElement.firstChild);
     const intendedFlipWidth =
       event.target.parentElement.offsetWidth -
       event.target.parentElement.firstChild.clientWidth;
-    console.log(intendedFlipWidth);
     setIconPosition((current) => {
       return { distance: intendedFlipWidth, transform: current.transform };
     });
@@ -62,14 +60,33 @@ export default function GalleryImageCard({
   }, [focus]);
   const handleImageLoad = (event: any) => {
     const height = event.target.offsetHeight;
-    console.log(height);
     const heightInVH = (height / window.innerHeight) * 100;
     setImageHeight(heightInVH);
-
     // Update the max height if the current image's height is greater
-    setMaxHeight((prevMaxHeight: number) =>
-      Math.max(prevMaxHeight, heightInVH)
-    );
+    setMaxHeight((prevMaxHeight: any) => {
+      function calcHeight() {
+        const maxArray = [];
+        for (let i = 0; i <= galleryRefs.current.length; i += 3) {
+          let triplet = [];
+          for (let y = 0; y < 3; y++) {
+            triplet.push(prevMaxHeight.current[i + y] ?? heightInVH);
+          }
+          for (let z = 0; z < 3; z++) {
+            maxArray.push(Math.max(...triplet));
+          }
+        }
+        return {
+          current: maxArray,
+          index: prevMaxHeight.index + 1,
+        };
+      }
+      return prevMaxHeight.current.length < 3
+        ? {
+            current: [...prevMaxHeight.current, heightInVH],
+            index: prevMaxHeight.index + 1,
+          }
+        : calcHeight();
+    });
   };
 
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
@@ -91,11 +108,10 @@ export default function GalleryImageCard({
     event.stopPropagation();
     setSelected(uniqueId);
   };
-
   return (
     <div
       style={{
-        height: `${window.innerWidth > 1024 ? maxHeight : imageHeight}vh`,
+        height: `${window.innerWidth > 1024 ? maxHeight.current[uniqueId] : imageHeight}vh`,
         perspective: "1000px",
       }}
       key={image._id}

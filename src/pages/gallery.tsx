@@ -28,7 +28,10 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
   const [focus, setFocus] = useState(-1);
-  const [maxHeight, setMaxHeight] = useState(0);
+  const [maxHeight, setMaxHeight] = useState<{
+    current: number[];
+    index: number;
+  }>({ current: [], index: 0 });
   const [selectedFilter, setSelectedFilter] = useState<{
     countries: string[];
     dates: string[];
