@@ -21,7 +21,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     galleryImages.slice(0, 10)
   ); // Initial images
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Only to prevent repeated calls
 
   const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -39,30 +39,34 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     countries: [],
     dates: [],
   });
+
+  // Scroll to selected image when it's clicked
   useEffect(() => {
-    // console.log(galleryRefs.current[selected]);
     selected > -1 && galleryRefs.current[selected]?.scrollIntoView();
   }, [selected]);
-  const loadMoreImages = () => {
-    setLoading(true);
-    const nextImages = galleryImages.slice(page * 10, (page + 1) * 10); // Adjust the slice for pagination
-    setDisplayedImages((prev) => [...prev, ...nextImages]);
-    setPage((prev) => prev + 1);
-    setLoading(false);
-  };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
-      ) {
-        loadMoreImages();
+  // Function to load more images
+  const loadMoreImages = (event: any) => {
+    if (
+      window.innerHeight + window.scrollY >=
+      event.target.offsetHeight - 500
+    ) {
+      if (loading) return; // Prevent triggering if already loading
+
+      setLoading(true);
+
+      // Calculate the next batch of images
+      const nextImages = galleryImages.slice(page * 10, (page + 1) * 10);
+
+      if (nextImages.length > 0) {
+        setDisplayedImages((prev) => [...prev, ...nextImages]);
+        setPage((prev) => prev + 1);
       }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading]);
+
+      setLoading(false);
+    }
+    return;
+  };
 
   return (
     <main
@@ -71,13 +75,12 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     >
       <Header socials={socials} setSelectedFilter={setSelectedFilter} />
       <section
-        // className="gallery-small sm:gallery-small-flipped lg:gallery"
-        className="relative flex h-auto overflow-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
+        className="relative flex h-auto overflow-y-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
+        onScroll={loadMoreImages}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-full lg:pt-[10vh]">
           {displayedImages
             .filter((image) => {
-              // console.log(image?.dateTaken.toString().split("-")[0]);
               const countries = selectedFilter?.countries;
               return countries.length > 0
                 ? countries.includes(image.location.split(" ")[1])

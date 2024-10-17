@@ -58,38 +58,78 @@ export default function GalleryImageCard({
     });
     return;
   }, [focus]);
+  // const handleImageLoad = (event: any) => {
+  //   const height = event.target.offsetHeight;
+  //   const heightInVH = (height / window.innerHeight) * 100;
+  //   setImageHeight(heightInVH);
+  //   // Update the max height if the current image's height is greater
+  //   setMaxHeight((prevMaxHeight: any) => {
+  //     // console.log("prevMaxHeight.index ", prevMaxHeight.index);
+  //     // console.log("galleryRefs# ", galleryRefs.current.length);
+  //     function calcHeight() {
+  //       const maxArray = [];
+  //       for (let i = 0; i <= galleryRefs.current.length; i += 3) {
+  //         let triplet = [];
+  //         for (let y = 0; y < 3; y++) {
+  //           console.log(
+  //             "prevMaxHeight.current[i + y] ",
+  //             prevMaxHeight.current[i + y],
+  //             "heightInVH ",
+  //             heightInVH,
+  //             "prevMaxHeight.current[i + y] ?? heightInVH ",
+  //             prevMaxHeight.current[i + y] ?? heightInVH
+  //           );
+  //           triplet.push(prevMaxHeight.current[i + y] ?? heightInVH);
+  //         }
+  //         for (let z = 0; z < 3; z++) {
+  //           // console.log("Math.max(...triplet) ", Math.max(...triplet));
+  //           maxArray.push(Math.max(...triplet));
+  //         }
+  //         // console.log("triplet ", triplet);
+  //       }
+  //       // console.log("maxArray ", maxArray);
+  //       return {
+  //         current: maxArray,
+  //         index: 0,
+  //       };
+  //     }
+  //     return prevMaxHeight.index < 2
+  //       ? // return prevMaxHeight.current.length < 3
+  //         {
+  //           current: [...prevMaxHeight.current, heightInVH],
+  //           index: prevMaxHeight.index + 1,
+  //         }
+  //       : calcHeight();
+  //   });
+  // };
+
+  //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleImageLoad = (event: any) => {
     const height = event.target.offsetHeight;
     const heightInVH = (height / window.innerHeight) * 100;
     setImageHeight(heightInVH);
-    // Update the max height if the current image's height is greater
+
     setMaxHeight((prevMaxHeight: any) => {
-      function calcHeight() {
-        const maxArray = [];
-        for (let i = 0; i <= galleryRefs.current.length; i += 3) {
-          let triplet = [];
-          for (let y = 0; y < 3; y++) {
-            triplet.push(prevMaxHeight.current[i + y] ?? heightInVH);
-          }
-          for (let z = 0; z < 3; z++) {
-            maxArray.push(Math.max(...triplet));
-          }
-        }
-        return {
-          current: maxArray,
-          index: prevMaxHeight.index + 1,
-        };
+      const updatedHeights = [...prevMaxHeight.current];
+
+      // Update the height at the correct index (uniqueId)
+      updatedHeights[uniqueId] = heightInVH;
+
+      // Calculate max height for each triplet group
+      const newMaxArray = [];
+      for (let i = 0; i < updatedHeights.length; i += 3) {
+        const triplet = updatedHeights.slice(i, i + 3);
+        const maxTripletHeight = Math.max(...triplet);
+        newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
       }
-      return prevMaxHeight.current.length < 3
-        ? {
-            current: [...prevMaxHeight.current, heightInVH],
-            index: prevMaxHeight.index + 1,
-          }
-        : calcHeight();
+
+      return {
+        current: newMaxArray, // Updated array with max heights for each triplet
+        index: updatedHeights.length - 1, // Update index to the last processed image
+      };
     });
   };
 
-  //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleCardClick = (event: any) => {
     event.stopPropagation();
     if (window.innerWidth > 1000) {
@@ -119,7 +159,7 @@ export default function GalleryImageCard({
       onClick={handleCardClick}
     >
       <motion.div
-        className="relative h-full w-auto"
+        className="relative h-full w-auto bg-gray-800 rounded-lg"
         animate={{ rotateY: focus != uniqueId ? 0 : 180 }}
         initial={false}
         // transition={{ duration: 0.3, animationDirection: "normal" }}
