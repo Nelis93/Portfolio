@@ -159,7 +159,7 @@ export default function GalleryImageCard({
       onClick={handleCardClick}
     >
       <motion.div
-        className="relative h-full w-auto bg-gray-800 rounded-lg"
+        className="relative h-full w-auto shadow-lg shadow-gray-700 rounded-lg"
         animate={{ rotateY: focus != uniqueId ? 0 : 180 }}
         initial={false}
         // transition={{ duration: 0.3, animationDirection: "normal" }}
@@ -212,7 +212,7 @@ export default function GalleryImageCard({
             transform: "rotateY(180deg)",
             backfaceVisibility: "hidden",
           }}
-          className="absolute hidden border-4 border-white left-0 w-full h-full rounded-lg p-4 lg:flex flex-col justify-start items-center space-y-5 pt-6 transition-all duration-300"
+          className="absolute hidden left-0 w-full h-full rounded-lg p-4 lg:flex flex-col justify-start items-center space-y-5 pt-6 transition-all duration-300 bg-black"
         >
           <h4 className="text-[.7em] lg:text-[.5em] font-bold">
             {image.title}

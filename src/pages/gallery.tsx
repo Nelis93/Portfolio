@@ -77,6 +77,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       <section
         className="relative flex h-auto overflow-y-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
         onScroll={loadMoreImages}
+        style={{ background: "top left url('/FlipMe.svg')" }}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-full lg:pt-[10vh]">
           {displayedImages
