@@ -44,7 +44,11 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   useEffect(() => {
     selected > -1 && galleryRefs.current[selected]?.scrollIntoView();
   }, [selected]);
+  const testCase = (event: any) => {
+    console.log(event.target.parentElement.offsetWidth);
 
+    return;
+  };
   // Function to load more images
   const loadMoreImages = (event: any) => {
     if (
@@ -75,11 +79,20 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     >
       <Header socials={socials} setSelectedFilter={setSelectedFilter} />
       <section
-        className="relative flex h-auto overflow-y-scroll scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
+        className="relative flex bg-transparent h-auto overflow-y-scroll overscroll-none scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
         onScroll={loadMoreImages}
-        style={{ background: "top left url('/FlipMe.svg')" }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-full lg:pt-[10vh]">
+        <div className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:w-full">
+          <div
+            className="hidden lg:block fixed overflow-hidden z-0  h-[80%]"
+            style={{
+              background: "top left url('/FlipMe.svg')",
+              width: `calc(100% - 52vh)`,
+              maxWidth: `calc(1500px - 40vh)`,
+              margin: "0 auto",
+            }}
+            onClick={testCase}
+          ></div>
           {displayedImages
             .filter((image) => {
               const countries = selectedFilter?.countries;

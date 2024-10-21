@@ -37,8 +37,8 @@ export default function GalleryImageCard({
 
   const handlePosition = (event: any) => {
     const intendedFlipWidth =
-      event.target.parentElement.offsetWidth -
-      event.target.parentElement.firstChild.clientWidth;
+      event.target.parentElement.parentElement.offsetWidth -
+      event.target.parentElement.parentElement.firstChild.clientWidth;
     setIconPosition((current) => {
       return { distance: intendedFlipWidth, transform: current.transform };
     });
@@ -149,36 +149,117 @@ export default function GalleryImageCard({
     setSelected(uniqueId);
   };
   return (
+    // <div
+    //   style={{
+    //     height: `${window.innerWidth > 1024 ? maxHeight.current[uniqueId] : imageHeight}vh`,
+    //     perspective: "1000px",
+    //   }}
+    //   key={image._id}
+    //   className="group relative w-full lg:max-h-[75vh] border-black border-8 lg:cursor-pointer"
+    //   onClick={handleCardClick}
+    // >
+    //   <motion.div
+    //     className="relative h-full w-auto shadow-lg shadow-gray-700 rounded-lg overflow-y-hidden"
+    //     animate={{ rotateY: focus !== uniqueId ? 0 : 180 }}
+    //     initial={false}
+    //     // transition={{ duration: 0.3, animationDirection: "normal" }}
+    //     onViewportEnter={() => controls.start({ opacity: 1, y: 0 })}
+    //     // onAnimationComplete={() => setIsAnimating(false)}
+    //     ref={(el) => {
+    //       galleryRefs.current[uniqueId] = el;
+    //     }}
+    //     style={{
+    //       transform: `${focus !== uniqueId ? "rotateY(0deg)" : "rotateY(180deg)"}`,
+    //       transition: "transform 0.6s",
+    //       transformStyle: "preserve-3d",
+    //     }}
+    //     onLoad={handlePosition}
+    //   >
+    //     <div
+    //       className="hidden z-30 lg:flex right-0 justify-center items-center  size-[1.4em]  rounded-[50px]  text-gray-500"
+    //       style={{
+    //         position: "absolute",
+    //         transitionProperty: "transform",
+    //         transitionDelay: ".6s",
+    //         transitionTimingFunction: "ease-in-out",
+    //         transform: `${iconPosition.transform}`,
+    //         transformStyle: "preserve-3d",
+    //       }}
+    //       onClick={handleButtonClick}
+    //     >
+    //       <IconContext.Provider
+    //         value={{
+    //           className: "social-icon size-full p-3 bg-black",
+    //         }}
+    //       >
+    //         <TfiNewWindow />
+    //       </IconContext.Provider>
+    //     </div>
+    //     <motion.img
+    //       className="relative lg:absolute z-20 w-full h-fit lg:w-auto sm:h-auto rounded-lg "
+    //       //  sm:transition-opacity  sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80"
+    //       // object-cover lg:object-contain "
+    //       src={urlFor(image.actualImage)?.url()}
+    //       alt={image.title}
+    //       onLoad={handleImageLoad} // Trigger height calculation on load
+    //       style={{
+    //         backfaceVisibility: "hidden",
+    //         transform: "rotateY(0deg)",
+    //       }}
+    //     />
+
+    //     <div
+    //       style={{
+    //         // transform: `${focus == uniqueId ? "rotateY(0deg)" : "rotateY(180deg)"}`,
+    //         transform: "rotateY(180deg)",
+    //         backfaceVisibility: "hidden",
+    //       }}
+    //       className="absolute bg-black z-20 hidden top-0 left-0 w-full h-full rounded-lg p-4 lg:flex flex-col justify-start items-center space-y-5 pt-6"
+    //     >
+    //       <h4 className="text-[.7em] lg:text-[.5em] font-bold">
+    //         {image.title}
+    //       </h4>
+    //       <p className="text-[.5em] lg:text-[.4em]">{image.description}</p>
+    //       <p className="absolute text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
+    //         {image.location}
+    //       </p>
+    //     </div>
+    //   </motion.div>
+    // </div>
     <div
       style={{
         height: `${window.innerWidth > 1024 ? maxHeight.current[uniqueId] : imageHeight}vh`,
         perspective: "1000px",
+        backgroundColor: `${focus == uniqueId ? "black" : "transparent"}`,
+        transitionProperty: "background-color",
+        boxShadow: "inset 0em 1em black",
+        transitionTimingFunction:
+          focus == uniqueId ? "ease-out" : "cubic-bezier(0.6, 0, 0.2, 1)", // Smooth easing
+        transitionDuration: focus == uniqueId ? "0.3s" : "1s", // Faster black, slower to transparent
+        transitionDelay: focus == uniqueId ? "0s" : "0.6s",
       }}
       key={image._id}
-      className="group relative w-full lg:max-h-[75vh]  lg:cursor-pointer"
+      className="group relative w-full lg:max-h-[75vh] border-black border-8 lg:cursor-pointer"
       onClick={handleCardClick}
     >
+      {/* Card container with 3D flip */}
       <motion.div
-        className="relative h-full w-auto shadow-lg shadow-gray-700 rounded-lg"
-        animate={{ rotateY: focus != uniqueId ? 0 : 180 }}
+        className="relative h-full w-full shadow-lg shadow-gray-700 rounded-lg"
+        animate={{ rotateY: focus !== uniqueId ? 0 : 180 }} // Flip based on focus
         initial={false}
-        // transition={{ duration: 0.3, animationDirection: "normal" }}
-        onViewportEnter={() => controls.start({ opacity: 1, y: 0 })}
-        // onAnimationComplete={() => setIsAnimating(false)}
+        style={{
+          transformStyle: "preserve-3d", // Required for 3D flipping
+          transition: "transform 0.6s", // Smooth transition
+        }}
         ref={(el) => {
           galleryRefs.current[uniqueId] = el;
-        }}
-        style={{
-          transition: "transform 0.6s",
-          transformStyle: "preserve-3d",
         }}
         onLoad={handlePosition}
       >
         <div
-          className="hidden lg:flex right-0 justify-center items-center  size-[1.4em]  rounded-[50px]  text-gray-500"
+          className="hidden z-30 lg:flex right-0 justify-center items-center  size-[1.4em]  rounded-[50px]  text-gray-500"
           style={{
             position: "absolute",
-            zIndex: "20",
             transitionProperty: "transform",
             transitionDelay: ".6s",
             transitionTimingFunction: "ease-in-out",
@@ -195,30 +276,33 @@ export default function GalleryImageCard({
             <TfiNewWindow />
           </IconContext.Provider>
         </div>
-        <motion.img
-          className="relative lg:absolute w-full h-fit lg:w-auto sm:h-auto rounded-lg "
-          //  sm:transition-opacity  sm:duration-200 sm:ease-in-out sm:group-hover:opacity-80"
-          // object-cover lg:object-contain "
-          src={urlFor(image.actualImage)?.url()}
-          alt={image.title}
-          onLoad={handleImageLoad} // Trigger height calculation on load
-          style={{
-            backfaceVisibility: "hidden",
-          }}
-        />
-
+        {/* Front side of the card: Image */}
+        <div className="relative overflow-y-clip w-full h-full rounded-lg">
+          <motion.img
+            className="absolute z-20 w-full h-auto rounded-lg"
+            src={urlFor(image.actualImage)?.url()}
+            alt={image.title}
+            onLoad={handleImageLoad}
+            style={{
+              backfaceVisibility: "hidden", // Hide image when back is shown
+            }}
+          />
+        </div>
+        {/* Back side of the card: Information */}
         <div
+          className="absolute top-0 left-0 w-full h-full overflow-y-hidden bg-black rounded-lg p-4 flex flex-col justify-start items-center space-y-5"
           style={{
-            transform: "rotateY(180deg)",
-            backfaceVisibility: "hidden",
+            backfaceVisibility: "hidden", // Hide this when the front is shown
+            transform: "rotateY(180deg)", // Flip back side to show when rotated
           }}
-          className="absolute hidden left-0 w-full h-full rounded-lg p-4 lg:flex flex-col justify-start items-center space-y-5 pt-6 transition-all duration-300 bg-black"
         >
-          <h4 className="text-[.7em] lg:text-[.5em] font-bold">
+          <h4 className="relative text-[.7em] font-bold text-white">
             {image.title}
           </h4>
-          <p className="text-[.5em] lg:text-[.4em]">{image.description}</p>
-          <p className="absolute text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
+          <p className="relative text-[.5em] max-h-[70%] overflow-y-hidden break-words overflow-ellipsis text-white">
+            {image.description}
+          </p>
+          <p className="absolute text-[.7em] lg:text-[.5em] bottom-4 right-4 italic text-white">
             {image.location}
           </p>
         </div>
