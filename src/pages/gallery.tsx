@@ -22,8 +22,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   ); // Initial images
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false); // Only to prevent repeated calls
-
-  const controls = useAnimation();
+  const [cardCount, setCardCount] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
@@ -44,10 +43,26 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   useEffect(() => {
     selected > -1 && galleryRefs.current[selected]?.scrollIntoView();
   }, [selected]);
-  const testCase = (event: any) => {
-    console.log(event.target.parentElement.offsetWidth);
 
-    return;
+  useEffect(() => {
+    setCardCount(filteredImages().length);
+    // console.log(filteredImages().length);
+  }, [selectedFilter, displayedImages]);
+  const filteredImages = () => {
+    return displayedImages
+      .filter((image) => {
+        const countries = selectedFilter?.countries;
+        let index = image.location.split(" ");
+        return countries.length > 0
+          ? countries.includes(index[index.length - 1])
+          : image;
+      })
+      .filter((image) => {
+        const dates = selectedFilter?.dates;
+        return dates.length > 0
+          ? dates.includes(image?.dateTaken.toString().split("-")[0])
+          : image;
+      });
   };
   // Function to load more images
   const loadMoreImages = (event: any) => {
@@ -71,7 +86,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     }
     return;
   };
-
+  console.log(galleryRefs.current.length);
   return (
     <main
       translate="no"
@@ -83,43 +98,31 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         onScroll={loadMoreImages}
       >
         <div className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:w-full">
-          <div
-            className="hidden lg:block fixed overflow-hidden z-0  h-[80%]"
-            style={{
-              background: "top left url('/FlipMe.svg')",
-              width: `calc(100% - 52vh)`,
-              maxWidth: `calc(1500px - 40vh)`,
-              margin: "0 auto",
-            }}
-            onClick={testCase}
-          ></div>
-          {displayedImages
-            .filter((image) => {
-              const countries = selectedFilter?.countries;
-              return countries.length > 0
-                ? countries.includes(image.location.split(" ")[1])
-                : image;
-            })
-            .filter((image) => {
-              const dates = selectedFilter?.dates;
-              return dates.length > 0
-                ? dates.includes(image?.dateTaken.toString().split("-")[0])
-                : image;
-            })
-            .map((image, index) => (
-              <GalleryImageCard
-                key={image._id}
-                uniqueId={index}
-                image={image}
-                controls={controls}
-                galleryRefs={galleryRefs}
-                setSelected={setSelected}
-                focus={focus}
-                setFocus={setFocus}
-                maxHeight={maxHeight}
-                setMaxHeight={setMaxHeight}
-              />
-            ))}
+          {cardCount >= 6 && (
+            <div
+              className="hidden lg:block fixed overflow-hidden z-0  h-[80%]"
+              style={{
+                background: "top left url('/FlipMe.svg')",
+                width: `calc(100% - 52vh)`,
+                maxWidth: `calc(1500px - 40vh)`,
+                margin: "0 auto",
+              }}
+            ></div>
+          )}
+          {filteredImages().map((image, index) => (
+            <GalleryImageCard
+              key={image._id}
+              uniqueId={index}
+              image={image}
+              cardCount={cardCount}
+              galleryRefs={galleryRefs}
+              setSelected={setSelected}
+              focus={focus}
+              setFocus={setFocus}
+              maxHeight={maxHeight}
+              setMaxHeight={setMaxHeight}
+            />
+          ))}
         </div>
         {loading && <p className="text-white">Loading more images...</p>}
       </section>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import DropDownButton from "./DropDownButton";
 
@@ -130,7 +130,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                 transitionDuration: ".2s",
               }}
             >
-              DATES &#8594;
+              COUNTRY &#8594;
             </h4>
             <ul className="item-list list-none flex flex-1 flex-col justify-around">
               {leftMenu().map((text, i) => (
@@ -157,7 +157,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                 transitionDuration: ".2s",
               }}
             >
-              &#8592; COUNTRY
+              &#8592; YEAR
             </h4>
             <ul className="item-list list-none flex flex-1 flex-col justify-around">
               {rightMenu.map((text, i) => (

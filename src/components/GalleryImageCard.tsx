@@ -8,7 +8,7 @@ import { IconContext } from "react-icons";
 type Props = {
   image: GalleryImage;
   uniqueId: number;
-  controls: any;
+  cardCount: any;
   galleryRefs: any;
   setSelected: any;
   focus: any;
@@ -20,7 +20,7 @@ type Props = {
 export default function GalleryImageCard({
   image,
   uniqueId,
-  controls,
+  cardCount,
   galleryRefs,
   setSelected,
   focus,
@@ -230,7 +230,7 @@ export default function GalleryImageCard({
       style={{
         height: `${window.innerWidth > 1024 ? maxHeight.current[uniqueId] : imageHeight}vh`,
         perspective: "1000px",
-        backgroundColor: `${focus == uniqueId ? "black" : "transparent"}`,
+        backgroundColor: focus == uniqueId ? "black" : "transparent",
         transitionProperty: "background-color",
         boxShadow: "inset 0em 1em black",
         transitionTimingFunction:
@@ -277,7 +277,13 @@ export default function GalleryImageCard({
           </IconContext.Provider>
         </div>
         {/* Front side of the card: Image */}
-        <div className="relative overflow-y-clip w-full h-full rounded-lg">
+        <div
+          className="relative overflow-y-clip w-full h-full rounded-lg"
+          style={{
+            background:
+              cardCount < 6 ? "top left url('/FlipMe.svg')" : "inherit",
+          }}
+        >
           <motion.img
             className="absolute z-20 w-full h-auto rounded-lg"
             src={urlFor(image.actualImage)?.url()}
