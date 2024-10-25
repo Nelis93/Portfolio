@@ -3,14 +3,13 @@ import type { GetStaticProps } from "next";
 import { GalleryImage, Social } from "../../typings";
 import { fetchGalleryImages } from "../utils/fetchGalleryImages";
 import dynamic from "next/dynamic";
-import { useAnimation } from "framer-motion";
 import GalleryImageCard from "@/components/GalleryImageCard";
+import GalleryImageCardSmall from "@/components/GalleryImageCardSmall";
 import Header from "@/components/Header";
 import { fetchSocials } from "../utils/fetchSocials";
 import Slider from "@/components/Slider";
 import FocusedImageCard from "@/components/FocusedImageCard";
 import Dots from "@/components/Dots";
-
 type Props = {
   galleryImages: GalleryImage[];
   socials: Social[];
@@ -19,9 +18,9 @@ type Props = {
 const Gallery = ({ galleryImages, socials }: Props) => {
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
     galleryImages.slice(0, 10)
-  ); // Initial images
+  );
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false); // Only to prevent repeated calls
+  const [loading, setLoading] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
@@ -40,22 +39,17 @@ const Gallery = ({ galleryImages, socials }: Props) => {
 
   // Scroll to selected image when it's clicked
   useEffect(() => {
-    selected > -1 && galleryRefs.current[selected]?.scrollIntoView();
+    if (selected > -1) {
+      setDisplayedImages(filteredImages());
+      galleryRefs.current[selected]?.scrollIntoView();
+      return;
+    }
+    setDisplayedImages(filteredImages().slice(0, 10));
   }, [selected]);
 
   useEffect(() => {
-    // setCardCount(filteredImages().length);
     setDisplayedImages(filteredImages().slice(0, 10));
-    // console.log(
-    //   galleryRefs.current.filter(
-    //     (ref) =>
-    //       ref != null &&
-    //       filteredImages()
-    //         .slice(0, 10)
-    //         .map((image) => image._id)
-    //         .includes(ref.id)
-    //   )
-    // );
+    setPage(1);
   }, [selectedFilter]);
   const filteredImages = () => {
     return galleryImages
@@ -73,25 +67,12 @@ const Gallery = ({ galleryImages, socials }: Props) => {
           : image;
       });
   };
+
   // Function to load more images
   const loadMoreImages = (event: any) => {
-    console.log(
-      event,
-      "event.target.scrollHeight: ",
-      event.target.scrollHeight,
-      "event.target.scrollLeft: ",
-      event.target.scrollLeft,
-      "event.target.scrollLeftMax: ",
-      event.target.scrollLeftMax,
-      "event.target.scrollTop: ",
-      event.target.scrollTop,
-      "event.target.scrollTopMax: ",
-      event.target.scrollTopMax,
-      "event.target.scrollWidth: ",
-      event.target.scrollWidth
-    );
     if (event.target.scrollTop > event.target.scrollTopMax - 100) {
-      window.alert("you've reached the bottom");
+      // window.alert("you've reached the bottom");
+
       if (loading) return; // Prevent triggering if already loading
 
       setLoading(true);
@@ -115,10 +96,10 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     >
       <Header socials={socials} setSelectedFilter={setSelectedFilter} />
       <section
-        className="relative flex bg-transparent h-auto overflow-y-scroll overscroll-none scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen lg:w-full lg:max-w-[1500px]"
+        className="relative flex bg-transparent w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
       >
-        <div className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:w-full">
+        <div className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full">
           {displayedImages.length >= 6 && (
             <div
               className="hidden lg:block fixed overflow-hidden z-0  h-[80%]"
@@ -130,27 +111,37 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               }}
             ></div>
           )}
-          {displayedImages.map((image, index) => (
-            <GalleryImageCard
-              key={image._id}
-              uniqueId={index}
-              image={image}
-              cardCount={displayedImages.length}
-              galleryRefs={galleryRefs}
-              setSelected={setSelected}
-              focus={focus}
-              setFocus={setFocus}
-              maxHeight={maxHeight}
-              setMaxHeight={setMaxHeight}
-            />
-          ))}
+          {displayedImages.map((image, index) =>
+            window.innerWidth < 1024 ? (
+              <GalleryImageCardSmall
+                key={image._id}
+                uniqueId={index}
+                image={image}
+                // galleryRefs={galleryRefs}
+                setSelected={setSelected}
+              />
+            ) : (
+              <GalleryImageCard
+                key={image._id}
+                uniqueId={index}
+                image={image}
+                cardCount={displayedImages.length}
+                // galleryRefs={galleryRefs}
+                setSelected={setSelected}
+                focus={focus}
+                setFocus={setFocus}
+                maxHeight={maxHeight}
+                setMaxHeight={setMaxHeight}
+              />
+            )
+          )}
         </div>
         {loading && <p className="text-white">Loading more images...</p>}
       </section>
       {selected > -1 && (
         <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen overflow-x-scroll  scrollbar-none items-start sm:items-center">
           <Slider
-            items={galleryImages}
+            items={displayedImages}
             refs={galleryRefs}
             currentIndex={selected}
             setCurrentIndex={setSelected}
@@ -159,7 +150,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
             }
           />
           <Dots
-            items={galleryImages}
+            items={displayedImages}
             refs={galleryRefs}
             currentIndex={selected}
             setCurrentIndex={setSelected}
@@ -175,10 +166,8 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               <FocusedImageCard
                 key={image._id}
                 uniqueId={index}
-                images={galleryImages}
                 image={image}
                 galleryRefs={galleryRefs}
-                selected={selected}
                 setSelected={setSelected}
               />
             ))}

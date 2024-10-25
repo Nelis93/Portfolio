@@ -7,9 +7,7 @@ import { IconContext } from "react-icons";
 
 type Props = {
   image: GalleryImage;
-  images: GalleryImage[];
   uniqueId: number;
-  selected: any;
   setSelected: any;
   galleryRefs: any;
 };
@@ -61,14 +59,14 @@ export default function FocusedImageCard({
   // }, []);
   return (
     <motion.div
-      className="relative flex flex-col w-screen sm:w-[70vw] z-50 snap-center sm:mx-auto border-4 rounded-xl border-gray-500 h-[85vh] sm:h-full sm:grid grid-cols-5 grid-rows-10 sm:flex-wrap"
+      className="relative flex flex-col sm:flex-row justify-start items-start w-screen sm:w-[70vw] z-50 snap-center sm:mx-auto border-4 rounded-xl border-gray-500 h-[85vh] sm:h-full lg:grid grid-cols-5 grid-rows-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
         ref.current = el;
         galleryRefs.current[uniqueId] = el;
       }}
-      id={uniqueId.toString()}
+      // id={uniqueId.toString()}
       exit={{ opacity: 0 }}
     >
       <IconContext.Provider
@@ -83,7 +81,7 @@ export default function FocusedImageCard({
         <TfiClose />
       </IconContext.Provider>
       <motion.img
-        className="relative rounded-lg cursor-none h-fit max-h-full w-auto col-span-3 row-span-10 justify-self-start self-start place-items-start items-start object-contain"
+        className="relative rounded-lg cursor-none h-fit max-h-full w-auto  justify-self-start self-start place-items-start items-start object-contain lg:col-span-3 lg:row-span-10"
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
         // initial={{ x: 300 }}
@@ -91,14 +89,14 @@ export default function FocusedImageCard({
         // exit={{ x: -300 }}
         // transition={{ duration: 0.5 }}
       />
-      <div className="relative flex flex-col h-full w-auto px-[1em] pt-[1em] space-y-[1em] col-span-2 row-span-10">
-        <h4 className="absolute bottom-[2em] sm:relative sm:bottom-auto text-[.8em] sm:text-[.9em] lg:text-[.7em] font-bold">
+      <div className="relative flex flex-col justify-center sm:justify-start sm:items-start h-full w-full sm:w-auto text-wrap flex-grow px-[.2em] sm:px-[1em] pt-[2em] space-y-[1em] lg:col-span-2 lg:row-span-10">
+        <h4 className="bottom-[2em] relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
           {image.title}
         </h4>
-        <p className="hidden sm:block text-[.7em] lg:text-[.5em]">
+        <p className="hidden sm:block  text-[.7em] lg:text-[.5em] max-w-full overflow-scroll scrollbar-none max-h-[50%] lg:max-h-[70%] ">
           {image.description}
         </p>
-        <p className="absolute text-[.6em] sm:text-[.7em] lg:text-[.5em] bottom-4 right-4 italic">
+        <p className="absolute text-[.6em] sm:text-[.7em] lg:text-[.5em] bottom-4 text-right right-4 italic">
           {image.location}
         </p>
       </div>
