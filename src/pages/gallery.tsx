@@ -22,7 +22,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   ); // Initial images
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false); // Only to prevent repeated calls
-  const [cardCount, setCardCount] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
@@ -45,11 +44,21 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   }, [selected]);
 
   useEffect(() => {
-    setCardCount(filteredImages().length);
-    // console.log(filteredImages().length);
-  }, [selectedFilter, displayedImages]);
+    // setCardCount(filteredImages().length);
+    setDisplayedImages(filteredImages().slice(0, 10));
+    // console.log(
+    //   galleryRefs.current.filter(
+    //     (ref) =>
+    //       ref != null &&
+    //       filteredImages()
+    //         .slice(0, 10)
+    //         .map((image) => image._id)
+    //         .includes(ref.id)
+    //   )
+    // );
+  }, [selectedFilter]);
   const filteredImages = () => {
-    return displayedImages
+    return galleryImages
       .filter((image) => {
         const countries = selectedFilter?.countries;
         let index = image.location.split(" ");
@@ -66,16 +75,29 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   };
   // Function to load more images
   const loadMoreImages = (event: any) => {
-    if (
-      window.innerHeight + window.scrollY >=
-      event.target.offsetHeight - 500
-    ) {
+    console.log(
+      event,
+      "event.target.scrollHeight: ",
+      event.target.scrollHeight,
+      "event.target.scrollLeft: ",
+      event.target.scrollLeft,
+      "event.target.scrollLeftMax: ",
+      event.target.scrollLeftMax,
+      "event.target.scrollTop: ",
+      event.target.scrollTop,
+      "event.target.scrollTopMax: ",
+      event.target.scrollTopMax,
+      "event.target.scrollWidth: ",
+      event.target.scrollWidth
+    );
+    if (event.target.scrollTop > event.target.scrollTopMax - 100) {
+      window.alert("you've reached the bottom");
       if (loading) return; // Prevent triggering if already loading
 
       setLoading(true);
 
       // Calculate the next batch of images
-      const nextImages = galleryImages.slice(page * 10, (page + 1) * 10);
+      const nextImages = filteredImages().slice(page * 10, (page + 1) * 10);
 
       if (nextImages.length > 0) {
         setDisplayedImages((prev) => [...prev, ...nextImages]);
@@ -86,7 +108,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     }
     return;
   };
-  console.log(galleryRefs.current.length);
   return (
     <main
       translate="no"
@@ -98,7 +119,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         onScroll={loadMoreImages}
       >
         <div className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:w-full">
-          {cardCount >= 6 && (
+          {displayedImages.length >= 6 && (
             <div
               className="hidden lg:block fixed overflow-hidden z-0  h-[80%]"
               style={{
@@ -109,12 +130,12 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               }}
             ></div>
           )}
-          {filteredImages().map((image, index) => (
+          {displayedImages.map((image, index) => (
             <GalleryImageCard
               key={image._id}
               uniqueId={index}
               image={image}
-              cardCount={cardCount}
+              cardCount={displayedImages.length}
               galleryRefs={galleryRefs}
               setSelected={setSelected}
               focus={focus}

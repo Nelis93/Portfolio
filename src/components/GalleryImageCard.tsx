@@ -247,6 +247,8 @@ export default function GalleryImageCard({
         className="relative h-full w-full shadow-lg shadow-gray-700 rounded-lg"
         animate={{ rotateY: focus !== uniqueId ? 0 : 180 }} // Flip based on focus
         initial={false}
+        key={image._id}
+        id={image._id}
         style={{
           transformStyle: "preserve-3d", // Required for 3D flipping
           transition: "transform 0.6s", // Smooth transition
@@ -258,6 +260,7 @@ export default function GalleryImageCard({
       >
         <div
           className="hidden z-30 lg:flex right-0 justify-center items-center  size-[1.4em]  rounded-[50px]  text-gray-500"
+          id={image._id}
           style={{
             position: "absolute",
             transitionProperty: "transform",

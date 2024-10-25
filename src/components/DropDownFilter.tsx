@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import DropDownButton from "./DropDownButton";
 
@@ -8,6 +8,36 @@ type Props = {
 export default function DropDownFilter({ setSelectedFilter }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLeftMenu, setIsLefMenu] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null); // Ref for the dropdown
+
+  // Define the click handler outside of the effect
+  const handleClickOutside = (event: MouseEvent) => {
+    // If the clicked target is outside the dropdown, close it
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      console.log("yes");
+      // Add event listener to detect clicks outside the dropdown
+      window.addEventListener("click", handleClickOutside);
+    } else {
+      console.log("no");
+      // Remove event listener when dropdown is closed
+      window.removeEventListener("click", handleClickOutside);
+    }
+
+    // Cleanup function to remove the event listener on unmount or state change
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const selectListItem = (event: any) => {
     const selector =
@@ -56,7 +86,6 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
     "Belgium",
   ];
   const toggleMenu = () => {
-    // console.log(dateTest())
     setIsLefMenu((current) => !current);
   };
   const slideVerticalAnimation = {
@@ -76,7 +105,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
       rotateX: -15,
       x: -200,
       y: -320,
-      opacity: 0,
+      opacity: 1,
       transition: {
         duration: 0.3,
       },
@@ -101,10 +130,10 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
     },
   };
   return (
-    <div className="relative z-50 w-auto">
+    <div className="relative z-50 w-auto" ref={dropdownRef}>
       <DropDownButton isOpen={isOpen} setIsOpen={setIsOpen} />
       <motion.div
-        className="rounded-md shadow-md overflow-x-hidden absolute h-auto sm:max-h-[80vh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
+        className=" rounded-md shadow-md overflow-x-hidden absolute h-auto sm:max-h-[80vh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
         initial="close"
         animate={isOpen ? "open" : "close"}
         variants={slideVerticalAnimation}

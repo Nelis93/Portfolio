@@ -18,8 +18,7 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
     );
   };
   const clicked = () => {
-    console.log(isOpen);
-    setIsOpen((current: any) => !current);
+    setIsOpen((current: boolean) => !current);
   };
   return (
     <motion.button
