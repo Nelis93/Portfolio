@@ -10,6 +10,9 @@ import { fetchSocials } from "../utils/fetchSocials";
 import Slider from "@/components/Slider";
 import FocusedImageCard from "@/components/FocusedImageCard";
 import Dots from "@/components/Dots";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 type Props = {
   galleryImages: GalleryImage[];
   socials: Social[];
@@ -21,7 +24,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   );
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  // const containerRef = useRef<HTMLDivElement | null>(null);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
   const [focus, setFocus] = useState(-1);
@@ -36,7 +39,53 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     countries: [],
     dates: [],
   });
+  function debounce(cb: Function, delay = 1000) {
+    let timeout: any;
 
+    return (...args: any) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(...args);
+      }, delay);
+    };
+  }
+  const startCalc = () => {
+    setLoading(true);
+  };
+  const debounceMaxHeightCalculation = debounce(() => {
+    setMaxHeight((prevMaxHeight: any) => {
+      const newMaxArray = [];
+      for (let i = 0; i < prevMaxHeight.current.length; i += 3) {
+        const triplet = prevMaxHeight.current.slice(i, i + 3);
+        const maxTripletHeight = Math.max(...triplet);
+        newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
+      }
+      return {
+        current: newMaxArray,
+        index: prevMaxHeight.current.length - 1,
+      };
+    });
+    setLoading(false);
+  }, 300);
+  useEffect(() => {
+    if (loading) debounceMaxHeightCalculation();
+    // if (loading) {
+    //   console.log(loading);
+    //   setMaxHeight((prevMaxHeight: any) => {
+    //     const newMaxArray = [];
+    //     for (let i = 0; i < prevMaxHeight.current.length; i += 3) {
+    //       const triplet = prevMaxHeight.current.slice(i, i + 3);
+    //       const maxTripletHeight = Math.max(...triplet);
+    //       newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
+    //     }
+    //     return {
+    //       current: newMaxArray,
+    //       index: prevMaxHeight.current.length - 1,
+    //     };
+    //   });
+    //   setLoading(false);
+    // }
+  }, [loading]);
   // Scroll to selected image when it's clicked
   useEffect(() => {
     if (selected > -1) {
@@ -44,11 +93,11 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       galleryRefs.current[selected]?.scrollIntoView();
       return;
     }
-    setDisplayedImages(filteredImages().slice(0, 10));
+    setDisplayedImages(filteredImages().slice(0, 9));
   }, [selected]);
 
   useEffect(() => {
-    setDisplayedImages(filteredImages().slice(0, 10));
+    setDisplayedImages(filteredImages().slice(0, 9));
     setPage(1);
   }, [selectedFilter]);
   const filteredImages = () => {
@@ -69,26 +118,22 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   };
 
   // Function to load more images
-  const loadMoreImages = (event: any) => {
+  const loadMoreImages = debounce((event: any) => {
     if (event.target.scrollTop > event.target.scrollTopMax - 100) {
-      // window.alert("you've reached the bottom");
-
-      if (loading) return; // Prevent triggering if already loading
+      if (loading) return;
 
       setLoading(true);
 
-      // Calculate the next batch of images
-      const nextImages = filteredImages().slice(page * 10, (page + 1) * 10);
+      const nextImages = filteredImages().slice(page * 9, (page + 1) * 9);
 
       if (nextImages.length > 0) {
         setDisplayedImages((prev) => [...prev, ...nextImages]);
         setPage((prev) => prev + 1);
       }
-
       setLoading(false);
     }
-    return;
-  };
+  }, 250);
+
   return (
     <main
       translate="no"
@@ -99,7 +144,10 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         className="relative flex bg-transparent w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
       >
-        <div className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full">
+        <div
+          className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full"
+          onLoad={startCalc}
+        >
           {displayedImages.length >= 6 && (
             <div
               className="hidden lg:block fixed overflow-hidden z-0  h-[80%]"
@@ -117,7 +165,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
                 key={image._id}
                 uniqueId={index}
                 image={image}
-                // galleryRefs={galleryRefs}
                 setSelected={setSelected}
               />
             ) : (
@@ -126,7 +173,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
                 uniqueId={index}
                 image={image}
                 cardCount={displayedImages.length}
-                // galleryRefs={galleryRefs}
                 setSelected={setSelected}
                 focus={focus}
                 setFocus={setFocus}
@@ -136,10 +182,22 @@ const Gallery = ({ galleryImages, socials }: Props) => {
             )
           )}
         </div>
-        {loading && <p className="text-white">Loading more images...</p>}
+        <Backdrop
+          sx={(theme: any) => ({
+            opacity: loading ? 1 : 0,
+            color: "#fff",
+            transition: "opacity",
+            transitionTimingFunction: "ease-in-out",
+            zIndex: theme.zIndex.drawer + 1,
+          })}
+          open={loading}
+        >
+          <CircularProgress />
+        </Backdrop>
+        {/* {loading && <p className="text-white">Loading more images...</p>} */}
       </section>
       {selected > -1 && (
-        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen overflow-x-scroll  scrollbar-none items-start sm:items-center">
+        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen overflow-x-scroll snap-center scrollbar-none items-start sm:items-center">
           <Slider
             items={displayedImages}
             refs={galleryRefs}
@@ -160,7 +218,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
           />
           <div
             className="relative z-30 bg-black text-white w-max sm:mx-auto mb-2 sm:mb-0 sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none items-start justify-center sm:justify-start"
-            ref={containerRef}
+            // ref={containerRef}
           >
             {displayedImages.map((image, index) => (
               <FocusedImageCard

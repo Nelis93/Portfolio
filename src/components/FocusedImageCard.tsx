@@ -59,7 +59,7 @@ export default function FocusedImageCard({
   // }, []);
   return (
     <motion.div
-      className="relative flex flex-col sm:flex-row justify-start items-start w-screen sm:w-[70vw] z-50 snap-center sm:mx-auto border-4 rounded-xl border-gray-500 h-[85vh] sm:h-full lg:grid grid-cols-5 grid-rows-10"
+      className="relative flex flex-col sm:flex-row justify-start snap-center items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 h-[85vh] sm:h-full lg:grid grid-cols-5 grid-rows-10"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {

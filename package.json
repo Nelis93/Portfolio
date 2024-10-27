@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@heroicons/react": "^2.0.16",
+    "@mui/material": "^6.1.5",
     "@next/font": "13.1.6",
     "@portabletext/react": "^2.0.3",
     "@sanity/client": "^6.21.1",

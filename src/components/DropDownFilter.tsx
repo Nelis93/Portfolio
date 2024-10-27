@@ -14,15 +14,18 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   // Define the click handler outside of the effect
   const handleClickOutside = (event: MouseEvent) => {
     // If the clicked target is outside the dropdown, close it
+    event.stopPropagation();
     if (
       dropdownRef.current &&
       !dropdownRef.current.contains(event.target as Node)
     ) {
+      console.log("dropdown disengaged");
       setIsOpen(false);
     }
   };
 
   useEffect(() => {
+    console.log(isOpen);
     if (isOpen) {
       // Add event listener to detect clicks outside the dropdown
       window.addEventListener("click", handleClickOutside);
@@ -88,22 +91,22 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   };
   const slideVerticalAnimation = {
     open: {
-      rotateX: 0,
-      y: -50,
-      x: -200,
-      opacity: 1,
+      // rotateX: 0,
+      y: "-1em",
+      x: "-5em",
+      display: "block",
+
       transition: {
         duration: 0.3,
         mass: 0.8,
         type: "spring",
       },
-      display: "block",
     },
     close: {
-      rotateX: -15,
-      x: -200,
+      // rotateX: -15,
+      x: "-5em",
       y: -320,
-      opacity: 1,
+
       transition: {
         duration: 0.3,
       },
@@ -135,18 +138,12 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
         initial="close"
         animate={isOpen ? "open" : "close"}
         variants={slideVerticalAnimation}
-        style={{
-          transition: "height 0.5s",
-        }}
       >
         <motion.div
           className="flex items-start h-full relative w-[10em]"
           initial="left"
           animate={isLeftMenu ? "left" : "right"}
           variants={slideHorizontalAnimation}
-          style={{
-            transition: "height 0.5s",
-          }}
         >
           <motion.div className="flex flex-col text-[.7em] h-full relative w-[50%] ">
             <h4

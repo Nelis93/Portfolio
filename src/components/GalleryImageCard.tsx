@@ -21,12 +21,11 @@ export default function GalleryImageCard({
   image,
   uniqueId,
   cardCount,
-  // galleryRefs,
   setSelected,
   focus,
   setFocus,
-  maxHeight, // New prop to pass max height
-  setMaxHeight, // New prop to set max height
+  maxHeight,
+  setMaxHeight,
 }: Props) {
   const [iconPosition, setIconPosition] = useState({
     distance: 0,
@@ -57,30 +56,31 @@ export default function GalleryImageCard({
     return;
   }, [focus]);
 
-  //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleImageLoad = (event: any) => {
     const height = event.target.offsetHeight;
     const heightInVH = (height / window.innerHeight) * 100;
-
-    setMaxHeight((prevMaxHeight: any) => {
-      const updatedHeights = [...prevMaxHeight.current];
-
-      // Update the height at the correct index (uniqueId)
-      updatedHeights[uniqueId] = heightInVH;
-
-      // Calculate max height for each triplet group
-      const newMaxArray = [];
-      for (let i = 0; i < updatedHeights.length; i += 3) {
-        const triplet = updatedHeights.slice(i, i + 3);
-        const maxTripletHeight = Math.max(...triplet);
-        newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
-      }
-
-      return {
-        current: newMaxArray, // Updated array with max heights for each triplet
-        index: updatedHeights.length - 1, // Update index to the last processed image
-      };
+    setMaxHeight((prev: any) => {
+      return { current: [...prev.current, heightInVH], index: prev.index };
     });
+    // setMaxHeight((prevMaxHeight: any) => {
+    //   const updatedHeights = [...prevMaxHeight.current];
+
+    //   // Update the height at the correct index (uniqueId)
+    //   updatedHeights[uniqueId] = heightInVH;
+
+    //   // Calculate max height for each triplet group
+    //   const newMaxArray = [];
+    //   for (let i = 0; i < updatedHeights.length; i += 3) {
+    //     const triplet = updatedHeights.slice(i, i + 3);
+    //     const maxTripletHeight = Math.max(...triplet);
+    //     newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
+    //   }
+
+    //   return {
+    //     current: newMaxArray, // Updated array with max heights for each triplet
+    //     index: updatedHeights.length - 1, // Update index to the last processed image
+    //   };
+    // });
   };
 
   const handleCardClick = (event: any) => {
@@ -132,7 +132,7 @@ export default function GalleryImageCard({
         onLoad={handlePosition}
       >
         <div
-          className="z-30 flex right-0 justify-center items-center  size-[1.4em]  rounded-[50px]  text-gray-500"
+          className="z-30 flex right-0 justify-center items-center  w-[15%] h-auto  rounded-[50px]  text-gray-500"
           id={image._id}
           style={{
             position: "absolute",
@@ -174,7 +174,7 @@ export default function GalleryImageCard({
         </div>
         {/* Back side of the card: Information */}
         <div
-          className="absolute top-0 left-0 w-full h-full overflow-y-hidden bg-black rounded-lg p-4 flex flex-col justify-start items-center space-y-5"
+          className="absolute top-0 left-0 w-full h-full overflow-y-hidden bg-black rounded-lg p-4 pb-14 flex flex-col justify-start items-center space-y-5"
           style={{
             backfaceVisibility: "hidden", // Hide this when the front is shown
             transform: "rotateY(180deg)", // Flip back side to show when rotated

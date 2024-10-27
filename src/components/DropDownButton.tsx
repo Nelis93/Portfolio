@@ -13,6 +13,7 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
         strokeWidth="3"
         stroke="black"
         strokeLinecap="round"
+        opacity="1"
         {...props}
       />
     );
@@ -25,7 +26,6 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
       className="items-center bg-gray-500 hover:bg-white p-2 rounded-[50%] cursor:pointer flex flex-row h-auto justify-center w-auto"
       onClick={clicked}
       animate={isOpen ? "open" : "closed"}
-      initial={false}
       style={{
         transition: "all",
         transitionDuration: ".3s",
