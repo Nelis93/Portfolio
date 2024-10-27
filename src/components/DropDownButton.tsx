@@ -20,10 +20,11 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
   };
   const clicked = () => {
     setIsOpen((current: boolean) => !current);
+    return
   };
   return (
     <motion.button
-      className="items-center bg-gray-500 hover:bg-white p-2 rounded-[50%] cursor:pointer flex flex-row h-auto justify-center w-auto"
+      className="flex flex-row justify-center items-center bg-gray-500 hover:bg-white p-2 rounded-[50%] cursor:pointer h-full w-full"
       onClick={clicked}
       animate={isOpen ? "open" : "closed"}
       style={{

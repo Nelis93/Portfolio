@@ -53,7 +53,7 @@ export default function Contact({ pageInfo }: Props) {
             <p className="text-[1em]">{pageInfo.address}</p>
           </div>
         </div>
-        <div className="relative lg:hidden mx-auto pt-[10vh] sm:pt-0">
+        <div className="relative lg:hidden mx-auto pt-[5em] sm:pt-[1em]">
           <ReactWhatsapp
             element="button"
             number={pageInfo.phoneNumber}
@@ -62,7 +62,7 @@ export default function Contact({ pageInfo }: Props) {
             <SocialIcon
               network="whatsapp"
               bgColor="white"
-              style={{ height: "2em", width: "2em" }}
+              style={{ height: "3em", width: "3em" }}
             />
           </ReactWhatsapp>
         </div>

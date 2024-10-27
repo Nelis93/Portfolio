@@ -9,6 +9,7 @@ type Props = {
   focus: number;
   setFocus: any;
   setCurrentIndex: any;
+  experienceRefs: any;
 };
 
 export default function ExperienceCard({
@@ -17,6 +18,7 @@ export default function ExperienceCard({
   focus,
   setFocus,
   setCurrentIndex,
+  experienceRefs,
 }: Props) {
   // Create a ref for each project
   const ref = useRef<HTMLElement | null>(null);
@@ -42,6 +44,7 @@ export default function ExperienceCard({
       onClick={handleCardClick}
       ref={(el) => {
         ref.current = el;
+        experienceRefs.current[uniqueId] = el;
       }}
     >
       <motion.img
@@ -69,12 +72,12 @@ export default function ExperienceCard({
               <img
                 key={tech._id}
                 src={urlFor(tech.image).url()}
-                className="h-[1em] w-[1em] sm:h-[5vw] sm:w-[5vw] lg:h-[2.5em] lg:w-[2.5em]"
+                className="h-[1em] w-[1em] sm:h-[2.5em] sm:w-[2.5em]"
               />
             );
           })}
         </div>
-        <p className="uppercase text-[.4em] sm:text-[1em] text-gray-400 pb-[1.2em] sm:pb-0 lg:pb-[1em]">
+        <p className="absolute sm:relative pt-12 sm:pt-0 right-2 uppercase text-[.4em] sm:text-[1em] text-gray-400 lg:pb-[1em]">
           {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"
