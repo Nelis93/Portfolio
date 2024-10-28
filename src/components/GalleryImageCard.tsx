@@ -9,7 +9,6 @@ type Props = {
   image: GalleryImage;
   uniqueId: number;
   cardCount: any;
-  // galleryRefs: any;
   setSelected: any;
   focus: any;
   setFocus: any;

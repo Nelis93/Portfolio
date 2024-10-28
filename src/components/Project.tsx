@@ -53,7 +53,7 @@ export default function Project({
         viewport={{ once: true }}
         src={urlFor(project?.image).url()}
         alt="none available"
-        className="project-small-Img sm:project-small-flipped-Img"
+        className="lg:project-Img project-small-Img sm:project-small-flipped-Img"
       />
 
       <Dots

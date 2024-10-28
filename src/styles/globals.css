@@ -10,40 +10,40 @@
     @apply outline-none bg-teal-400/10 rounded-sm border-b border-l px-6 py-[2vh] border-yellow-500 text-white placeholder-yellow-500/60 transition-all focus:border-yellow-500/40 focus:text-white hover:border-yellow-500/40;
   }
   .expCardFocus {
-    @apply relative overflow-y-hidden shadow-lg text-[.36em] h-[90%] w-[30%] max-w-[25em] flex flex-col flex-shrink-0 rounded-lg items-center snap-center  bg-teal-200 px-[1em] pt-[1em] pb-[3em] opacity-100 cursor-pointer transition-opacity duration-200;
+    @apply relative overflow-y-hidden shadow-lg text-[1em] h-auto max-h-[12em] w-[10em] max-w-[25em] py-0 flex flex-col flex-shrink-0 rounded-lg items-start justify-start snap-center  bg-teal-200 px-[.5em]  pb-[3em] opacity-100 cursor-pointer transition-opacity duration-200;
   }
   .expCardReg {
-    @apply overflow-y-hidden text-[.33em] h-[80%] w-[25%] max-w-[25em] flex-col px-[1em] py-0 hover:opacity-100 opacity-40 cursor-pointer;
+    @apply overflow-y-hidden text-[.9em] h-auto max-h-[12em] w-[9em] max-w-[9em] flex-col px-[.5em] py-0 hover:opacity-100 opacity-40 cursor-pointer;
   }
   .expCardReg-small {
     @apply relative text-[2em] w-full h-full flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 shadow-lg shadow-gray-700 px-2 pb-[3em] opacity-100 transition-opacity duration-200;
   }
   .expCardReg-small-flipped {
-    @apply max-w-full text-[1em] flex-row py-[1em];
+    @apply max-w-full flex-row py-[.5em];
   }
   .expCardReg-Img {
-    @apply w-[12em] h-[12em] mr-0 self-center object-center;
+    @apply w-[5em] h-[5em] mr-0 self-center object-center;
   }
   .expCardReg-small-Img {
     @apply w-[5em] h-[5em] my-[.6em] flex-shrink-0 rounded-full self-center object-cover;
   }
   .expCardReg-small-flipped-Img {
-    @apply w-[9em] h-[9em] mr-[1.8em] self-start object-left;
+    @apply mr-[1.8em] object-left;
   }
   .expCardReg-Title {
-    @apply text-[1.8em];
+    @apply text-[.8em];
   }
   .expCardReg-small-Title {
     @apply text-[.7em] text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
   }
   .expCardReg-SubTitle {
-    @apply text-[1.4em];
+    @apply text-[.7em];
   }
   .expCardReg-small-SubTitle {
     @apply font-bold pt-2 pl-1 text-[.5em];
   }
   .about {
-    @apply px-[20vh];
+    @apply px-[20vh] text-[5vh];
   }
   .about-small {
     @apply text-[1rem] flex flex-col relative h-screen  justify-start mx-auto items-center;
@@ -79,7 +79,7 @@
     @apply text-[1.5em] pb-[1em] pt-[.5em];
   }
   .experience {
-    @apply mx-[10vw];
+    @apply text-[5vh];
   }
   .experience-small {
     @apply relative text-[1rem] h-screen flex flex-col overflow-hidden justify-start items-center;
@@ -88,13 +88,13 @@
     @apply max-w-full;
   }
   .experience-Title {
-    @apply text-[1em] top-[7vh] tracking-[20px];
+    @apply top-[7vh] text-[1em] tracking-[20px];
   }
   .experience-small-Title {
     @apply text-[2em] absolute top-[3em] uppercase tracking-[10px] text-white;
   }
   .experience-small-flipped-Title {
-    @apply top-[1.2em] text-[2em];
+    @apply top-[1.2em];
   }
   .experience-Container {
     @apply w-full h-full px-0 mt-[15vh] mb-[10vh] justify-center items-center space-x-5 overflow-y-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80;
@@ -143,7 +143,7 @@
     @apply text-[1em] size-[3.5em] relative flex cursor-none;
   }
   .projects {
-    @apply text-[5vh] justify-center;
+    @apply text-[5vh] justify-start;
   }
   .projects-small {
     @apply text-[1rem] relative h-screen flex flex-col justify-end mx-auto items-center;
@@ -152,7 +152,7 @@
     @apply max-w-full;
   }
   .projects-Title {
-    @apply text-[1em];
+    @apply text-[1em] top-[7vh];
   }
   .projects-small-Title {
     @apply text-[2em] absolute top-[2.5em] uppercase tracking-[10px] text-white;
@@ -161,7 +161,7 @@
     @apply top-[1em];
   }
   .projects-Carousel {
-    @apply px-0 pt-[5em] scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
+    @apply px-0  scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
   }
   .projects-small-Carousel {
     @apply relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none;
@@ -170,13 +170,16 @@
     @apply pt-[3em];
   }
   .project {
-    @apply text-[3vh] pb-[12vh] pl-[10em] pr-[5em] gap-x-5;
+    @apply text-[3vh]  pl-[10em] pr-[5em] gap-x-5;
   }
   .project-small {
     @apply text-[2em] relative w-screen pb-[1em] px-[.5em] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4;
   }
   .project-small-flipped {
     @apply text-[1em] pt-14 px-[1em] grid gap-x-10 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
+  }
+  .project-Img {
+    @apply row-span-8 self-center;
   }
   .project-small-Img {
     @apply block relative w-[10em] rounded-lg cursor-none;
@@ -185,7 +188,7 @@
     @apply h-auto w-full row-span-9 col-span-2 self-end object-contain;
   }
   .project-Dots {
-    @apply self-start;
+    @apply row-span-2 self-start;
   }
   .project-small-Dots {
     @apply relative flex justify-center gap-5 mt-2;
@@ -194,7 +197,7 @@
     @apply row-span-1 col-span-2 z-40 self-center;
   }
   .project-Sum {
-    @apply text-[1em] row-span-8 pt-[1em] pl-[2em] scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80 text-left;
+    @apply text-[1em] row-span-8 pt-[1em] px-[2em] scrollbar-none text-left;
   }
   .project-small-Sum {
     @apply overscroll-y-contain text-[.6em] h-[8em] text-center overflow-y-auto scrollbar-none;

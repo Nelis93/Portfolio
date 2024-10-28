@@ -59,7 +59,7 @@ export default function ExperienceCard({
         src={urlFor(experience?.companyImage).url()}
         alt="not found"
       />
-      <div className="relative pl-[10px] sm:space-y-2 lg:space-y-0">
+      <div className="relative pl-[10px] ">
         <h4 className="expCardReg-small-Title sm:expCardReg-Title">
           {experience.jobTitle}
         </h4>
@@ -72,18 +72,18 @@ export default function ExperienceCard({
               <img
                 key={tech._id}
                 src={urlFor(tech.image).url()}
-                className="h-[1em] w-[1em] sm:h-[2.5em] sm:w-[2.5em]"
+                className="h-[1em] w-[1em]"
               />
             );
           })}
         </div>
-        <p className="absolute sm:relative pt-12 sm:pt-0 right-2 uppercase text-[.4em] sm:text-[1em] text-gray-400 lg:pb-[1em]">
+        <p className="absolute lg:relative pt-12 sm:pt-0 right-2 sm:bottom-0 uppercase text-[.4em] text-gray-400 lg:pb-[1em]">
           {new Date(experience.dateStarted).toDateString()} -{" "}
           {experience.isCurrentlyWorkingHere
             ? "present"
             : new Date(experience.dateEnded).toDateString()}
         </p>
-        <ul className="hidden lg:block overscroll-contain space-y-1 max-h-[30%] ml-[1vh] lg:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+        <ul className="hidden overscroll-contain space-y-1 max-h-[30%] ml-[1vh] lg:text-[1.3em] cursor-default overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
           {experience.points.map((point, i) => {
             return <li key={i}>{point}</li>;
           })}
