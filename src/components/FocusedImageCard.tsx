@@ -37,8 +37,14 @@ export default function FocusedImageCard({
     event.stopPropagation();
     setSelected(-1);
   };
-  const detDom = () => {
-    if (window.innerWidth > 500 && window.innerWidth < 1024) {
+  const detDom = (event: any) => {
+    console.log(
+      event.target.offsetWidth > event.target.parentElement.offsetWidth * 0.5
+    );
+    if (
+      window.innerWidth > 500 &&
+      event.target.offsetWidth > event.target.parentElement.offsetWidth * 0.5
+    ) {
       setDominance((current: boolean) => !current);
     }
   };
@@ -64,7 +70,7 @@ export default function FocusedImageCard({
   // }, []);
   return (
     <motion.div
-      className="relative flex flex-col sm:flex-row justify-start snap-center items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-[85vh] sm:h-full lg:grid grid-cols-5 grid-rows-10"
+      className="relative flex flex-col sm:flex-row justify-start snap-center items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-[85vh] sm:h-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
@@ -74,6 +80,9 @@ export default function FocusedImageCard({
       // id={uniqueId.toString()}
       exit={{ opacity: 0 }}
       onClick={detDom}
+      style={{
+        cursor: "url(/ArrowLeft.svg), pointer",
+      }}
     >
       <IconContext.Provider
         value={{
@@ -87,19 +96,19 @@ export default function FocusedImageCard({
         <TfiClose />
       </IconContext.Provider>
       <motion.img
-        className="relative rounded-lg cursor-none h-fit max-h-full w-auto  justify-self-start self-start place-items-start items-start object-contain lg:col-span-3 lg:row-span-10"
+        className="relative rounded-lg h-fit max-h-full w-auto  justify-self-start self-start place-items-start items-start object-contain lg:col-span-3 lg:row-span-10"
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
         style={{
-          x: dominance ? 0 : -100,
+          x: dominance ? 0 : "-30%",
         }}
       />
       <div
         style={{
-          transform: dominance ? "" : "translate(-100px)",
-          minWidth: dominance ? "30%" : "50%",
+          transform: dominance ? "" : "translate(-40%)",
+          minWidth: dominance ? "0" : "40%",
         }}
-        className="relative flex flex-col flex-grow justify-center sm:justify-start sm:items-start h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
+        className="relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
       >
         <h4 className="bottom-[2em] relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
           {image.title}
