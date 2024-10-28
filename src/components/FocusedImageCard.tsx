@@ -81,7 +81,9 @@ export default function FocusedImageCard({
       exit={{ opacity: 0 }}
       onClick={detDom}
       style={{
-        cursor: "url(/ArrowLeft.svg), pointer",
+        cursor: dominance
+          ? "url(/ArrowLeft.svg), pointer"
+          : "url(/ArrowRight.svg), pointer",
       }}
     >
       <IconContext.Provider
