@@ -38,9 +38,6 @@ export default function FocusedImageCard({
     setSelected(-1);
   };
   const detDom = (event: any) => {
-    console.log(
-      event.target.offsetWidth > event.target.parentElement.offsetWidth * 0.5
-    );
     if (
       window.innerWidth > 500 &&
       event.target.offsetWidth > event.target.parentElement.offsetWidth * 0.5
@@ -80,11 +77,6 @@ export default function FocusedImageCard({
       // id={uniqueId.toString()}
       exit={{ opacity: 0 }}
       onClick={detDom}
-      style={{
-        cursor: dominance
-          ? "url(/ArrowLeft.svg), pointer"
-          : "url(/ArrowRight.svg), pointer",
-      }}
     >
       <IconContext.Provider
         value={{
@@ -103,6 +95,9 @@ export default function FocusedImageCard({
         alt={image.title}
         style={{
           x: dominance ? 0 : "-30%",
+          cursor: dominance
+            ? "url(/ArrowLeft.svg), pointer"
+            : "url(/ArrowRight.svg), pointer",
         }}
       />
       <div
