@@ -137,7 +137,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   return (
     <main
       translate="no"
-      className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-2 sm:p-4 lg:p-8 overflow-y-scroll overflow-auto"
+      className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-2 sm:p-4 lg:p-8  overflow-y-scroll overflow-auto"
     >
       <Header socials={socials} setSelectedFilter={setSelectedFilter} />
       <section

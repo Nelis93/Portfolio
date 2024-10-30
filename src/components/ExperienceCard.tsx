@@ -74,7 +74,7 @@ export default function ExperienceCard({
             <h4 className="text-[.7em] sm:text-[.8em] w-full text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg">
               {experience.jobTitle}
             </h4>
-            <p className="expCardReg-small-SubTitle sm:expCardReg-SubTitle">
+            <p className="font-bold pt-2 pl-1 text-[.5em] lg:text-[.6em]">
               {experience.company}
             </p>
             <div className="absolute bottom-10 flex space-x-5 overflow-x-auto scrollbar-none py-[2.5vh]">
