@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type Props = {
   items: any;
@@ -8,7 +8,13 @@ type Props = {
   style: any;
 };
 
-export default function Dots({ items, refs, currentIndex, setCurrentIndex, style }: Props) {
+export default function Dots({
+  items,
+  refs,
+  currentIndex,
+  setCurrentIndex,
+  style,
+}: Props) {
   const totalItems = items.length;
   const maxDots = 5; // Maximum number of dots to display
 
@@ -48,7 +54,7 @@ export default function Dots({ items, refs, currentIndex, setCurrentIndex, style
       {visibleDots.map((idx: number) => (
         <div
           key={idx}
-          className={`size-[.8em] rounded-[50%] lg:hover:cursor-pointer ${
+          className={`size-[.8em] max-w-[5vw] max-h-[5vw] rounded-[50%] lg:hover:cursor-pointer ${
             currentIndex === idx ? "bg-yellow-500" : "bg-black"
           }`}
           onClick={() => window.innerWidth > 1000 && handleDotClick(idx)}

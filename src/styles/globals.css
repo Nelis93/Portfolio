@@ -10,34 +10,34 @@
     @apply outline-none bg-teal-400/10 rounded-sm border-b border-l px-6 py-[2vh] border-yellow-500 text-white placeholder-yellow-500/60 transition-all focus:border-yellow-500/40 focus:text-white hover:border-yellow-500/40;
   }
   .expCardFocus {
-    @apply relative overflow-y-hidden shadow-lg text-[1em] h-auto max-h-[12em] w-[10em] max-w-[25em] py-0 flex flex-col flex-shrink-0 rounded-lg items-start justify-start snap-center  bg-teal-200 px-[.5em]  pb-[3em] opacity-100 cursor-pointer transition-opacity duration-200;
+    @apply overflow-y-hidden text-[1em] h-[12em] py-0 w-[10em] max-w-[25em] flex-col flex-shrink-0 items-start justify-start snap-center  bg-teal-200  cursor-help transition-opacity duration-200;
   }
   .expCardReg {
-    @apply overflow-y-hidden text-[.9em] h-auto max-h-[12em] w-[9em] max-w-[9em] flex-col px-[.5em] py-0 hover:opacity-100 opacity-40 cursor-pointer;
+    @apply overflow-y-hidden text-[.9em] h-[12em] py-0 w-[9em] max-w-[9em] flex-col hover:opacity-100 opacity-40 cursor-pointer;
   }
   .expCardReg-small {
-    @apply relative text-[2em] w-full h-full flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 shadow-lg shadow-gray-700 px-2 pb-[3em] opacity-100 transition-opacity duration-200;
+    @apply relative text-[2em] w-full h-full flex flex-col flex-shrink-0 rounded-lg snap-center bg-teal-200 shadow-lg shadow-gray-700  opacity-100 transition-opacity duration-200;
   }
   .expCardReg-small-flipped {
-    @apply max-w-full flex-row py-[.5em];
+    @apply max-w-full flex-row;
   }
-  .expCardReg-Img {
-    @apply w-[5em] h-[5em] mr-0 self-center object-center;
+  /* .expCardReg-Img {
+    @apply lg:mr-0 lg:object-center;
   }
   .expCardReg-small-Img {
-    @apply w-[5em] h-[5em] my-[.6em] flex-shrink-0 rounded-full self-center object-cover;
+    @apply my-[.6em] w-[5em] h-[5em] flex-shrink-0 rounded-full self-center object-cover;
   }
   .expCardReg-small-flipped-Img {
-    @apply mr-[1.8em] object-left;
-  }
+    @apply sm:mr-[1.8em] sm:object-left;
+  } */
   .expCardReg-Title {
-    @apply text-[.8em];
+    @apply lg:text-[.8em];
   }
   .expCardReg-small-Title {
-    @apply text-[.7em] text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
+    @apply text-[.7em] lg:text-[.8em] w-full text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg;
   }
   .expCardReg-SubTitle {
-    @apply text-[.7em];
+    @apply text-[.6em];
   }
   .expCardReg-small-SubTitle {
     @apply font-bold pt-2 pl-1 text-[.5em];
@@ -100,10 +100,10 @@
     @apply w-full h-full px-0 mt-[15vh] mb-[10vh] justify-center items-center space-x-5 overflow-y-hidden scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80;
   }
   .experience-small-Container {
-    @apply w-full max-h-[60vh] px-10 mt-[12em] flex flex-row justify-start space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
+    @apply w-full overflow-y-hidden  h-[25em] px-10 mt-[12em] flex flex-row justify-start space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none;
   }
   .experience-small-flipped-Container {
-    @apply w-[85%] max-h-none h-fit mt-[6em] items-start space-x-10;
+    @apply w-[85%] max-h-none h-full mt-[6em] items-start space-x-10;
   }
   .skills {
     @apply text-[5vh] text-left justify-center max-w-[2000px] px-5 space-y-5;
