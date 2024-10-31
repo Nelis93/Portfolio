@@ -14,6 +14,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   // Define the click handler outside of the effect
   const handleClickOutside = (event: MouseEvent) => {
     // If the clicked target is outside the dropdown, close it
+    console.log(dropdownRef.current)
     event.stopPropagation();
     if (
       dropdownRef.current &&
@@ -25,24 +26,25 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   };
 
   useEffect(() => {
-    console.log("isOpen: ", isOpen, "dropdownRef: ", dropdownRef);
+    console.log('isOpen changed: ', isOpen)
     if (isOpen) {
       // Add event listener to detect clicks outside the dropdown
-      window.addEventListener("click", handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
     } else {
       // Remove event listener when dropdown is closed
-      window.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     }
 
     // Cleanup function to remove the event listener on unmount or state change
     return () => {
-      window.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [isOpen]);
 
   const selectListItem = (event: any) => {
+    console.log("event.target.parentElement.previousSibling: ", event.target.parentElement.previousSibling)
     const selector =
-      event.target.parentElement.previousSibling.innerText.includes("DATES")
+      event.target.parentElement.previousSibling.innerText.includes("COUNTRY")
         ? "dates"
         : "countries";
     const nonSelector = selector === "dates" ? "countries" : "dates";

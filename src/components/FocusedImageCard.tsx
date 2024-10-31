@@ -45,26 +45,6 @@ export default function FocusedImageCard({
       setDominance((current: boolean) => !current);
     }
   };
-  // const handleClickOutside = (event: any) => {
-  //   // Check if the click is outside the motion.div (ref.current)
-  //   event.stopPropagation();
-  //   if (ref.current != event.target.parentElement && !ref.current?.contains(event.target)) {
-  //     console.log("clicked outside");
-  //     setSelected(-1)
-  //     return;
-  //   }
-  //   console.log("clicked inside");
-  // };
-
-  // useEffect(() => {
-  //   // Attach the event listener to the whole document
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   // Cleanup the event listener on component unmount
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
   return (
     <motion.div
       className="relative flex flex-col sm:flex-row justify-start snap-center items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-[85vh] sm:h-full"

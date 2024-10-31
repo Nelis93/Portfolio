@@ -18,13 +18,14 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
       />
     );
   };
-  const clicked = () => {
+  const clicked = (event: any) => {
+    console.log(event.target)
     setIsOpen((current: boolean) => !current);
     return
   };
   return (
     <motion.button
-      className="flex flex-row justify-center items-center bg-gray-500 hover:bg-white p-2 rounded-[50%] cursor:pointer h-full w-full"
+      className="flex flex-row justify-center items-center bg-gray-500 hover:bg-white rounded-[50%] cursor:pointer h-full w-full"
       onClick={clicked}
       animate={isOpen ? "open" : "closed"}
       style={{
@@ -33,10 +34,10 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
       }}
     >
       <svg
-        width="23"
-        height="23"
-        style={{ margin: "4px 0 0 2px", color: "gray" }}
-        viewBox="0 0 23 23"
+        width="50"
+        height="50"
+        style={{  color: "gray", borderRadius: '50px', padding: '4px' }}
+        viewBox="-5 -5 30 30"
       >
         <Path
           variants={{

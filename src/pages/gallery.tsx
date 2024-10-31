@@ -24,7 +24,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   );
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  // const containerRef = useRef<HTMLDivElement | null>(null);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [selected, setSelected] = useState(-1);
   const [focus, setFocus] = useState(-1);
@@ -69,22 +68,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   }, 300);
   useEffect(() => {
     if (loading) debounceMaxHeightCalculation();
-    // if (loading) {
-    //   console.log(loading);
-    //   setMaxHeight((prevMaxHeight: any) => {
-    //     const newMaxArray = [];
-    //     for (let i = 0; i < prevMaxHeight.current.length; i += 3) {
-    //       const triplet = prevMaxHeight.current.slice(i, i + 3);
-    //       const maxTripletHeight = Math.max(...triplet);
-    //       newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
-    //     }
-    //     return {
-    //       current: newMaxArray,
-    //       index: prevMaxHeight.current.length - 1,
-    //     };
-    //   });
-    //   setLoading(false);
-    // }
+
   }, [loading]);
   // Scroll to selected image when it's clicked
   useEffect(() => {
@@ -93,12 +77,25 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       galleryRefs.current[selected]?.scrollIntoView();
       return;
     }
+    setPage(1)
     setDisplayedImages(filteredImages().slice(0, 9));
   }, [selected]);
+  const extraCards = () => {
+    if (displayedImages.length % 3 == 0){
 
+      return 0
+    } else if ((displayedImages.length + 1) % 3 == 0){
+
+      return 1
+    }
+      return 2
+
+  }
   useEffect(() => {
+    debounceMaxHeightCalculation()
     setDisplayedImages(filteredImages().slice(0, 9));
     setPage(1);
+    extraCards()
   }, [selectedFilter]);
   const filteredImages = () => {
     return galleryImages
@@ -119,6 +116,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
 
   // Function to load more images
   const loadMoreImages = debounce((event: any) => {
+    extraCards();
     if (event.target.scrollTop > event.target.scrollTopMax - 100) {
       if (loading) return;
 
@@ -141,7 +139,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     >
       <Header socials={socials} setSelectedFilter={setSelectedFilter} />
       <section
-        className="relative flex bg-transparent w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[5vh] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
+        className="relative flex bg-transparent w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-20 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
       >
         <div
@@ -150,12 +148,13 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         >
           {displayedImages.length >= 6 && (
             <div
-              className="hidden lg:block fixed overflow-hidden z-0  h-[80%]"
+              className="hidden lg:block fixed z-0 h-full pt-64 bottom-8"
               style={{
-                background: "top left url('/FlipMe.svg')",
+                backgroundImage: " url('/FlipMe.svg')",
+                backgroundClip: "content-box",
+                backgroundOrigin: "content-box",
                 width: `calc(100% - 52vh)`,
-                maxWidth: `calc(1500px - 40vh)`,
-                margin: "0 auto",
+                maxWidth: `calc(1500px - 40vh)`
               }}
             ></div>
           )}
@@ -181,6 +180,21 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               />
             )
           )}
+          {
+            window.innerWidth > 1024 &&
+              Array.from({ length: extraCards() }).map((_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    height: `${maxHeight.current.slice(-1)[0] || 0}vh`, // Access last height safely
+                    width: "full",
+                    backgroundColor: "black",
+                    zIndex: 1
+                  }}
+                ></div>
+              ))
+            
+          }
         </div>
         <Backdrop
           sx={(theme: any) => ({
