@@ -4,7 +4,6 @@ import { Project as PJT } from "../../typings";
 import Project from "./Project";
 import Slider from "./Slider";
 
-
 type Props = {
   projects: PJT[];
 };
@@ -19,16 +18,24 @@ export default function Projects({ projects }: Props) {
       initial={{ opacity: 0 }}
       transition={{ duration: 1.5 }}
       whileInView={{ opacity: 1 }}
-      className="projects-small sm:projects-small-flipped lg:projects"
+      className="text-[1rem] relative h-screen flex flex-col justify-end mx-auto items-center sm:max-w-full lg:text-[5vh] lg:justify-start"
     >
-      <h3 className="projects-small-Title sm:projects-small-flipped-Title lg:projects-Title">
+      <h3 className="text-[2em] absolute top-[2.5em] uppercase tracking-[10px] text-white sm:top-[1em] lg:text-[1em] lg:top-[7vh]">
         Projects
       </h3>
-      
-      <Slider items={projects} refs={projectRefs} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} style={"absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]"}/>
+
+      <Slider
+        items={projects}
+        refs={projectRefs}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+        style={
+          "absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]"
+        }
+      />
       {/* Projects Carousel */}
       <div
-        className="projects-small-Carousel sm:projects-small-flipped-Carousel lg:projects-Carousel"
+        className="relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none sm:pt-[3em] lg:px-0  lg:scrollbar-thin lg:scrollbar-track-teal-300/40 lg:scrollbar-thumb-yellow-500/80"
         ref={containerRef}
       >
         {projects

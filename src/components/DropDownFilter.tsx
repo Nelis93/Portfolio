@@ -8,13 +8,12 @@ type Props = {
 export default function DropDownFilter({ setSelectedFilter }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLeftMenu, setIsLefMenu] = useState(false);
-
   const dropdownRef = useRef<HTMLDivElement>(null); // Ref for the dropdown
 
   // Define the click handler outside of the effect
   const handleClickOutside = (event: MouseEvent) => {
     // If the clicked target is outside the dropdown, close it
-    console.log(dropdownRef.current)
+    console.log(dropdownRef.current);
     event.stopPropagation();
     if (
       dropdownRef.current &&
@@ -26,7 +25,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   };
 
   useEffect(() => {
-    console.log('isOpen changed: ', isOpen)
+    console.log("isOpen changed: ", isOpen);
     if (isOpen) {
       // Add event listener to detect clicks outside the dropdown
       document.addEventListener("click", handleClickOutside);
@@ -42,7 +41,10 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   }, [isOpen]);
 
   const selectListItem = (event: any) => {
-    console.log("event.target.parentElement.previousSibling: ", event.target.parentElement.previousSibling)
+    console.log(
+      "event.target.parentElement.previousSibling: ",
+      event.target.parentElement.previousSibling
+    );
     const selector =
       event.target.parentElement.previousSibling.innerText.includes("COUNTRY")
         ? "dates"
@@ -91,63 +93,77 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   const toggleMenu = () => {
     setIsLefMenu((current) => !current);
   };
-  const slideVerticalAnimation = {
-    open: {
-      // rotateX: 0,
-      y: "-1em",
-      x: "-5em",
-      display: "block",
 
-      transition: {
-        duration: 0.3,
-        mass: 0.8,
-        type: "spring",
-      },
-    },
-    close: {
-      // rotateX: -15,
-      x: "-5em",
-      y: -320,
+  // const slideVerticalAnimation = {
+  //   open: {
+  //     // rotateX: 0,
+  //     y: "-1em",
+  //     x: "-5em",
+  //     display: "block",
 
-      transition: {
-        duration: 0.3,
-      },
-      transitionEnd: {
-        display: "none",
-      },
-    },
-  };
+  //     animation: {
+  //       duration: 0.3,
+  //       mass: 0.8,
+  //       type: "spring",
+  //     },
+  //   },
+  //   close: {
+  //     // rotateX: -15,
+  //     x: "-5em",
+  //     y: -320,
 
-  const slideHorizontalAnimation = {
-    left: {
-      x: "-5em",
-      transition: {
-        duration: 0.3,
-      },
-    },
-    right: {
-      x: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+  //     transition: {
+  //       duration: 0.3,
+  //     },
+  //     transitionEnd: {
+  //       display: "none",
+  //     },
+  //   },
+  // };
+
+  // const slideHorizontalAnimation = {
+  //   left: {
+  //     x: "-5em",
+  //     transition: {
+  //       duration: 0.3,
+  //     },
+  //   },
+  //   right: {
+  //     x: 0,
+  //     transition: {
+  //       duration: 0.3,
+  //     },
+  //   },
+  // };
   return (
     <div className="relative z-50 w-auto" ref={dropdownRef}>
       <DropDownButton isOpen={isOpen} setIsOpen={setIsOpen} />
-      <motion.div
-        className=" rounded-md shadow-md overflow-x-hidden absolute h-auto sm:max-h-[80vh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
-        initial="close"
-        animate={isOpen ? "open" : "close"}
-        variants={slideVerticalAnimation}
+      <div
+        className="block rounded-md shadow-md left-[-5.5em] overflow-x-hidden absolute h-auto sm:max-h-[80vh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
+        // initial="close"
+        style={{
+          transform: isOpen ? "translateY(-1em)" : "translateY(-10em)",
+          opacity: isOpen ? "1" : "0",
+          transition: "transform, opacity",
+          transitionDuration: ".5s, 1s",
+          transitionTimingFunction: "ease-in-out",
+        }}
+        // animate={isOpen ? "open" : "close"}
+        // variants={slideVerticalAnimation}
       >
-        <motion.div
+        <div
           className="flex items-start h-full relative w-[10em]"
-          initial="left"
-          animate={isLeftMenu ? "left" : "right"}
-          variants={slideHorizontalAnimation}
+          style={{
+            transform: isLeftMenu ? "translateX(-5em)" : "translateX(0)",
+            transitionProperty: "transform",
+            transitionDuration: ".3s",
+            transitionTimingFunction: "ease-in-out",
+          }}
+          // initial="left"
+          // animate={isLeftMenu ? "left" : "right"}
+          // variants={slideHorizontalAnimation}
         >
-          <motion.div className="flex flex-col text-[.7em] h-full relative w-[50%] ">
+          <div className="flex flex-col text-[.7em] h-full relative w-[50%] ">
             <h4
               onClick={toggleMenu}
               className="cursor-pointer m-0 py-[.5em] text-center hover:text-black hover:bg-white"
@@ -173,8 +189,8 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                 </li>
               ))}
             </ul>
-          </motion.div>
-          <motion.div className="flex flex-col text-[.7em] h-full relative w-[50%] ">
+          </div>
+          <div className="flex flex-col text-[.7em] h-full relative w-[50%] ">
             <h4
               onClick={toggleMenu}
               className="fill-white cursor-pointer m-0 py-[.5em] text-center hover:text-black hover:bg-white"
@@ -200,9 +216,9 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                 </li>
               ))}
             </ul>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

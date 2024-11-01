@@ -33,12 +33,12 @@ export default function Contact({ pageInfo }: Props) {
   };
 
   return (
-    <div className="contact-small sm:contact-small-flipped lg:contact">
-      <h3 className="contact-small-Title sm:contact-small-flipped-Title lg:contact-Title">
+    <div className="text-[1rem] h-screen max-w-full relative text-left flex flex-col items-center justify-center px-4 sm:flex-row sm:items-center lg:text-[5vh]">
+      <h3 className="text-[2em] absolute top-[3em] uppercase tracking-[10px] text-white sm:text-[2em] sm:top-[1.2em] lg:text-[1em] lg:top-[7vh] lg:tracking-[20px]">
         Contact
       </h3>
 
-      <div className="contact-small-Details sm:contact-small-flipped-Details lg:contact-Details">
+      <div className="text-[1.2em] flex flex-col max-w-full justify-center items-center space-y-1 sm:mt-14 sm:space-y-3 lg:text-[.7em] lg:mt-[20vh] lg:justify-start">
         <div className="flex flex-col break-all justify-center items-center space-y-[2vh]">
           <div className="flex items-center space-x-5 justify-center">
             <PhoneIcon className="text-yellow-500 h-[1em] w-[1em] animate-pulse" />

@@ -19,9 +19,9 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
     );
   };
   const clicked = (event: any) => {
-    console.log(event.target)
+    console.log(event.target);
     setIsOpen((current: boolean) => !current);
-    return
+    return;
   };
   return (
     <motion.button
@@ -36,7 +36,7 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
       <svg
         width="50"
         height="50"
-        style={{  color: "gray", borderRadius: '50px', padding: '4px' }}
+        style={{ color: "gray", borderRadius: "50px", padding: "4px" }}
         viewBox="-5 -5 30 30"
       >
         <Path

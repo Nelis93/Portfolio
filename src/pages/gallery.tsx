@@ -20,7 +20,7 @@ type Props = {
 
 const Gallery = ({ galleryImages, socials }: Props) => {
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
-    galleryImages.slice(0, 10)
+    galleryImages.slice(0, 9)
   );
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -68,7 +68,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   }, 300);
   useEffect(() => {
     if (loading) debounceMaxHeightCalculation();
-
   }, [loading]);
   // Scroll to selected image when it's clicked
   useEffect(() => {
@@ -77,25 +76,22 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       galleryRefs.current[selected]?.scrollIntoView();
       return;
     }
-    setPage(1)
+    setPage(1);
     setDisplayedImages(filteredImages().slice(0, 9));
   }, [selected]);
   const extraCards = () => {
-    if (displayedImages.length % 3 == 0){
-
-      return 0
-    } else if ((displayedImages.length + 1) % 3 == 0){
-
-      return 1
+    if (displayedImages.length % 3 == 0) {
+      return 0;
+    } else if ((displayedImages.length + 1) % 3 == 0) {
+      return 1;
     }
-      return 2
-
-  }
+    return 2;
+  };
   useEffect(() => {
-    debounceMaxHeightCalculation()
     setDisplayedImages(filteredImages().slice(0, 9));
+    debounceMaxHeightCalculation();
     setPage(1);
-    extraCards()
+    extraCards();
   }, [selectedFilter]);
   const filteredImages = () => {
     return galleryImages
@@ -141,6 +137,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       <section
         className="relative flex bg-transparent w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-20 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
+        onResize={debounceMaxHeightCalculation}
       >
         <div
           className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full"
@@ -154,7 +151,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
                 backgroundClip: "content-box",
                 backgroundOrigin: "content-box",
                 width: `calc(100% - 52vh)`,
-                maxWidth: `calc(1500px - 40vh)`
+                maxWidth: `calc(1500px - 40vh)`,
               }}
             ></div>
           )}
@@ -180,21 +177,18 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               />
             )
           )}
-          {
-            window.innerWidth > 1024 &&
-              Array.from({ length: extraCards() }).map((_, i) => (
-                <div
-                  key={i}
-                  style={{
-                    height: `${maxHeight.current.slice(-1)[0] || 0}vh`, // Access last height safely
-                    width: "full",
-                    backgroundColor: "black",
-                    zIndex: 1
-                  }}
-                ></div>
-              ))
-            
-          }
+          {window.innerWidth > 1024 &&
+            Array.from({ length: extraCards() }).map((_, i) => (
+              <div
+                key={i}
+                style={{
+                  height: `${maxHeight.current.slice(-1)[0] || 0}vh`, // Access last height safely
+                  width: "full",
+                  backgroundColor: "black",
+                  zIndex: 1,
+                }}
+              ></div>
+            ))}
         </div>
         <Backdrop
           sx={(theme: any) => ({

@@ -121,102 +121,102 @@
   .skills-small-flipped-Grid {
     @apply sm:w-fit sm:grid sm:grid-cols-6 sm:gap-x-10 sm:grid-flow-dense;
   } */
-  .skill {
-    @apply size-[5vw];
+  /* .skill {
+    @apply lg:size-[5vw];
   }
   .skill-small {
-    @apply text-[1em] size-[3.5em] relative flex cursor-none;
+    @apply text-[1em] size-[3.5em] relative flex cursor-none lg:size-[5vw];
   }
   .projects {
-    @apply text-[5vh] justify-start;
+    @apply lg:text-[5vh] lg:justify-start;
   }
   .projects-small {
-    @apply text-[1rem] relative h-screen flex flex-col justify-end mx-auto items-center;
+    @apply text-[1rem] relative h-screen flex flex-col justify-end mx-auto items-center sm:max-w-full lg:text-[5vh] lg:justify-start;
   }
   .projects-small-flipped {
-    @apply max-w-full;
+    @apply sm:max-w-full;
   }
   .projects-Title {
-    @apply text-[1em] top-[7vh];
+    @apply lg:text-[1em] lg:top-[7vh];
   }
   .projects-small-Title {
-    @apply text-[2em] absolute top-[2.5em] uppercase tracking-[10px] text-white;
+    @apply text-[2em] absolute top-[2.5em] uppercase tracking-[10px] text-white sm:top-[1em] lg:text-[1em] lg:top-[7vh];
   }
   .projects-small-flipped-Title {
-    @apply top-[1em];
+    @apply sm:top-[1em];
   }
   .projects-Carousel {
-    @apply px-0  scrollbar-thin scrollbar-track-teal-300/40 scrollbar-thumb-yellow-500/80;
+    @apply lg:px-0  lg:scrollbar-thin lg:scrollbar-track-teal-300/40 lg:scrollbar-thumb-yellow-500/80;
   }
   .projects-small-Carousel {
-    @apply relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none;
+    @apply relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none sm:pt-[3em] lg:px-0  lg:scrollbar-thin lg:scrollbar-track-teal-300/40 lg:scrollbar-thumb-yellow-500/80;
   }
   .projects-small-flipped-Carousel {
-    @apply pt-[3em];
+    @apply sm:pt-[3em];
   }
   .project {
-    @apply text-[3vh]  pl-[10em] pr-[5em] gap-x-5;
+    @apply lg:text-[3vh]  lg:pl-[10em] lg:pr-[5em] lg:gap-x-5;
   }
   .project-small {
-    @apply text-[2em] relative w-screen pb-[1em] px-[.5em] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4;
+    @apply text-[2em] relative w-screen pb-[1em] px-[.5em] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4 sm:text-[1em] sm:pt-14 sm:px-[1em] sm:grid sm:gap-x-10 sm:grid-flow-col-dense sm:grid-cols-5 sm:grid-rows-10 sm:space-y-3 lg:text-[3vh]  lg:pl-[10em] lg:pr-[5em] lg:gap-x-5; 
   }
   .project-small-flipped {
-    @apply text-[1em] pt-14 px-[1em] grid gap-x-10 grid-flow-col-dense grid-cols-5 grid-rows-10 space-y-3;
+    @apply sm:text-[1em] sm:pt-14 sm:px-[1em] sm:grid sm:gap-x-10 sm:grid-flow-col-dense sm:grid-cols-5 sm:grid-rows-10 sm:space-y-3;
   }
   .project-Img {
-    @apply row-span-8 self-center;
+    @apply lg:row-span-8 lg:self-center;
   }
   .project-small-Img {
-    @apply block relative w-[10em] rounded-lg cursor-none;
+    @apply block relative w-[10em] rounded-lg cursor-none sm:h-auto sm:w-full sm:row-span-9 sm:col-span-2 sm:self-end sm:object-contain lg:row-span-8 lg:self-center;
   }
   .project-small-flipped-Img {
-    @apply h-auto w-full row-span-9 col-span-2 self-end object-contain;
+    @apply sm:h-auto sm:w-full sm:row-span-9 sm:col-span-2 sm:self-end sm:object-contain;
   }
   .project-Dots {
-    @apply row-span-2 self-start;
+    @apply lg:row-span-2 lg:self-start;
   }
   .project-small-Dots {
-    @apply relative flex justify-center gap-5 mt-2;
+    @apply relative flex justify-center gap-5 mt-2 sm:row-span-1 sm:col-span-2 sm:z-40 sm:self-center lg:row-span-2 lg:self-start;
   }
   .project-small-flipped-Dots {
-    @apply row-span-1 col-span-2 z-40 self-center;
+    @apply sm:row-span-1 sm:col-span-2 sm:z-40 sm:self-center;
   }
   .project-Sum {
-    @apply text-[1em] row-span-8 pt-[1em] px-[2em] scrollbar-none text-left;
+    @apply lg:text-[1em] lg:row-span-8 lg:pt-[1em] lg:px-[2em] lg:scrollbar-none lg:text-left;
   }
   .project-small-Sum {
-    @apply overscroll-y-contain text-[.6em] h-[8em] text-center overflow-y-auto scrollbar-none;
+    @apply overscroll-y-contain text-[.6em] h-[8em] text-center overflow-y-auto scrollbar-none sm:text-[1em] sm:text-left sm:w-full sm:h-full sm:row-span-6 sm:col-span-3 lg:text-[1em] lg:row-span-8 lg:pt-[1em] lg:px-[2em] lg:scrollbar-none lg:text-left;
   }
   .project-small-flipped-Sum {
-    @apply text-[1em] text-left w-full h-full row-span-6 col-span-3;
+    @apply sm:text-[1em] sm:text-left sm:w-full sm:h-full sm:row-span-6 sm:col-span-3;
   }
   .contact {
-    @apply text-[5vh];
+    @apply lg:text-[5vh];
   }
   .contact-small {
-    @apply text-[1rem] h-screen max-w-full relative text-left flex flex-col items-center justify-center px-4;
+    @apply text-[1rem] h-screen max-w-full relative text-left flex flex-col items-center justify-center px-4 sm:flex-row sm:items-center lg:text-[5vh];
   }
   .contact-small-flipped {
-    @apply flex-row items-center;
+    @apply sm:flex-row sm:items-center;
   }
   .contact-Title {
-    @apply text-[1em] top-[7vh] tracking-[20px];
+    @apply lg:text-[1em] lg:top-[7vh] lg:tracking-[20px];
   }
   .contact-small-Title {
-    @apply text-[2em] absolute top-[3em] uppercase tracking-[10px] text-white;
+    @apply text-[2em] absolute top-[3em] uppercase tracking-[10px] text-white sm:text-[2em] sm:top-[1.2em] lg:text-[1em] lg:top-[7vh] lg:tracking-[20px];
   }
   .contact-small-flipped-Title {
-    @apply text-[2em] top-[1.2em];
+    @apply sm:text-[2em] sm:top-[1.2em];
   }
   .contact-Details {
-    @apply text-[.7em] mt-[20vh] justify-start;
+    @apply lg:text-[.7em] lg:mt-[20vh] lg:justify-start;
   }
   .contact-small-Details {
-    @apply text-[1.2em] flex flex-col max-w-full justify-center items-center space-y-1;
+    @apply text-[1.2em] flex flex-col max-w-full justify-center items-center space-y-1 sm:mt-14 sm:space-y-3 lg:text-[.7em] lg:mt-[20vh] lg:justify-start;
   }
   .contact-small-flipped-Details {
-    @apply mt-14 space-y-3;
-  }
+    @apply sm:mt-14 sm:space-y-3;
+  } */
   .social-icon {
     @apply flex justify-center items-center hover:bg-white  size-[1.2em]  rounded-[50px]  text-gray-500 transition-colors duration-[.3s];
   }
