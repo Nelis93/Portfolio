@@ -80,3 +80,12 @@ export interface GalleryImage extends SanityBody {
   people: string[];
   position: number;
 }
+export interface LogbookEntry extends SanityBody {
+  _type: "logbookEntry";
+  title: string;
+  description: string;
+  location: string;
+  date: Date;
+  entry: block[];
+  position: number;
+}

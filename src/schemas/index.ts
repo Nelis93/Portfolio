@@ -4,6 +4,7 @@ import social from "./social";
 import project from "./project";
 import pageInfo from "./pageInfo";
 import galleryImage from "./galleryImage";
+import logbookEntry from "./logbookEntry";
 
 export const schemaTypes = [
   pageInfo,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   experience,
   social,
   galleryImage,
+  logbookEntry,
 ];

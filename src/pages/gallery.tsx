@@ -22,9 +22,11 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
     galleryImages.slice(0, 9)
   );
+  const [bgWidth, setBgWidth] = useState<number | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const gridRef = useRef<HTMLDivElement | null>(null);
   const [selected, setSelected] = useState(-1);
   const [focus, setFocus] = useState(-1);
   const [maxHeight, setMaxHeight] = useState<{
@@ -51,6 +53,24 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const startCalc = () => {
     setLoading(true);
   };
+  useEffect(() => {
+    if (gridRef.current) {
+      // Set the width once the component has mounted
+      setBgWidth(gridRef.current.offsetWidth);
+    }
+
+    const handleResize = () => {
+      if (gridRef.current) {
+        setBgWidth(gridRef.current.offsetWidth);
+      }
+    };
+
+    // Add a resize event listener to update the width dynamically
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const debounceMaxHeightCalculation = debounce(() => {
     setMaxHeight((prevMaxHeight: any) => {
       const newMaxArray = [];
@@ -112,11 +132,10 @@ const Gallery = ({ galleryImages, socials }: Props) => {
 
   // Function to load more images
   const loadMoreImages = debounce((event: any) => {
-    const distanceFromTop = event.target.clientHeight + event.target.scrollTop
-    // console.log(distanceFromTop, event.target.scrollHeight)
+    const distanceFromTop = event.target.clientHeight + event.target.scrollTop;
     extraCards();
     if (distanceFromTop > event.target.scrollHeight - 100) {
-      console.log('bottom reached')
+      console.log("bottom reached");
       if (loading) return;
 
       setLoading(true);
@@ -138,12 +157,13 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     >
       <Header socials={socials} setSelectedFilter={setSelectedFilter} />
       <section
-        className="relative flex bg-transparent w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
+        className="relative flex w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
         onResize={debounceMaxHeightCalculation}
       >
         <div
           className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full"
+          ref={gridRef}
           onLoad={startCalc}
         >
           {displayedImages.length >= 6 && (
@@ -153,8 +173,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
                 backgroundImage: " url('/FlipMe.svg')",
                 backgroundClip: "content-box",
                 backgroundOrigin: "content-box",
-                width: `calc(80vw - 10vh)`,
-                maxWidth: `calc(1500px - 20vh)`,
+                width: bgWidth,
               }}
             ></div>
           )}

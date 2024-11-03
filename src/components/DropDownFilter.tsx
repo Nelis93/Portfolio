@@ -40,10 +40,6 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   }, [isOpen]);
 
   const selectListItem = (event: any) => {
-    console.log(
-      "event.target.parentElement.previousSibling: ",
-      event.target.parentElement.previousSibling
-    );
     const selector =
       event.target.parentElement.previousSibling.innerText.includes("COUNTRY")
         ? "dates"
