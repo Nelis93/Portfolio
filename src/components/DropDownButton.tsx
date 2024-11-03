@@ -32,7 +32,7 @@ export default function DropDownButton({ isOpen, setIsOpen }: Props) {
         transition: "all",
         transitionDuration: ".3s",
       }}
-    >
+    ><div className="absolute w-full h-full z-20 bg-transparent"></div>
       <svg
         width="50"
         height="50"

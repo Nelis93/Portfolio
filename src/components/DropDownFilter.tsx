@@ -25,7 +25,6 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   };
 
   useEffect(() => {
-    console.log("isOpen changed: ", isOpen);
     if (isOpen) {
       // Add event listener to detect clicks outside the dropdown
       document.addEventListener("click", handleClickOutside);

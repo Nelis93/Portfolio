@@ -60,26 +60,7 @@ export default function GalleryImageCard({
     const heightInVH = (height / window.innerHeight) * 100;
     setMaxHeight((prev: any) => {
       return { current: [...prev.current, heightInVH], index: prev.index };
-    });
-    // setMaxHeight((prevMaxHeight: any) => {
-    //   const updatedHeights = [...prevMaxHeight.current];
-
-    //   // Update the height at the correct index (uniqueId)
-    //   updatedHeights[uniqueId] = heightInVH;
-
-    //   // Calculate max height for each triplet group
-    //   const newMaxArray = [];
-    //   for (let i = 0; i < updatedHeights.length; i += 3) {
-    //     const triplet = updatedHeights.slice(i, i + 3);
-    //     const maxTripletHeight = Math.max(...triplet);
-    //     newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
-    //   }
-
-    //   return {
-    //     current: newMaxArray, // Updated array with max heights for each triplet
-    //     index: updatedHeights.length - 1, // Update index to the last processed image
-    //   };
-    // });
+    })
   };
 
   const handleCardClick = (event: any) => {
@@ -110,7 +91,6 @@ export default function GalleryImageCard({
         transitionDuration: focus == uniqueId ? "0.3s" : "1s", // Faster black, slower to transparent
         transitionDelay: focus == uniqueId ? "0s" : "0.6s",
       }}
-      key={image._id}
       className="group relative w-full max-h-[75vh] border-black border-8 cursor-pointer"
       onClick={handleCardClick}
     >
@@ -119,7 +99,6 @@ export default function GalleryImageCard({
         className="relative h-full w-full shadow-lg shadow-gray-700 rounded-lg"
         animate={{ rotateY: focus !== uniqueId ? 0 : 180 }} // Flip based on focus
         initial={false}
-        key={image._id}
         id={image._id}
         style={{
           transformStyle: "preserve-3d", // Required for 3D flipping
@@ -159,6 +138,7 @@ export default function GalleryImageCard({
               cardCount < 6 && window.innerWidth > 1024
                 ? "top left url('/FlipMe.svg')"
                 : "inherit",
+            backfaceVisibility: "hidden", // Hide image when back is shown
           }}
         >
           <motion.img
@@ -167,7 +147,7 @@ export default function GalleryImageCard({
             alt={image.title}
             onLoad={handleImageLoad}
             style={{
-              backfaceVisibility: "hidden", // Hide image when back is shown
+              backfaceVisibility: "hidden",
             }}
           />
         </div>

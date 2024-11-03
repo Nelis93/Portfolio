@@ -56,6 +56,7 @@ export default function ExperienceCard({
             transition: "transform",
             transitionDuration: "1s",
             transitionTimingFunction: "ease-in-out",
+            cursor: focus == uniqueId ? 'url(/ArrowDown.svg), pointer' : 'pointer',
           }}
         >
           <motion.img
@@ -103,13 +104,14 @@ export default function ExperienceCard({
             transition: "transform",
             transitionDuration: "1s",
             transitionTimingFunction: "ease-in-out",
+            cursor: focus == uniqueId ? 'url(/ArrowUp.svg), pointer' : 'pointer',
           }}
         >
           <div>
             <h4 className="text-[.7em] lg:text-[.8em] mb-5 w-full text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-yellow-600 from-70% to-yellow-300 rounded-lg">
               {experience.jobTitle}
             </h4>
-            <ul className="relative overscroll-contain ml-3 space-y-2 max-h-[30%] text-[.5em] overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-yellow-500/80">
+            <ul className="relative overscroll-contain ml-3 space-y-2 max-h-[30%] text-[.5em] overflow-y-scroll scrollbar-none">
               {experience.points.map((point, i) => {
                 return (
                   <li className="bg-stone-500 px-2 py-1 rounded-lg" key={i}>
