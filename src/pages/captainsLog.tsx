@@ -23,14 +23,83 @@ const CaptainsLog = ({ socials }: Props) => {
       }, delay);
     };
   }
+
+  const CARDS = 10;
+  const MAX_VISIBILITY = 3;
+
+  const Card = ({ title, content }: any) => (
+    <div className="w-full h-full p-8 bg-purple-300 rounded-lg text-gray-700 shadow-lg transition-all duration-300">
+      <h2 className="text-2xl font-bold text-center mb-4 text-gray-900">
+        {title}
+      </h2>
+      <p className="text-justify">{content}</p>
+    </div>
+  );
+
+  const Carousel = ({ children }: any) => {
+    const [active, setActive] = useState(2);
+    const count = React.Children.count(children);
+
+    return (
+      <div className="relative w-[23rem] h-[23rem] perspective">
+        {active > 0 && (
+          <button
+            className="absolute left-0 top-1/2 transform -translate-x-full -translate-y-1/2 z-10 text-white text-5xl cursor-pointer"
+            onClick={() => setActive((i) => i - 1)}
+          >
+            ←
+          </button>
+        )}
+
+        {React.Children.map(children, (child, i) => (
+          <div
+            className={`absolute w-full h-full transition-all duration-300`}
+            style={{
+              transform: `
+                rotateY(${(active - i) * 50}deg)
+                scaleY(${1 + Math.abs(active - i) * -0.4})
+                translateZ(${Math.abs(active - i) * -30}rem)
+                translateX(${Math.sign(active - i) * -5}rem)
+              `,
+              opacity: Math.abs(active - i) >= MAX_VISIBILITY ? 0 : 1,
+              pointerEvents: active === i ? "auto" : "none",
+              filter: `blur(${Math.abs(active - i)}rem)`,
+            }}
+          >
+            {child}
+          </div>
+        ))}
+
+        {active < count - 1 && (
+          <button
+            className="absolute right-0 top-1/2 transform translate-x-full -translate-y-1/2 z-10 text-white text-5xl cursor-pointer"
+            onClick={() => setActive((i) => i + 1)}
+          >
+            →
+          </button>
+        )}
+      </div>
+    );
+  };
+
   return (
     <main
       translate="no"
       className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-2 sm:p-4 lg:p-8  overflow-y-scroll overflow-auto"
     >
       {/* <Header socials={socials} setSelectedFilter={setSelectedFilter} /> */}
-      <section className="relative flex bg-transparent w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]">
-        <div className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full"></div>
+      <section className="relative flex bg-transparent w-full h-auto overflow-scroll scrollbar-none">
+        <div className="flex items-center justify-center w-full h-screen overflow-clip bg-gradient-to-br from-purple-500 to-pink-500 font-sans">
+          <Carousel>
+            {[...Array(CARDS)].map((_, i) => (
+              <Card
+                key={i}
+                title={"Card " + (i + 1)}
+                content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+              />
+            ))}
+          </Carousel>
+        </div>
       </section>
     </main>
   );
