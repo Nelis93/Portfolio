@@ -28,8 +28,8 @@ const CaptainsLog = ({ socials }: Props) => {
   const MAX_VISIBILITY = 3;
 
   const Card = ({ title, content }: any) => (
-    <div className="w-full h-full p-8 bg-purple-300 rounded-lg text-gray-700 shadow-lg transition-all duration-300">
-      <h2 className="text-2xl font-bold text-center mb-4 text-gray-900">
+    <div className="w-full h-full p-8 bg-teal-400 rounded-lg text-white shadow-lg transition-all duration-300">
+      <h2 className="text-2xl font-bold text-center mb-4 text-white">
         {title}
       </h2>
       <p className="text-justify">{content}</p>
@@ -41,7 +41,8 @@ const CaptainsLog = ({ socials }: Props) => {
     const count = React.Children.count(children);
 
     return (
-      <div className="relative w-[23rem] h-[23rem] perspective">
+      <div className="relative w-[23rem] h-[23rem]" style={{perspective: "500px",
+        transformStyle: "preserve-3d"}}>
         {active > 0 && (
           <button
             className="absolute left-0 top-1/2 transform -translate-x-full -translate-y-1/2 z-10 text-white text-5xl cursor-pointer"
@@ -53,15 +54,18 @@ const CaptainsLog = ({ socials }: Props) => {
 
         {React.Children.map(children, (child, i) => (
           <div
-            className={`absolute w-full h-full transition-all duration-300`}
+            className={`absolute w-full h-full`}
             style={{
+              transition:'all',
+              transitionDuration:".3s",
               transform: `
                 rotateY(${(active - i) * 50}deg)
                 scaleY(${1 + Math.abs(active - i) * -0.4})
                 translateZ(${Math.abs(active - i) * -30}rem)
-                translateX(${Math.sign(active - i) * -5}rem)
+                translateX(${Math.sign(active - i) * -4}rem)
               `,
-              opacity: Math.abs(active - i) >= MAX_VISIBILITY ? 0 : 1,
+              // zIndex: i <= active ? i : -i + 2*active,
+              // opacity: Math.abs(active - i) >= MAX_VISIBILITY ? 0 : 1,
               pointerEvents: active === i ? "auto" : "none",
               filter: `blur(${Math.abs(active - i)}rem)`,
             }}
@@ -89,7 +93,7 @@ const CaptainsLog = ({ socials }: Props) => {
     >
       {/* <Header socials={socials} setSelectedFilter={setSelectedFilter} /> */}
       <section className="relative flex bg-transparent w-full h-auto overflow-scroll scrollbar-none">
-        <div className="flex items-center justify-center w-full h-screen overflow-clip bg-gradient-to-br from-purple-500 to-pink-500 font-sans">
+        <div className="flex items-center justify-center w-full h-screen overflow-clip bg-gradient-to-br from-teal-300 to-teal-600 font-sans">
           <Carousel>
             {[...Array(CARDS)].map((_, i) => (
               <Card
@@ -103,7 +107,10 @@ const CaptainsLog = ({ socials }: Props) => {
       </section>
     </main>
   );
-};
+ 
+  
+}
+
 
 export default dynamic(() => Promise.resolve(CaptainsLog), { ssr: false });
 
