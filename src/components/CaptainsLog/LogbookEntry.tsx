@@ -1,5 +1,5 @@
 import React from "react";
-import { LogbookEntry as LBEntry } from "../../typings";
+import { LogbookEntry as LBEntry } from "typings";
 
 type Props = {
   bigLog: LBEntry;

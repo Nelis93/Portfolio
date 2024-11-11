@@ -37,6 +37,7 @@ export default function FocusedImageCard({
     event.stopPropagation();
     setSelected(-1);
   };
+  // detDom will toggle the lateral position of the image within the card
   const detDom = (event: any) => {
     if (
       window.innerWidth > 500 &&
