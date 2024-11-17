@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { urlFor } from "../../sanity";
-import { GalleryImage } from "../../typings";
+import { urlFor } from "../../../sanity";
+import { GalleryImage } from "typings";
 import { TfiClose } from "react-icons/tfi";
 import { IconContext } from "react-icons";
 

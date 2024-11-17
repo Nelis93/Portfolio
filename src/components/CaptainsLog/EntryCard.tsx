@@ -15,17 +15,18 @@ export default function EntryCard({
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
 
-  //   // Track if each entry is in view
-  //   const isInView = useInView(ref, {
-  //     amount: 0.5,
-  //     once: false,
-  //   });
-  //   // Update the currentIndex based on which entry is in view
-  //   useEffect(() => {
-  //     if (isInView) {
-  //       setSelected(uniqueId);
-  //     }
-  //   }, [isInView, uniqueId]);
+  // Track if each entry is in view
+  const isInView = useInView(ref, {
+    amount: 0.5,
+    once: false,
+  });
+  // Update the currentIndex based on which entry is in view
+  useEffect(() => {
+    if (isInView) {
+      console.log(uniqueId);
+      setSelected(uniqueId);
+    }
+  }, [isInView, uniqueId]);
   return (
     <motion.div
       className="w-full h-full p-8 bg-teal-400 overflow-clip rounded-lg text-white shadow-lg"

@@ -3,12 +3,12 @@ import type { GetStaticProps } from "next";
 import { GalleryImage, Social } from "../../typings";
 import { fetchGalleryImages } from "../utils/fetchGalleryImages";
 import dynamic from "next/dynamic";
-import GalleryImageCard from "@/components/GalleryImageCard";
-import GalleryImageCardSmall from "@/components/GalleryImageCardSmall";
+import GalleryImageCard from "@/components/Gallery/GalleryImageCard";
+import GalleryImageCardSmall from "@/components/Gallery/GalleryImageCardSmall";
 import Header from "@/components/Header";
 import { fetchSocials } from "../utils/fetchSocials";
 import Slider from "@/components/Slider";
-import FocusedImageCard from "@/components/FocusedImageCard";
+import FocusedImageCard from "@/components/Gallery/FocusedImageCard";
 import Dots from "@/components/Dots";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -22,7 +22,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
     galleryImages.slice(0, 9)
   );
-  const [bgWidth, setBgWidth] = useState<number | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -53,24 +52,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const startCalc = () => {
     setLoading(true);
   };
-  useEffect(() => {
-    if (gridRef.current) {
-      // Set the width once the component has mounted
-      setBgWidth(gridRef.current.offsetWidth);
-    }
-
-    const handleResize = () => {
-      if (gridRef.current) {
-        setBgWidth(gridRef.current.offsetWidth);
-      }
-    };
-
-    // Add a resize event listener to update the width dynamically
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener on component unmount
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
   const debounceMaxHeightCalculation = debounce(() => {
     setMaxHeight((prevMaxHeight: any) => {
       const newMaxArray = [];
@@ -160,23 +141,21 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         className="relative flex w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
         onResize={debounceMaxHeightCalculation}
+        style={{
+          backgroundImage:
+            displayedImages.length >= 6 && window.innerWidth > 2000
+              ? " url('/FlipMe.svg')"
+              : "",
+          backgroundAttachment: "fixed",
+          backgroundClip: "content-box",
+          backgroundOrigin: "content-box",
+        }}
       >
         <div
-          className="relative z-[1] bg-transparent grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full"
+          className="relative z-[1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full"
           ref={gridRef}
           onLoad={startCalc}
         >
-          {displayedImages.length >= 6 && (
-            <div
-              className="hidden lg:block fixed z-0 h-full pt-44 bottom-8"
-              style={{
-                backgroundImage: " url('/FlipMe.svg')",
-                backgroundClip: "content-box",
-                backgroundOrigin: "content-box",
-                width: bgWidth,
-              }}
-            ></div>
-          )}
           {displayedImages.map((image, index) =>
             window.innerWidth < 1024 ? (
               <GalleryImageCardSmall
@@ -245,10 +224,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               "fixed bottom-[.2em] self-center sm:bottom-[2vh] sm:top-auto justify-self-center z-40 sm:z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"
             }
           />
-          <div
-            className="relative z-30 bg-black text-white w-max sm:mx-auto mb-2 sm:mb-0 sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none items-start justify-center sm:justify-start"
-            // ref={containerRef}
-          >
+          <div className="relative z-30 bg-black text-white w-max sm:mx-auto mb-2 sm:mb-0 sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none items-start justify-center sm:justify-start">
             {displayedImages.map((image, index) => (
               <FocusedImageCard
                 key={image._id}

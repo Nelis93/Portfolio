@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { GalleryImage } from "../../typings";
-import { urlFor } from "../../sanity";
+import { GalleryImage } from "typings";
+import { urlFor } from "../../../sanity";
 import { TfiNewWindow } from "react-icons/tfi";
 import { IconContext } from "react-icons";
 
@@ -60,7 +60,7 @@ export default function GalleryImageCard({
     const heightInVH = (height / window.innerHeight) * 100;
     setMaxHeight((prev: any) => {
       return { current: [...prev.current, heightInVH], index: prev.index };
-    })
+    });
   };
 
   const handleCardClick = (event: any) => {

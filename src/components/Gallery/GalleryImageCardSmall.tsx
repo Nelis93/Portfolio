@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { GalleryImage } from "../../typings";
-import { urlFor } from "../../sanity";
+import { GalleryImage } from "typings";
+import { urlFor } from "../../../sanity";
 
 type Props = {
   image: GalleryImage;

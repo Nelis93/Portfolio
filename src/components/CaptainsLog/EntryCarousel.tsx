@@ -1,51 +1,46 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export default function EntryCarousel({ children, selected }: any) {
-  //   const count = React.Children.count(children);
+  const carouselRef = useRef(null);
+  // const [scrollPos, setScrollPos] = useState({
+  //   a: 0,
+  //   b: 0,
+  // });
+
+  // const setScrollPosition = (event: any) => {
+  //   setScrollPos((current) => {
+  //     return { a: event.target.scrollLeft, b: current.b };
+  //   });
+  // };
+
   return (
     <div
-      className="relative w-[23rem] h-[23rem]"
+      ref={carouselRef}
+      className="relative z-30 bg-black text-white w-1/2 sm:mx-auto mb-2 sm:mb-0 sm:h-[80vh] flex flex-row overflow-x-scroll snap-x snap-mandatory scrollbar-none items-center justify-center sm:justify-start"
       style={{ perspective: "500px", transformStyle: "preserve-3d" }}
     >
-      {/* {active > 0 && (
-        <button
-          className="absolute left-0 top-1/2 transform -translate-x-full -translate-y-1/2 z-10 text-white text-5xl cursor-pointer"
-          onClick={() => setActive((i) => i - 1)}
-        >
-          ←
-        </button>
-      )} */}
-
+      <div className="relative min-w-[23rem] h-[23rem]"></div>
       {React.Children.map(children, (child, i) => (
         <div
-          className={`absolute w-full h-full`}
+          className="min-w-[23rem] h-[23rem]  mx-auto"
           style={{
-            transition: "all",
-            transitionDuration: ".3s",
             transform: `
-                    rotateY(${(selected - i) * 50}deg)
-                    scaleY(${1 + Math.abs(selected - i) * -0.4})
-                    translateZ(${Math.abs(selected - i) * -30}rem)
-                    translateX(${Math.sign(selected - i) * -4}rem)
-                  `,
-            // zIndex: i <= selected ? i : -i + 2*selected,
-            // opacity: Math.abs(selected - i) >= MAX_VISIBILITY ? 0 : 1,
+              scaleY(${1 + Math.abs(selected - i) * -0.2})
+              rotateY(${(selected - i) * 50}deg)
+              translateZ(${Math.abs(selected - i) * -1}em)
+              translateX(${(selected - i) * 0.5}em)
+              `,
+            // filter: `blur(${Math.abs(selected - i)}rem)`,
+            scrollSnapAlign: "center",
+            transition: "all 0.3s ease-out",
             pointerEvents: selected === i ? "auto" : "none",
-            filter: `blur(${Math.abs(selected - i)}rem)`,
+            display: "block",
           }}
         >
           {child}
         </div>
       ))}
-
-      {/* {selected < count - 1 && (
-        <button
-          className="absolute right-0 top-1/2 transform translate-x-full -translate-y-1/2 z-10 text-white text-5xl cursor-pointer"
-          onClick={() => setActive((i) => i + 1)}
-        >
-          →
-        </button>
-      )} */}
+      <div className="min-w-[23rem] h-[23rem]"></div>
     </div>
   );
 }

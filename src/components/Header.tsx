@@ -11,7 +11,7 @@ import { IconContext } from "react-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Social } from "../../typings";
-import DropDownFilter from "./DropDownFilter";
+import DropDownFilter from "./Gallery/DropDownFilter";
 
 type Props = {
   socials: Social[];

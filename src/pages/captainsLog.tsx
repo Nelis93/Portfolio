@@ -15,7 +15,7 @@ type Props = {
 };
 
 const CaptainsLog = ({ socials, logBookEntries }: Props) => {
-  const [selected, setSelected] = useState(2);
+  const [selected, setSelected] = useState(0);
   // const [focus, setFocus] = useState(-1);
   const logBookEntryRefs = useRef<(HTMLDivElement | null)[]>([]);
   function debounce(cb: Function, delay = 1000) {
@@ -26,6 +26,30 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
       timeout = setTimeout(() => {
         cb(...args);
       }, delay);
+    };
+  }
+  function throttle(cb: Function, delay = 1000) {
+    let shouldWait = false;
+    let waitingArgs: any;
+    const timeoutFunc = () => {
+      if (waitingArgs == null) {
+        shouldWait = false;
+        // waitingArgs = undefined
+      } else {
+        cb(...waitingArgs); // Execute with the last arguments if needed
+        waitingArgs = null;
+        setTimeout(timeoutFunc, delay);
+      }
+    };
+
+    return (...args: any) => {
+      if (shouldWait) {
+        waitingArgs = args;
+        return;
+      }
+      cb(...args); // Execute the callback immediately
+      shouldWait = true;
+      setTimeout(timeoutFunc, delay);
     };
   }
 
@@ -44,35 +68,39 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
   return (
     <main
       translate="no"
-      className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-2 sm:p-4 lg:p-8  overflow-y-scroll overflow-auto"
+      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen h-screen   overflow-y-scroll overflow-x-clip"
     >
-      {/* <Header socials={socials} setSelectedFilter={setSelectedFilter} /> */}
-      <section className="relative flex bg-transparent w-full h-auto overflow-scroll scrollbar-none">
+      <Header socials={socials} />
+      <section className="flex flex-col z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen snap-center scrollbar-none items-start overflow-x-hidden sm:items-center">
         <Slider
           items={logBookEntries}
           refs={logBookEntryRefs}
           currentIndex={selected}
           setCurrentIndex={setSelected}
           style={
-            "fixed z-20 hidden sm:flex flex-row justify-between items-center h-full bg-transparent w-screen"
+            "absolute hidden sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2"
           }
         />
-        <div className="flex items-center justify-center w-full h-full overflow-x-scroll bg-gradient-to-br from-teal-300 to-teal-600 font-sans">
-          <EntryCarousel selected={selected}>
-            {logBookEntries
-              .sort((a, b) => a.position - b.position)
-              .map((entry, index) => {
-                return (
-                  <EntryCard
-                    uniqueId={index}
-                    logBookEntry={entry}
-                    logBookEntryRefs={logBookEntryRefs}
-                    setSelected={setSelected}
-                  />
-                );
-              })}
-          </EntryCarousel>
-        </div>
+
+        <EntryCarousel
+          selected={selected}
+          setSelected={setSelected}
+          throttle={throttle}
+          debounce={debounce}
+        >
+          {logBookEntries
+            .sort((a, b) => a.position - b.position)
+            .map((entry, index) => {
+              return (
+                <EntryCard
+                  uniqueId={index}
+                  logBookEntry={entry}
+                  logBookEntryRefs={logBookEntryRefs}
+                  setSelected={setSelected}
+                />
+              );
+            })}
+        </EntryCarousel>
       </section>
     </main>
   );
