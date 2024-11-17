@@ -137,7 +137,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
         className="block rounded-md shadow-md left-[-5.5em] overflow-x-hidden absolute h-auto sm:max-h-[80vh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
         // initial="close"
         style={{
-          transform: isOpen ? "translateY(-1em)" : "translateY(-10em)",
+          transform: isOpen ? "translateY(-1em)" : "translateY(-20em)",
           opacity: isOpen ? "1" : "0",
           transition: "transform, opacity",
           transitionDuration: ".5s, 1s",

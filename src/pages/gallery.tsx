@@ -143,7 +143,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         onResize={debounceMaxHeightCalculation}
         style={{
           backgroundImage:
-            displayedImages.length >= 6 && window.innerWidth > 2000
+            displayedImages.length >= 6 && window.innerWidth > 1500
               ? " url('/FlipMe.svg')"
               : "",
           backgroundAttachment: "fixed",
@@ -205,7 +205,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         </Backdrop>
       </section>
       {selected > -1 && (
-        <section className="fixed flex flex-col text-[5vh] z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen overflow-x-scroll snap-center scrollbar-none items-start sm:items-center">
+        <section className="fixed flex flex-col text-[5vh] z-30 sm:top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-[85vh] sm:h-screen overflow-x-scroll snap-center scrollbar-none items-start sm:items-center">
           <Slider
             items={displayedImages}
             refs={galleryRefs}
@@ -224,7 +224,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
               "fixed bottom-[.2em] self-center sm:bottom-[2vh] sm:top-auto justify-self-center z-40 sm:z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60"
             }
           />
-          <div className="relative z-30 bg-black text-white w-max sm:mx-auto mb-2 sm:mb-0 sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none items-start justify-center sm:justify-start">
+          <div className="relative z-30 bg-black text-white w-max sm:mx-auto mb-2 sm:mb-0 max-h-full overflow-y-hidden sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-center snap-mandatory scrollbar-none items-start justify-center sm:justify-start">
             {displayedImages.map((image, index) => (
               <FocusedImageCard
                 key={image._id}

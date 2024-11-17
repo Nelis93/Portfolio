@@ -1,64 +1,52 @@
 import React from "react";
-import { motion } from "framer-motion";
 
 type Props = {
-  isOpen: any;
-  setIsOpen: any;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 export default function DropDownButton({ isOpen, setIsOpen }: Props) {
-  const Path = (props: any) => {
+  const Path = ({ d, style }: { d: string; style?: React.CSSProperties }) => {
     return (
-      <motion.path
+      <path
         fill="black"
         strokeWidth="3"
         stroke="black"
         strokeLinecap="round"
-        opacity="1"
-        {...props}
+        d={d}
+        style={style}
       />
     );
   };
-  const clicked = (event: any) => {
+
+  const clicked = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.log(event.target);
-    setIsOpen((current: boolean) => !current);
-    return;
+    setIsOpen((current) => !current);
   };
+
   return (
-    <motion.button
-      className="flex flex-row justify-center items-center bg-gray-500 hover:bg-white rounded-[50%] cursor:pointer h-full w-full"
+    <button
+      className={`flex flex-row justify-center items-center bg-gray-500 hover:bg-white rounded-[50%] h-full w-full`}
       onClick={clicked}
-      animate={isOpen ? "open" : "closed"}
       style={{
-        transition: "all",
-        transitionDuration: ".3s",
+        transition: "all 0.3s ease",
+        transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
       }}
-    ><div className="absolute w-full h-full z-20 bg-transparent"></div>
+    >
+      <div className="absolute w-full h-full z-20 bg-transparent"></div>
       <svg
         width="50"
         height="50"
         style={{ color: "gray", borderRadius: "50px", padding: "4px" }}
         viewBox="-5 -5 30 30"
       >
-        <Path
-          variants={{
-            closed: { d: "M 2 2.5 L 20 2.5" },
-            open: { d: "M 3 16.5 L 17 2.5" },
-          }}
-        />
+        <Path d={isOpen ? "M 3 16.5 L 17 2.5" : "M 2 2.5 L 20 2.5"} />
         <Path
           d="M 2 9.423 L 20 9.423"
-          variants={{
-            closed: { opacity: 1 },
-            open: { opacity: 0 },
-          }}
+          style={{ opacity: isOpen ? 0 : 1, transition: "opacity 0.3s ease" }}
         />
-        <Path
-          variants={{
-            closed: { d: "M 2 16.346 L 20 16.346" },
-            open: { d: "M 3 2.5 L 17 16.346" },
-          }}
-        />
+        <Path d={isOpen ? "M 3 2.5 L 17 16.346" : "M 2 16.346 L 20 16.346"} />
       </svg>
-    </motion.button>
+    </button>
   );
 }

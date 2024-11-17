@@ -48,7 +48,7 @@ export default function FocusedImageCard({
   };
   return (
     <motion.div
-      className="relative flex flex-col sm:flex-row justify-start snap-center items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-[85vh] sm:h-full"
+      className="relative flex flex-col sm:flex-row justify-start snap-center items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-full"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       ref={(el) => {
@@ -85,8 +85,9 @@ export default function FocusedImageCard({
         style={{
           transform: dominance ? "" : "translate(-40%)",
           minWidth: dominance ? "0" : "40%",
+          pointerEvents: "none",
         }}
-        className="relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
+        className="relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start w-full sm:h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] sm:pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
       >
         <h4 className="bottom-[2em] relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
           {image.title}
