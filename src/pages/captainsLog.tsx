@@ -53,24 +53,12 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
     };
   }
 
-  // const CARDS = 10;
-  // const MAX_VISIBILITY = 3;
-
-  // const Card = ({ title, content }: any) => (
-  //   <div className="w-full h-full p-8 bg-teal-400 rounded-lg text-white shadow-lg transition-all duration-300">
-  //     <h2 className="text-2xl font-bold text-center mb-4 text-white">
-  //       {title}
-  //     </h2>
-  //     <p className="text-justify">{content}</p>
-  //   </div>
-  // );
-
   return (
     <main
       translate="no"
       className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen h-screen   overflow-y-scroll overflow-x-clip"
     >
-      <Header socials={socials} />
+      <Header socials={socials} setSelectedFilter={null} />
       <section className="flex flex-col z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen snap-center scrollbar-none items-start overflow-x-hidden sm:items-center">
         <Slider
           items={logBookEntries}
@@ -82,12 +70,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
           }
         />
 
-        <EntryCarousel
-          selected={selected}
-          setSelected={setSelected}
-          throttle={throttle}
-          debounce={debounce}
-        >
+        <EntryCarousel selected={selected} setSelected={setSelected}>
           {logBookEntries
             .sort((a, b) => a.position - b.position)
             .map((entry, index) => {

@@ -17,7 +17,7 @@ export default function EntryCard({
 
   // Track if each entry is in view
   const isInView = useInView(ref, {
-    amount: 0.5,
+    amount: 1,
     once: false,
   });
   // Update the currentIndex based on which entry is in view
@@ -26,7 +26,7 @@ export default function EntryCard({
       console.log(uniqueId);
       setSelected(uniqueId);
     }
-  }, [isInView, uniqueId]);
+  }, [isInView]);
   return (
     <motion.div
       className="w-full h-full p-8 bg-teal-400 overflow-clip rounded-lg text-white shadow-lg"
