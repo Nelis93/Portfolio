@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 
 export default function EntryCarousel({ children, selected }: any) {
   const carouselRef = useRef<HTMLElement | null>(null);

@@ -18,7 +18,6 @@ export default function Slider({
   style,
 }: Props) {
   const slide = (index: any) => {
-    console.log(index);
     refs.current[index]?.scrollIntoView({
       behavior: "smooth",
       inline: "center",

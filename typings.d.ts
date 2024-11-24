@@ -88,4 +88,5 @@ export interface LogbookEntry extends SanityBody {
   date: Date;
   entry: block[];
   position: number;
+  slug: slug;
 }

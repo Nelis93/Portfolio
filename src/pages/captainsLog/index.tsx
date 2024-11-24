@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import type { GetStaticProps } from "next";
-import { Social, LogbookEntry } from "../../typings";
+import { Social, LogbookEntry } from "../../../typings";
 import dynamic from "next/dynamic";
 import Header from "@/components/Header";
-import { fetchSocials } from "../utils/fetchSocials";
+import { fetchSocials } from "../../utils/fetchSocials";
 import { fetchLogbookEntries } from "@/utils/fetchLogbookEntries";
 import EntryCarousel from "@/components/CaptainsLog/EntryCarousel";
 import EntryCard from "@/components/CaptainsLog/EntryCard";
@@ -18,6 +18,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
   const [selected, setSelected] = useState(0);
   // const [focus, setFocus] = useState(-1);
   const logBookEntryRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   function debounce(cb: Function, delay = 1000) {
     let timeout: any;
 
@@ -56,7 +57,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
   return (
     <main
       translate="no"
-      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen h-screen   overflow-y-scroll overflow-x-clip"
+      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen h-screen   overflow-y-scroll scrollbar-none overflow-x-clip"
     >
       <Header socials={socials} setSelectedFilter={null} />
       <section className="flex flex-col z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen snap-center scrollbar-none items-start overflow-x-hidden sm:items-center">
