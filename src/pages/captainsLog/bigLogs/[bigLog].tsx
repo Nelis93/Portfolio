@@ -45,6 +45,7 @@ const components: PortableTextComponents = {
     h1: ({ children }) => <h1 className="text-2xl">{children}</h1>,
     h2: ({ children }) => <h2 className="text-xl">{children}</h2>,
     h3: ({ children }) => <h3 className="text-lg">{children}</h3>,
+    h4: () => <br />,
     blockquote: ({ children }) => (
       <blockquote className="border-l-purple-500">{children}</blockquote>
     ),
@@ -67,7 +68,10 @@ const components: PortableTextComponents = {
   listItem: {
     // Ex. 1: customizing common list types
     bullet: ({ children }) => (
-      <li style={{ listStyleType: "disclosure-closed" }}>{children}</li>
+      <li style={{ listStyleType: "disclosure-closed" }}>
+        <span>something ridiculous</span>
+        {children}
+      </li>
     ),
 
     // Ex. 2: rendering custom list items
