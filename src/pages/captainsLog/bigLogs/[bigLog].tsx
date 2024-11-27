@@ -3,6 +3,7 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import { LogbookEntry } from "../../../../typings";
 import { fetchLogbookEntries } from "@/utils/fetchLogbookEntries";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
+import { urlFor } from "../../../../sanity";
 
 type Props = {
   logBookEntries: LogbookEntry[];
@@ -12,15 +13,21 @@ const components: PortableTextComponents = {
     code: (props) => {
       const { code } = props.value;
       console.log(props.value);
-      return <div>{code}</div>;
+      return <div>test{code}</div>;
     },
-    image: ({ value }) => <img src={value.imageUrl} />,
+    image: ({ value }) => <img src={urlFor(value).url()} />,
     callToAction: ({ value, isInline }) =>
       isInline ? (
         <a href={value.url}>{value.text}</a>
       ) : (
         <div className="callToAction">{value.text}</div>
       ),
+    break: () => (
+      <span>
+        <br />
+        <br />
+      </span>
+    ),
   },
   marks: {
     // Ex. 1: custom renderer for the em / italics decorator
@@ -39,20 +46,20 @@ const components: PortableTextComponents = {
         </a>
       );
     },
+    break: () => (
+      <span>
+        <br />
+        <br />
+      </span>
+    ),
   },
   block: {
     // Ex. 1: customizing common block types
     h1: ({ children }) => <h1 className="text-2xl">{children}</h1>,
     h2: ({ children }) => <h2 className="text-xl">{children}</h2>,
     h3: ({ children }) => <h3 className="text-lg">{children}</h3>,
-    h4: () => <br />,
     blockquote: ({ children }) => (
       <blockquote className="border-l-purple-500">{children}</blockquote>
-    ),
-
-    // Ex. 2: rendering custom styles
-    customHeading: ({ children }) => (
-      <h2 className="text-lg text-primary text-purple-700">{children}</h2>
     ),
   },
   list: {
@@ -68,10 +75,7 @@ const components: PortableTextComponents = {
   listItem: {
     // Ex. 1: customizing common list types
     bullet: ({ children }) => (
-      <li style={{ listStyleType: "disclosure-closed" }}>
-        <span>something ridiculous</span>
-        {children}
-      </li>
+      <li style={{ listStyleType: "disclosure-closed" }}>{children}</li>
     ),
 
     // Ex. 2: rendering custom list items
@@ -83,9 +87,6 @@ export default function BigLog({ logBookEntries }: Props) {
   const logEntry = logBookEntries.find(
     (entry) => entry.slug.current == router.query.bigLog
   );
-  const testi = logEntry?.entry.map((child) => {
-    return child.children[0].text;
-  });
   return (
     <div className="min-h-screen bg-black text-gray-800 p-6 sm:p-12">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
@@ -112,11 +113,8 @@ export default function BigLog({ logBookEntries }: Props) {
 
         {/* Article Content */}
         <article className="p-6">
-          <div className="prose max-w-none prose-purple">
+          <div className="text-lg">
             <PortableText value={logEntry?.entry} components={components} />
-            {/* {logEntry?.entry.map((child) => {
-              return child[0].text;
-            })} */}
           </div>
         </article>
       </div>

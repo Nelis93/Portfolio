@@ -1,12 +1,6 @@
 // import { defineField, defineType } from "../../node_modules/sanity";
-import { defineField, defineType } from "@sanity/types";
-
-// const HighlightIcon = () => (
-//   <span style={{ fontWeight: 'bold' }}>H</span>
-// )
-// const HighlightDecorator = props => (
-//   <span style={{ backgroundColor: 'yellow' }}>{props.children}</span>
-// )
+import { defineField, defineType, defineArrayMember } from "@sanity/types";
+import { EnterIcon } from "@sanity/icons";
 
 export default defineType({
   name: "logbookEntry",
@@ -38,16 +32,13 @@ export default defineType({
       title: "Entry",
       type: "array",
       of: [
-        {
+        defineArrayMember({
           type: "block",
           styles: [
             { title: "Normal", value: "normal" },
             { title: "H1", value: "h1" },
             { title: "H2", value: "h2" },
             { title: "H3", value: "h3" },
-            { title: "H4", value: "h4" },
-            { title: "H5", value: "h5" },
-            { title: "H6", value: "h6" },
             { title: "Quote", value: "blockquote" },
           ],
           marks: {
@@ -55,6 +46,11 @@ export default defineType({
               { title: "Strong", value: "strong" },
               { title: "Emphasis", value: "em" },
               { title: "Code", value: "code" },
+              {
+                title: "Break",
+                value: "break",
+                icon: EnterIcon,
+              },
             ],
             annotations: [
               {
@@ -68,6 +64,7 @@ export default defineType({
                     title: "Reference",
                     to: [
                       { type: "image" },
+                      { type: "url" },
                       // other types you may want to link to
                     ],
                   },
@@ -75,10 +72,12 @@ export default defineType({
               },
             ],
           },
-        },
-        {
+        }),
+        defineArrayMember({
           type: "image",
-        },
+          name: "image",
+          title: "Image",
+        }),
       ],
     }),
     defineField({
