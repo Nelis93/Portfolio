@@ -1,33 +1,25 @@
 import { useRouter } from "next/router";
 import type { GetStaticPaths, GetStaticProps } from "next";
-import { LogbookEntry } from "../../../../typings";
+import { LogbookEntry, Social } from "../../../../typings";
 import { fetchLogbookEntries } from "@/utils/fetchLogbookEntries";
+import { fetchSocials } from "@/utils/fetchSocials";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { urlFor } from "../../../../sanity";
+import Header from "@/components/Header";
 
 type Props = {
+  socials: Social[];
   logBookEntries: LogbookEntry[];
 };
 const components: PortableTextComponents = {
   types: {
-    code: (props) => {
-      const { code } = props.value;
-      console.log(props.value);
-      return <div>test{code}</div>;
-    },
     image: ({ value }) => <img src={urlFor(value).url()} />,
-    callToAction: ({ value, isInline }) =>
-      isInline ? (
-        <a href={value.url}>{value.text}</a>
-      ) : (
-        <div className="callToAction">{value.text}</div>
-      ),
-    break: () => (
-      <span>
-        <br />
-        <br />
-      </span>
-    ),
+    // break: () => (
+    //   <span>
+    //     <br />
+    //     <br />
+    //   </span>
+    // ),
   },
   marks: {
     // Ex. 1: custom renderer for the em / italics decorator
@@ -41,7 +33,12 @@ const components: PortableTextComponents = {
         ? "_blank"
         : undefined;
       return (
-        <a href={value?.href} target={target}>
+        <a
+          href={value?.href}
+          target={target}
+          rel={"noindex nofollow"}
+          className="text-blue-800 underline hover:text-teal-700"
+        >
           {children}
         </a>
       );
@@ -82,49 +79,65 @@ const components: PortableTextComponents = {
     checkmarks: ({ children }) => <li>✅ {children}</li>,
   },
 };
-export default function BigLog({ logBookEntries }: Props) {
+export default function BigLog({ logBookEntries, socials }: Props) {
   const router = useRouter();
+  // Handle fallback loading state
+  if (router.isFallback) {
+    return (
+      <div className="h-screen flex justify-center items-center text-white">
+        Loading...
+      </div>
+    );
+  }
+
+  // Find the specific log entry
   const logEntry = logBookEntries.find(
     (entry) => entry.slug.current == router.query.bigLog
   );
+
+  // Handle case where logEntry is not found
+  if (!logEntry) {
+    return (
+      <div className="h-screen flex justify-center items-center text-white">
+        Entry not found.
+      </div>
+    );
+  }
   return (
-    <div className="min-h-screen bg-black text-gray-800 p-6 sm:p-12">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-        {/* Article Header */}
-        <header className="bg-gradient-to-r from-teal-600 to-teal-300 text-white py-8 px-6">
-          <h1 className="text-4xl font-bold mb-2">{logEntry?.title}</h1>
-          <div className="flex items-center text-sm space-x-4">
-            <span>
-              <strong>Author:</strong>
-            </span>
-            <span>
-              <strong>Date: </strong>
+    <main className="h-screen max-w-screen bg-black overflow-y-scroll overflow-x-hidden scrollbar-none">
+      <Header socials={socials} setSelectedFilter={""} />
+      <div className="min-h-screen text-gray-800 p-6 sm:p-12">
+        <article className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          {/* Article Header */}
+          <header className="relative min-h-[8em] bg-gradient-to-r from-teal-600 to-teal-300 text-white py-8 px-6">
+            <h1 className="text-4xl font-bold mb-2">{logEntry?.title}</h1>
+            <div className="absolute bottom-0 py-2 text-sm space-x-4">
               {logEntry && new Date(logEntry.date).toDateString()}
-            </span>
-          </div>
-        </header>
+            </div>
+          </header>
 
-        {/* Article Summary */}
-        <section className="p-6 border-b border-gray-200">
-          <p className="text-lg text-gray-600 italic">
-            {logEntry?.description}
-          </p>
-        </section>
+          {/* Article Summary */}
+          <section className="p-6 border-b border-gray-200">
+            <p className="text-lg text-gray-600 italic">
+              {logEntry?.description}
+            </p>
+          </section>
 
-        {/* Article Content */}
-        <article className="p-6">
-          <div className="text-lg">
-            <PortableText value={logEntry?.entry} components={components} />
-          </div>
+          {/* Article Content */}
+          <section className="p-6">
+            <div className="text-lg">
+              <PortableText value={logEntry?.entry} components={components} />
+            </div>
+          </section>
         </article>
       </div>
-    </div>
+    </main>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const logBookEntries: LogbookEntry[] = await fetchLogbookEntries();
-
+  const socials: Social[] = await fetchSocials();
   // Create paths for each entry
   const paths = logBookEntries.map((entry) => ({
     params: { bigLog: entry.slug.current }, // Ensure `id` corresponds to the dynamic [bigLog] param
@@ -132,16 +145,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: true, // Enable fallback for paths not generated at build time
+    fallback: "blocking",
   };
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const logBookEntries: LogbookEntry[] = await fetchLogbookEntries();
-
+  const socials: Social[] = await fetchSocials();
   return {
     props: {
       logBookEntries,
+      socials,
     },
     revalidate: 10,
   };

@@ -77,6 +77,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
             .map((entry, index) => {
               return (
                 <EntryCard
+                  key={entry._id}
                   uniqueId={index}
                   logBookEntry={entry}
                   logBookEntryRefs={logBookEntryRefs}

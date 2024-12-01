@@ -1,6 +1,7 @@
 // import { defineField, defineType } from "../../node_modules/sanity";
 import { defineField, defineType, defineArrayMember } from "@sanity/types";
 import { EnterIcon } from "@sanity/icons";
+import { LinkIcon } from "@sanity/icons";
 
 export default defineType({
   name: "logbookEntry",
@@ -54,19 +55,15 @@ export default defineType({
             ],
             annotations: [
               {
-                name: "internalLink",
+                title: "URL",
+                name: "link",
                 type: "object",
-                title: "Internal link",
+                icon: LinkIcon,
                 fields: [
                   {
-                    name: "reference",
-                    type: "reference",
-                    title: "Reference",
-                    to: [
-                      { type: "image" },
-                      { type: "url" },
-                      // other types you may want to link to
-                    ],
+                    title: "URL",
+                    name: "href",
+                    type: "url",
                   },
                 ],
               },

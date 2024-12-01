@@ -20,11 +20,6 @@ type Props = {
 
 function Header({ socials, setSelectedFilter }: Props) {
   const router = useRouter();
-  const [isGalleryPage, setIsGalleryPage] = useState(false);
-
-  useEffect(() => {
-    setIsGalleryPage(router.pathname.includes("gallery"));
-  }, [router.pathname]);
 
   // Define the icon map for general use
   const iconMap: { [key: string]: React.ElementType } = {
@@ -54,7 +49,7 @@ function Header({ socials, setSelectedFilter }: Props) {
         {socials
           .sort((a, b) => a.position - b.position)
           .filter((social) => {
-            const taggie = isGalleryPage ? "FaCameraRetro" : "FaHome";
+            const taggie = router.pathname === "/" ? "FaHome" : "FaCameraRetro";
             return social.tag != taggie;
           })
           .map((social) => {
@@ -87,7 +82,7 @@ function Header({ socials, setSelectedFilter }: Props) {
         }}
         className="flex flex-row items-center text-gray-300 cursor-pointer space-x-4"
       >
-        {window.location.href.includes("gallery") && (
+        {router.pathname.includes("gallery") && (
           <DropDownFilter setSelectedFilter={setSelectedFilter} />
         )}
         <Link href="/#contact" className="social-icon">
