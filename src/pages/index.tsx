@@ -33,8 +33,12 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
     >
       <Head>
         <title>{pageInfo?.title} Portfolio</title>
+        <meta
+          name="description"
+          content="I'm the CEO of SEO. Have a look at my website 🙂."
+        />
       </Head>
-      <Header socials={socials} setSelectedFilter={''}/>
+      <Header socials={socials} setSelectedFilter={""} />
       <section id="hero" className="snap-start">
         <Hero pageInfo={pageInfo} />
       </section>

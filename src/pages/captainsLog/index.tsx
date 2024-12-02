@@ -60,7 +60,10 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
       className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen h-screen   overflow-y-scroll scrollbar-none overflow-x-clip"
     >
       <Header socials={socials} setSelectedFilter={null} />
-      <section className="flex flex-col z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-screen snap-center scrollbar-none items-start overflow-x-hidden sm:items-center">
+      <section className="flex flex-col z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-auto snap-center scrollbar-none items-start overflow-x-hidden sm:items-center">
+        <h1 className="text-[2em]">
+          These are some writings for when you're free 🦅
+        </h1>
         <Slider
           items={logBookEntries}
           refs={logBookEntryRefs}

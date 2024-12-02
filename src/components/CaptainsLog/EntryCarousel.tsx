@@ -14,7 +14,7 @@ export default function EntryCarousel({ children, selected }: any) {
   // };
   return (
     <div
-      className="relative z-30 bg-black text-white w-2/3 sm:mx-auto mb-2 sm:mb-0 sm:h-[80vh] flex flex-row overflow-x-scroll snap-x snap-mandatory scrollbar-none items-center justify-center sm:justify-start"
+      className="relative z-30 text-white w-2/3 max-w-[60em] sm:mx-auto mb-2 sm:mb-0 sm:h-[60vh] flex flex-row overflow-x-scroll snap-x snap-mandatory scrollbar-none items-center justify-center sm:justify-start"
       style={{ perspective: "500px", transformStyle: "preserve-3d" }}
     >
       <div className="relative min-w-[23rem] h-[23rem]"></div>
