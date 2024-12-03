@@ -127,6 +127,7 @@ export interface GalleryImage extends SanityBody {
   dateTaken: Date;
   people: string[];
   position: number;
+  linkToPost: reference;
 }
 export interface LogbookEntry extends SanityBody {
   _type: "logbookEntry";

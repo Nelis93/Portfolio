@@ -30,7 +30,17 @@ export default function EntryCard({
   return (
     <Link href={`captainsLog/bigLogs/${logBookEntry.slug.current}`}>
       <motion.div
-        className="relative flex flex-col items-center w-full h-full p-8 bg-gradient-to-b from-stone-600 to-yellow-950 overflow-clip rounded-lg text-white"
+        className="relative flex flex-col items-center w-full h-full p-8 bg-gradient-to-b from-stone-600 to-slate-700 overflow-clip rounded-lg text-white"
+        style={{
+          // width: "100%",
+          // height: "100%",
+          padding: "2rem",
+          // backgroundColor: "hsl(280deg, 40%, 80%)", // Purple color with a dynamic lightness
+          // borderRadius: "1rem",
+          // color: "#9CA3AF", // Gray color
+          textAlign: "justify",
+          transition: "all 0.3s ease-out",
+        }}
         ref={(el) => {
           ref.current = el;
           logBookEntryRefs.current[uniqueId] = el;

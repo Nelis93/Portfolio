@@ -14,12 +14,6 @@ type Props = {
 const components: PortableTextComponents = {
   types: {
     image: ({ value }) => <img src={urlFor(value).url()} />,
-    // break: () => (
-    //   <span>
-    //     <br />
-    //     <br />
-    //   </span>
-    // ),
   },
   marks: {
     // Ex. 1: custom renderer for the em / italics decorator
@@ -43,8 +37,9 @@ const components: PortableTextComponents = {
         </a>
       );
     },
-    break: () => (
+    break: ({ value, children }) => (
       <span>
+        {children}
         <br />
         <br />
       </span>

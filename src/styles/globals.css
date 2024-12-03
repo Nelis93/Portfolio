@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.card-container {
+  transform: rotateY(calc(var(--offset) * 50deg))
+    scaleY(calc(1 + var(--abs-offset) * -0.4))
+    translateZ(calc(var(--abs-offset) * -30rem))
+    translateX(calc(var(--direction) * -5rem));
+}
 @layer components {
   .heroButton {
     @apply px-6 py-2 m-2 bg-teal-600 border border-white rounded-full uppercase text-[2vh] tracking-widest text-gray-50 transition-all hover:border-white/40 hover:text-white/40;
@@ -21,7 +27,7 @@
   .expCardReg-small-flipped {
     @apply max-w-full flex-row;
   }
-    .social-icon {
+  .social-icon {
     @apply flex justify-center items-center hover:bg-white  size-[1.2em]  rounded-[50px]  text-gray-500 transition-colors duration-[.3s];
   }
 }

@@ -4,6 +4,7 @@ import { urlFor } from "../../../sanity";
 import { GalleryImage } from "typings";
 import { TfiClose } from "react-icons/tfi";
 import { IconContext } from "react-icons";
+import Link from "next/link";
 
 type Props = {
   image: GalleryImage;
@@ -89,10 +90,12 @@ export default function FocusedImageCard({
         }}
         className="relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start w-full sm:h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] sm:pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
       >
-        <h4 className="bottom-[2em] relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
-          {image.title}
-        </h4>
-        <p className="hidden sm:block  text-[.7em] lg:text-[.5em] max-w-full overflow-scroll scrollbar-none  lg:max-h-[70%] ">
+        <Link href={"en.wikipedia.org"} className="z-50">
+          <h4 className="bottom-[2em] z-50 relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
+            {image.title}
+          </h4>
+        </Link>
+        <p className="hidden sm:block text-[.7em] lg:text-[.5em] max-w-full overflow-scroll scrollbar-none  lg:max-h-[70%] ">
           {image.description}
         </p>
         <p className="absolute bg-black text-[.6em] sm:text-[.7em] lg:text-[.5em] bottom-4 text-right right-4 italic">

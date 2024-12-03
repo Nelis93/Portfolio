@@ -60,7 +60,19 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
       className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen h-screen   overflow-y-scroll scrollbar-none overflow-x-clip"
     >
       <Header socials={socials} setSelectedFilter={null} />
-      <section className="flex flex-col z-30 top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-auto snap-center scrollbar-none items-start overflow-x-hidden sm:items-center">
+      <section
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100vw",
+          height: "100vh",
+          // backgroundImage: "linear-gradient(45deg, #8B5CF6, #EC4899)", // Gradient from purple to pink
+          fontFamily: "'Montserrat', sans-serif",
+          overflow: "hidden",
+        }}
+        className="flex flex-col z-30 top-0 justify-center w-full lg:px-auto h-full snap-center scrollbar-none items-start overflow-x-hidden sm:items-center"
+      >
         <h1 className="text-[2em]">
           These are some writings for when you're free 🦅
         </h1>

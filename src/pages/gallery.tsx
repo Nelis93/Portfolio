@@ -78,6 +78,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       return;
     }
     setPage(1);
+    console.log(filteredImages().slice(0, 9));
     setDisplayedImages(filteredImages().slice(0, 9));
   }, [selected]);
   const extraCards = () => {

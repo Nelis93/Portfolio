@@ -31,6 +31,12 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "linkToPost",
+      title: "LinkToPost",
+      type: "reference",
+      to: { type: "logbookEntry" },
+    }),
+    defineField({
       name: "peopleInPicture",
       title: "Friends",
       type: "array",
