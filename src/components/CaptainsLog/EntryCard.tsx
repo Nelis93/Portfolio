@@ -17,16 +17,16 @@ export default function EntryCard({
   const ref = useRef<HTMLElement | null>(null);
 
   // Track if each entry is in view
-  const isInView = useInView(ref, {
-    amount: 1,
-    once: false,
-  });
-  // Update the currentIndex based on which entry is in view
-  useEffect(() => {
-    if (isInView) {
-      setSelected(uniqueId);
-    }
-  }, [isInView]);
+  // const isInView = useInView(ref, {
+  //   amount: 1,
+  //   once: false,
+  // });
+  // // Update the currentIndex based on which entry is in view
+  // useEffect(() => {
+  //   if (isInView) {
+  //     setSelected(uniqueId);
+  //   }
+  // }, [isInView]);
   return (
     <Link href={`captainsLog/bigLogs/${logBookEntry.slug.current}`}>
       <motion.div
