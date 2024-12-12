@@ -4,21 +4,21 @@ type EntryCarouselProps = {
   children: React.ReactElement<{ _id: string }>[];
   selected: number;
   setSelected: any; // Callback to update the selected card
-  throttle: any;
+  debounce: any;
 };
 
 export default function EntryCarousel({
   children,
   selected,
   setSelected,
-  throttle,
+  debounce,
 }: EntryCarouselProps) {
   const [scrollPos, setScrollPos] = useState({ a: 0, b: 0 });
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const MAX_VISIBILITY = 3;
   const setScrollPosition = (event: any) => {
     setScrollPos((current) => {
-      if (current.a < event) {
+      if (Math.sign(event) > 0) {
         console.log("pos");
         return { a: event, b: 1 };
       }
@@ -26,50 +26,61 @@ export default function EntryCarousel({
       return { a: event, b: -1 };
     });
   };
-  const handleScroll = throttle(() => {
-    if (!carouselRef.current) return;
-    console.log(
-      "carouselRef.current!.scrollLeft: ",
-      carouselRef.current.scrollLeft
-    );
-    setScrollPosition(carouselRef.current.scrollLeft);
-    // setScrollPos((curr) => {
-    //   if(curr > carouselRef.current.scrollLeft){
-    //     return
-    //   }
-    // })
-    // const cards = Array.from(carouselRef.current.children) as HTMLElement[];
-    // let minDiff = Infinity;
-    // let closestIndex = 0;
+  // const handleScroll = useCallback(
+  //   debounce(() => {
+  //     if (!carouselRef.current) return;
+  //     console.log(
+  //       "carouselRef.current!.scrollLeft: ",
+  //       carouselRef.current.scrollLeft
+  //     );
 
-    // cards.forEach((card, index) => {
-    //   const cardCenter =
-    //     card.offsetLeft +
-    //     card.offsetWidth / 2 -
-    //     carouselRef.current!.scrollLeft;
-    //   const containerCenter = carouselRef.current!.offsetWidth / 2;
-    //   const diff = Math.abs(cardCenter - containerCenter);
-    //   console.log(index, " : cardCenter: ", cardCenter);
-    //   console.log(index, " : diff: ", diff);
-    //   if (diff < minDiff) {
-    //     minDiff = diff;
-    //     closestIndex = index;
-    //   }
-    // });
+  //     // setScrollPos((curr) => {
+  //     //   if(curr > carouselRef.current.scrollLeft){
+  //     //     return
+  //     //   }
+  //     // })
+  //     // const cards = Array.from(carouselRef.current.children) as HTMLElement[];
+  //     // let minDiff = Infinity;
+  //     // let closestIndex = 0;
 
-    // if (closestIndex !== selected) {
-    //   setSelected(closestIndex);
-    // }
-  }, 5000);
+  //     // cards.forEach((card, index) => {
+  //     //   const cardCenter =
+  //     //     card.offsetLeft +
+  //     //     card.offsetWidth / 2 -
+  //     //     carouselRef.current!.scrollLeft;
+  //     //   const containerCenter = carouselRef.current!.offsetWidth / 2;
+  //     //   const diff = Math.abs(cardCenter - containerCenter);
+  //     //   console.log(index, " : cardCenter: ", cardCenter);
+  //     //   console.log(index, " : diff: ", diff);
+  //     //   if (diff < minDiff) {
+  //     //     minDiff = diff;
+  //     //     closestIndex = index;
+  //     //   }
+  //     // });
 
+  //     // if (closestIndex !== selected) {
+  //     //   setSelected(closestIndex);
+  //     // }
+  //   }, 100),
+  //   [selected, setSelected]
+  // );
+  const handleWheel = debounce((event: any) => {
+    setScrollPosition(event.deltaY);
+    console.log(event.deltaY);
+  }, 100);
   useEffect(() => {
-    if (scrollPos.b === 1) {
+    console.log("selected: ", selected);
+    console.log("#children: ", children.length);
+    if (scrollPos.b === 1 && selected < children.length - 1) {
       console.log("useEffect: pos ", scrollPos.b);
-      // setSelected((current: any) => current + 1);
+      setSelected((current: any) => current + 1);
       return;
+    } else if (scrollPos.b === -1 && selected > 0) {
+      setSelected((current: any) => current - 1);
+      console.log("useEffect: neg ", scrollPos.b);
+    } else {
+      setSelected(0);
     }
-    // setSelected((current: any) => current - 1);
-    console.log("useEffect: neg ", scrollPos.b);
   }, [scrollPos]);
   // 2;
 
@@ -77,7 +88,8 @@ export default function EntryCarousel({
     <div
       className="relative z-30 text-white w-2/3 max-w-[60em] sm:mx-auto mb-2 sm:mb-0 sm:h-[60vh] flex flex-row overflow-x-scroll snap-x snap-mandatory scrollbar-none items-center justify-center"
       ref={carouselRef}
-      onScroll={handleScroll}
+      // onScroll={handleScroll}
+      onWheel={handleWheel}
       // className="text-white     flex flex-row overflow-x-scroll snap-x snap-mandatory scrollbar-none items-center justify-center sm:justify-start"
       style={{
         position: "relative",

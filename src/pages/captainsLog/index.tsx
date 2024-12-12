@@ -89,7 +89,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
         <EntryCarousel
           selected={selected}
           setSelected={setSelected}
-          throttle={throttle}
+          debounce={debounce}
         >
           {logBookEntries
             .sort((a, b) => a.position - b.position)
