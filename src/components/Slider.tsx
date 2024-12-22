@@ -8,6 +8,7 @@ type Props = {
   currentIndex: any;
   setCurrentIndex: any;
   style: any;
+  scrolling: boolean;
 };
 
 export default function Slider({
@@ -16,6 +17,7 @@ export default function Slider({
   currentIndex,
   setCurrentIndex,
   style,
+  scrolling,
 }: Props) {
   const slide = (index: any) => {
     refs.current[index]?.scrollIntoView({
@@ -27,14 +29,14 @@ export default function Slider({
     event?.stopPropagation();
     const nextIndex = currentIndex + 1 === items.length ? 0 : currentIndex + 1;
     setCurrentIndex(nextIndex);
-    slide(nextIndex);
+    scrolling ?? slide(nextIndex);
   };
   const handlePrevious = (event: any) => {
     event?.stopPropagation();
     const prevIndex =
       currentIndex - 1 < 0 ? items.length - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
-    slide(prevIndex);
+    scrolling ?? slide(prevIndex);
   };
   return (
     <div className={style}>

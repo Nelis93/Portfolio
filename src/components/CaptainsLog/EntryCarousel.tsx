@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from "react";
 type EntryCarouselProps = {
   children: React.ReactElement<{ _id: string }>[];
   selected: number;
-  setSelected: any; // Callback to update the selected card
+  setSelected: any;
   debounce: any;
 };
 
@@ -34,11 +34,12 @@ export default function EntryCarousel({
   }, 100);
   const handleMouseEnter = () => {
     console.log("entered");
+    carouselRef.current?.addEventListener("wheel", handleWheel);
     setUserPos(true);
   };
   const handleMouseLeave = () => {
     setUserPos(false);
-
+    carouselRef.current?.removeEventListener("wheel", handleWheel);
     console.log("left");
   };
   useEffect(() => {
@@ -55,37 +56,43 @@ export default function EntryCarousel({
       // console.log("end of line");
       carouselRef.current?.removeEventListener("wheel", handleWheel);
       // setSelected(0);
+    } else if (scrollPos.b === -1 && selected === 0) {
+      // console.log("end of line");
+      carouselRef.current?.removeEventListener("wheel", handleWheel);
+      // setSelected(0);
     }
   }, [scrollPos]);
-  useEffect(() => {
-    // console.log(userPos);
-    if (userPos && selected === children.length - 1 && scrollPos.b === 1) {
-      carouselRef.current?.removeEventListener("wheel", handleWheel);
-      console.log("eventlistener unmount");
-    } else if (
-      userPos &&
-      selected === children.length - 1 &&
-      scrollPos.b === -1
-    ) {
-      console.log("eventlistener mount");
-      carouselRef.current?.addEventListener("wheel", handleWheel);
-    } else if (userPos && selected === 0 && scrollPos.b === -1) {
-      console.log("eventlistener unmount");
-      carouselRef.current?.removeEventListener("wheel", handleWheel);
-    } else if (userPos && selected === 0 && scrollPos.b === 1) {
-      console.log("eventlistener mount");
-      carouselRef.current?.addEventListener("wheel", handleWheel);
-    }
-  }, [userPos, selected]);
+  // useEffect(() => {
+  //   // console.log(userPos);
+  //   if (userPos && selected === children.length - 1 && scrollPos.b === 1) {
+  //     carouselRef.current?.removeEventListener("wheel", handleWheel);
+  //     console.log("eventlistener unmount");
+  //   } else if (
+  //     userPos &&
+  //     selected === children.length - 1 &&
+  //     scrollPos.b === -1
+  //   ) {
+  //     console.log("eventlistener mount");
+  //     carouselRef.current?.addEventListener("wheel", handleWheel);
+  //   } else if (userPos && selected === 0 && scrollPos.b === -1) {
+  //     console.log("eventlistener unmount");
+  //     carouselRef.current?.removeEventListener("wheel", handleWheel);
+  //   } else if (userPos && selected === 0 && scrollPos.b === 1) {
+  //     console.log("eventlistener mount");
+  //     carouselRef.current?.addEventListener("wheel", handleWheel);
+  //   } else {
+  //     console.log("");
+  //   }
+  // }, [userPos, selected]);
   return (
     <div
-      className="relative bg-red-500 text-white w-2/3 max-w-[60em] sm:mx-auto mb-2 sm:mb-0 sm:h-[60vh] sm:max-h-[30em] flex flex-row overflow-x-scroll snap-x snap-mandatory scrollbar-none items-center justify-center"
+      className=" z-30 text-white w-full top-0 sm:mx-auto mb-2 sm:mb-0 sm:h-[60vh] sm:max-h-[30em] flex flex-row overflow-x-hidden items-center justify-center"
       ref={carouselRef}
       // onWheel={handleWheel}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        position: "relative",
+        position: "sticky",
         perspective: "500px",
         transformStyle: "preserve-3d",
       }}
@@ -114,7 +121,6 @@ export default function EntryCarousel({
               opacity: Math.abs(selected - i) >= MAX_VISIBILITY ? 0 : 1,
               display: "block",
               zIndex: Math.abs(selected - i) * -1,
-              scrollSnapAlign: "center",
             }}
           >
             {child}

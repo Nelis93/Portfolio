@@ -60,23 +60,9 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
       className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen   overflow-y-scroll scrollbar-none overflow-x-clip"
     >
       <Header socials={socials} setSelectedFilter={null} />
-      <section
-        // style={
-        //   {
-        //     display: "flex",
-        //     alignItems: "center",
-        //     justifyContent: "center",
-        //     width: "100vw",
-        //     height: "100vh",
-        //     backgroundImage: "linear-gradient(45deg, #8B5CF6, #EC4899)", // Gradient from purple to pink
-        //     fontFamily: "'Montserrat', sans-serif",
-        //     overflow: "hidden",
-        //   }
-        // }
-        className="relative flex flex-col justify-center w-full lg:px-auto h-screen scrollbar-none items-start overflow-x-hidden sm:items-center"
-      >
+      <section className="relative flex flex-col justify-center w-full lg:px-auto h-screen scrollbar-none items-start overflow-x-hidden sm:items-center">
         <h1 className="text-[2em]">
-          These are some writings for when you're free 🦅
+          {/* These are some writings for when you're free 🦅 */}
         </h1>
         <Slider
           items={logBookEntries}
@@ -86,27 +72,30 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
           style={
             "absolute hidden sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2"
           }
+          scrolling={false}
         />
-
-        <EntryCarousel
-          selected={selected}
-          setSelected={setSelected}
-          debounce={debounce}
-        >
-          {logBookEntries
-            .sort((a, b) => a.position - b.position)
-            .map((entry, index) => {
-              return (
-                <EntryCard
-                  key={entry._id}
-                  uniqueId={index}
-                  logBookEntry={entry}
-                  logBookEntryRefs={logBookEntryRefs}
-                  setSelected={setSelected}
-                />
-              );
-            })}
-        </EntryCarousel>
+        <div className="relative text-white w-2/3 max-w-[60em] sm:h-[60vh] sm:max-h-[30em] overflow-y-scroll scrollbar-none">
+          <EntryCarousel
+            selected={selected}
+            setSelected={setSelected}
+            debounce={debounce}
+          >
+            {logBookEntries
+              .sort((a, b) => a.position - b.position)
+              .map((entry, index) => {
+                return (
+                  <EntryCard
+                    key={entry._id}
+                    uniqueId={index}
+                    logBookEntry={entry}
+                    logBookEntryRefs={logBookEntryRefs}
+                    setSelected={setSelected}
+                  />
+                );
+              })}
+          </EntryCarousel>
+          <div className="relative text-white w-full h-[200vh] "></div>
+        </div>
       </section>
       <section className="relative">
         <div className="h-screen w-screen bg-black "></div>

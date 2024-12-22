@@ -32,6 +32,7 @@ export default function Projects({ projects }: Props) {
         style={
           "absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]"
         }
+        scrolling
       />
       {/* Projects Carousel */}
       <div

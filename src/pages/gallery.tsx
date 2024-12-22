@@ -215,6 +215,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
             style={
               "fixed z-20 hidden sm:flex flex-row justify-between items-center h-full bg-opacity-50 bg-black w-screen"
             }
+            scrolling
           />
           <Dots
             items={displayedImages}
