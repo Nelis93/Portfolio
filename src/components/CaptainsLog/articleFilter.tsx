@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
 import { LogbookEntry } from "typings";
 import Link from "next/link";
-import { set } from "sanity";
+import { FaSearch } from "react-icons/fa";
+import { IconContext } from "react-icons";
 
 type ArticleFilterProps = {
   logBookEntries: LogbookEntry[];
@@ -25,7 +25,7 @@ export default function ArticleFilter({ logBookEntries }: ArticleFilterProps) {
     console.log(value);
     const matches = findMatches(value, logBookEntries);
     setFilteredEntries(matches);
-    !isOpen && setIsOpen(true);
+    value.length > 0 ? setIsOpen(true) : setIsOpen(false);
   }
 
   function handleKeyUp(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -64,18 +64,37 @@ export default function ArticleFilter({ logBookEntries }: ArticleFilterProps) {
 
   return (
     <div>
-      <form className="max-w-96 my-[50px]">
-        <input
-          type="text"
-          className="m-0 p-[20px] h-5 text-center text-2xl shadow-sm border-solid border-[10px] w-[120%] left-[-10%] relative top-[10px] z-20 border-[#F7F7F7] rounded-s"
-          placeholder="title or word"
-          value={query}
-          onChange={handleInputChange}
-          onKeyUp={handleKeyUp}
-          onClick={() => setIsOpen(true)}
-        />
+      <form className="relative w-[20em] my-[50px]">
+        <div className="relative w-full z-20">
+          <input
+            type="text"
+            className="m-0 p-[20px] h-3 w-full text-center text-xl shadow-sm border-solid border-[10px] relative border-[#F7F7F7] rounded-s"
+            placeholder="title or word from description"
+            value={query}
+            onChange={handleInputChange}
+            onKeyUp={handleKeyUp}
+            onClick={() => setIsOpen(true)}
+          />
+          <IconContext.Provider
+            value={{
+              style: {
+                position: "absolute",
+                top: "0",
+                color: "gray",
+                backgroundColor: "white",
+                height: "90%",
+                width: "3em",
+                padding: "0.5em",
+                right: "1em",
+                display: isOpen ? "none" : "block",
+              },
+            }}
+          >
+            <FaSearch />
+          </IconContext.Provider>
+        </div>
         <ul
-          className="relative m-0 p-0"
+          className="relative w-full left-[-10%] top-[10px] z-20"
           style={{ display: isOpen ? "block" : "none" }}
         >
           {filteredEntries.length > 0 ? (

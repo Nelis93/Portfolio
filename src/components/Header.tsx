@@ -6,6 +6,7 @@ import {
   FaCameraRetro,
   FaHome,
   FaEnvelope,
+  FaBookDead,
 } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import { motion } from "framer-motion";
@@ -27,10 +28,11 @@ function Header({ socials, setSelectedFilter }: Props) {
     FaFacebookF: FaFacebookF,
     FaCameraRetro: FaCameraRetro,
     FaHome: FaHome,
+    FaBookDead: FaBookDead,
   };
 
   return (
-    <header className="text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] sticky top-0 p-5 flex items-start justify-between z-20">
+    <header className="text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] sticky top-0 p-5 flex items-start justify-between z-30">
       <motion.div
         initial={{
           x: -500,

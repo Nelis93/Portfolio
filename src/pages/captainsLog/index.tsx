@@ -89,7 +89,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
                     uniqueId={index}
                     logBookEntry={entry}
                     logBookEntryRefs={logBookEntryRefs}
-                    setSelected={setSelected}
+                    style={""}
                   />
                 );
               })}

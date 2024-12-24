@@ -1,21 +1,22 @@
-import React, { useRef, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 type Props = {
   uniqueId: number;
-  setSelected: any;
   logBookEntryRefs: any;
   logBookEntry: any;
+  style: string;
 };
 export default function EntryCard({
   uniqueId,
-  setSelected,
   logBookEntryRefs,
   logBookEntry,
+  style,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
-
+  const url = window.location.href;
+  console.log(url);
   // Track if each entry is in view
   // const isInView = useInView(ref, {
   //   amount: 1,
@@ -28,17 +29,10 @@ export default function EntryCard({
   //   }
   // }, [isInView]);
   return (
-    <Link href={`captainsLog/bigLogs/${logBookEntry.slug.current}`}>
+    <Link href={`${url}/${logBookEntry.slug.current}`} className={style || ""}>
       <motion.div
-        className="relative flex flex-col items-center w-full h-full p-8 bg-gradient-to-b from-stone-600 to-slate-700 overflow-clip rounded-lg text-white"
+        className="relative flex flex-col text-justify items-center w-full h-full p-8 bg-gradient-to-b from-stone-600 to-slate-700 overflow-clip rounded-lg text-white"
         style={{
-          // width: "100%",
-          // height: "100%",
-          padding: "2rem",
-          // backgroundColor: "hsl(280deg, 40%, 80%)", // Purple color with a dynamic lightness
-          // borderRadius: "1rem",
-          // color: "#9CA3AF", // Gray color
-          textAlign: "justify",
           transition: "all 0.3s ease-out",
         }}
         ref={(el) => {
