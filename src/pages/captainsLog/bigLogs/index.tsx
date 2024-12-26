@@ -37,7 +37,7 @@ const bigLogs = ({ socials, logBookEntries }: Props) => {
   return (
     <main className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-black w-screen h-screen p-2 sm:p-4 lg:px-8  overflow-y-scroll  scrollbar-none overflow-x-clip">
       <Header socials={socials} setSelectedFilter={() => {}}></Header>
-      <div className="sticky flex flex-row justify-center items-start w-screen h-auto z-20 top-0">
+      <div className="sticky bg-inherit flex flex-row justify-center items-start w-screen h-auto z-20 top-5">
         <ArticleFilter logBookEntries={logBookEntries} />
       </div>
       <section className="relative flex w-full h-auto  max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]">

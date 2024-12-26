@@ -54,17 +54,12 @@ export default function Contact({ pageInfo }: Props) {
           </div>
         </div>
         <div className="relative lg:hidden mx-auto pt-[5em] sm:pt-[1em]">
-          {/* <ReactWhatsapp
-            element="button"
-            number={pageInfo.phoneNumber}
-            message="Hi 🙂"
-          >
-            <SocialIcon
-              network="whatsapp"
-              bgColor="white"
-              style={{ height: "3em", width: "3em" }}
-            />
-          </ReactWhatsapp> */}
+          {/* <ReactWhatsapp number={pageInfo.phoneNumber} message="Hi 🙂" /> */}
+          {/* <SocialIcon
+            network="whatsapp"
+            bgColor="white"
+            style={{ height: "3em", width: "3em" }}
+          /> */}
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}

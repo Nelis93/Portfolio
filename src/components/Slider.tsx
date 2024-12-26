@@ -29,14 +29,14 @@ export default function Slider({
     event?.stopPropagation();
     const nextIndex = currentIndex + 1 === items.length ? 0 : currentIndex + 1;
     setCurrentIndex(nextIndex);
-    scrolling ?? slide(nextIndex);
+    scrolling && slide(nextIndex);
   };
   const handlePrevious = (event: any) => {
     event?.stopPropagation();
     const prevIndex =
       currentIndex - 1 < 0 ? items.length - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
-    scrolling ?? slide(prevIndex);
+    scrolling && slide(prevIndex);
   };
   return (
     <div className={style}>

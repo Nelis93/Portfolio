@@ -64,11 +64,11 @@ export default function ArticleFilter({ logBookEntries }: ArticleFilterProps) {
 
   return (
     <div>
-      <form className="relative w-[20em] my-[50px]">
-        <div className="relative w-full z-20">
+      <form className="relative flex flex-col items-center w-[25em] mb-[50px]">
+        <div className="relative flex flex-row items-center w-[25em] z-20">
           <input
             type="text"
-            className="m-0 p-[20px] h-3 w-full text-center text-xl shadow-sm border-solid border-[10px] relative border-[#F7F7F7] rounded-s"
+            className="relative m-0 p-[20px] h-3 w-full text-center text-xl shadow-sm border-solid border-[10px]  border-[#F7F7F7] rounded-s"
             placeholder="title or word from description"
             value={query}
             onChange={handleInputChange}
@@ -79,10 +79,9 @@ export default function ArticleFilter({ logBookEntries }: ArticleFilterProps) {
             value={{
               style: {
                 position: "absolute",
-                top: "0",
                 color: "gray",
-                backgroundColor: "white",
-                height: "90%",
+                backgroundColor: "transparent",
+                height: "80%",
                 width: "3em",
                 padding: "0.5em",
                 right: "1em",
@@ -94,7 +93,7 @@ export default function ArticleFilter({ logBookEntries }: ArticleFilterProps) {
           </IconContext.Provider>
         </div>
         <ul
-          className="relative w-full left-[-10%] top-[10px] z-20"
+          className="relative w-[20em] top-[10px] z-20"
           style={{ display: isOpen ? "block" : "none" }}
         >
           {filteredEntries.length > 0 ? (

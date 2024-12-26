@@ -15,7 +15,9 @@ export default function EntryCard({
   style,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
-  const url = window.location.href;
+  const url = window.location.href.includes("bigLogs")
+    ? window.location.href
+    : window.location.href + "/bigLogs";
   console.log(url);
   // Track if each entry is in view
   // const isInView = useInView(ref, {

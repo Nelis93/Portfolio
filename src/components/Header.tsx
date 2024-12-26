@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import {
   FaLinkedinIn,
@@ -30,9 +30,9 @@ function Header({ socials, setSelectedFilter }: Props) {
     FaHome: FaHome,
     FaBookDead: FaBookDead,
   };
-
+  console.log(router.pathname);
   return (
-    <header className="text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] sticky top-0 p-5 flex items-start justify-between z-30">
+    <header className="sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30">
       <motion.div
         initial={{
           x: -500,
