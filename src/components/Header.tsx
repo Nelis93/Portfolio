@@ -30,7 +30,7 @@ function Header({ socials, setSelectedFilter }: Props) {
     FaHome: FaHome,
     FaBookDead: FaBookDead,
   };
-  console.log(router.pathname);
+  console.log(router);
   return (
     <header className="sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30">
       <motion.div
@@ -57,7 +57,11 @@ function Header({ socials, setSelectedFilter }: Props) {
           .map((social) => {
             let IconComponent = iconMap[social.tag];
             return (
-              <Link key={social._id} href={social.url} className="social-icon">
+              <Link
+                key={social._id}
+                href={social.slug?.current ?? "/"}
+                className="social-icon"
+              >
                 <IconContext.Provider
                   value={{
                     className: "h-[75%]",

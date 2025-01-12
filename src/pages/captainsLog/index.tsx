@@ -16,6 +16,7 @@ type Props = {
 
 const CaptainsLog = ({ socials, logBookEntries }: Props) => {
   const [selected, setSelected] = useState(0);
+  // const [scrollPos, setScrollPos] = useState(0);
   // const [focus, setFocus] = useState(-1);
   const logBookEntryRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -53,11 +54,18 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
       setTimeout(timeoutFunc, delay);
     };
   }
-
+  const handleScroll = (event: any) => {
+    setSelected(() => {
+      return Math.round(
+        (event.target.scrollTop / event.target.scrollTopMax) *
+          (logBookEntries.length - 1)
+      );
+    });
+  };
   return (
     <main
       translate="no"
-      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-screen   overflow-y-scroll scrollbar-none overflow-x-clip"
+      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-full overflow-y-scroll scrollbar-none overflow-x-clip"
     >
       <Header socials={socials} setSelectedFilter={null} />
       <section className="relative flex flex-col justify-center w-full lg:px-auto h-screen scrollbar-none items-start overflow-x-hidden sm:items-center">
@@ -74,7 +82,10 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
           }
           scrolling={false}
         />
-        <div className="relative text-white w-2/3 max-w-[60em] sm:h-[60vh] sm:max-h-[30em] overflow-y-scroll scrollbar-none">
+        <div
+          className="relative text-white w-2/3 max-w-[60em] sm:h-[60vh] sm:max-h-[30em] overflow-y-scroll scrollbar-none"
+          onScroll={handleScroll}
+        >
           <EntryCarousel
             selected={selected}
             setSelected={setSelected}
@@ -94,7 +105,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
                 );
               })}
           </EntryCarousel>
-          <div className="relative text-white w-full h-[200vh] "></div>
+          <div className="relative text-white w-full h-[200vh]"></div>
         </div>
       </section>
       <section className="relative">

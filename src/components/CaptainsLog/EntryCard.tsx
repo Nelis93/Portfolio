@@ -19,17 +19,6 @@ export default function EntryCard({
     ? window.location.href
     : window.location.href + "/bigLogs";
   console.log(url);
-  // Track if each entry is in view
-  // const isInView = useInView(ref, {
-  //   amount: 1,
-  //   once: false,
-  // });
-  // // Update the currentIndex based on which entry is in view
-  // useEffect(() => {
-  //   if (isInView) {
-  //     setSelected(uniqueId);
-  //   }
-  // }, [isInView]);
   return (
     <Link href={`${url}/${logBookEntry.slug.current}`} className={style || ""}>
       <motion.div
@@ -42,7 +31,7 @@ export default function EntryCard({
           logBookEntryRefs.current[uniqueId] = el;
         }}
       >
-        <h2 className="relative block text-2xl w-full font-bold text-center mb-4 text-white text-nowrap overflow-hidden overflow-ellipsis">
+        <h2 className="relative block text-2xl w-full font-bold text-center pb-4 text-white text-nowrap overflow-hidden overflow-ellipsis">
           {logBookEntry.title}
         </h2>
         <p className="relative line-clamp-[10] text-justify">

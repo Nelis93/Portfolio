@@ -48,7 +48,7 @@ const bigLogs = ({ socials, logBookEntries }: Props) => {
               key={lbEntry._id}
               uniqueId={index}
               logBookEntry={lbEntry}
-              style={"h-[20em] text-[.5em]"}
+              style={"h-[25em] text-[.5em]"}
             />
           ))}
         </div>
