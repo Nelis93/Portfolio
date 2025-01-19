@@ -38,7 +38,13 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
           content="I'm the CEO of SEO. Have a look at my website 🙂."
         />
       </Head>
-      <Header socials={socials} setSelectedFilter={""} />
+      <Header
+        socials={socials}
+        setSelectedFilter={""}
+        style={
+          "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
+        }
+      />
       <section id="hero" className="snap-start">
         <Hero pageInfo={pageInfo} />
       </section>

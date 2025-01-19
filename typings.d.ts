@@ -139,4 +139,5 @@ export interface LogbookEntry extends SanityBody {
   entry: block[];
   position: number;
   slug: slug;
+  image: Image;
 }

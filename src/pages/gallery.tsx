@@ -137,7 +137,13 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       translate="no"
       className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-2 sm:p-4 lg:p-8  overflow-y-scroll overflow-auto"
     >
-      <Header socials={socials} setSelectedFilter={setSelectedFilter} />
+      <Header
+        socials={socials}
+        setSelectedFilter={setSelectedFilter}
+        style={
+          "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
+        }
+      />
       <section
         className="relative flex w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
@@ -153,7 +159,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         }}
       >
         <div
-          className="relative z-[1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-0 w-full"
+          className="relative z-[1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-0 w-full"
           ref={gridRef}
           onLoad={startCalc}
         >

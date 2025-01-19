@@ -100,7 +100,13 @@ export default function BigLog({ logBookEntries, socials }: Props) {
   }
   return (
     <main className="h-screen max-w-screen bg-black overflow-y-scroll overflow-x-hidden scrollbar-none">
-      <Header socials={socials} setSelectedFilter={""} />
+      <Header
+        socials={socials}
+        setSelectedFilter={""}
+        style={
+          "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
+        }
+      />
       <div className="min-h-screen text-gray-800 p-6 sm:p-12">
         <article className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
           {/* Article Header */}

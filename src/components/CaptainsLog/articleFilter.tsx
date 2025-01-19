@@ -48,10 +48,10 @@ export default function ArticleFilter({ logBookEntries }: ArticleFilterProps) {
   useEffect(() => {
     if (isOpen) {
       // Add event listener to detect clicks outside the dropdown
-      console.log("dropdown engaged");
+      // console.log("dropdown engaged");
       document.addEventListener("click", handleClickOutside);
     } else {
-      console.log("dropdown disengaged");
+      // console.log("dropdown disengaged");
       // Remove event listener when dropdown is closed
       document.removeEventListener("click", handleClickOutside);
     }

@@ -66,6 +66,7 @@ export default function FocusedImageCard({
             "social-icon sm:size-[2em] lg:size-[1.2em] absolute right-0 z-40 bg-black hover:bg-gray-500 hover:fill-black rounded-full hover:cursor-pointer",
           attr: {
             onClick: handleButtonClick,
+            onSelect: handleButtonClick,
           },
         }}
       >
@@ -91,7 +92,7 @@ export default function FocusedImageCard({
         className="relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start w-full sm:h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] sm:pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
       >
         <Link href={"en.wikipedia.org"} className="z-50">
-          <h4 className="bottom-[2em] z-50 relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
+          <h4 className="bottom-[2em] relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
             {image.title}
           </h4>
         </Link>

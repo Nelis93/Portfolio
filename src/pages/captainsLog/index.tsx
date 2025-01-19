@@ -67,8 +67,14 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
       translate="no"
       className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-full overflow-y-scroll scrollbar-none overflow-x-clip"
     >
-      <Header socials={socials} setSelectedFilter={null} />
-      <section className="relative flex flex-col justify-center w-full lg:px-auto h-screen scrollbar-none items-start overflow-x-hidden sm:items-center">
+      <Header
+        socials={socials}
+        setSelectedFilter={null}
+        style={
+          "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
+        }
+      />
+      <section className="relative flex flex-col justify-center w-full px-auto h-screen scrollbar-none overflow-x-hidden items-center">
         <h1 className="text-[2em]">
           {/* These are some writings for when you're free 🦅 */}
         </h1>
@@ -83,7 +89,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
           scrolling={false}
         />
         <div
-          className="relative text-white w-2/3 max-w-[60em] sm:h-[60vh] sm:max-h-[30em] overflow-y-scroll scrollbar-none"
+          className="relative text-white w-2/3 max-w-[80vw] sm:max-w-[60em] h-[60vh] max-h-[30em] overflow-y-scroll scrollbar-none"
           onScroll={handleScroll}
         >
           <EntryCarousel
@@ -105,10 +111,10 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
                 );
               })}
           </EntryCarousel>
-          <div className="relative text-white w-full h-[200vh]"></div>
+          <div className="relative hidden sm:block text-white w-full h-[200vh]"></div>
         </div>
       </section>
-      <section className="relative">
+      <section className="relative hidden sm:block">
         <div className="h-screen w-screen bg-black "></div>
       </section>
     </main>

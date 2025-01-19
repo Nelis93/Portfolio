@@ -17,9 +17,10 @@ import DropDownFilter from "./Gallery/DropDownFilter";
 type Props = {
   socials: Social[];
   setSelectedFilter: any;
+  style: string;
 };
 
-function Header({ socials, setSelectedFilter }: Props) {
+function Header({ socials, setSelectedFilter, style }: Props) {
   const router = useRouter();
 
   // Define the icon map for general use
@@ -30,9 +31,8 @@ function Header({ socials, setSelectedFilter }: Props) {
     FaHome: FaHome,
     FaBookDead: FaBookDead,
   };
-  console.log(router);
   return (
-    <header className="sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30">
+    <header className={style}>
       <motion.div
         initial={{
           x: -500,

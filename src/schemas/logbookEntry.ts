@@ -83,6 +83,14 @@ export default defineType({
       type: "number",
     }),
     defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       title: "Slug",
       name: "slug",
       type: "slug",
