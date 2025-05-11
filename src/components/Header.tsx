@@ -51,8 +51,19 @@ function Header({ socials, setSelectedFilter, style }: Props) {
         {socials
           .sort((a, b) => a.position - b.position)
           .filter((social) => {
-            const taggie = router.pathname === "/" ? "FaHome" : "FaCameraRetro";
-            return social.tag != taggie;
+            const taggie = () => {
+              if (router.pathname === "/") {
+                return "FaHome";
+              } else if (router.pathname.includes("gallery")) {
+                return "FaCameraRetro";
+              } else if (router.pathname.includes("captainsLog")) {
+                return "FaBookDead";
+              } else {
+                return;
+              }
+            };
+            // router.pathname === "/" ? "FaHome" : "FaCameraRetro";
+            return social.tag != taggie();
           })
           .map((social) => {
             let IconComponent = iconMap[social.tag];

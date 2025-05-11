@@ -34,7 +34,7 @@ export default function EntryCard({
         <h2 className="relative block text-2xl w-full font-bold text-center pb-4 text-white text-nowrap overflow-hidden overflow-ellipsis">
           {logBookEntry.title}
         </h2>
-        <p className="relative line-clamp-[10] text-justify">
+        <p className=" relative font-paragraph line-clamp-[10] text-justify">
           {logBookEntry.description}
         </p>
       </motion.div>

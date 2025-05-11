@@ -89,7 +89,7 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
           <Link
             key={index}
             href={`/captainsLog/bigLogs/${entry.slug.current}`}
-            className="relative flex items-start p-6 bg-gradient-to-b from-stone-600 to-slate-700 hover:bg-stone-400 hover:border-red-500 rounded-lg shadow-lg border-l-4 border-l-slate-50"
+            className="relative flex items-start p-6 bg-gradient-to-b from-stone-600 to-slate-700 hover:bg-stone-400 hover:border-yellow-500 rounded-lg shadow-lg border-l-4 border-l-slate-50"
           >
             <div className="relative self-center flex-shrink-0 h-44 mr-6 w-44 ">
               <img

@@ -116,7 +116,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const loadMoreImages = debounce((event: any) => {
     const distanceFromTop = event.target.clientHeight + event.target.scrollTop;
     extraCards();
-    debounceMaxHeightCalculation();
     if (distanceFromTop > event.target.scrollHeight - 100) {
       console.log("bottom reached");
       if (loading) return;
@@ -130,6 +129,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         setPage((prev) => prev + 1);
       }
       setLoading(false);
+      debounceMaxHeightCalculation();
     }
   }, 250);
 
