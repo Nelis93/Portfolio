@@ -6,6 +6,7 @@ import { fetchSocials } from "@/utils/fetchSocials";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { urlFor } from "../../../../sanity";
 import Header from "@/components/Header";
+import Breadcrumbs from "@/components/CaptainsLog/BreadCrumbs";
 
 type Props = {
   socials: Social[];
@@ -107,6 +108,8 @@ export default function BigLog({ logBookEntries, socials }: Props) {
           "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
         }
       />
+      <Breadcrumbs />
+      {/* Main Content */}
       <div className="min-h-screen text-gray-800 p-6 sm:p-12">
         <article className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
           {/* Article Header */}

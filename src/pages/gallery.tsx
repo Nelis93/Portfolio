@@ -60,12 +60,14 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         const maxTripletHeight = Math.max(...triplet);
         newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
       }
+      console.log("newMaxArray: ", newMaxArray);
       return {
         current: newMaxArray,
         index: prevMaxHeight.current.length - 1,
       };
     });
     setLoading(false);
+    console.log("maxHeight after debounce: ", maxHeight);
   }, 300);
   useEffect(() => {
     if (loading) debounceMaxHeightCalculation();
@@ -78,7 +80,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       return;
     }
     setPage(1);
-    console.log(filteredImages().slice(0, 9));
     setDisplayedImages(filteredImages().slice(0, 9));
   }, [selected]);
   const extraCards = () => {

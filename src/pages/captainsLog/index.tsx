@@ -8,6 +8,7 @@ import { fetchLogbookEntries } from "@/utils/fetchLogbookEntries";
 import EntryCarousel from "@/components/CaptainsLog/EntryCarousel";
 import EntryCard from "@/components/CaptainsLog/EntryCard";
 import Slider from "@/components/Slider";
+import Link from "next/link";
 
 type Props = {
   socials: Social[];
@@ -65,7 +66,7 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
   return (
     <main
       translate="no"
-      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-full overflow-y-scroll scrollbar-none overflow-x-clip"
+      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-full overflow-x-clip"
     >
       <Header
         socials={socials}
@@ -74,9 +75,11 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
           "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
         }
       />
-      <section className="relative flex flex-col justify-center w-full px-auto h-screen scrollbar-none overflow-x-hidden items-center">
-        <h1 className="text-[2em]">
-          {/* These are some writings for when you're free 🦅 */}
+      <section className="relative flex flex-col justify-center w-full px-auto min-h-screen scrollbar-none overflow-x-hidden items-center">
+        <h1 className="text-[2em] py-4 sm:px-0 lg:px-2 mb-2 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
+          <Link href={"captainsLog/bigLogs"}>
+            These are some writings for when you're free 🦅
+          </Link>
         </h1>
         <Slider
           items={logBookEntries}

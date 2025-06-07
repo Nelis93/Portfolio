@@ -20,6 +20,7 @@ import { urlFor } from "../../../../sanity";
 import Link from "next/link";
 import { FaSearch } from "react-icons/fa";
 import { IconContext } from "react-icons";
+import Breadcrumbs from "../../../components/CaptainsLog/BreadCrumbs";
 
 // Component Props
 type Props = {
@@ -49,6 +50,15 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
     );
   }, [query, logBookEntries]);
 
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    };
+    return date.toLocaleDateString(undefined, options);
+  }
   return (
     <main className="relative flex flex-col items-center bg-gradient-to-br from-teal-300 to-teal-600 text-black w-screen h-screen px-4 lg:px-8 overflow-y-scroll scrollbar-none">
       <Header
@@ -56,7 +66,7 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
         setSelectedFilter={() => {}}
         style="sticky bg-teal-500 rounded-b-md text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 pb-6 mb-2 flex items-start justify-between z-20"
       />
-
+      <Breadcrumbs />
       {/* Search Input */}
       <div className="sticky flex flex-row items-center top-5 z-20 w-full max-w-lg">
         <input
@@ -112,6 +122,9 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
                 }}
               />
             </div>
+            <p className="absolute bottom-0 right-0 p-4 text-lg font-paragraph text-justify text-white">
+              {formatDate(entry._updatedAt)}
+            </p>
           </Link>
         ))}
         {filteredEntries.length === 0 && (

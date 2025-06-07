@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { urlFor } from "../../../sanity";
+import { LogbookEntry } from "typings";
 
 type Props = {
   uniqueId: number;
   logBookEntryRefs: any;
-  logBookEntry: any;
+  logBookEntry: LogbookEntry;
   style: string;
 };
 export default function EntryCard({
@@ -19,10 +21,19 @@ export default function EntryCard({
     ? window.location.href
     : window.location.href + "/bigLogs";
   console.log(url);
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    };
+    return date.toLocaleDateString(undefined, options);
+  }
   return (
     <Link href={`${url}/${logBookEntry.slug.current}`} className={style || ""}>
       <motion.div
-        className="relative flex flex-col text-justify items-center w-full h-full p-8 bg-gradient-to-b from-stone-600 to-slate-700 overflow-clip rounded-lg text-white"
+        className="relative flex flex-col text-justify items-center w-full h-full bg-gradient-to-b from-stone-600 to-slate-700 overflow-clip rounded-lg text-white"
         style={{
           transition: "all 0.3s ease-out",
         }}
@@ -31,12 +42,29 @@ export default function EntryCard({
           logBookEntryRefs.current[uniqueId] = el;
         }}
       >
-        <h2 className="relative block text-2xl w-full font-bold text-center pb-4 text-white text-nowrap overflow-hidden overflow-ellipsis">
-          {logBookEntry.title}
-        </h2>
-        <p className=" relative font-paragraph line-clamp-[10] text-justify">
-          {logBookEntry.description}
-        </p>
+        <motion.img
+          initial={{
+            y: -100,
+            opacity: 0,
+          }}
+          transition={{ duration: 1.2 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="h-[10em] w-full flex-shrink-0 self-center object-cover sm:mr-[1.8em] sm:object-left lg:mr-0 lg:object-center"
+          src={urlFor(logBookEntry.image)?.url()}
+          alt="not found"
+        />
+        <div className="relative p-8 flex flex-col justify-start items-start w-full h-full">
+          <h2 className="relative block text-2xl w-full font-bold text-center pb-4 text-white text-nowrap overflow-hidden overflow-ellipsis">
+            {logBookEntry.title}
+          </h2>
+          <p className=" relative font-paragraph line-clamp-[5] text-justify">
+            {logBookEntry.description}
+          </p>
+          <p className="absolute bottom-0 right-0 p-4 font-paragraph text-justify">
+            {formatDate(logBookEntry._updatedAt)}
+          </p>
+        </div>
       </motion.div>
     </Link>
   );
