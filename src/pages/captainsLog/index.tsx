@@ -76,11 +76,11 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
         }
       />
       <section className="relative flex flex-col justify-center w-full px-auto min-h-screen scrollbar-none overflow-x-hidden items-center">
-        <h1 className="text-[2em] py-4 sm:px-0 lg:px-2 mb-2 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
-          <Link href={"captainsLog/bigLogs"}>
+        <Link href={"captainsLog/bigLogs"}>
+          <h1 className="py-4 sm:px-0 lg:px-2 text-[2em] h-20 mb-8 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
             These are some writings for when you're free 🦅
-          </Link>
-        </h1>
+          </h1>
+        </Link>
         <Slider
           items={logBookEntries}
           refs={logBookEntryRefs}

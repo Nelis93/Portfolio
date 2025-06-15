@@ -19,19 +19,39 @@ type Props = {
 };
 
 const Gallery = ({ galleryImages, socials }: Props) => {
+  // displayed images are the images that are currently shown in the gallery
+  // initially, we show the first 9 images
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
     galleryImages.slice(0, 9)
   );
+  // page is used to keep track of the current page of images
+  // we load 9 images per page
   const [page, setPage] = useState(1);
+  // loading is used to show a loading spinner when more images are being loaded
+  // it is set to true when more images are being loaded and false when the loading is done
+  // it is also used to trigger the calculation of the max height of the images
   const [loading, setLoading] = useState(false);
+  // galleryRefs is used to keep track of the refs of the gallery images
+  // this is used to scroll to the selected image when it is clicked
   const galleryRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // galleryRefs.current is an array of refs that are used to scroll to the selected image
   const gridRef = useRef<HTMLDivElement | null>(null);
+  // selected is used to keep track of the currently selected image
+  // it is set to -1 when no image is selected
+  // when an image is clicked, it is set to the index of the clicked image
+  // when an image is selected, the gallery is displayed in a focused view
+  // and the selected image is scrolled into view
   const [selected, setSelected] = useState(-1);
   const [focus, setFocus] = useState(-1);
+  // focus is used to keep track of the currently focused image
+  // it is set to -1 when no image is focused
+  // when an image is focused, it is set to the index of the focused image
   const [maxHeight, setMaxHeight] = useState<{
     current: number[];
     index: number;
   }>({ current: [], index: 0 });
+  // maxHeight is used to keep track of the maximum height of the images in the gallery
+  // it is used to set the height of the images in the gallery
   const [selectedFilter, setSelectedFilter] = useState<{
     countries: string[];
     dates: string[];
@@ -39,6 +59,8 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     countries: [],
     dates: [],
   });
+  // selectedFilter is used to keep track of the currently selected filters
+  // it is an object with two arrays: countries and dates
   function debounce(cb: Function, delay = 1000) {
     let timeout: any;
 
@@ -49,13 +71,22 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       }, delay);
     };
   }
+
   const startCalc = () => {
     setLoading(true);
   };
+  // debounceMaxHeightCalculation is used to debounce the calculation of the maximum height of the images
+  // it is called when the loading state is set to true
+  // it calculates the maximum height of the images in triplets
+  // and sets the maxHeight state to the new maximum heights
   const debounceMaxHeightCalculation = debounce(() => {
     setMaxHeight((prevMaxHeight: any) => {
       const newMaxArray = [];
-      for (let i = 0; i < prevMaxHeight.current.length; i += 3) {
+      for (
+        let i = 0;
+        i < prevMaxHeight.current.length && i < galleryImages.length + 2;
+        i += 3
+      ) {
         const triplet = prevMaxHeight.current.slice(i, i + 3);
         const maxTripletHeight = Math.max(...triplet);
         newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
@@ -72,6 +103,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   useEffect(() => {
     if (loading) debounceMaxHeightCalculation();
   }, [loading]);
+
   // Scroll to selected image when it's clicked
   useEffect(() => {
     if (selected > -1) {
