@@ -9,6 +9,7 @@ import EntryCarousel from "@/components/CaptainsLog/EntryCarousel";
 import EntryCard from "@/components/CaptainsLog/EntryCard";
 import Slider from "@/components/Slider";
 import Link from "next/link";
+import MobileEntryCarousel from "@/components/CaptainsLog/MobileEntryCarousel";
 
 type Props = {
   socials: Social[];
@@ -75,9 +76,9 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
           "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
         }
       />
-      <section className="relative flex flex-col justify-center w-full px-auto min-h-screen scrollbar-none overflow-x-hidden items-center">
+      <section className="relative flex flex-col justify-center w-full min-h-screen items-center px-2 sm:px-4 md:px-8 py-4">
         <Link href={"captainsLog/bigLogs"}>
-          <h1 className="py-4 sm:px-0 lg:px-2 text-[2em] h-20 mb-8 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
+          <h1 className="py-4 sm:px-0 lg:px-2 text-lg sm:text-2xl h-20 mb-8 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
             These are some writings for when you're free 🦅
           </h1>
         </Link>
@@ -92,28 +93,42 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
           scrolling={false}
         />
         <div
-          className="relative text-white w-2/3 max-w-[80vw] sm:max-w-[60em] h-[60vh] max-h-[30em] overflow-y-scroll scrollbar-none"
+          className="relative text-white w-full sm:w-5/6 md:w-2/3 max-w-[95vw] sm:max-w-[60em] h-[60vh] max-h-[30em] rounded-lg overflow-y-scroll scrollbar-none shadow-md"
           onScroll={handleScroll}
         >
-          <EntryCarousel
-            selected={selected}
-            setSelected={setSelected}
-            debounce={debounce}
-          >
-            {logBookEntries
-              .sort((a, b) => a.position - b.position)
-              .map((entry, index) => {
-                return (
-                  <EntryCard
-                    key={entry._id}
-                    uniqueId={index}
-                    logBookEntry={entry}
-                    logBookEntryRefs={logBookEntryRefs}
-                    style={""}
-                  />
-                );
-              })}
-          </EntryCarousel>
+          {window.innerWidth > 500 ? (
+            <EntryCarousel
+              selected={selected}
+              setSelected={setSelected}
+              debounce={debounce}
+            >
+              {logBookEntries
+                .sort((a, b) => a.position - b.position)
+                .map((entry, index) => {
+                  return (
+                    <EntryCard
+                      key={entry._id}
+                      uniqueId={index}
+                      logBookEntry={entry}
+                      logBookEntryRefs={logBookEntryRefs}
+                      style={""}
+                    />
+                  );
+                })}
+            </EntryCarousel>
+          ) : (
+            <MobileEntryCarousel selected={selected} setSelected={setSelected}>
+              {logBookEntries.map((entry, idx) => (
+                <EntryCard
+                  key={entry._id}
+                  uniqueId={idx}
+                  logBookEntryRefs={logBookEntryRefs}
+                  logBookEntry={entry}
+                  style={""}
+                />
+              ))}
+            </MobileEntryCarousel>
+          )}
           <div className="relative hidden sm:block text-white w-full h-[200vh]"></div>
         </div>
       </section>

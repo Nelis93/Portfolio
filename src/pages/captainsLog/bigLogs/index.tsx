@@ -99,24 +99,24 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
           <Link
             key={index}
             href={`/captainsLog/bigLogs/${entry.slug.current}`}
-            className="relative flex items-start p-6 bg-gradient-to-b from-stone-600 to-slate-700 hover:bg-stone-400 hover:border-yellow-500 rounded-lg shadow-lg border-l-4 border-l-slate-50"
+            className="relative flex items-start h-36 sm:h-auto sm:p-6 bg-gradient-to-b from-stone-600 to-slate-700 sm:hover:bg-stone-400 sm:hover:border-yellow-500 rounded-lg shadow-lg border-l-4 border-l-slate-50"
           >
-            <div className="relative self-center flex-shrink-0 h-44 mr-6 w-44 ">
+            <div className="absolute z-0 sm:relative sm:self-center flex-shrink-0 h-full sm:h-44 sm:mr-6 w-full sm:w-44 ">
               <img
                 src={urlFor(entry.image)?.url()}
                 alt={entry.title}
-                className="h-full w-full object-cover rounded-full"
+                className="h-full w-full object-cover rounded-lg sm:rounded-full"
               />
             </div>
-            <div className="flex flex-col text-justify items-start text-white">
+            <div className="flex flex-col z-10 p-5 sm:p-0 text-justify items-start text-white">
               <h2
-                className="text-xl font-bold text-white pb-2"
+                className="text-xl font-bold text-white bg-neutral-400 rounded-lg px-2 sm:px-0 sm:bg-auto bg-opacity-70 sm:bg-opacity-0 pb-2"
                 dangerouslySetInnerHTML={{
                   __html: highlightText(entry.title, query),
                 }}
               />
               <p
-                className="text-lg line-clamp-4"
+                className="hidden sm:block text-lg line-clamp-4"
                 dangerouslySetInnerHTML={{
                   __html: highlightText(entry.description, query),
                 }}

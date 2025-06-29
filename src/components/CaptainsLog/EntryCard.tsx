@@ -58,7 +58,7 @@ export default function EntryCard({
           <h2 className="relative block text-2xl w-full font-bold text-center pb-4 text-white text-nowrap overflow-hidden overflow-ellipsis">
             {logBookEntry.title}
           </h2>
-          <p className=" relative font-paragraph line-clamp-[5] text-justify">
+          <p className=" relative text-xl font-paragraph mb-4 sm:mb-0 line-clamp-[4] sm-line-clamp-[5] text-justify">
             {logBookEntry.description}
           </p>
           <p className="absolute bottom-0 right-0 p-4 font-paragraph text-justify">
