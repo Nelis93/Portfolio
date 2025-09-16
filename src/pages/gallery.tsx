@@ -42,16 +42,26 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   // when an image is selected, the gallery is displayed in a focused view
   // and the selected image is scrolled into view
   const [selected, setSelected] = useState(-1);
-  const [focus, setFocus] = useState(-1);
   // focus is used to keep track of the currently focused image
   // it is set to -1 when no image is focused
   // when an image is focused, it is set to the index of the focused image
-  const [maxHeight, setMaxHeight] = useState<{
-    current: number[];
-    index: number;
-  }>({ current: [], index: 0 });
+  const [focus, setFocus] = useState(-1);
   // maxHeight is used to keep track of the maximum height of the images in the gallery
   // it is used to set the height of the images in the gallery
+  // const [maxHeight, setMaxHeight] = useState<{
+  //   current: number[];
+  //   index: number;
+  // }>({ current: [], index: 0 });
+  const [maxHeight, setMaxHeight] = useState<{ id: string; value: number }[]>(
+    []
+  );
+  const [maxHeightCleared, setMaxHeightCleared] = useState(false);
+  const [imgHeight, setImgHeight] = useState<number[]>([]);
+  const [imgTitle, setImgTitle] = useState<string[]>([]);
+  const [imgNaturalHeight, setImgNaturalHeight] = useState<number[]>([]);
+  const [imgWidth, setImgWidth] = useState<number[]>([]);
+  // selectedFilter is used to keep track of the currently selected filters
+  // it is an object with two arrays: countries and dates
   const [selectedFilter, setSelectedFilter] = useState<{
     countries: string[];
     dates: string[];
@@ -59,8 +69,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     countries: [],
     dates: [],
   });
-  // selectedFilter is used to keep track of the currently selected filters
-  // it is an object with two arrays: countries and dates
   function debounce(cb: Function, delay = 1000) {
     let timeout: any;
 
@@ -71,38 +79,102 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       }, delay);
     };
   }
+  // useEffect(() => {
+  //   if (
+  //     selectedFilter.countries.length == 0 &&
+  //     selectedFilter.dates.length == 0
+  //   ) {
+  //     return;
+  //   }
+  //   // Recalculate heights whenever displayedImages changes
+  //   debounceMaxHeightCalculation();
+  // }, [displayedImages]);
+  useEffect(() => {
+    // Only run when all displayed images have a height
+    const allHeightsReady = displayedImages.every((img) =>
+      maxHeight.some((h) => h.id === img._id && h.value > 0)
+    );
+    if (allHeightsReady) {
+      window.confirm(
+        "Heights are matched! MaxHeight: " +
+          maxHeight.length +
+          ", DisplayedImages: " +
+          displayedImages.length
+      );
+      debounceMaxHeightCalculation();
+    } else {
+      window.confirm(
+        "Heights NOT matched! MaxHeight: " +
+          maxHeight.length +
+          ", DisplayedImages: " +
+          displayedImages.length
+      );
+    }
+  }, [displayedImages, page]);
 
-  const startCalc = () => {
-    setLoading(true);
-  };
+  // const startCalc = () => {
+  //   window.confirm("startCalc() was called, so grid was rendered");
+  //   setLoading(true);
+  // };
+  useEffect(() => {
+    if (loading) debounceMaxHeightCalculation();
+  }, [loading]);
   // debounceMaxHeightCalculation is used to debounce the calculation of the maximum height of the images
   // it is called when the loading state is set to true
   // it calculates the maximum height of the images in triplets
   // and sets the maxHeight state to the new maximum heights
+  // Old and depricated
+  // const debounceMaxHeightCalculation = debounce(() => {
+  //   setMaxHeight((prevMaxHeight: any) => {
+  //     const newMaxArray = [];
+  //     for (
+  //       let i = 0;
+  //       i < prevMaxHeight.current.length && i < galleryImages.length + 2;
+  //       i += 3
+  //     ) {
+  //       const triplet = prevMaxHeight.current.slice(i, i + 3);
+  //       const maxTripletHeight = Math.max(...triplet);
+  //       newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
+  //     }
+  //     // console.log("newMaxArray: ", newMaxArray);
+  //     return {
+  //       current: newMaxArray,
+  //       index: prevMaxHeight.current.length - 1,
+  //     };
+  //   });
+  //   setLoading(false);
+  //   // console.log("maxHeight after debounce: ", maxHeight);
+  // }, 300);
+  // New and improved
+
   const debounceMaxHeightCalculation = debounce(() => {
-    setMaxHeight((prevMaxHeight: any) => {
-      const newMaxArray = [];
-      for (
-        let i = 0;
-        i < prevMaxHeight.current.length && i < galleryImages.length + 2;
-        i += 3
-      ) {
-        const triplet = prevMaxHeight.current.slice(i, i + 3);
-        const maxTripletHeight = Math.max(...triplet);
-        newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
+    setMaxHeight((prevMaxHeight: { id: string; value: number }[]) => {
+      const newMaxArray: { id: string; value: number }[] = [];
+      // Group by triplets in displayedImages
+      for (let i = 0; i < displayedImages.length; i += 3) {
+        const triplet = displayedImages.slice(i, i + 3);
+        // Get heights for this triplet
+        const heights = triplet.map((img) => {
+          const found = prevMaxHeight.find((item) => item.id === img._id);
+          return found ? found.value : undefined;
+        });
+        // Only calculate if all heights are defined
+        if (heights.every((h) => typeof h === "number")) {
+          const maxTripletHeight = Math.max(...heights);
+          triplet.forEach((img) => {
+            newMaxArray.push({ id: img._id, value: maxTripletHeight });
+          });
+        } else {
+          // If not all heights are ready, push undefined or 0
+          triplet.forEach((img) => {
+            newMaxArray.push({ id: img._id, value: 0 });
+          });
+        }
       }
-      console.log("newMaxArray: ", newMaxArray);
-      return {
-        current: newMaxArray,
-        index: prevMaxHeight.current.length - 1,
-      };
+      return newMaxArray;
     });
     setLoading(false);
-    console.log("maxHeight after debounce: ", maxHeight);
   }, 300);
-  useEffect(() => {
-    if (loading) debounceMaxHeightCalculation();
-  }, [loading]);
 
   // Scroll to selected image when it's clicked
   useEffect(() => {
@@ -115,6 +187,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     setDisplayedImages(filteredImages().slice(0, 9));
   }, [selected]);
   const extraCards = () => {
+    // window.confirm("extraCards() was called.");
     if (displayedImages.length % 3 == 0) {
       return 0;
     } else if ((displayedImages.length + 1) % 3 == 0) {
@@ -123,11 +196,31 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     return 2;
   };
   useEffect(() => {
-    setDisplayedImages(filteredImages().slice(0, 9));
-    debounceMaxHeightCalculation();
-    setPage(1);
-    extraCards();
+    if (
+      selectedFilter.countries.length == 0 &&
+      selectedFilter.dates.length == 0
+    ) {
+      return;
+    }
+    setMaxHeight([]);
+    setMaxHeightCleared(true);
   }, [selectedFilter]);
+  useEffect(() => {
+    if (!maxHeightCleared) return;
+    if (
+      selectedFilter.countries.length == 0 &&
+      selectedFilter.dates.length == 0
+    ) {
+      setDisplayedImages(galleryImages.slice(0, 9));
+    } else {
+      setDisplayedImages(filteredImages().slice(0, 9));
+    }
+    // debounceMaxHeightCalculation();
+    // console.log("maxHeight length after: ", maxHeight.length);
+    setMaxHeightCleared(false);
+    setPage(1);
+  }, [maxHeightCleared]);
+
   const filteredImages = () => {
     return galleryImages
       .filter((image) => {
@@ -148,12 +241,9 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   // Function to load more images
   const loadMoreImages = debounce((event: any) => {
     const distanceFromTop = event.target.clientHeight + event.target.scrollTop;
-    extraCards();
     if (distanceFromTop > event.target.scrollHeight - 100) {
-      console.log("bottom reached");
+      // console.log("bottom reached");
       if (loading) return;
-
-      setLoading(true);
 
       const nextImages = filteredImages().slice(page * 9, (page + 1) * 9);
 
@@ -161,8 +251,8 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         setDisplayedImages((prev) => [...prev, ...nextImages]);
         setPage((prev) => prev + 1);
       }
-      setLoading(false);
-      debounceMaxHeightCalculation();
+      setLoading(true);
+      // debounceMaxHeightCalculation();
     }
   }, 250);
 
@@ -181,7 +271,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       <section
         className="relative flex w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
-        onResize={debounceMaxHeightCalculation}
+        // onResize={debounceMaxHeightCalculation}
         style={{
           backgroundImage:
             displayedImages.length >= 6 && window.innerWidth > 1500
@@ -195,36 +285,58 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         <div
           className="relative z-[1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-0 w-full"
           ref={gridRef}
-          onLoad={startCalc}
+          // onLoadStart={startCalc}
+          // onLoadedData={startCalc}
+          // onProgress={startCalc}
+          // onLoadedMetadata={startCalc}
+          // onLoad={startCalc}
         >
-          {displayedImages.map((image, index) =>
-            window.innerWidth < 1024 ? (
-              <GalleryImageCardSmall
-                key={image._id}
-                uniqueId={index}
-                image={image}
-                setSelected={setSelected}
-              />
-            ) : (
-              <GalleryImageCard
-                key={image._id}
-                uniqueId={index}
-                image={image}
-                cardCount={displayedImages.length}
-                setSelected={setSelected}
-                focus={focus}
-                setFocus={setFocus}
-                maxHeight={maxHeight}
-                setMaxHeight={setMaxHeight}
-              />
+          {displayedImages
+            .map((image, index) => ({ image, index })) // Attach index to each image
+            .sort(
+              (a, b) => a.index - b.index
+              // (a, b) => maxHeight.current[a.index] - maxHeight.current[b.index]
             )
-          )}
+            .map(({ image, index }) =>
+              window.innerWidth < 1024 ? (
+                <GalleryImageCardSmall
+                  key={image._id}
+                  uniqueId={index}
+                  image={image}
+                  setSelected={setSelected}
+                />
+              ) : (
+                <GalleryImageCard
+                  key={image._id}
+                  uniqueId={index}
+                  image={image}
+                  cardCount={displayedImages.length}
+                  setSelected={setSelected}
+                  focus={focus}
+                  setFocus={setFocus}
+                  imgHeight={imgHeight}
+                  setImgHeight={setImgHeight}
+                  imgNaturalHeight={imgNaturalHeight}
+                  setImgNaturalHeight={setImgNaturalHeight}
+                  imgWidth={imgWidth}
+                  setImgWidth={setImgWidth}
+                  imgTitle={imgTitle}
+                  setImgTitle={setImgTitle}
+                  maxHeight={maxHeight}
+                  setMaxHeight={setMaxHeight}
+                  selectedFilter={selectedFilter}
+                />
+              )
+            )}
           {window.innerWidth > 1024 &&
             Array.from({ length: extraCards() }).map((_, i) => (
               <div
                 key={i}
                 style={{
-                  height: `${maxHeight.current.slice(-1)[0] || 0}vh`, // Access last height safely
+                  // old
+                  // height: `${maxHeight.current.slice(-1)[0] || 0}vh`,
+                  // new
+                  height: `${maxHeight.slice(-1)[0].value ?? 0}vh`,
                   width: "full",
                   backgroundColor: "black",
                   zIndex: 1,

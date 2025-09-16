@@ -13,7 +13,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
   // Define the click handler outside of the effect
   const handleClickOutside = (event: MouseEvent) => {
     // If the clicked target is outside the dropdown, close it
-    console.log(dropdownRef.current);
+    // console.log(dropdownRef.current);
     event.stopPropagation();
     if (
       dropdownRef.current &&

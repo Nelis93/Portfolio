@@ -4,6 +4,8 @@ import { GalleryImage } from "typings";
 import { urlFor } from "../../../sanity";
 import { TfiNewWindow } from "react-icons/tfi";
 import { IconContext } from "react-icons";
+// import { unique } from "next/dist/build/utils";
+// import { set } from "sanity";
 
 type Props = {
   image: GalleryImage;
@@ -14,6 +16,15 @@ type Props = {
   setFocus: any;
   maxHeight: any;
   setMaxHeight: any;
+  imgHeight: any;
+  setImgHeight: any;
+  imgNaturalHeight: any;
+  setImgNaturalHeight: any;
+  imgWidth: any;
+  setImgWidth: any;
+  imgTitle: any;
+  setImgTitle: any;
+  selectedFilter: any;
 };
 
 export default function GalleryImageCard({
@@ -25,6 +36,14 @@ export default function GalleryImageCard({
   setFocus,
   maxHeight,
   setMaxHeight,
+  imgHeight,
+  setImgHeight,
+  imgNaturalHeight,
+  setImgNaturalHeight,
+  imgWidth,
+  setImgWidth,
+  imgTitle,
+  setImgTitle,
 }: Props) {
   const [iconPosition, setIconPosition] = useState({
     distance: 0,
@@ -55,13 +74,101 @@ export default function GalleryImageCard({
     return;
   }, [focus]);
 
+  // useEffect(() => {
+  //   if (
+  //     selectedFilter.countries.length == 0 &&
+  //     selectedFilter.dates.length == 0
+  //   ) {
+  //     console.log("post-filter title: ", image.title);
+  //   }
+  // }, [selectedFilter]);
+  // old and depcricated
+  // const handleImageLoad = (event: any) => {
+  //   const offsetHeight = event.target.offsetHeight;
+  //   const heightInVH = (offsetHeight / window.innerHeight) * 100;
+  //   const naturalWidth = event.target.naturalWidth;
+  //   const naturalHeight = event.target.naturalHeight;
+  //   // console.log(
+  //   //   "Name: ",
+  //   //   event.target.alt,
+  //   //   "offsetWidth: ",
+  //   //   event.target.offsetWidth
+  //   // );
+  //   setImgHeight((prev: any) => {
+  //     const next = [...prev];
+  //     next[uniqueId] = offsetHeight;
+  //     return next;
+  //   });
+  //   setImgNaturalHeight((prev: any) => {
+  //     const next = [...prev];
+  //     next[uniqueId] = naturalHeight;
+  //     return next;
+  //   });
+  //   setImgWidth((prev: any) => {
+  //     const next = [...prev];
+  //     next[uniqueId] = naturalWidth;
+  //     return next;
+  //   });
+  //   setMaxHeight((prev: any) => {
+  //     const nextCurrent = [...prev.current];
+  //     nextCurrent[uniqueId] = heightInVH;
+  //     return { current: nextCurrent, index: prev.index };
+  //   });
+  //   setImgTitle((prev: any) => {
+  //     const next = [...prev];
+  //     next[uniqueId] = event.target.alt;
+  //     return next;
+  //   });
+  // };
+  // new and improved
   const handleImageLoad = (event: any) => {
-    const height = event.target.offsetHeight;
-    const heightInVH = (height / window.innerHeight) * 100;
-    setMaxHeight((prev: any) => {
-      return { current: [...prev.current, heightInVH], index: prev.index };
+    const offsetHeight = event.target.offsetHeight;
+    const heightInVH = (offsetHeight / window.innerHeight) * 100;
+    // ...other set* calls...
+    const naturalWidth = event.target.naturalWidth;
+    const naturalHeight = event.target.naturalHeight;
+    // console.log(
+    //   "Name: ",
+    //   event.target.alt,
+    //   "offsetWidth: ",
+    //   event.target.offsetWidth
+    // );
+    setImgHeight((prev: any) => {
+      const next = [...prev];
+      next[uniqueId] = offsetHeight;
+      return next;
+    });
+    setImgNaturalHeight((prev: any) => {
+      const next = [...prev];
+      next[uniqueId] = naturalHeight;
+      return next;
+    });
+    setImgWidth((prev: any) => {
+      const next = [...prev];
+      next[uniqueId] = naturalWidth;
+      return next;
+    });
+    setImgTitle((prev: any) => {
+      const next = [...prev];
+      next[uniqueId] = event.target.alt;
+      return next;
+    });
+    setMaxHeight((prev: { id: string; value: number }[]) => {
+      const next = [...prev];
+      const idx = next.findIndex((item) => item.id === image._id);
+      if (idx > -1) {
+        next[idx].value = heightInVH;
+      } else {
+        next.push({ id: image._id, value: heightInVH });
+      }
+      return next;
     });
   };
+
+  // When using maxHeight for rendering:
+  const heightObj = maxHeight.find((item: any) => item.id === image._id);
+  const maxHeightValue = heightObj ? heightObj.value : 0;
+  const maxHeightId = heightObj ? heightObj.id.substring(0, 4) : 0;
 
   const handleCardClick = (event: any) => {
     event.stopPropagation();
@@ -81,7 +188,10 @@ export default function GalleryImageCard({
   return (
     <div
       style={{
-        height: `${maxHeight.current[uniqueId]}vh`,
+        // old
+        // height: `${maxHeight.current[uniqueId]}vh`,
+        // new
+        height: `${maxHeightValue}vh`,
         perspective: "1000px",
         backgroundColor: focus == uniqueId ? "black" : "transparent",
         transitionProperty: "background-color",
@@ -141,6 +251,21 @@ export default function GalleryImageCard({
             backfaceVisibility: "hidden", // Hide image when back is shown
           }}
         >
+          <div className="absolute flex flex-col z-40 w-full h-full text-xl bg-black bg-opacity-50  ">
+            <span>Image Id: {image._id.substring(0, 4)}</span>
+            <span>maxHeight.Id: {maxHeightId}</span>
+            {/* old */}
+            {/* <span>MaxHeight: {Math.round(maxHeight.current[uniqueId])}</span> */}
+            {/* new */}
+            <span>MaxHeight: {Math.round(maxHeightValue)}</span>
+            <span>imgHeight: {Math.round(imgHeight[uniqueId])}</span>
+            <span>imgWidth: {Math.round(imgWidth[uniqueId])}</span>
+            <span>
+              imgNaturalHeight: {Math.round(imgNaturalHeight[uniqueId])}
+            </span>
+            <span>MaxHeight Title: {imgTitle[uniqueId]}</span>
+            <span>Image Title: {image.title.substring(0, 10)}</span>
+          </div>
           <motion.img
             className="absolute z-20 w-full h-auto rounded-lg"
             src={urlFor(image.actualImage)?.url()}

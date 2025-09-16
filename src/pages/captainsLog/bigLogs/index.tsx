@@ -71,7 +71,7 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
       <div className="sticky flex flex-row items-center top-5 z-20 w-full max-w-lg">
         <input
           type="text"
-          className="w-full p-3 text-xl text-center border-2 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="w-full p-3 text-base sm:text-xl text-center border-2 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
           placeholder="Filter by title or description"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -110,7 +110,7 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
             </div>
             <div className="flex flex-col z-10 p-5 sm:p-0 text-justify items-start text-white">
               <h2
-                className="text-xl font-bold text-white bg-neutral-400 rounded-lg px-2 sm:px-0 sm:bg-auto bg-opacity-70 sm:bg-opacity-0 pb-2"
+                className="text-xl line-clamp-[2] text-ellipsis font-bold text-white bg-neutral-400 rounded-lg px-2 sm:px-0 sm:bg-auto bg-opacity-70 sm:bg-opacity-0 pb-2"
                 dangerouslySetInnerHTML={{
                   __html: highlightText(entry.title, query),
                 }}

@@ -82,21 +82,23 @@ const CaptainsLog = ({ socials, logBookEntries }: Props) => {
             These are some writings for when you're free 🦅
           </h1>
         </Link>
-        <Slider
-          items={logBookEntries}
-          refs={logBookEntryRefs}
-          currentIndex={selected}
-          setCurrentIndex={setSelected}
-          style={
-            "absolute hidden sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2"
-          }
-          scrolling={false}
-        />
+        {window.innerWidth > 1000 && (
+          <Slider
+            items={logBookEntries}
+            refs={logBookEntryRefs}
+            currentIndex={selected}
+            setCurrentIndex={setSelected}
+            style={
+              "absolute hidden sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2"
+            }
+            scrolling={false}
+          />
+        )}
         <div
-          className="relative text-white w-full sm:w-5/6 md:w-2/3 max-w-[95vw] sm:max-w-[60em] h-[60vh] max-h-[30em] rounded-lg overflow-y-scroll scrollbar-none shadow-md"
+          className="relative text-white w-full sm:w-5/6 md:w-2/3 max-w-[95vw] sm:max-w-[60em] h-[60vh] max-h-[30em] rounded-lg overflow-y-scroll scrollbar-none"
           onScroll={handleScroll}
         >
-          {window.innerWidth > 500 ? (
+          {window.innerWidth > 1000 ? (
             <EntryCarousel
               selected={selected}
               setSelected={setSelected}

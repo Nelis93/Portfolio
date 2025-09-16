@@ -33,7 +33,7 @@ const MobileEntryCarousel = ({ children, selected, setSelected }: Props) => {
   };
 
   return (
-    <div className="block sm:hidden w-screen max-w-full overflow-x-hidden">
+    <div className="block w-screen max-w-full overflow-x-hidden">
       <div
         ref={scrollRef}
         className="flex flex-row overflow-x-auto snap-x snap-mandatory scrollbar-none w-screen"

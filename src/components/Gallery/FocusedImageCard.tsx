@@ -73,7 +73,7 @@ export default function FocusedImageCard({
         <TfiClose />
       </IconContext.Provider>
       <motion.img
-        className="relative rounded-lg h-fit max-h-full w-auto  justify-self-start self-start place-items-start items-start object-contain lg:col-span-3 lg:row-span-10"
+        className="relative rounded-lg h-fit max-h-full w-auto  justify-self-start self-start place-items-start items-start    lg:col-span-3 lg:row-span-10"
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
         style={{
