@@ -95,7 +95,13 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       maxHeight.some((h) => h.id === img._id && h.value > 0)
     );
     if (allHeightsReady) {
-      window.confirm(
+      // window.confirm(
+      //   "Heights are matched! MaxHeight: " +
+      //     maxHeight.length +
+      //     ", DisplayedImages: " +
+      //     displayedImages.length
+      // );
+      console.log(
         "Heights are matched! MaxHeight: " +
           maxHeight.length +
           ", DisplayedImages: " +
@@ -103,14 +109,16 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       );
       debounceMaxHeightCalculation();
     } else {
-      window.confirm(
+      console.log(
         "Heights NOT matched! MaxHeight: " +
           maxHeight.length +
           ", DisplayedImages: " +
-          displayedImages.length
+          displayedImages.length +
+          ", Page: " +
+          page
       );
     }
-  }, [displayedImages, page]);
+  }, [displayedImages, maxHeight.length]);
 
   // const startCalc = () => {
   //   window.confirm("startCalc() was called, so grid was rendered");
@@ -148,6 +156,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   // New and improved
 
   const debounceMaxHeightCalculation = debounce(() => {
+    console.log("debounceMaxHeightCalculation called");
     setMaxHeight((prevMaxHeight: { id: string; value: number }[]) => {
       const newMaxArray: { id: string; value: number }[] = [];
       // Group by triplets in displayedImages
@@ -173,6 +182,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       }
       return newMaxArray;
     });
+    console.log("debounceMaxHeightCalculation ran");
     setLoading(false);
   }, 300);
 
@@ -202,25 +212,46 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     ) {
       return;
     }
-    setMaxHeight([]);
-    setMaxHeightCleared(true);
-  }, [selectedFilter]);
-  useEffect(() => {
-    if (!maxHeightCleared) return;
-    if (
-      selectedFilter.countries.length == 0 &&
-      selectedFilter.dates.length == 0
-    ) {
-      setDisplayedImages(galleryImages.slice(0, 9));
-    } else {
-      setDisplayedImages(filteredImages().slice(0, 9));
-    }
-    // debounceMaxHeightCalculation();
-    // console.log("maxHeight length after: ", maxHeight.length);
-    setMaxHeightCleared(false);
-    setPage(1);
-  }, [maxHeightCleared]);
+    const filtered = filteredImages().sort((a, b) =>
+      a.dateTaken > b.dateTaken ? -1 : 1
+    );
+    setDisplayedImages(filtered.slice(0, 9));
 
+    // Preserve any existing measured heights that match the filtered images,
+    // and initialize missing ones to 0 so the structure stays aligned.
+    setMaxHeight((prev) =>
+      filteredMaxHeightForImages(displayedImages.slice(0, 9), prev)
+    );
+
+    // setMaxHeightCleared(true);
+  }, [selectedFilter]);
+  // useEffect(() => {
+  //   if (!maxHeightCleared) return;
+  //   if (
+  //     selectedFilter.countries.length == 0 &&
+  //     selectedFilter.dates.length == 0
+  //   ) {
+  //     setDisplayedImages(galleryImages.slice(0, 9));
+  //   } else {
+  //     setDisplayedImages(filteredImages().slice(0, 9));
+  //   }
+  //   // debounceMaxHeightCalculation();
+  //   // console.log("maxHeight length after: ", maxHeight.length);
+  //   setMaxHeightCleared(false);
+  //   setPage(1);
+  // }, [maxHeightCleared]);
+
+  function filteredMaxHeightForImages(
+    filteredImgs: GalleryImage[],
+    prevMax: { id: string; value: number }[]
+  ): { id: string; value: number }[] {
+    const map = new Map(prevMax.map((m) => [m.id, m.value]));
+    return filteredImgs.map((img) => {
+      const val = map.get(img._id);
+      console.log("Mapping image ID ", img._id, " to height value ", val);
+      return { id: img._id, value: typeof val === "number" ? val : 0 };
+    });
+  }
   const filteredImages = () => {
     return galleryImages
       .filter((image) => {
@@ -336,7 +367,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
                   // old
                   // height: `${maxHeight.current.slice(-1)[0] || 0}vh`,
                   // new
-                  height: `${maxHeight.slice(-1)[0].value ?? 0}vh`,
+                  height: `${maxHeight.slice(-1)[0]?.value || 0}vh`,
                   width: "full",
                   backgroundColor: "black",
                   zIndex: 1,

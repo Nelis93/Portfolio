@@ -124,15 +124,8 @@ export default function GalleryImageCard({
   const handleImageLoad = (event: any) => {
     const offsetHeight = event.target.offsetHeight;
     const heightInVH = (offsetHeight / window.innerHeight) * 100;
-    // ...other set* calls...
     const naturalWidth = event.target.naturalWidth;
     const naturalHeight = event.target.naturalHeight;
-    // console.log(
-    //   "Name: ",
-    //   event.target.alt,
-    //   "offsetWidth: ",
-    //   event.target.offsetWidth
-    // );
     setImgHeight((prev: any) => {
       const next = [...prev];
       next[uniqueId] = offsetHeight;
