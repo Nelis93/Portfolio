@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import DropDownButton from "./DropDownButton";
 
 type Props = {
@@ -23,6 +23,25 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
       setIsOpen(false);
     }
   };
+
+  // --- new: clear filters handler ---
+  const clearFilters = () => {
+    // reset filter state
+    setSelectedFilter({ countries: [], dates: [] });
+
+    // remove selected classes from any list items inside the dropdown
+    if (dropdownRef.current) {
+      const items = dropdownRef.current.querySelectorAll("li");
+      items.forEach((el) => {
+        el.classList.remove("bg-white", "text-black");
+      });
+    }
+
+    // close dropdown and reset menu side
+    setIsOpen(false);
+    setIsLefMenu(false);
+  };
+  // --- end new ---
 
   useEffect(() => {
     if (isOpen) {
@@ -69,7 +88,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
 
   const leftMenu = () => {
     let tempArray = [];
-    for (let i = 2018; i <= 2024; i++) {
+    for (let i = 2018; i <= 2025; i++) {
       tempArray.push(i.toString());
     }
     return tempArray;
@@ -84,6 +103,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
     "Australia",
     "Scandinavia",
     "Belgium",
+    "Bali",
   ];
   const toggleMenu = () => {
     setIsLefMenu((current) => !current);
@@ -158,7 +178,7 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
           // animate={isLeftMenu ? "left" : "right"}
           // variants={slideHorizontalAnimation}
         >
-          <div className="flex flex-col text-[.7em] h-full relative w-[50%] ">
+          <div className="flex flex-col text-[.7em] h-full relative w-[50%]">
             <h4
               onClick={toggleMenu}
               className="cursor-pointer m-0 py-[.5em] text-center hover:text-black hover:bg-white"
@@ -169,11 +189,11 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
             >
               COUNTRY &#8594;
             </h4>
-            <ul className="item-list list-none flex flex-1 flex-col justify-around">
+            <ul className="relative list-none flex flex-col h-full justify-around">
               {leftMenu().map((text, i) => (
                 <li
                   key={i}
-                  className="item flex-1 text-center cursor-pointer hover:bg-white hover:text-black"
+                  className="flex-1 text-center cursor-pointer hover:bg-white hover:text-black"
                   style={{
                     transition: "color, background-color",
                     transitionDuration: ".2s",
@@ -183,6 +203,20 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                   {text}
                 </li>
               ))}
+              <li
+                key="clear-countries"
+                className="text-center cursor-pointer border-t-white border-t-2 text-red-900 hover:bg-white hover:text-black font-semibold"
+                style={{
+                  transition: "color, background-color",
+                  transitionDuration: ".2s",
+                }}
+                onClick={() => {
+                  clearFilters();
+                }}
+                aria-label="Clear country filters"
+              >
+                Clear
+              </li>
             </ul>
           </div>
           <div className="flex flex-col text-[.7em] h-full relative w-[50%] ">
@@ -210,6 +244,20 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                   {text}
                 </li>
               ))}
+              <li
+                key="clear-dates"
+                className="item flex-1 items-end text-center cursor-pointer border-t-white border-t-2 text-red-900 hover:bg-white hover:text-black font-semibold"
+                style={{
+                  transition: "color, background-color",
+                  transitionDuration: ".2s",
+                }}
+                onClick={() => {
+                  clearFilters();
+                }}
+                aria-label="Clear date filters"
+              >
+                Clear
+              </li>
             </ul>
           </div>
         </div>

@@ -12,6 +12,7 @@ import FocusedImageCard from "@/components/Gallery/FocusedImageCard";
 import Dots from "@/components/Dots";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useRouter } from "next/router";
 
 type Props = {
   galleryImages: GalleryImage[];
@@ -19,6 +20,7 @@ type Props = {
 };
 
 const Gallery = ({ galleryImages, socials }: Props) => {
+  const router = useRouter();
   // displayed images are the images that are currently shown in the gallery
   // initially, we show the first 9 images
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
@@ -55,7 +57,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   const [maxHeight, setMaxHeight] = useState<{ id: string; value: number }[]>(
     []
   );
-  const [maxHeightCleared, setMaxHeightCleared] = useState(false);
+  // const [maxHeightCleared, setMaxHeightCleared] = useState(false);
   const [imgHeight, setImgHeight] = useState<number[]>([]);
   const [imgTitle, setImgTitle] = useState<string[]>([]);
   const [imgNaturalHeight, setImgNaturalHeight] = useState<number[]>([]);
@@ -69,6 +71,63 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     countries: [],
     dates: [],
   });
+  const buildQueryFromFilter = (filter: {
+    countries: string[];
+    dates: string[];
+  }) => {
+    const q: any = {};
+    if (filter.countries?.length) q.countries = filter.countries.join("-");
+    if (filter.dates?.length) q.dates = filter.dates.join("-");
+    return q;
+  };
+
+  const parseFilterFromQuery = (query: any) => {
+    const countriesRaw = query?.countries;
+    const datesRaw = query?.dates;
+    const countries =
+      typeof countriesRaw === "string"
+        ? countriesRaw.split("-").filter(Boolean)
+        : Array.isArray(countriesRaw)
+          ? countriesRaw.join("-").split("-").filter(Boolean)
+          : [];
+    const dates =
+      typeof datesRaw === "string"
+        ? datesRaw.split("-").filter(Boolean)
+        : Array.isArray(datesRaw)
+          ? datesRaw.join("-").split("-").filter(Boolean)
+          : [];
+    return { countries, dates };
+  };
+  useEffect(() => {
+    // parse URL on first load and sync to selectedFilter
+    if (!router.isReady) return;
+    const parsed = parseFilterFromQuery(router.query);
+    // only set if different to avoid extra re-renders
+    const same =
+      parsed.countries.join("-") === selectedFilter.countries.join("-") &&
+      parsed.dates.join("-") === selectedFilter.dates.join("-");
+    if (!same) {
+      setSelectedFilter(parsed);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
+
+  // keep URL in sync when selectedFilter changes
+  useEffect(() => {
+    if (!router.isReady) return;
+    const query = buildQueryFromFilter(selectedFilter);
+    // use replace with shallow to avoid full page transition
+    router.replace(
+      {
+        pathname: router.pathname,
+        query,
+      },
+      undefined,
+      { shallow: true }
+    );
+    // when filter changes we want to reset heights and images (existing logic handles that)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFilter]);
   function debounce(cb: Function, delay = 1000) {
     let timeout: any;
 
@@ -95,12 +154,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       maxHeight.some((h) => h.id === img._id && h.value > 0)
     );
     if (allHeightsReady) {
-      // window.confirm(
-      //   "Heights are matched! MaxHeight: " +
-      //     maxHeight.length +
-      //     ", DisplayedImages: " +
-      //     displayedImages.length
-      // );
       console.log(
         "Heights are matched! MaxHeight: " +
           maxHeight.length +
@@ -117,6 +170,23 @@ const Gallery = ({ galleryImages, socials }: Props) => {
           ", Page: " +
           page
       );
+      // --- Detailed diagnostic table/logging ---
+      const imageIds = displayedImages
+        .map((img) => img._id)
+        .slice()
+        .sort();
+      const maxIds = maxHeight
+        .map((h) => h.id)
+        .slice()
+        .sort();
+
+      // Build a table that pairs sorted ids side-by-side
+      const maxLen = Math.max(imageIds.length, maxIds.length);
+      const table = Array.from({ length: maxLen }, (_, i) => ({
+        imageId: imageIds[i] ?? null,
+        maxHeightId: maxIds[i] ?? null,
+      }));
+      console.table(table);
     }
   }, [displayedImages, maxHeight.length]);
 
@@ -125,7 +195,14 @@ const Gallery = ({ galleryImages, socials }: Props) => {
   //   setLoading(true);
   // };
   useEffect(() => {
-    if (loading) debounceMaxHeightCalculation();
+    if (loading) {
+      console.log(
+        "loading is ",
+        loading,
+        ", starting debounceMaxHeightCalculation"
+      );
+      debounceMaxHeightCalculation();
+    }
   }, [loading]);
   // debounceMaxHeightCalculation is used to debounce the calculation of the maximum height of the images
   // it is called when the loading state is set to true
@@ -210,18 +287,24 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       selectedFilter.countries.length == 0 &&
       selectedFilter.dates.length == 0
     ) {
+      setDisplayedImages(
+        galleryImages
+          .sort((a, b) => (a.dateTaken > b.dateTaken ? -1 : 1))
+          .slice(0, 9)
+      );
       return;
     }
-    const filtered = filteredImages().sort((a, b) =>
-      a.dateTaken > b.dateTaken ? -1 : 1
-    );
-    setDisplayedImages(filtered.slice(0, 9));
+    // const filtered = filteredImages().sort((a, b) =>
+    //   a.dateTaken > b.dateTaken ? -1 : 1
+    // );
+    setDisplayedImages(filteredImages().slice(0, 9));
 
     // Preserve any existing measured heights that match the filtered images,
     // and initialize missing ones to 0 so the structure stays aligned.
     setMaxHeight((prev) =>
-      filteredMaxHeightForImages(displayedImages.slice(0, 9), prev)
+      filteredMaxHeightForImages(filteredImages().slice(0, 9), prev)
     );
+    setPage(1);
 
     // setMaxHeightCleared(true);
   }, [selectedFilter]);
@@ -248,12 +331,12 @@ const Gallery = ({ galleryImages, socials }: Props) => {
     const map = new Map(prevMax.map((m) => [m.id, m.value]));
     return filteredImgs.map((img) => {
       const val = map.get(img._id);
-      console.log("Mapping image ID ", img._id, " to height value ", val);
       return { id: img._id, value: typeof val === "number" ? val : 0 };
     });
   }
   const filteredImages = () => {
     return galleryImages
+      .sort((a, b) => (a.dateTaken > b.dateTaken ? -1 : 1))
       .filter((image) => {
         const countries = selectedFilter?.countries;
         let index = image.location.split(" ");
@@ -283,7 +366,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         setPage((prev) => prev + 1);
       }
       setLoading(true);
-      // debounceMaxHeightCalculation();
     }
   }, 250);
 
@@ -316,11 +398,6 @@ const Gallery = ({ galleryImages, socials }: Props) => {
         <div
           className="relative z-[1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-0 w-full"
           ref={gridRef}
-          // onLoadStart={startCalc}
-          // onLoadedData={startCalc}
-          // onProgress={startCalc}
-          // onLoadedMetadata={startCalc}
-          // onLoad={startCalc}
         >
           {displayedImages
             .map((image, index) => ({ image, index })) // Attach index to each image

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { GalleryImage } from "typings";
+import { GalleryImage } from "../../../typings";
 import { urlFor } from "../../../sanity";
 import { TfiNewWindow } from "react-icons/tfi";
 import { IconContext } from "react-icons";
@@ -181,9 +181,6 @@ export default function GalleryImageCard({
   return (
     <div
       style={{
-        // old
-        // height: `${maxHeight.current[uniqueId]}vh`,
-        // new
         height: `${maxHeightValue}vh`,
         perspective: "1000px",
         backgroundColor: focus == uniqueId ? "black" : "transparent",
@@ -256,7 +253,7 @@ export default function GalleryImageCard({
             <span>
               imgNaturalHeight: {Math.round(imgNaturalHeight[uniqueId])}
             </span>
-            <span>MaxHeight Title: {imgTitle[uniqueId]}</span>
+            <span>MaxHeight Title: {imgTitle[uniqueId]?.substring(0, 10)}</span>
             <span>Image Title: {image.title.substring(0, 10)}</span>
           </div>
           <motion.img
