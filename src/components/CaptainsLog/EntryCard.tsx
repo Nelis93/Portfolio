@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { urlFor } from "../../../sanity";
-import { LogbookEntry } from "typings";
+import { LogbookEntry } from "../../../typings";
 
 type Props = {
   uniqueId: number;
