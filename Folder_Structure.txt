@@ -1,0 +1,102 @@
+📂.next
+📂.sanity
+📂.vscode
+📂node_modules
+📦public
+ ┣ 📜ArrowDown.svg
+ ┣ 📜ArrowLeft.svg
+ ┣ 📜ArrowRight.svg
+ ┣ 📜ArrowUp.svg
+ ┣ 📜favicon.ico
+ ┗ 📜FlipMe.svg
+📦sanity
+ ┣ 📂.sanity
+ ┃ ┗ 📂runtime
+ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┗ 📜index.html
+ ┃ 📂dist
+ ┃ ┃ ┣ 📂static
+ ┣ 📂node_modules
+ ┃ 📂static
+ ┃  ┗ 📜.gitkeep
+ ┣ 📜.eslintrc
+ ┣ 📜.gitignore
+ ┣ 📜package.json
+ ┣ 📜README.md
+ ┣ 📜sanity.cli.ts
+ ┣ 📜sanity.config.ts
+ ┗ 📜tsconfig.json
+📦src
+ ┣ 📂components
+ ┃ ┣ 📂CaptainsLog
+ ┃ ┃ ┣ 📜articleFilter.tsx
+ ┃ ┃ ┣ 📜BreadCrumbs.tsx
+ ┃ ┃ ┣ 📜carousel.js
+ ┃ ┃ ┣ 📜EntryCard.tsx
+ ┃ ┃ ┣ 📜EntryCarousel old.tsx
+ ┃ ┃ ┣ 📜EntryCarousel.tsx
+ ┃ ┃ ┗ 📜MobileEntryCarousel.tsx
+ ┃ ┣ 📂Gallery
+ ┃ ┃ ┣ 📜DropDownButton.tsx
+ ┃ ┃ ┣ 📜DropDownFilter.tsx
+ ┃ ┃ ┣ 📜FocusedImageCard.tsx
+ ┃ ┃ ┣ 📜GalleryImageCard.tsx
+ ┃ ┃ ┣ 📜GalleryImageCardSmall.tsx
+ ┃ ┃ ┗ 📜tempo.txt
+ ┃ ┣ 📜About.tsx
+ ┃ ┣ 📜BackgroundCircles.tsx
+ ┃ ┣ 📜Contact.tsx
+ ┃ ┣ 📜Dots.tsx
+ ┃ ┣ 📜ExperienceCard.tsx
+ ┃ ┣ 📜Header.tsx
+ ┃ ┣ 📜Hero.tsx
+ ┃ ┣ 📜PhoneHover.tsx
+ ┃ ┣ 📜Project.tsx
+ ┃ ┣ 📜Projects.tsx
+ ┃ ┣ 📜Skill.tsx
+ ┃ ┣ 📜Skills.tsx
+ ┃ ┣ 📜Slider.tsx
+ ┃ ┣ 📜Tooltip.tsx
+ ┃ ┣ 📜TooltipContainer.tsx
+ ┃ ┗ 📜WorkExperience.tsx
+ ┣ 📂pages
+ ┃ ┣ 📂captainsLog
+ ┃ ┃ ┣ 📂bigLogs
+ ┃ ┃ ┃ ┣ 📜index.tsx
+ ┃ ┃ ┃ ┗ 📜[bigLog].tsx
+ ┃ ┃ ┗ 📜index.tsx
+ ┃ ┣ 📜gallery.tsx
+ ┃ ┣ 📜index.tsx
+ ┃ ┣ 📜_app.tsx
+ ┃ ┗ 📜_document.tsx
+ ┣ 📂schemas
+ ┃ ┣ 📜experience.ts
+ ┃ ┣ 📜galleryImage.ts
+ ┃ ┣ 📜index.ts
+ ┃ ┣ 📜logbookEntry.ts
+ ┃ ┣ 📜pageInfo.ts
+ ┃ ┣ 📜project.ts
+ ┃ ┣ 📜skill.ts
+ ┃ ┗ 📜social.ts
+ ┣ 📂styles
+ ┃ ┗ 📜globals.css
+ ┗ 📂utils
+   ┣ 📜fetchExperiences.ts
+   ┣ 📜fetchGalleryImages.ts
+   ┣ 📜fetchLogbookEntries.ts
+   ┣ 📜fetchPageInfo.ts
+   ┣ 📜fetchProjects.ts
+   ┣ 📜fetchSkills.ts
+   ┗ 📜fetchSocials.ts
+📜.env.local
+📜.gitignore
+📜next-env.d.ts
+📜next.config.js
+📜package-lock.json
+📜package.json
+📜postcss.config.js
+📜README.md
+📜sanity.ts
+📜tailwind.config.js
+📜tsconfig.json
+📜typings.d.ts

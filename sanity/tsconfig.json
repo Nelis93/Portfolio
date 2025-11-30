@@ -13,8 +13,8 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "sanity": ["../node_modules/sanity"],
-      "@sanity/types": ["../node_modules/@sanity/types"]
+      "sanity": ["../../node_modules/sanity"],
+      "@sanity/types": ["../../node_modules/@sanity/types"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
