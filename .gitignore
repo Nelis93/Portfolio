@@ -34,3 +34,18 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 node_modules
+
+# next
+.next
+out
+
+# sanity build
+.sanity
+/sanity/dist
+
+# local
+node_modules
+.env.local
+.vscode
+.DS_Store
+dist

@@ -3,13 +3,51 @@
 📂.vscode
 📂node_modules
 📦public
- ┣ 📜ArrowDown.svg
- ┣ 📜ArrowLeft.svg
- ┣ 📜ArrowRight.svg
- ┣ 📜ArrowUp.svg
- ┣ 📜favicon.ico
- ┗ 📜FlipMe.svg
+ ┗ 📜favicon.ico
 📦sanity
+ ┣ 📂.sanity
+ ┃ ┗ 📂runtime
+ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┗ 📜index.html
+ ┣ 📂dist
+ ┃ ┣ 📂static
+ ┃ ┃ ┣ 📜.gitkeep
+ ┃ ┃ ┣ 📜45117e79.create-tools.json
+ ┃ ┃ ┣ 📜803690c8.create-schema.json
+ ┃ ┃ ┣ 📜apple-touch-icon.png
+ ┃ ┃ ┣ 📜browser-C1QntWIL.js
+ ┃ ┃ ┣ 📜browser-C9a_dgxp.js
+ ┃ ┃ ┣ 📜create-manifest.json
+ ┃ ┃ ┣ 📜favicon-192.png
+ ┃ ┃ ┣ 📜favicon-512.png
+ ┃ ┃ ┣ 📜favicon.ico
+ ┃ ┃ ┣ 📜favicon.svg
+ ┃ ┃ ┣ 📜index-DqY8holM.js
+ ┃ ┃ ┣ 📜index2-kT6K_J3R.js
+ ┃ ┃ ┣ 📜index3-DO0h22uy.js
+ ┃ ┃ ┣ 📜manifest.webmanifest
+ ┃ ┃ ┣ 📜resources-BKIg9TTG.js
+ ┃ ┃ ┣ 📜resources-D3qiWlg5.js
+ ┃ ┃ ┣ 📜resources-QGy_B4Uy.js
+ ┃ ┃ ┣ 📜resources2-BRR_GPwx.js
+ ┃ ┃ ┣ 📜resources2-VKZO8M7m.js
+ ┃ ┃ ┣ 📜resources3-DE47U_sT.js
+ ┃ ┃ ┣ 📜resources3-DUgMfh5Z.js
+ ┃ ┃ ┣ 📜resources4-DAT-YSb7.js
+ ┃ ┃ ┣ 📜sanity-DTYxCvUz.js
+ ┃ ┃ ┣ 📜SanityVision-CYtL8U0h.js
+ ┃ ┃ ┣ 📜stegaEncodeSourceMap-DHQDz1LF.js
+ ┃ ┃ ┣ 📜stegaEncodeSourceMap-DSy_zl4u.js
+ ┃ ┃ ┣ 📜ViteDevServerStopped-BG_RY8YO.js
+ ┃ ┃ ┗ 📜ViteDevServerStopped-BXN5impo.js
+ ┃ ┣ 📜favicon.ico
+ ┃ ┗ 📜index.html
+ ┣ 📂static
+ ┃ ┗ 📜.gitkeep
+ ┣ 📜.eslintrc
+ ┣ 📜.gitignore
+ ┣ 📜README.md
+ ┗ 📜tsconfig.json
  ┣ 📂.sanity
  ┃ ┗ 📂runtime
  ┃ ┃ ┣ 📜app.js
@@ -26,7 +64,88 @@
  ┣ 📜sanity.cli.ts
  ┣ 📜sanity.config.ts
  ┗ 📜tsconfig.json
+📦scripts
 📦src
+ ┣ 📂assets
+ ┃ ┗ 📂images
+ ┃ ┃ ┣ 📜ArrowDown.svg
+ ┃ ┃ ┣ 📜ArrowLeft.svg
+ ┃ ┃ ┣ 📜ArrowRight.svg
+ ┃ ┃ ┣ 📜ArrowUp.svg
+ ┃ ┃ ┗ 📜FlipMe.svg
+ ┣ 📂components
+ ┃ ┣ 📂CaptainsLog
+ ┃ ┃ ┣ 📜articleFilter.tsx
+ ┃ ┃ ┣ 📜BreadCrumbs.tsx
+ ┃ ┃ ┣ 📜carousel.js
+ ┃ ┃ ┣ 📜EntryCard.tsx
+ ┃ ┃ ┣ 📜EntryCarousel old.tsx
+ ┃ ┃ ┣ 📜EntryCarousel.tsx
+ ┃ ┃ ┗ 📜MobileEntryCarousel.tsx
+ ┃ ┣ 📂Gallery
+ ┃ ┃ ┣ 📜DropDownButton.tsx
+ ┃ ┃ ┣ 📜DropDownFilter.tsx
+ ┃ ┃ ┣ 📜FocusedImageCard.tsx
+ ┃ ┃ ┣ 📜GalleryImageCard.tsx
+ ┃ ┃ ┣ 📜GalleryImageCardSmall.tsx
+ ┃ ┃ ┗ 📜tempo.txt
+ ┃ ┣ 📂layouts
+ ┃ ┃ ┗ 📜MainLayout.tsx
+ ┃ ┣ 📂sections
+ ┃ ┃ ┣ 📜About.tsx
+ ┃ ┃ ┣ 📜Contact.tsx
+ ┃ ┃ ┣ 📜Hero.tsx
+ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┣ 📜Projects.tsx
+ ┃ ┃ ┣ 📜Skills.tsx
+ ┃ ┃ ┗ 📜WorkExperience.tsx
+ ┃ ┗ 📂ui
+ ┃ ┃ ┣ 📜BackgroundCircles.tsx
+ ┃ ┃ ┣ 📜Dots.tsx
+ ┃ ┃ ┣ 📜ExperienceCard.tsx
+ ┃ ┃ ┣ 📜Header.tsx
+ ┃ ┃ ┣ 📜index.ts
+ ┃ ┃ ┣ 📜PhoneHover.tsx
+ ┃ ┃ ┣ 📜Project.tsx
+ ┃ ┃ ┣ 📜Skill.tsx
+ ┃ ┃ ┣ 📜Slider.tsx
+ ┃ ┃ ┣ 📜Tooltip.tsx
+ ┃ ┃ ┗ 📜TooltipContainer.tsx
+ ┣ 📂hooks
+ ┣ 📂lib
+ ┃ ┣ 📜sanity.cli.ts
+ ┃ ┗ 📜sanity.ts
+ ┣ 📂pages
+ ┃ ┣ 📂captainsLog
+ ┃ ┃ ┣ 📂bigLogs
+ ┃ ┃ ┃ ┣ 📜index.tsx
+ ┃ ┃ ┃ ┗ 📜[bigLog].tsx
+ ┃ ┃ ┗ 📜index.tsx
+ ┃ ┣ 📜gallery.tsx
+ ┃ ┣ 📜index.tsx
+ ┃ ┣ 📜_app.tsx
+ ┃ ┗ 📜_document.tsx
+ ┣ 📂schemas
+ ┃ ┣ 📜experience.ts
+ ┃ ┣ 📜galleryImage.ts
+ ┃ ┣ 📜index.ts
+ ┃ ┣ 📜logbookEntry.ts
+ ┃ ┣ 📜pageInfo.ts
+ ┃ ┣ 📜project.ts
+ ┃ ┣ 📜skill.ts
+ ┃ ┗ 📜social.ts
+ ┣ 📂styles
+ ┃ ┗ 📜globals.css
+ ┣ 📂types
+ ┃ ┗ 📜index.ts
+ ┗ 📂utils
+ ┃ ┣ 📜fetchExperiences.ts
+ ┃ ┣ 📜fetchGalleryImages.ts
+ ┃ ┣ 📜fetchLogbookEntries.ts
+ ┃ ┣ 📜fetchPageInfo.ts
+ ┃ ┣ 📜fetchProjects.ts
+ ┃ ┣ 📜fetchSkills.ts
+ ┃ ┗ 📜fetchSocials.ts
  ┣ 📂components
  ┃ ┣ 📂CaptainsLog
  ┃ ┃ ┣ 📜articleFilter.tsx
@@ -96,7 +215,9 @@
 📜package.json
 📜postcss.config.js
 📜README.md
-📜sanity.ts
+📜sanity-deps.json 
+📜sanity-devdeps.json s
+📜sanity.config.ts
 📜tailwind.config.js
 📜tsconfig.json
 📜typings.d.ts

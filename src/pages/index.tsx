@@ -1,13 +1,13 @@
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import About from "@/components/About";
-import Contact from "@/components/Contact";
+import About from "@/components/sections/About";
+import Contact from "@/components/sections/Contact";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
-import Skills from "@/components/Skills";
-import WorkExperience from "@/components/WorkExperience";
+import Skills from "@/components/sections/Skills";
+import WorkExperience from "@/components/sections/WorkExperience";
 import { urlFor } from "../../sanity";
 import { PageInfo, Experience, Skill, Project, Social } from "../../typings";
 import { fetchPageInfo } from "../utils/fetchPageInfo";
