@@ -1,13 +1,13 @@
-import { groq } from "next-sanity";
-import { sanityClient } from "../../sanity";
-import { Project } from "../../typings";
+import {groq} from 'next-sanity'
+import {sanityClient} from '../lib/sanity'
+import {Project} from '../../typings'
 
 const query = groq`
     *[_type == "project"] {
         ...,
         technologies[]->
     }
-`;
+`
 
 export const fetchProjects = async () => {
   // const res = await fetch(
@@ -15,6 +15,6 @@ export const fetchProjects = async () => {
   // );
   // const data = await res.json();
   // const projects: Project[] = data.projects;
-  const projects: Project[] = await sanityClient.fetch(query);
-  return projects;
-};
+  const projects: Project[] = await sanityClient.fetch(query)
+  return projects
+}

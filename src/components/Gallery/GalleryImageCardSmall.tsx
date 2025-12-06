@@ -1,14 +1,14 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { GalleryImage } from "../../../typings";
-import { urlFor } from "../../../sanity";
+import React from 'react'
+import {motion} from 'framer-motion'
+import {GalleryImage} from '../../../typings'
+import {urlFor} from '../../lib/sanity'
 
 type Props = {
-  image: GalleryImage;
-  uniqueId: number;
+  image: GalleryImage
+  uniqueId: number
   // galleryRefs: any;
-  setSelected: any;
-};
+  setSelected: any
+}
 
 export default function GalleryImageCardSmall({
   image,
@@ -18,9 +18,9 @@ export default function GalleryImageCardSmall({
 }: Props) {
   //clicking on the photo should flip the card, showing the info like it's written on the back of it.
   const handleCardClick = (event: any) => {
-    event.stopPropagation();
-    setSelected(uniqueId);
-  };
+    event.stopPropagation()
+    setSelected(uniqueId)
+  }
 
   return (
     <div
@@ -38,5 +38,5 @@ export default function GalleryImageCardSmall({
         alt={image.title}
       />
     </div>
-  );
+  )
 }

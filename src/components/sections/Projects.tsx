@@ -1,23 +1,23 @@
-import React, { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { Project as PJT } from "../../typings";
-import Project from "./Project";
-import Slider from "./Slider";
+import React, {useState, useRef} from 'react'
+import {motion} from 'framer-motion'
+import {Project as PJT} from '../../../typings'
+import Project from '../ui/Project'
+import Slider from '../ui/Slider'
 
 type Props = {
-  projects: PJT[];
-};
+  projects: PJT[]
+}
 
-export default function Projects({ projects }: Props) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+export default function Projects({projects}: Props) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const projectRefs = useRef<(HTMLDivElement | null)[]>([])
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      transition={{ duration: 1.5 }}
-      whileInView={{ opacity: 1 }}
+      initial={{opacity: 0}}
+      transition={{duration: 1.5}}
+      whileInView={{opacity: 1}}
       className="text-[1rem] relative h-screen flex flex-col justify-end mx-auto items-center sm:max-w-full lg:text-[5vh] lg:justify-start"
     >
       <h3 className="text-[2em] absolute top-[2.5em] uppercase tracking-[10px] text-white sm:top-[1em] lg:text-[1em] lg:top-[7vh]">
@@ -29,9 +29,7 @@ export default function Projects({ projects }: Props) {
         refs={projectRefs}
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
-        style={
-          "absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]"
-        }
+        style={'absolute z-20 h-1 hidden xl:flex justify-between w-screen top-[50%]'}
         scrolling
       />
       {/* Projects Carousel */}
@@ -52,10 +50,10 @@ export default function Projects({ projects }: Props) {
                 setCurrentIndex={setCurrentIndex}
                 projectRefs={projectRefs}
               />
-            );
+            )
           })}
       </div>
       <div className="hidden lg:block w-screen absolute top-[30%] bg-teal-300/10 h-[500px] -skew-y-12"></div>
     </motion.div>
-  );
+  )
 }

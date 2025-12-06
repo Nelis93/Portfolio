@@ -1,21 +1,16 @@
 type Props = {
-  children: any;
-  x: number;
-  y: number;
-  contentRef: any;
-};
+  children: any
+  x: number
+  y: number
+  contentRef: any
+}
 
-export default function TooltipContainer({
-  children,
-  x,
-  y,
-  contentRef,
-}: Props) {
+export default function TooltipContainer({children, x, y, contentRef}: Props) {
   return (
     <div
       style={{
-        position: "absolute",
-        pointerEvents: "none",
+        position: 'absolute',
+        pointerEvents: 'none',
         left: 0,
         top: 0,
         transform: `translate3d(${x}px, ${y}px, 0)`,
@@ -25,5 +20,5 @@ export default function TooltipContainer({
         {children}
       </div>
     </div>
-  );
+  )
 }

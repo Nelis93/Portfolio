@@ -1,5 +1,5 @@
-import React from "react";
-import { useRouter } from "next/router";
+import React from 'react'
+import {useRouter} from 'next/router'
 import {
   FaLinkedinIn,
   FaFacebookF,
@@ -7,30 +7,30 @@ import {
   FaHome,
   FaEnvelope,
   FaBookDead,
-} from "react-icons/fa";
-import { IconContext } from "react-icons";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { Social } from "../../typings";
-import DropDownFilter from "./Gallery/DropDownFilter";
+} from 'react-icons/fa'
+import {IconContext} from 'react-icons'
+import {motion} from 'framer-motion'
+import Link from 'next/link'
+import {Social} from '../../../typings'
+import DropDownFilter from '../Gallery/DropDownFilter'
 
 type Props = {
-  socials: Social[];
-  setSelectedFilter: any;
-  style: string;
-};
+  socials: Social[]
+  setSelectedFilter: any
+  style: string
+}
 
-function Header({ socials, setSelectedFilter, style }: Props) {
-  const router = useRouter();
+function Header({socials, setSelectedFilter, style}: Props) {
+  const router = useRouter()
 
   // Define the icon map for general use
-  const iconMap: { [key: string]: React.ElementType } = {
+  const iconMap: {[key: string]: React.ElementType} = {
     FaLinkedinIn: FaLinkedinIn,
     FaFacebookF: FaFacebookF,
     FaCameraRetro: FaCameraRetro,
     FaHome: FaHome,
     FaBookDead: FaBookDead,
-  };
+  }
   return (
     <header className={style}>
       <motion.div
@@ -52,36 +52,32 @@ function Header({ socials, setSelectedFilter, style }: Props) {
           .sort((a, b) => a.position - b.position)
           .filter((social) => {
             const taggie = () => {
-              if (router.pathname === "/") {
-                return "FaHome";
-              } else if (router.pathname.includes("gallery")) {
-                return "FaCameraRetro";
-              } else if (router.pathname.includes("captainsLog")) {
-                return "FaBookDead";
+              if (router.pathname === '/') {
+                return 'FaHome'
+              } else if (router.pathname.includes('gallery')) {
+                return 'FaCameraRetro'
+              } else if (router.pathname.includes('captainsLog')) {
+                return 'FaBookDead'
               } else {
-                return;
+                return
               }
-            };
+            }
             // router.pathname === "/" ? "FaHome" : "FaCameraRetro";
-            return social.tag != taggie();
+            return social.tag != taggie()
           })
           .map((social) => {
-            let IconComponent = iconMap[social.tag];
+            let IconComponent = iconMap[social.tag]
             return (
-              <Link
-                key={social._id}
-                href={social.slug?.current ?? "/"}
-                className="social-icon"
-              >
+              <Link key={social._id} href={social.slug?.current ?? '/'} className="social-icon">
                 <IconContext.Provider
                   value={{
-                    className: "h-[75%]",
+                    className: 'h-[75%]',
                   }}
                 >
                   <IconComponent />
                 </IconContext.Provider>
               </Link>
-            );
+            )
           })}
       </motion.div>
       <motion.div
@@ -99,13 +95,13 @@ function Header({ socials, setSelectedFilter, style }: Props) {
         }}
         className="flex flex-row items-center text-gray-300 cursor-pointer space-x-4"
       >
-        {router.pathname.includes("gallery") && (
+        {router.pathname.includes('gallery') && (
           <DropDownFilter setSelectedFilter={setSelectedFilter} />
         )}
         <Link href="/#contact" className="social-icon">
           <IconContext.Provider
             value={{
-              className: "h-[75%]",
+              className: 'h-[75%]',
             }}
           >
             <FaEnvelope />
@@ -119,7 +115,7 @@ function Header({ socials, setSelectedFilter, style }: Props) {
         </Link>
       </motion.div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header

@@ -1,22 +1,22 @@
-import React, { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import ExperienceCard from "./ExperienceCard";
-import { Experience } from "../../../typings";
-import Dots from "./Dots";
+import React, {useState, useRef} from 'react'
+import {motion} from 'framer-motion'
+import ExperienceCard from '../ui/ExperienceCard'
+import {Experience} from '../../../typings'
+import Dots from '../ui/Dots'
 
 type Props = {
-  experiences: Experience[];
-};
+  experiences: Experience[]
+}
 
-export default function WorkExperience({ experiences }: Props) {
-  const [focus, setFocus] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const experienceRefs = useRef<(HTMLDivElement | null)[]>([]);
+export default function WorkExperience({experiences}: Props) {
+  const [focus, setFocus] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const experienceRefs = useRef<(HTMLDivElement | null)[]>([])
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      transition={{ duration: 1.5 }}
-      whileInView={{ opacity: 1 }}
+      initial={{opacity: 0}}
+      transition={{duration: 1.5}}
+      whileInView={{opacity: 1}}
       className="relative text-[1rem] h-screen flex flex-col overflow-hidden justify-start items-center sm:max-w-full lg:text-[5vh]"
     >
       <h3 className="text-[2em] absolute top-[3em] uppercase tracking-[10px] text-white sm:top-[1.2em] lg:top-[7vh] lg:text-[1em] lg:tracking-[20px]">
@@ -34,7 +34,7 @@ export default function WorkExperience({ experiences }: Props) {
               setCurrentIndex={setCurrentIndex}
               experienceRefs={experienceRefs}
             />
-          );
+          )
         })}
       </div>
       <Dots
@@ -43,9 +43,9 @@ export default function WorkExperience({ experiences }: Props) {
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
         style={
-          "relative z-40 flex lg:hidden justify-center items-start gap-5 mt-12 sm:mt-5 sm:pb-4"
+          'relative z-40 flex lg:hidden justify-center items-start gap-5 mt-12 sm:mt-5 sm:pb-4'
         }
       />
     </motion.div>
-  );
+  )
 }

@@ -1,20 +1,20 @@
-import React from "react";
-import { PhoneIcon, MapPinIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
+import React from 'react'
+import {PhoneIcon, MapPinIcon, EnvelopeIcon} from '@heroicons/react/24/solid'
 // import { SocialIcon } from "react-social-icons";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { PageInfo } from "../../../typings";
+import {useForm, SubmitHandler} from 'react-hook-form'
+import {PageInfo} from '../../../typings'
 // import ReactWhatsapp from "react-whatsapp";
-import PhoneHover from "./PhoneHover";
+import PhoneHover from '../ui/PhoneHover'
 
 type Props = {
-  pageInfo: PageInfo;
-};
+  pageInfo: PageInfo
+}
 type Inputs = {
-  name: string;
-  company: string;
-  subject: string;
-  message: string;
-};
+  name: string
+  company: string
+  subject: string
+  message: string
+}
 
 const hover = {
   tooltipContent: (
@@ -24,13 +24,13 @@ const hover = {
     </p>
   ),
   rest: <p className="text-[1em] cursor-not-allowed">+31 4 159 265 35</p>,
-};
+}
 
-export default function Contact({ pageInfo }: Props) {
-  const { register, handleSubmit } = useForm<Inputs>();
+export default function Contact({pageInfo}: Props) {
+  const {register, handleSubmit} = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = (formdata) => {
-    window.location.href = `mailto:${pageInfo.email}?subject=${formdata.subject}&body=${formdata.message} (${formdata.company})`;
-  };
+    window.location.href = `mailto:${pageInfo.email}?subject=${formdata.subject}&body=${formdata.message} (${formdata.company})`
+  }
 
   return (
     <div className="text-[1rem] h-screen max-w-full relative text-left flex flex-col items-center justify-center px-4 sm:flex-row sm:items-center lg:text-[5vh]">
@@ -66,30 +66,21 @@ export default function Contact({ pageInfo }: Props) {
           className="hidden lg:flex flex-col space-y-2 w-screen px-5 lg:w-fit h-[40vh] text-[2vh] mx-auto"
         >
           <div className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-2">
+            <input {...register('name')} placeholder="Name" className="contactInput" type="text" />
             <input
-              {...register("name")}
-              placeholder="Name"
-              className="contactInput"
-              type="text"
-            />
-            <input
-              {...register("company")}
+              {...register('company')}
               placeholder="Company"
               className="contactInput"
               type="text"
             />
           </div>
           <input
-            {...register("subject")}
+            {...register('subject')}
             placeholder="Subject"
             className="contactInput"
             type="text"
           />
-          <textarea
-            {...register("message")}
-            placeholder="Message"
-            className="contactInput"
-          />
+          <textarea {...register('message')} placeholder="Message" className="contactInput" />
           <button
             type="submit"
             className="bg-teal-500 py-[1em] px-10 rounded-md text-white font-bold"
@@ -99,5 +90,5 @@ export default function Contact({ pageInfo }: Props) {
         </form>
       </div>
     </div>
-  );
+  )
 }

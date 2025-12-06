@@ -9,55 +9,52 @@
 // //   };
 // // };
 
-import { useState, useMemo } from "react";
-import { LogbookEntry, Social } from "../../../../typings";
-import { fetchLogbookEntries } from "@/utils/fetchLogbookEntries";
-import { fetchSocials } from "@/utils/fetchSocials";
-import dynamic from "next/dynamic";
-import { GetStaticProps } from "next";
-import Header from "@/components/Header";
-import { urlFor } from "../../../../sanity";
-import Link from "next/link";
-import { FaSearch } from "react-icons/fa";
-import { IconContext } from "react-icons";
-import Breadcrumbs from "../../../components/CaptainsLog/BreadCrumbs";
+import {useState, useMemo} from 'react'
+import {LogbookEntry, Social} from '../../../../typings'
+import {fetchLogbookEntries} from '@/utils/fetchLogbookEntries'
+import {fetchSocials} from '@/utils/fetchSocials'
+import dynamic from 'next/dynamic'
+import {GetStaticProps} from 'next'
+import Header from '@/components/ui/Header'
+import {urlFor} from '../../../lib/sanity'
+import Link from 'next/link'
+import {FaSearch} from 'react-icons/fa'
+import {IconContext} from 'react-icons'
+import Breadcrumbs from '../../../components/CaptainsLog/BreadCrumbs'
 
 // Component Props
 type Props = {
-  socials: Social[];
-  logBookEntries: LogbookEntry[];
-};
+  socials: Social[]
+  logBookEntries: LogbookEntry[]
+}
 
-const BigLogs = ({ socials, logBookEntries }: Props) => {
-  const [query, setQuery] = useState("");
+const BigLogs = ({socials, logBookEntries}: Props) => {
+  const [query, setQuery] = useState('')
 
   // Function to highlight matched words
   const highlightText = (text: string, query: string) => {
-    if (!query) return text;
-    const regex = new RegExp(`(${query})`, "gi");
-    return text.replace(
-      regex,
-      '<span class="bg-yellow-300 text-black">$1</span>'
-    );
-  };
+    if (!query) return text
+    const regex = new RegExp(`(${query})`, 'gi')
+    return text.replace(regex, '<span class="bg-yellow-300 text-black">$1</span>')
+  }
 
   // Memoized filtered log entries to optimize performance
   const filteredEntries = useMemo(() => {
-    if (!query) return logBookEntries;
-    const regex = new RegExp(query, "gi");
+    if (!query) return logBookEntries
+    const regex = new RegExp(query, 'gi')
     return logBookEntries.filter(
-      (entry) => entry.title.match(regex) || entry.description.match(regex)
-    );
-  }, [query, logBookEntries]);
+      (entry) => entry.title.match(regex) || entry.description.match(regex),
+    )
+  }, [query, logBookEntries])
 
   function formatDate(dateString: string) {
-    const date = new Date(dateString);
+    const date = new Date(dateString)
     const options: Intl.DateTimeFormatOptions = {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return date.toLocaleDateString(undefined, options);
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }
+    return date.toLocaleDateString(undefined, options)
   }
   return (
     <main className="relative flex flex-col items-center bg-gradient-to-br from-teal-300 to-teal-600 text-black w-screen h-screen px-4 lg:px-8 overflow-y-scroll scrollbar-none">
@@ -79,13 +76,13 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
         <IconContext.Provider
           value={{
             style: {
-              position: "absolute",
-              color: "gray",
-              backgroundColor: "transparent",
-              height: "80%",
-              width: "3em",
-              padding: "0.5em",
-              right: "1em",
+              position: 'absolute',
+              color: 'gray',
+              backgroundColor: 'transparent',
+              height: '80%',
+              width: '3em',
+              padding: '0.5em',
+              right: '1em',
             },
           }}
         >
@@ -128,25 +125,23 @@ const BigLogs = ({ socials, logBookEntries }: Props) => {
           </Link>
         ))}
         {filteredEntries.length === 0 && (
-          <p className="text-center text-white text-lg">
-            No matching articles found.
-          </p>
+          <p className="text-center text-white text-lg">No matching articles found.</p>
         )}
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default dynamic(() => Promise.resolve(BigLogs), { ssr: false });
+export default dynamic(() => Promise.resolve(BigLogs), {ssr: false})
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const logBookEntries: LogbookEntry[] = await fetchLogbookEntries();
-  const socials: Social[] = await fetchSocials();
+  const logBookEntries: LogbookEntry[] = await fetchLogbookEntries()
+  const socials: Social[] = await fetchSocials()
   return {
     props: {
       logBookEntries,
       socials,
     },
     revalidate: 10,
-  };
-};
+  }
+}

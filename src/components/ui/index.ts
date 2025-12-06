@@ -1,10 +1,10 @@
-export { default as Header } from "./Header";
-export { default as Tooltip } from "./Tooltip";
-export { default as TooltipContainer } from "./TooltipContainer";
-export { default as BackgroundCircles } from "./BackgroundCircles";
-export { default as Dots } from "./Dots";
-export { default as ExperienceCard } from "./ExperienceCard";
-export { default as PhoneHover } from "./PhoneHover";
-export { default as Project } from "./Project";
-export { default as Skill } from "./Skill";
-export { default as Slider } from "./Slider";
+export {default as Header} from './Header'
+export {default as Tooltip} from './Tooltip'
+export {default as TooltipContainer} from './TooltipContainer'
+export {default as BackgroundCircles} from './BackgroundCircles'
+export {default as Dots} from './Dots'
+export {default as ExperienceCard} from './ExperienceCard'
+export {default as PhoneHover} from './PhoneHover'
+export {default as Project} from './Project'
+export {default as Skill} from './Skill'
+export {default as Slider} from './Slider'

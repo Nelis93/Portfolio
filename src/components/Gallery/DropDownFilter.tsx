@@ -1,113 +1,106 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef} from 'react'
 // import { motion } from "framer-motion";
-import DropDownButton from "./DropDownButton";
+import DropDownButton from './DropDownButton'
 
 type Props = {
-  setSelectedFilter: any;
-};
-export default function DropDownFilter({ setSelectedFilter }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLeftMenu, setIsLefMenu] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null); // Ref for the dropdown
+  setSelectedFilter: any
+}
+export default function DropDownFilter({setSelectedFilter}: Props) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isLeftMenu, setIsLefMenu] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null) // Ref for the dropdown
 
   // Define the click handler outside of the effect
   const handleClickOutside = (event: MouseEvent) => {
     // If the clicked target is outside the dropdown, close it
     // console.log(dropdownRef.current);
-    event.stopPropagation();
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node)
-    ) {
-      console.log("dropdown disengaged");
-      setIsOpen(false);
+    event.stopPropagation()
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      console.log('dropdown disengaged')
+      setIsOpen(false)
     }
-  };
+  }
 
   // --- new: clear filters handler ---
   const clearFilters = () => {
     // reset filter state
-    setSelectedFilter({ countries: [], dates: [] });
+    setSelectedFilter({countries: [], dates: []})
 
     // remove selected classes from any list items inside the dropdown
     if (dropdownRef.current) {
-      const items = dropdownRef.current.querySelectorAll("li");
+      const items = dropdownRef.current.querySelectorAll('li')
       items.forEach((el) => {
-        el.classList.remove("bg-white", "text-black");
-      });
+        el.classList.remove('bg-white', 'text-black')
+      })
     }
 
     // close dropdown and reset menu side
-    setIsOpen(false);
-    setIsLefMenu(false);
-  };
+    setIsOpen(false)
+    setIsLefMenu(false)
+  }
   // --- end new ---
 
   useEffect(() => {
     if (isOpen) {
       // Add event listener to detect clicks outside the dropdown
-      document.addEventListener("click", handleClickOutside);
+      document.addEventListener('click', handleClickOutside)
     } else {
       // Remove event listener when dropdown is closed
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside)
     }
 
     // Cleanup function to remove the event listener on unmount or state change
     return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [isOpen]);
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [isOpen])
 
   const selectListItem = (event: any) => {
-    const selector =
-      event.target.parentElement.previousSibling.innerText.includes("COUNTRY")
-        ? "dates"
-        : "countries";
-    const nonSelector = selector === "dates" ? "countries" : "dates";
+    const selector = event.target.parentElement.previousSibling.innerText.includes('COUNTRY')
+      ? 'dates'
+      : 'countries'
+    const nonSelector = selector === 'dates' ? 'countries' : 'dates'
     setSelectedFilter((current: any) => {
       if (!current?.[selector].includes(event.target.innerText.toString())) {
-        event.target.classList.add("bg-white", "text-black");
+        event.target.classList.add('bg-white', 'text-black')
         return {
-          [selector]: [
-            ...current?.[selector],
-            event.target.innerText.toString(),
-          ],
+          [selector]: [...current?.[selector], event.target.innerText.toString()],
           [nonSelector]: current?.[nonSelector],
-        };
+        }
       }
 
-      event.target.classList.remove("bg-white", "text-black");
+      event.target.classList.remove('bg-white', 'text-black')
       return {
         [selector]: current?.[selector].filter(
-          (item: Text) => item !== event.target.innerText.toString()
+          (item: Text) => item !== event.target.innerText.toString(),
         ),
         [nonSelector]: current?.[nonSelector],
-      };
-    });
-  };
+      }
+    })
+  }
 
   const leftMenu = () => {
-    let tempArray = [];
+    let tempArray = []
     for (let i = 2018; i <= 2025; i++) {
-      tempArray.push(i.toString());
+      tempArray.push(i.toString())
     }
-    return tempArray;
-  };
+    return tempArray
+  }
 
   const rightMenu = [
-    "India",
-    "Myanmar",
-    "Thailand",
-    "Vietnam",
-    "New Zealand",
-    "Australia",
-    "Scandinavia",
-    "Belgium",
-    "Bali",
-  ];
+    'India',
+    'Myanmar',
+    'Thailand',
+    'Vietnam',
+    'New Zealand',
+    'Australia',
+    'Scandinavia',
+    'Belgium',
+    'Bali',
+  ]
   const toggleMenu = () => {
-    setIsLefMenu((current) => !current);
-  };
+    setIsLefMenu((current) => !current)
+  }
 
   // const slideVerticalAnimation = {
   //   open: {
@@ -157,11 +150,11 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
         className="block rounded-md shadow-md left-[-5.5em] overflow-x-hidden absolute h-auto sm:max-h-[80vh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
         // initial="close"
         style={{
-          transform: isOpen ? "translateY(-1em)" : "translateY(-20em)",
-          opacity: isOpen ? "1" : "0",
-          transition: "transform, opacity",
-          transitionDuration: ".5s, 1s",
-          transitionTimingFunction: "ease-in-out",
+          transform: isOpen ? 'translateY(-1em)' : 'translateY(-20em)',
+          opacity: isOpen ? '1' : '0',
+          transition: 'transform, opacity',
+          transitionDuration: '.5s, 1s',
+          transitionTimingFunction: 'ease-in-out',
         }}
         // animate={isOpen ? "open" : "close"}
         // variants={slideVerticalAnimation}
@@ -169,10 +162,10 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
         <div
           className="flex items-start h-full relative w-[10em]"
           style={{
-            transform: isLeftMenu ? "translateX(-5em)" : "translateX(0)",
-            transitionProperty: "transform",
-            transitionDuration: ".3s",
-            transitionTimingFunction: "ease-in-out",
+            transform: isLeftMenu ? 'translateX(-5em)' : 'translateX(0)',
+            transitionProperty: 'transform',
+            transitionDuration: '.3s',
+            transitionTimingFunction: 'ease-in-out',
           }}
           // initial="left"
           // animate={isLeftMenu ? "left" : "right"}
@@ -183,8 +176,8 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
               onClick={toggleMenu}
               className="cursor-pointer m-0 py-[.5em] text-center hover:text-black hover:bg-white"
               style={{
-                transition: "color, background-color",
-                transitionDuration: ".2s",
+                transition: 'color, background-color',
+                transitionDuration: '.2s',
               }}
             >
               COUNTRY &#8594;
@@ -195,8 +188,8 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                   key={i}
                   className="flex-1 text-center cursor-pointer hover:bg-white hover:text-black"
                   style={{
-                    transition: "color, background-color",
-                    transitionDuration: ".2s",
+                    transition: 'color, background-color',
+                    transitionDuration: '.2s',
                   }}
                   onClick={selectListItem}
                 >
@@ -207,11 +200,11 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                 key="clear-countries"
                 className="text-center cursor-pointer border-t-white border-t-2 text-red-900 hover:bg-white hover:text-black font-semibold"
                 style={{
-                  transition: "color, background-color",
-                  transitionDuration: ".2s",
+                  transition: 'color, background-color',
+                  transitionDuration: '.2s',
                 }}
                 onClick={() => {
-                  clearFilters();
+                  clearFilters()
                 }}
                 aria-label="Clear country filters"
               >
@@ -224,8 +217,8 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
               onClick={toggleMenu}
               className="fill-white cursor-pointer m-0 py-[.5em] text-center hover:text-black hover:bg-white"
               style={{
-                transition: "color, background-color",
-                transitionDuration: ".2s",
+                transition: 'color, background-color',
+                transitionDuration: '.2s',
               }}
             >
               &#8592; YEAR
@@ -236,8 +229,8 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                   key={i}
                   className="item flex-1 text-center cursor-pointer hover:bg-white hover:text-black"
                   style={{
-                    transition: "color, background-color",
-                    transitionDuration: ".2s",
+                    transition: 'color, background-color',
+                    transitionDuration: '.2s',
                   }}
                   onClick={selectListItem}
                 >
@@ -248,11 +241,11 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
                 key="clear-dates"
                 className="item flex-1 items-end text-center cursor-pointer border-t-white border-t-2 text-red-900 hover:bg-white hover:text-black font-semibold"
                 style={{
-                  transition: "color, background-color",
-                  transitionDuration: ".2s",
+                  transition: 'color, background-color',
+                  transitionDuration: '.2s',
                 }}
                 onClick={() => {
-                  clearFilters();
+                  clearFilters()
                 }}
                 aria-label="Clear date filters"
               >
@@ -263,5 +256,5 @@ export default function DropDownFilter({ setSelectedFilter }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

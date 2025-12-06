@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { Experience } from "../../typings";
-import { urlFor } from "../../sanity";
+import React, {useEffect, useRef, useState} from 'react'
+import {motion, useInView} from 'framer-motion'
+import {Experience} from '../../../typings'
+import {urlFor} from '../../lib/sanity'
 
 type Props = {
-  experience: Experience;
-  uniqueId: number;
-  focus: number;
-  setFocus: any;
-  setCurrentIndex: any;
-  experienceRefs: any;
-};
+  experience: Experience
+  uniqueId: number
+  focus: number
+  setFocus: any
+  setCurrentIndex: any
+  experienceRefs: any
+}
 
 export default function ExperienceCard({
   experience,
@@ -21,41 +21,41 @@ export default function ExperienceCard({
   experienceRefs,
 }: Props) {
   // Create a ref for each project
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<HTMLElement | null>(null)
   // Track if each project is in view
   const isInView = useInView(ref, {
     amount: 0.5,
     once: false,
-  });
-  const [dominance, setDominance] = useState(false);
+  })
+  const [dominance, setDominance] = useState(false)
   // Update the currentIndex based on which project is in view
   useEffect(() => {
     if (isInView) {
-      console.log(uniqueId, " is in view");
-      setCurrentIndex(uniqueId);
+      console.log(uniqueId, ' is in view')
+      setCurrentIndex(uniqueId)
     }
-  }, [isInView, uniqueId]);
+  }, [isInView, uniqueId])
   const handleCardClick = () => {
-    setFocus(uniqueId);
-    focus == uniqueId && setDominance((current) => !current);
-  };
+    setFocus(uniqueId)
+    focus == uniqueId && setDominance((current) => !current)
+  }
   return (
     <article
-      className={`expCardReg-small sm:expCardReg-small-flipped ${focus == uniqueId ? "lg:expCardFocus" : "lg:expCardReg"}`}
+      className={`expCardReg-small sm:expCardReg-small-flipped ${focus == uniqueId ? 'lg:expCardFocus' : 'lg:expCardReg'}`}
       onClick={handleCardClick}
       ref={(el) => {
-        ref.current = el;
-        experienceRefs.current[uniqueId] = el;
+        ref.current = el
+        experienceRefs.current[uniqueId] = el
       }}
     >
       <div className="absolute w-full lg:w-fit h-full">
         <section
           className="relative flex flex-col sm:flex-row lg:flex-col w-full h-full px-[.5em]"
           style={{
-            transform: dominance ? "translateY(-100%)" : "inherit",
-            transition: "transform",
-            transitionDuration: "1s",
-            transitionTimingFunction: "ease-in-out",
+            transform: dominance ? 'translateY(-100%)' : 'inherit',
+            transition: 'transform',
+            transitionDuration: '1s',
+            transitionTimingFunction: 'ease-in-out',
             cursor: focus == uniqueId ? 'url(/ArrowDown.svg), pointer' : 'pointer',
           }}
         >
@@ -64,9 +64,9 @@ export default function ExperienceCard({
               y: -100,
               opacity: 0,
             }}
-            transition={{ duration: 1.2 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            transition={{duration: 1.2}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true}}
             className="my-[.6em] w-[5em] h-[5em] flex-shrink-0 rounded-full self-center object-cover sm:mr-[1.8em] sm:object-left lg:mr-0 lg:object-center"
             src={urlFor(experience?.companyImage).url()}
             alt="not found"
@@ -75,35 +75,29 @@ export default function ExperienceCard({
             <h4 className="text-[.7em] sm:text-[.8em] w-full text-clip line-clamp-1 pl-1 font-light bg-gradient-to-r from-teal-300 from-70% to-teal-200 rounded-lg">
               {experience.jobTitle}
             </h4>
-            <p className="font-bold pt-2 pl-1 text-[.5em] lg:text-[.6em]">
-              {experience.company}
-            </p>
+            <p className="font-bold pt-2 pl-1 text-[.5em] lg:text-[.6em]">{experience.company}</p>
             <div className="absolute bottom-10 flex space-x-5 overflow-x-auto scrollbar-none py-[2.5vh]">
               {experience.technologies.map((tech) => {
                 return (
-                  <img
-                    key={tech._id}
-                    src={urlFor(tech.image).url()}
-                    className="h-[1em] w-[1em]"
-                  />
-                );
+                  <img key={tech._id} src={urlFor(tech.image).url()} className="h-[1em] w-[1em]" />
+                )
               })}
             </div>
           </div>
           <p className="absolute right-2 bottom-2 uppercase text-[.4em] text-gray-400">
-            {new Date(experience.dateStarted).toDateString()} -{" "}
+            {new Date(experience.dateStarted).toDateString()} -{' '}
             {experience.isCurrentlyWorkingHere
-              ? "present"
+              ? 'present'
               : new Date(experience.dateEnded).toDateString()}
           </p>
         </section>
         <section
           className="relative w-full h-full rounded-lg lg:rounded-none py-[.5em] px-[.5em] bg-stone-600 overflow-y-scroll scrollbar-none"
           style={{
-            transform: dominance ? "translateY(-100%)" : "inherit",
-            transition: "transform",
-            transitionDuration: "1s",
-            transitionTimingFunction: "ease-in-out",
+            transform: dominance ? 'translateY(-100%)' : 'inherit',
+            transition: 'transform',
+            transitionDuration: '1s',
+            transitionTimingFunction: 'ease-in-out',
             cursor: focus == uniqueId ? 'url(/ArrowUp.svg), pointer' : 'pointer',
           }}
         >
@@ -117,12 +111,12 @@ export default function ExperienceCard({
                   <li className="bg-stone-500 px-2 py-1 rounded-lg" key={i}>
                     {point}
                   </li>
-                );
+                )
               })}
             </ul>
           </div>
         </section>
       </div>
     </article>
-  );
+  )
 }

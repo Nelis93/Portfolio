@@ -1,18 +1,18 @@
-import { ReactElement } from "react";
+import {ReactElement} from 'react'
 
 interface SanityBody {
-  _createdAt: string;
-  _id: string;
-  _rev: string;
-  _updatedAt: string;
+  _createdAt: string
+  _id: string
+  _rev: string
+  _updatedAt: string
 }
 
 interface Image {
-  _type: "image";
+  _type: 'image'
   asset: {
-    _ref: string;
-    _type: "reference";
-  };
+    _ref: string
+    _type: 'reference'
+  }
 }
 
 // interface Block {
@@ -64,80 +64,80 @@ interface Image {
 //   ];
 // }
 export interface PageInfo extends SanityBody {
-  _type: "pageInfo";
-  address: string;
-  backgroundInformation: string;
-  email: string;
-  role: string;
-  heroImage: string;
-  title: string;
-  phoneNumber: string;
-  profilePic: Image;
+  _type: 'pageInfo'
+  address: string
+  backgroundInformation: string
+  email: string
+  role: string
+  heroImage: string
+  title: string
+  phoneNumber: string
+  profilePic: Image
 }
 
 export interface Technology extends SanityBody {
-  _type: "skill";
-  image: Image;
-  progress: number;
-  title: string;
+  _type: 'skill'
+  image: Image
+  progress: number
+  title: string
 }
 
 export interface Skill extends SanityBody {
-  _type: "skill";
-  image: Image;
-  progress: number;
-  title: string;
-  webdev: boolean;
+  _type: 'skill'
+  image: Image
+  progress: number
+  title: string
+  webdev: boolean
 }
 
 export interface Experience extends SanityBody {
-  _type: "experience";
-  company: string;
-  companyImage: Image;
-  dateStarted: Date;
-  dateEnded: Date;
-  isCurrentlyWorkingHere: Boolean;
-  jobTitle: string;
-  points: string[];
-  technologies: Technology[];
+  _type: 'experience'
+  company: string
+  companyImage: Image
+  dateStarted: Date
+  dateEnded: Date
+  isCurrentlyWorkingHere: Boolean
+  jobTitle: string
+  points: string[]
+  technologies: Technology[]
 }
 
 export interface Project extends SanityBody {
-  _type: "project";
-  title: string;
-  image: Image;
-  linkToBuild: string;
-  summary: string;
-  technologies: Technology[];
-  position: number;
+  _type: 'project'
+  title: string
+  image: Image
+  linkToBuild: string
+  summary: string
+  technologies: Technology[]
+  position: number
 }
 export interface Social extends SanityBody {
-  _type: "social";
-  title: string;
-  slug: slug;
-  url: url;
-  tag: string;
-  position: number;
+  _type: 'social'
+  title: string
+  slug: slug
+  url: url
+  tag: string
+  position: number
 }
 export interface GalleryImage extends SanityBody {
-  _type: "galleryImage";
-  title: string;
-  description: string;
-  actualImage: Image;
-  location: string;
-  dateTaken: Date;
-  people: string[];
-  position: number;
-  linkToPost: reference;
+  _type: 'galleryImage'
+  title: string
+  description: string
+  actualImage: Image
+  location: string
+  dateTaken: Date
+  people: string[]
+  position: number
+  linkToPost: reference
 }
 export interface LogbookEntry extends SanityBody {
-  _type: "logbookEntry";
-  title: string;
-  description: string;
-  location: string;
-  date: Date;
-  entry: block[];
-  position: number;
-  slug: slug;
-  image: Image;
+  _type: 'logbookEntry'
+  title: string
+  description: string
+  location: string
+  date: Date
+  entry: block[]
+  position: number
+  slug: slug
+  image: Image
 }

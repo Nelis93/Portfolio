@@ -1,24 +1,24 @@
-import React from "react";
-import { motion } from "framer-motion";
-import Skill from "./Skill";
-import { Skill as SkillType } from "../../../typings";
+import React from 'react'
+import {motion} from 'framer-motion'
+import Skill from '../ui/Skill'
+import {Skill as SkillType} from '../../../typings'
 type Props = {
-  skills: SkillType[];
-};
+  skills: SkillType[]
+}
 
-export default function Skills({ skills }: Props) {
+export default function Skills({skills}: Props) {
   function startSkill(array: any[] | undefined) {
-    let newArray = array;
+    let newArray = array
     if (window.innerWidth < 400) {
-      newArray?.pop();
+      newArray?.pop()
     }
-    return newArray;
+    return newArray
   }
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      transition={{ duration: 1.5 }}
-      whileInView={{ opacity: 1 }}
+      initial={{opacity: 0}}
+      transition={{duration: 1.5}}
+      whileInView={{opacity: 1}}
       className="text-[1rem] relative flex flex-col text-center h-screen w-screen justify-center items-center lg:text-[5vh] lg:text-left lg:max-w-[2000px] lg:px-5"
     >
       <h3 className="absolute text-[2em] top-[3em] uppercase tracking-[20px] text-white sm:top-[1.2em] lg:text-[1em] lg:top-[7vh]">
@@ -36,16 +36,16 @@ export default function Skills({ skills }: Props) {
             ?.slice(0, skills.length / 2)
             .filter((skill) => skill.webdev)
             .map((skill) => {
-              return <Skill key={skill._id} skill={skill} />;
-            })
+              return <Skill key={skill._id} skill={skill} />
+            }),
         )}
         {skills
           ?.slice(skills.length / 2, skills.length)
           .filter((skill) => skill.webdev)
           .map((skill) => {
-            return <Skill key={skill._id} skill={skill} directionLeft />;
+            return <Skill key={skill._id} skill={skill} directionLeft />
           })}
       </div>
     </motion.div>
-  );
+  )
 }

@@ -1,29 +1,29 @@
-import { useRef, useLayoutEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import TooltipContainer from "./TooltipContainer";
+import {useRef, useLayoutEffect, useState} from 'react'
+import {createPortal} from 'react-dom'
+import TooltipContainer from './TooltipContainer'
 
 type Props = {
-  children: any;
-  targetRect: any;
-};
+  children: any
+  targetRect: any
+}
 
-export default function Tooltip({ children, targetRect }: Props) {
-  const ref: any = useRef(null);
-  const [tooltipHeight, setTooltipHeight] = useState(0);
+export default function Tooltip({children, targetRect}: Props) {
+  const ref: any = useRef(null)
+  const [tooltipHeight, setTooltipHeight] = useState(0)
 
   useLayoutEffect(() => {
-    const { height } = ref.current.getBoundingClientRect();
-    setTooltipHeight(height);
-  }, []);
+    const {height} = ref.current.getBoundingClientRect()
+    setTooltipHeight(height)
+  }, [])
 
-  let tooltipX = 0;
-  let tooltipY = 0;
+  let tooltipX = 0
+  let tooltipY = 0
   if (targetRect !== null) {
-    tooltipX = targetRect.left;
-    tooltipY = targetRect.top - tooltipHeight;
+    tooltipX = targetRect.left
+    tooltipY = targetRect.top - tooltipHeight
     if (tooltipY < 0) {
       // It doesn't fit above, so place below.
-      tooltipY = targetRect.bottom;
+      tooltipY = targetRect.bottom
     }
   }
 
@@ -31,6 +31,6 @@ export default function Tooltip({ children, targetRect }: Props) {
     <TooltipContainer x={tooltipX} y={tooltipY} contentRef={ref}>
       {children}
     </TooltipContainer>,
-    document.body
-  );
+    document.body,
+  )
 }

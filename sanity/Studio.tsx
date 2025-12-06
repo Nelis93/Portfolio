@@ -15,7 +15,7 @@ const SanityStudio = React.lazy(async () => {
     // Sanity exposes a Studio component from the 'sanity' package
     // (Sanity v3 exports; if your install differs, you may need to import differently).
     import('sanity'),
-    import('../sanity.config'),
+    import('../sanity.config.ts'),
   ])
 
   // sanityConfigModule could be a default export or named; handle both:

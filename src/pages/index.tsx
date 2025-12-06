@@ -1,31 +1,31 @@
-import type { GetStaticProps } from "next";
-import Head from "next/head";
-import Link from "next/link";
-import About from "@/components/sections/About";
-import Contact from "@/components/sections/Contact";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Projects from "@/components/Projects";
-import Skills from "@/components/sections/Skills";
-import WorkExperience from "@/components/sections/WorkExperience";
-import { urlFor } from "../../sanity";
-import { PageInfo, Experience, Skill, Project, Social } from "../../typings";
-import { fetchPageInfo } from "../utils/fetchPageInfo";
-import { fetchExperiences } from "../utils/fetchExperiences";
-import { fetchProjects } from "../utils/fetchProjects";
-import { fetchSkills } from "../utils/fetchSkills";
-import { fetchSocials } from "../utils/fetchSocials";
-import dynamic from "next/dynamic";
+import type {GetStaticProps} from 'next'
+import Head from 'next/head'
+import Link from 'next/link'
+import About from '@/components/sections/About'
+import Contact from '@/components/sections/Contact'
+import Header from '@/components/ui/Header'
+import Hero from '@/components/sections/Hero'
+import Projects from '@/components/sections/Projects'
+import Skills from '@/components/sections/Skills'
+import WorkExperience from '@/components/sections/WorkExperience'
+import {urlFor} from '../lib/sanity'
+import {PageInfo, Experience, Skill, Project, Social} from '../../typings'
+import {fetchPageInfo} from '../utils/fetchPageInfo'
+import {fetchExperiences} from '../utils/fetchExperiences'
+import {fetchProjects} from '../utils/fetchProjects'
+import {fetchSkills} from '../utils/fetchSkills'
+import {fetchSocials} from '../utils/fetchSocials'
+import dynamic from 'next/dynamic'
 
 type Props = {
-  pageInfo: PageInfo;
-  experiences: Experience[];
-  skills: Skill[];
-  projects: Project[];
-  socials: Social[];
-};
+  pageInfo: PageInfo
+  experiences: Experience[]
+  skills: Skill[]
+  projects: Project[]
+  socials: Social[]
+}
 
-const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
+const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
   return (
     <div
       translate="no"
@@ -33,16 +33,13 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
     >
       <Head>
         <title>{pageInfo?.title} Portfolio</title>
-        <meta
-          name="description"
-          content="I'm the CEO of SEO. Have a look at my website 🙂."
-        />
+        <meta name="description" content="I'm the CEO of SEO. Have a look at my website 🙂." />
       </Head>
       <Header
         socials={socials}
-        setSelectedFilter={""}
+        setSelectedFilter={''}
         style={
-          "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
+          'sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30'
         }
       />
       <section id="hero" className="snap-start">
@@ -75,15 +72,15 @@ const Home = ({ pageInfo, experiences, skills, projects, socials }: Props) => {
         </footer>
       </Link>
     </div>
-  );
-};
-export default dynamic(() => Promise.resolve(Home), { ssr: false });
+  )
+}
+export default dynamic(() => Promise.resolve(Home), {ssr: false})
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const pageInfo: PageInfo = await fetchPageInfo();
-  const experiences: Experience[] = await fetchExperiences();
-  const skills: Skill[] = await fetchSkills();
-  const projects: Project[] = await fetchProjects();
-  const socials: Social[] = await fetchSocials();
+  const pageInfo: PageInfo = await fetchPageInfo()
+  const experiences: Experience[] = await fetchExperiences()
+  const skills: Skill[] = await fetchSkills()
+  const projects: Project[] = await fetchProjects()
+  const socials: Social[] = await fetchSocials()
 
   return {
     props: {
@@ -94,5 +91,5 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       socials,
     },
     revalidate: 10,
-  };
-};
+  }
+}
