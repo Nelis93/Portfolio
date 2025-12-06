@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {motion, useInView} from 'framer-motion'
 import {urlFor} from '../../lib/sanity'
-import {GalleryImage} from '../../../typings'
+import {GalleryImage} from '../../types'
 import {TfiClose} from 'react-icons/tfi'
 import {IconContext} from 'react-icons'
 import Link from 'next/link'

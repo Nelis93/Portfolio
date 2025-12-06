@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "strict": true,
     "skipLibCheck": true,
     "allowJs": false,
@@ -15,12 +11,12 @@
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
+    "types": ["@types/react"],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"],
+      "*.css": ["./src/styles/globals.css"]
     },
     "incremental": true
   },
@@ -29,9 +25,8 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "sanity/**/*.ts",
-    "sanity/**/*.tsx"
+    "sanity/**/*.tsx",
+    "globals.d.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

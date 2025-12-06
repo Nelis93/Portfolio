@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router'
 import type {GetStaticPaths, GetStaticProps} from 'next'
-import {LogbookEntry, Social} from '../../../../typings'
+import {LogbookEntry, Social} from '../../../types'
 import {fetchLogbookEntries} from '@/utils/fetchLogbookEntries'
 import {fetchSocials} from '@/utils/fetchSocials'
 import {PortableText, PortableTextComponents} from '@portabletext/react'

@@ -10,7 +10,7 @@
 // // };
 
 import {useState, useMemo} from 'react'
-import {LogbookEntry, Social} from '../../../../typings'
+import {LogbookEntry, Social} from '../../../types'
 import {fetchLogbookEntries} from '@/utils/fetchLogbookEntries'
 import {fetchSocials} from '@/utils/fetchSocials'
 import dynamic from 'next/dynamic'

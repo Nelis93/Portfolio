@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {motion} from 'framer-motion'
-import {GalleryImage} from '../../../typings'
+import {GalleryImage} from '../../types'
 import {urlFor} from '../../lib/sanity'
 import {TfiNewWindow} from 'react-icons/tfi'
 import {IconContext} from 'react-icons'

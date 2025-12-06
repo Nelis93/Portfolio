@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {motion, useInView} from 'framer-motion'
-import {Experience} from '../../../typings'
+import {Experience} from '../../types'
 import {urlFor} from '../../lib/sanity'
 
 type Props = {

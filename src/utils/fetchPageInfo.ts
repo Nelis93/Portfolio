@@ -1,6 +1,6 @@
 import {groq} from 'next-sanity'
 import {sanityClient} from '../lib/sanity'
-import {PageInfo} from '../../typings'
+import {PageInfo} from '../types'
 
 const query = groq`
     *[_type == "pageInfo"][0]

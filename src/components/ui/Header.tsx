@@ -11,7 +11,7 @@ import {
 import {IconContext} from 'react-icons'
 import {motion} from 'framer-motion'
 import Link from 'next/link'
-import {Social} from '../../../typings'
+import {Social} from '../../types'
 import DropDownFilter from '../Gallery/DropDownFilter'
 
 type Props = {

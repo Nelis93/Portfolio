@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import type {GetStaticProps} from 'next'
-import {GalleryImage, Social} from '../../typings'
+import {GalleryImage, Social} from '../types'
 import {fetchGalleryImages} from '../utils/fetchGalleryImages'
 import dynamic from 'next/dynamic'
 import GalleryImageCard from '@/components/Gallery/GalleryImageCard'

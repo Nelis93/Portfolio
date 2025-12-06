@@ -2,7 +2,7 @@ import React, {useRef} from 'react'
 import {motion} from 'framer-motion'
 import Link from 'next/link'
 import {urlFor} from '../../lib/sanity'
-import {LogbookEntry} from '../../../typings'
+import {LogbookEntry} from '../../types'
 
 type Props = {
   uniqueId: number

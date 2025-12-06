@@ -1,6 +1,6 @@
 import React from 'react'
 import {motion} from 'framer-motion'
-import {GalleryImage} from '../../../typings'
+import {GalleryImage} from '../../types'
 import {urlFor} from '../../lib/sanity'
 
 type Props = {

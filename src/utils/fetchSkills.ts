@@ -1,6 +1,6 @@
 import {groq} from 'next-sanity'
 import {sanityClient} from '../lib/sanity'
-import {Skill} from '../../typings'
+import {Skill} from '../types'
 
 const query = groq`
     *[_type == "skill"]

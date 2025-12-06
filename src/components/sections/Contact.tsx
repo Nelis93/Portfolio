@@ -2,7 +2,7 @@ import React from 'react'
 import {PhoneIcon, MapPinIcon, EnvelopeIcon} from '@heroicons/react/24/solid'
 // import { SocialIcon } from "react-social-icons";
 import {useForm, SubmitHandler} from 'react-hook-form'
-import {PageInfo} from '../../../typings'
+import {PageInfo} from '../../types'
 // import ReactWhatsapp from "react-whatsapp";
 import PhoneHover from '../ui/PhoneHover'
 

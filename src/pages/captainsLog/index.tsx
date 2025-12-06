@@ -1,6 +1,6 @@
 import React, {useState, useRef} from 'react'
 import type {GetStaticProps} from 'next'
-import {Social, LogbookEntry} from '../../../typings'
+import {Social, LogbookEntry} from '../../types'
 import dynamic from 'next/dynamic'
 import Header from '@/components/ui/Header'
 import {fetchSocials} from '../../utils/fetchSocials'

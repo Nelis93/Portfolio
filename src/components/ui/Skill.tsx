@@ -1,6 +1,6 @@
 import React from 'react'
 import {motion} from 'framer-motion'
-import {Skill as SkillOne} from '../../../typings'
+import {Skill as SkillOne} from '../../types'
 import {urlFor} from '../../lib/sanity'
 
 type Props = {

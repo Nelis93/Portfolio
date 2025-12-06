@@ -1,6 +1,6 @@
 import React, {useRef, useEffect} from 'react'
 import {motion, useInView} from 'framer-motion'
-import {Project as PJT} from '../../../typings'
+import {Project as PJT} from '../../types'
 import {urlFor} from '../../lib/sanity'
 import Dots from './Dots'
 import Link from 'next/link'

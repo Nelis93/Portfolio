@@ -1,6 +1,6 @@
 import {groq} from 'next-sanity'
 import {sanityClient} from '../lib/sanity'
-import {Social} from '../../typings'
+import {Social} from '../types'
 
 const query = groq`
     *[_type == "social"]
