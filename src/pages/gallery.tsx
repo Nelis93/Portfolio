@@ -12,7 +12,10 @@ import FocusedImageCard from '@/components/Gallery/FocusedImageCard'
 import Dots from '@/components/ui/Dots'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
-import {useRouter} from 'next/router'
+import debounce from '@/utils/debounce'
+import {extraCards} from '@/utils/extraCards'
+import {useFilterSync} from '@/hooks/useFilterSync'
+import {useInfiniteScroll} from '@/hooks/useInfiniteScroll'
 
 type Props = {
   galleryImages: GalleryImage[]
@@ -20,10 +23,11 @@ type Props = {
 }
 
 const Gallery = ({galleryImages, socials}: Props) => {
-  const router = useRouter()
   // displayed images are the images that are currently shown in the gallery
   // initially, we show the first 9 images
-  const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(galleryImages.slice(0, 9))
+  const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
+    galleryImages.sort((a, b) => (a.dateTaken > b.dateTaken ? -1 : 1)).slice(0, 9),
+  )
   // page is used to keep track of the current page of images
   // we load 9 images per page
   const [page, setPage] = useState(1)
@@ -67,80 +71,8 @@ const Gallery = ({galleryImages, socials}: Props) => {
     countries: [],
     dates: [],
   })
-  const buildQueryFromFilter = (filter: {countries: string[]; dates: string[]}) => {
-    const q: any = {}
-    if (filter.countries?.length) q.countries = filter.countries.join('-')
-    if (filter.dates?.length) q.dates = filter.dates.join('-')
-    return q
-  }
 
-  const parseFilterFromQuery = (query: any) => {
-    const countriesRaw = query?.countries
-    const datesRaw = query?.dates
-    const countries =
-      typeof countriesRaw === 'string'
-        ? countriesRaw.split('-').filter(Boolean)
-        : Array.isArray(countriesRaw)
-          ? countriesRaw.join('-').split('-').filter(Boolean)
-          : []
-    const dates =
-      typeof datesRaw === 'string'
-        ? datesRaw.split('-').filter(Boolean)
-        : Array.isArray(datesRaw)
-          ? datesRaw.join('-').split('-').filter(Boolean)
-          : []
-    return {countries, dates}
-  }
-  useEffect(() => {
-    // parse URL on first load and sync to selectedFilter
-    if (!router.isReady) return
-    const parsed = parseFilterFromQuery(router.query)
-    // only set if different to avoid extra re-renders
-    const same =
-      parsed.countries.join('-') === selectedFilter.countries.join('-') &&
-      parsed.dates.join('-') === selectedFilter.dates.join('-')
-    if (!same) {
-      setSelectedFilter(parsed)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady])
-
-  // keep URL in sync when selectedFilter changes
-  useEffect(() => {
-    if (!router.isReady) return
-    const query = buildQueryFromFilter(selectedFilter)
-    // use replace with shallow to avoid full page transition
-    router.replace(
-      {
-        pathname: router.pathname,
-        query,
-      },
-      undefined,
-      {shallow: true},
-    )
-    // when filter changes we want to reset heights and images (existing logic handles that)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFilter])
-  function debounce(cb: Function, delay = 1000) {
-    let timeout: any
-
-    return (...args: any) => {
-      clearTimeout(timeout)
-      timeout = setTimeout(() => {
-        cb(...args)
-      }, delay)
-    }
-  }
-  // useEffect(() => {
-  //   if (
-  //     selectedFilter.countries.length == 0 &&
-  //     selectedFilter.dates.length == 0
-  //   ) {
-  //     return;
-  //   }
-  //   // Recalculate heights whenever displayedImages changes
-  //   debounceMaxHeightCalculation();
-  // }, [displayedImages]);
+  useFilterSync(selectedFilter, setSelectedFilter)
   useEffect(() => {
     // Only run when all displayed images have a height
     const allHeightsReady = displayedImages.every((img) =>
@@ -183,43 +115,12 @@ const Gallery = ({galleryImages, socials}: Props) => {
     }
   }, [displayedImages, maxHeight.length])
 
-  // const startCalc = () => {
-  //   window.confirm("startCalc() was called, so grid was rendered");
-  //   setLoading(true);
-  // };
   useEffect(() => {
     if (loading) {
       console.log('loading is ', loading, ', starting debounceMaxHeightCalculation')
       debounceMaxHeightCalculation()
     }
   }, [loading])
-  // debounceMaxHeightCalculation is used to debounce the calculation of the maximum height of the images
-  // it is called when the loading state is set to true
-  // it calculates the maximum height of the images in triplets
-  // and sets the maxHeight state to the new maximum heights
-  // Old and depricated
-  // const debounceMaxHeightCalculation = debounce(() => {
-  //   setMaxHeight((prevMaxHeight: any) => {
-  //     const newMaxArray = [];
-  //     for (
-  //       let i = 0;
-  //       i < prevMaxHeight.current.length && i < galleryImages.length + 2;
-  //       i += 3
-  //     ) {
-  //       const triplet = prevMaxHeight.current.slice(i, i + 3);
-  //       const maxTripletHeight = Math.max(...triplet);
-  //       newMaxArray.push(...Array(triplet.length).fill(maxTripletHeight));
-  //     }
-  //     // console.log("newMaxArray: ", newMaxArray);
-  //     return {
-  //       current: newMaxArray,
-  //       index: prevMaxHeight.current.length - 1,
-  //     };
-  //   });
-  //   setLoading(false);
-  //   // console.log("maxHeight after debounce: ", maxHeight);
-  // }, 300);
-  // New and improved
 
   const debounceMaxHeightCalculation = debounce(() => {
     console.log('debounceMaxHeightCalculation called')
@@ -262,15 +163,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
     setPage(1)
     setDisplayedImages(filteredImages().slice(0, 9))
   }, [selected])
-  const extraCards = () => {
-    // window.confirm("extraCards() was called.");
-    if (displayedImages.length % 3 == 0) {
-      return 0
-    } else if ((displayedImages.length + 1) % 3 == 0) {
-      return 1
-    }
-    return 2
-  }
+
   useEffect(() => {
     if (selectedFilter.countries.length == 0 && selectedFilter.dates.length == 0) {
       setDisplayedImages(
@@ -278,33 +171,10 @@ const Gallery = ({galleryImages, socials}: Props) => {
       )
       return
     }
-    // const filtered = filteredImages().sort((a, b) =>
-    //   a.dateTaken > b.dateTaken ? -1 : 1
-    // );
     setDisplayedImages(filteredImages().slice(0, 9))
-
-    // Preserve any existing measured heights that match the filtered images,
-    // and initialize missing ones to 0 so the structure stays aligned.
     setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages().slice(0, 9), prev))
     setPage(1)
-
-    // setMaxHeightCleared(true);
   }, [selectedFilter])
-  // useEffect(() => {
-  //   if (!maxHeightCleared) return;
-  //   if (
-  //     selectedFilter.countries.length == 0 &&
-  //     selectedFilter.dates.length == 0
-  //   ) {
-  //     setDisplayedImages(galleryImages.slice(0, 9));
-  //   } else {
-  //     setDisplayedImages(filteredImages().slice(0, 9));
-  //   }
-  //   // debounceMaxHeightCalculation();
-  //   // console.log("maxHeight length after: ", maxHeight.length);
-  //   setMaxHeightCleared(false);
-  //   setPage(1);
-  // }, [maxHeightCleared]);
 
   function filteredMaxHeightForImages(
     filteredImgs: GalleryImage[],
@@ -331,21 +201,14 @@ const Gallery = ({galleryImages, socials}: Props) => {
   }
 
   // Function to load more images
-  const loadMoreImages = debounce((event: any) => {
-    const distanceFromTop = event.target.clientHeight + event.target.scrollTop
-    if (distanceFromTop > event.target.scrollHeight - 100) {
-      // console.log("bottom reached");
-      if (loading) return
-
-      const nextImages = filteredImages().slice(page * 9, (page + 1) * 9)
-
-      if (nextImages.length > 0) {
-        setDisplayedImages((prev) => [...prev, ...nextImages])
-        setPage((prev) => prev + 1)
-      }
-      setLoading(true)
-    }
-  }, 250)
+  const loadMoreImages = useInfiniteScroll(
+    loading,
+    page,
+    setPage,
+    setDisplayedImages,
+    setLoading,
+    filteredImages,
+  )
 
   return (
     <main
@@ -413,7 +276,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
               ),
             )}
           {window.innerWidth > 1024 &&
-            Array.from({length: extraCards()}).map((_, i) => (
+            Array.from({length: extraCards(displayedImages)}).map((_, i) => (
               <div
                 key={i}
                 style={{
