@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import {useState, useRef} from 'react'
 import {motion} from 'framer-motion'
 import {Project as PJT} from '../../types'
 import Project from '../ui/Project'

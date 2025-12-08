@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react'
+import {useRef, useEffect} from 'react'
 import {motion, useInView} from 'framer-motion'
 import {Project as PJT} from '../../types'
 import {urlFor} from '../../lib/sanity'

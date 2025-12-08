@@ -26,7 +26,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
   // displayed images are the images that are currently shown in the gallery
   // initially, we show the first 9 images
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
-    galleryImages.sort((a, b) => (a.dateTaken > b.dateTaken ? -1 : 1)).slice(0, 9),
+    galleryImages.sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1)).slice(0, 9),
   )
   // page is used to keep track of the current page of images
   // we load 9 images per page
@@ -165,15 +165,12 @@ const Gallery = ({galleryImages, socials}: Props) => {
   }, [selected])
 
   useEffect(() => {
-    if (selectedFilter.countries.length == 0 && selectedFilter.dates.length == 0) {
-      setDisplayedImages(
-        galleryImages.sort((a, b) => (a.dateTaken > b.dateTaken ? -1 : 1)).slice(0, 9),
-      )
-      return
-    }
     setDisplayedImages(filteredImages().slice(0, 9))
-    setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages().slice(0, 9), prev))
-    setPage(1)
+    if (selectedFilter.countries.length == 0 && selectedFilter.dates.length == 0) return
+    else {
+      setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages().slice(0, 9), prev))
+      setPage(1)
+    }
   }, [selectedFilter])
 
   function filteredMaxHeightForImages(
@@ -188,7 +185,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
   }
   const filteredImages = () => {
     return galleryImages
-      .sort((a, b) => (a.dateTaken > b.dateTaken ? -1 : 1))
+      .sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1))
       .filter((image) => {
         const countries = selectedFilter?.countries
         let index = image.location.split(' ')
@@ -228,7 +225,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
         // onResize={debounceMaxHeightCalculation}
         style={{
           backgroundImage:
-            displayedImages.length >= 6 && window.innerWidth > 1500 ? " url('/FlipMe.svg')" : '',
+            displayedImages.length >= 6 && window.innerWidth > 1000 ? "url('/FlipMe.svg')" : '',
           backgroundAttachment: 'fixed',
           backgroundClip: 'content-box',
           backgroundOrigin: 'content-box',
@@ -240,10 +237,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
         >
           {displayedImages
             .map((image, index) => ({image, index})) // Attach index to each image
-            .sort(
-              (a, b) => a.index - b.index,
-              // (a, b) => maxHeight.current[a.index] - maxHeight.current[b.index]
-            )
+            .sort((a, b) => a.index - b.index)
             .map(({image, index}) =>
               window.innerWidth < 1024 ? (
                 <GalleryImageCardSmall
@@ -280,9 +274,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
               <div
                 key={i}
                 style={{
-                  // old
-                  // height: `${maxHeight.current.slice(-1)[0] || 0}vh`,
-                  // new
                   height: `${maxHeight.slice(-1)[0]?.value || 0}vh`,
                   width: 'full',
                   backgroundColor: 'black',

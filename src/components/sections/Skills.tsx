@@ -1,4 +1,3 @@
-import React from 'react'
 import {motion} from 'framer-motion'
 import Skill from '../ui/Skill'
 import {Skill as SkillType} from '../../types'

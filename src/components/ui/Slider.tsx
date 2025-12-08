@@ -1,4 +1,3 @@
-import React from 'react'
 import {FaAngleLeft, FaAngleRight} from 'react-icons/fa'
 import {IconContext} from 'react-icons'
 

@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 import {Cursor, useTypewriter} from 'react-simple-typewriter'
 import {PageInfo} from '../../types'
 import BackgroundCircles from '../ui/BackgroundCircles'

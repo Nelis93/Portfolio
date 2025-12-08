@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import {useState, useRef} from 'react'
 import type {GetStaticProps} from 'next'
 import {Social, LogbookEntry} from '../../types'
 import dynamic from 'next/dynamic'

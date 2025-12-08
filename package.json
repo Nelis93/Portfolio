@@ -17,9 +17,6 @@
     "sanity-deploy": "sanity deploy",
     "sanity-deploy-graphql": "sanity graphql deploy"
   },
-  "keywords": [
-    "sanity"
-  ],
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

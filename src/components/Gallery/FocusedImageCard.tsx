@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import {useState, useRef, useEffect} from 'react'
 import {motion, useInView} from 'framer-motion'
 import {urlFor} from '../../lib/sanity'
 import {GalleryImage} from '../../types'

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import {LogbookEntry} from '../../types'
 import Link from 'next/link'
 import {FaSearch} from 'react-icons/fa'
