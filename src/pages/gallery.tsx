@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef} from 'react'
+import {useEffect, useState, useRef, useMemo, useCallback} from 'react'
 import type {GetStaticProps} from 'next'
 import {GalleryImage, Social} from '../types'
 import {fetchGalleryImages} from '../utils/fetchGalleryImages'
@@ -28,6 +28,20 @@ const Gallery = ({galleryImages, socials}: Props) => {
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
     galleryImages.sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1)).slice(0, 9),
   )
+  // edit by claude
+  const imageDataRef = useRef<
+    Map<
+      string,
+      {
+        height: number
+        naturalHeight: number
+        width: number
+        title: string
+      }
+    >
+  >(new Map())
+  //end edit by claude
+
   // page is used to keep track of the current page of images
   // we load 9 images per page
   const [page, setPage] = useState(1)
@@ -57,7 +71,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
   //   index: number;
   // }>({ current: [], index: 0 });
   const [maxHeight, setMaxHeight] = useState<{id: string; value: number}[]>([])
-  // const [maxHeightCleared, setMaxHeightCleared] = useState(false);
   const [imgHeight, setImgHeight] = useState<number[]>([])
   const [imgTitle, setImgTitle] = useState<string[]>([])
   const [imgNaturalHeight, setImgNaturalHeight] = useState<number[]>([])
@@ -71,49 +84,90 @@ const Gallery = ({galleryImages, socials}: Props) => {
     countries: [],
     dates: [],
   })
+  //edit by claude
+  const filteredImages = useMemo(() => {
+    return galleryImages
+      .sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1))
+      .filter((image) => {
+        const countries = selectedFilter?.countries
+        if (countries.length === 0) return true
+        let index = image.location.split(' ')
+        return countries.includes(index[index.length - 1])
+      })
+      .filter((image) => {
+        const dates = selectedFilter?.dates
+        if (dates.length === 0) return true
+        return dates.includes(image?.dateTaken.toString().split('-')[0])
+      })
+  }, [galleryImages, selectedFilter])
+
+  //end edit by claude
+  // const filteredImages = () => {
+  //   return galleryImages
+  //     .sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1))
+  //     .filter((image) => {
+  //       const countries = selectedFilter?.countries
+  //       let index = image.location.split(' ')
+  //       return countries.length > 0 ? countries.includes(index[index.length - 1]) : image
+  //     })
+  //     .filter((image) => {
+  //       const dates = selectedFilter?.dates
+  //       return dates.length > 0 ? dates.includes(image?.dateTaken.toString().split('-')[0]) : image
+  //     })
+  // }
 
   useFilterSync(selectedFilter, setSelectedFilter)
+  //edit by claude
   useEffect(() => {
-    // Only run when all displayed images have a height
     const allHeightsReady = displayedImages.every((img) =>
       maxHeight.some((h) => h.id === img._id && h.value > 0),
     )
     if (allHeightsReady) {
-      console.log(
-        'Heights are matched! MaxHeight: ' +
-          maxHeight.length +
-          ', DisplayedImages: ' +
-          displayedImages.length,
-      )
-      debounceMaxHeightCalculation()
-    } else {
-      console.log(
-        'Heights NOT matched! MaxHeight: ' +
-          maxHeight.length +
-          ', DisplayedImages: ' +
-          displayedImages.length +
-          ', Page: ' +
-          page,
-      )
-      // --- Detailed diagnostic table/logging ---
-      const imageIds = displayedImages
-        .map((img) => img._id)
-        .slice()
-        .sort()
-      const maxIds = maxHeight
-        .map((h) => h.id)
-        .slice()
-        .sort()
-
-      // Build a table that pairs sorted ids side-by-side
-      const maxLen = Math.max(imageIds.length, maxIds.length)
-      const table = Array.from({length: maxLen}, (_, i) => ({
-        imageId: imageIds[i] ?? null,
-        maxHeightId: maxIds[i] ?? null,
-      }))
-      console.table(table)
+      console.log('Heights matched!')
     }
-  }, [displayedImages, maxHeight.length])
+  }, [displayedImages, maxHeight])
+  //end edit by claude
+  // useEffect(() => {
+  //   // Only run when all displayed images have a height
+  //   const allHeightsReady = displayedImages.every((img) =>
+  //     maxHeight.some((h) => h.id === img._id && h.value > 0),
+  //   )
+  //   if (allHeightsReady) {
+  //     console.log(
+  //       'Heights are matched! MaxHeight: ' +
+  //         maxHeight.length +
+  //         ', DisplayedImages: ' +
+  //         displayedImages.length,
+  //     )
+  //     debounceMaxHeightCalculation()
+  //   } else {
+  //     console.log(
+  //       'Heights NOT matched! MaxHeight: ' +
+  //         maxHeight.length +
+  //         ', DisplayedImages: ' +
+  //         displayedImages.length +
+  //         ', Page: ' +
+  //         page,
+  //     )
+  //     // --- Detailed diagnostic table/logging ---
+  //     const imageIds = displayedImages
+  //       .map((img) => img._id)
+  //       .slice()
+  //       .sort()
+  //     const maxIds = maxHeight
+  //       .map((h) => h.id)
+  //       .slice()
+  //       .sort()
+
+  //     // Build a table that pairs sorted ids side-by-side
+  //     const maxLen = Math.max(imageIds.length, maxIds.length)
+  //     const table = Array.from({length: maxLen}, (_, i) => ({
+  //       imageId: imageIds[i] ?? null,
+  //       maxHeightId: maxIds[i] ?? null,
+  //     }))
+  //     console.table(table)
+  //   }
+  // }, [displayedImages, maxHeight.length])
 
   useEffect(() => {
     if (loading) {
@@ -122,56 +176,104 @@ const Gallery = ({galleryImages, socials}: Props) => {
     }
   }, [loading])
 
-  const debounceMaxHeightCalculation = debounce(() => {
-    console.log('debounceMaxHeightCalculation called')
-    setMaxHeight((prevMaxHeight: {id: string; value: number}[]) => {
+  //edit by claude
+  const debounceMaxHeightCalculation = useCallback(
+    debounce(() => {
+      console.log('debounceMaxHeightCalculation called')
       const newMaxArray: {id: string; value: number}[] = []
-      // Group by triplets in displayedImages
+
       for (let i = 0; i < displayedImages.length; i += 3) {
         const triplet = displayedImages.slice(i, i + 3)
-        // Get heights for this triplet
         const heights = triplet.map((img) => {
-          const found = prevMaxHeight.find((item) => item.id === img._id)
-          return found ? found.value : undefined
+          const data = imageDataRef.current.get(img._id)
+          return data?.height ?? 0
         })
-        // Only calculate if all heights are defined
-        if (heights.every((h) => typeof h === 'number')) {
-          const maxTripletHeight = Math.max(...heights)
-          triplet.forEach((img) => {
-            newMaxArray.push({id: img._id, value: maxTripletHeight})
-          })
-        } else {
-          // If not all heights are ready, push undefined or 0
-          triplet.forEach((img) => {
-            newMaxArray.push({id: img._id, value: 0})
-          })
-        }
+
+        const maxTripletHeight = Math.max(...heights)
+        triplet.forEach((img) => {
+          newMaxArray.push({id: img._id, value: maxTripletHeight})
+        })
       }
-      return newMaxArray
-    })
-    console.log('debounceMaxHeightCalculation ran')
-    setLoading(false)
-  }, 300)
+
+      setMaxHeight(newMaxArray)
+      setLoading(false)
+    }, 300),
+    [displayedImages],
+  )
+  //end edit by claude
+  // const debounceMaxHeightCalculation = debounce(() => {
+  //   console.log('debounceMaxHeightCalculation called')
+  //   setMaxHeight((prevMaxHeight: {id: string; value: number}[]) => {
+  //     const newMaxArray: {id: string; value: number}[] = []
+  //     // Group by triplets in displayedImages
+  //     for (let i = 0; i < displayedImages.length; i += 3) {
+  //       const triplet = displayedImages.slice(i, i + 3)
+  //       // Get heights for this triplet
+  //       const heights = triplet.map((img) => {
+  //         const found = prevMaxHeight.find((item) => item.id === img._id)
+  //         return found ? found.value : undefined
+  //       })
+  //       // Only calculate if all heights are defined
+  //       if (heights.every((h) => typeof h === 'number')) {
+  //         const maxTripletHeight = Math.max(...heights)
+  //         triplet.forEach((img) => {
+  //           newMaxArray.push({id: img._id, value: maxTripletHeight})
+  //         })
+  //       } else {
+  //         // If not all heights are ready, push undefined or 0
+  //         triplet.forEach((img) => {
+  //           newMaxArray.push({id: img._id, value: 0})
+  //         })
+  //       }
+  //     }
+  //     return newMaxArray
+  //   })
+  //   console.log('debounceMaxHeightCalculation ran')
+  //   setLoading(false)
+  // }, 300)
 
   // Scroll to selected image when it's clicked
+
+  // edit by claude
+
   useEffect(() => {
     if (selected > -1) {
-      setDisplayedImages(filteredImages())
+      setDisplayedImages(filteredImages)
       galleryRefs.current[selected]?.scrollIntoView()
       return
     }
     setPage(1)
-    setDisplayedImages(filteredImages().slice(0, 9))
-  }, [selected])
+    setDisplayedImages(filteredImages.slice(0, 9))
+  }, [selected, filteredImages])
+  //end edit by claude
+  // useEffect(() => {
+  //   if (selected > -1) {
+  //     setDisplayedImages(filteredImages())
+  //     galleryRefs.current[selected]?.scrollIntoView()
+  //     return
+  //   }
+  //   setPage(1)
+  //   setDisplayedImages(filteredImages().slice(0, 9))
+  // }, [selected])
+
+  //edit by claude
 
   useEffect(() => {
-    setDisplayedImages(filteredImages().slice(0, 9))
-    if (selectedFilter.countries.length == 0 && selectedFilter.dates.length == 0) return
-    else {
-      setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages().slice(0, 9), prev))
-      setPage(1)
-    }
-  }, [selectedFilter])
+    setDisplayedImages(filteredImages.slice(0, 9))
+    if (selectedFilter.countries.length === 0 && selectedFilter.dates.length === 0) return
+
+    setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages.slice(0, 9), prev))
+    setPage(1)
+  }, [filteredImages, selectedFilter])
+  // end edit by claude
+  // useEffect(() => {
+  //   setDisplayedImages(filteredImages().slice(0, 9))
+  //   if (selectedFilter.countries.length == 0 && selectedFilter.dates.length == 0) return
+  //   else {
+  //     setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages().slice(0, 9), prev))
+  //     setPage(1)
+  //   }
+  // }, [selectedFilter])
 
   function filteredMaxHeightForImages(
     filteredImgs: GalleryImage[],
@@ -183,19 +285,29 @@ const Gallery = ({galleryImages, socials}: Props) => {
       return {id: img._id, value: typeof val === 'number' ? val : 0}
     })
   }
-  const filteredImages = () => {
-    return galleryImages
-      .sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1))
-      .filter((image) => {
-        const countries = selectedFilter?.countries
-        let index = image.location.split(' ')
-        return countries.length > 0 ? countries.includes(index[index.length - 1]) : image
-      })
-      .filter((image) => {
-        const dates = selectedFilter?.dates
-        return dates.length > 0 ? dates.includes(image?.dateTaken.toString().split('-')[0]) : image
-      })
-  }
+
+  //edit by claude
+  const handleImageData = useCallback(
+    (
+      imageId: string,
+      data: {
+        height: number
+        naturalHeight: number
+        width: number
+        title: string
+      },
+    ) => {
+      imageDataRef.current.set(imageId, data)
+
+      // Check if all images in current view have loaded
+      const allLoaded = displayedImages.every((img) => imageDataRef.current.has(img._id))
+      if (allLoaded) {
+        debounceMaxHeightCalculation()
+      }
+    },
+    [displayedImages],
+  )
+  //end edit by claude
 
   // Function to load more images
   const loadMoreImages = useInfiniteScroll(
@@ -266,6 +378,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
                   maxHeight={maxHeight}
                   setMaxHeight={setMaxHeight}
                   selectedFilter={selectedFilter}
+                  onImageData={handleImageData} // NEW: Pass callback instead of all state setters
                 />
               ),
             )}
