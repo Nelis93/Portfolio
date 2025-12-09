@@ -13,19 +13,19 @@ type Props = {
   focus: any
   setFocus: any
   maxHeight: any
-  setMaxHeight: any
-  imgHeight: any
-  setImgHeight: any
-  imgNaturalHeight: any
-  setImgNaturalHeight: any
-  imgWidth: any
-  setImgWidth: any
+  // setMaxHeight: any
+  // imgHeight: any
+  // setImgHeight: any
+  // imgNaturalHeight: any
+  // setImgNaturalHeight: any
+  // imgWidth: any
+  // setImgWidth: any
   onImageData: (
     imageId: string,
     data: {height: number; naturalHeight: number; width: number; title: string},
   ) => void // NEW PROP by claude
-  imgTitle: any
-  setImgTitle: any
+  // imgTitle: any
+  // setImgTitle: any
   selectedFilter: any
 }
 
@@ -38,15 +38,15 @@ export default function GalleryImageCard({
   setFocus,
   maxHeight,
   onImageData, // NEW PROP by claude
-  setMaxHeight,
-  imgHeight,
-  setImgHeight,
-  imgNaturalHeight,
-  setImgNaturalHeight,
-  imgWidth,
-  setImgWidth,
-  imgTitle,
-  setImgTitle,
+  // setMaxHeight,
+  // imgHeight,
+  // setImgHeight,
+  // imgNaturalHeight,
+  // setImgNaturalHeight,
+  // imgWidth,
+  // setImgWidth,
+  // imgTitle,
+  // setImgTitle,
 }: Props) {
   const [iconPosition, setIconPosition] = useState({
     distance: 0,
@@ -226,15 +226,14 @@ export default function GalleryImageCard({
             backfaceVisibility: 'hidden', // Hide image when back is shown
           }}
         >
-          <div className="absolute flex flex-col z-40 w-full h-full text-xl bg-black bg-opacity-50  ">
+          {/* <div className="absolute flex flex-col z-40 w-full h-full text-xl bg-black bg-opacity-50  ">
             <span>Image Id: {image._id.substring(0, 4)}</span>
-            <span>MaxHeight: {Math.round(maxHeightValue)}</span>
-            <span>imgHeight: {Math.round(imgHeight[uniqueId])}</span>
-            <span>imgWidth: {Math.round(imgWidth[uniqueId])}</span>
-            <span>imgNaturalHeight: {Math.round(imgNaturalHeight[uniqueId])}</span>
-            <span>MaxHeight Title: {imgTitle[uniqueId]?.substring(0, 10)}</span>
+            <span>imgHeight: {Math.round(imageData.height)}</span>
+            <span>imgWidth: {Math.round(imageData.width)}</span>
+            <span>imgNaturalHeight: {Math.round(imageData.naturalHeight)}</span>
+            <span>MaxHeight Title: {imageData.title.substring(0, 10)}</span>
             <span>Image Title: {image.title.substring(0, 10)}</span>
-          </div>
+          </div> */}
           <motion.img
             className="absolute z-20 w-full h-auto rounded-lg"
             src={urlFor(image.actualImage)?.url()}

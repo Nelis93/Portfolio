@@ -367,16 +367,16 @@ const Gallery = ({galleryImages, socials}: Props) => {
                   setSelected={setSelected}
                   focus={focus}
                   setFocus={setFocus}
-                  imgHeight={imgHeight}
-                  setImgHeight={setImgHeight}
-                  imgNaturalHeight={imgNaturalHeight}
-                  setImgNaturalHeight={setImgNaturalHeight}
-                  imgWidth={imgWidth}
-                  setImgWidth={setImgWidth}
-                  imgTitle={imgTitle}
-                  setImgTitle={setImgTitle}
+                  // imgHeight={imgHeight}
+                  // setImgHeight={setImgHeight}
+                  // imgNaturalHeight={imgNaturalHeight}
+                  // setImgNaturalHeight={setImgNaturalHeight}
+                  // imgWidth={imgWidth}
+                  // setImgWidth={setImgWidth}
+                  // imgTitle={imgTitle}
+                  // setImgTitle={setImgTitle}
                   maxHeight={maxHeight}
-                  setMaxHeight={setMaxHeight}
+                  // setMaxHeight={setMaxHeight}
                   selectedFilter={selectedFilter}
                   onImageData={handleImageData} // NEW: Pass callback instead of all state setters
                 />
