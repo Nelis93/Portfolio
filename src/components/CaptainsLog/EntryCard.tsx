@@ -3,6 +3,7 @@ import {motion} from 'framer-motion'
 import Link from 'next/link'
 import {urlFor} from '../../lib/sanity'
 import {LogbookEntry} from '../../types'
+import formatDate from '@/utils/formateDate'
 
 type Props = {
   uniqueId: number
@@ -16,15 +17,6 @@ export default function EntryCard({uniqueId, logBookEntryRefs, logBookEntry, sty
     ? window.location.href
     : window.location.href + '/bigLogs'
   console.log(url)
-  function formatDate(dateString: string) {
-    const date = new Date(dateString)
-    const options: Intl.DateTimeFormatOptions = {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }
-    return date.toLocaleDateString(undefined, options)
-  }
   return (
     <Link href={`${url}/${logBookEntry.slug.current}`} className={style || ''}>
       <motion.div
