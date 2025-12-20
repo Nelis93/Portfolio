@@ -5,37 +5,10 @@ import Link from 'next/link'
 import Header from '@/components/ui/Header'
 import {fetchSocials} from '@/utils/fetchSocials'
 import {fetchLogbookEntries} from '@/utils/fetchLogbookEntries'
-import {urlFor} from '@/lib/sanity'
-import formatDate from '@/utils/formateDate'
 import type {Social, LogbookEntry} from '@/types'
-import Slider from '@/components/ui/Slider'
 import EntryCarousel from '@/components/CaptainsLog/EntryCarousel'
 import EntryCard from '@/components/CaptainsLog/EntryCard'
-/* ---------------- Card ---------------- */
-function LogCard({entry, style}: {entry: LogbookEntry; style: React.CSSProperties}) {
-  return (
-    <div
-      className="absolute w-[23rem] rounded-lg shadow-lg overflow-hidden bg-gradient-to-b from-stone-600 to-slate-700 text-white"
-      style={style}
-    >
-      <Link href={`/captainsLog/bigLogs/${entry.slug.current}`} className="block h-full">
-        <div className="h-[10rem] w-full overflow-hidden">
-          <img
-            src={urlFor(entry.image)?.url()}
-            alt={entry.title}
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
-        </div>
-        <div className="h-[13rem] p-6">
-          <h3 className="text-xl font-bold mb-2 truncate">{entry.title}</h3>
-          <p className="text-sm line-clamp-4 mb-4">{entry.description}</p>
-          <div className="text-xs text-right">{formatDate(entry._updatedAt)}</div>
-        </div>
-      </Link>
-    </div>
-  )
-}
+import MobileEntryCarousel from '@/components/CaptainsLog/MobileEntryCarousel'
 
 /* ---------------- Page ---------------- */
 const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}> = ({
@@ -66,39 +39,17 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
     return () => window.removeEventListener('scroll', onScroll)
   }, [logBookEntries.length])
 
-  /* 3D transform per card (same logic as your container version) */
-  const cardStyleFor = (i: number): React.CSSProperties => {
-    const offset = (selected - i) / 3
-    const absOffset = Math.abs(selected - i) / 3
-    const direction = Math.sign(selected - i)
-    const hidden = Math.abs(selected - i) > 3
-
-    return {
-      position: 'absolute',
-      maxHeight: '25rem',
-      transition: 'transform 280ms ease-out, opacity 280ms ease-out, filter 280ms ease-out',
-      transform: `rotateY(${offset * 50}deg)
-                  scaleY(${1 - absOffset * 0.4})
-                  translateZ(${-Math.max(0, absOffset) * 30}rem)
-                  translateX(${direction * -5}rem)`,
-      opacity: hidden ? 0 : 1,
-      pointerEvents: selected === i ? 'auto' : 'none',
-      zIndex: Math.max(0, 100 - Math.abs(selected - i)),
-      filter: `blur(${Math.min(4, absOffset * 1.5)}rem)`,
-    }
-  }
-
   return (
     <main className="bg-gradient-to-br from-teal-300 to-teal-600 text-white">
       <Header
         socials={socials}
         setSelectedFilter={null}
-        style="sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
+        style="sticky bg-teal-500 sm:bg-transparent rounded-b-md text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
       />
 
       {/* Intro */}
-      <section className="h-[30vh] flex items-end justify-center">
-        <Link href={'captainsLog/bigLogs'} className="flex w-auto z-50">
+      <section className="h-[20vh] sm:h-[30vh] flex sm:items-end justify-center">
+        <Link href={'captainsLog/bigLogs'} className="flex w-auto sm:z-50">
           <h1 className="flex py-4 sm:px-0 lg:px-2 text-lg sm:text-2xl h-20 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
             These are some writings for when you're free 🦅
           </h1>
@@ -111,42 +62,24 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
         className="relative bg-blue-200"
         style={{height: `${logBookEntries.length * CARD_SCROLL_PX}px`}}
       >
-        {/* {window.innerWidth > 1000 && (
-        )} */}
-        <EntryCarousel>
-          <Slider
-            items={logBookEntries}
+        {window.innerWidth > 1000 ? (
+          <EntryCarousel
+            entries={logBookEntries}
+            selected={selected}
+            setSelected={setSelected}
             refs={sectionRef}
-            currentIndex={selected}
-            setCurrentIndex={setSelected}
-            style={
-              'absolute hidden h-full sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2'
-            }
-            scrolling={false}
-          />
-          {logBookEntries.map((entry, i) => (
-            <EntryCard selected={selected} entry={entry} index={i} />
-            // <LogCard key={entry._id} entry={entry} style={cardStyleFor(i)} />
-          ))}
-        </EntryCarousel>
-        {/* <div
-          className="sticky top-0 pt-[50vh] flex items-center justify-center"
-          style={{perspective: 800, transformStyle: 'preserve-3d'}}
-        >
-          <Slider
-            items={logBookEntries}
-            refs={sectionRef}
-            currentIndex={selected}
-            setCurrentIndex={setSelected}
-            style={
-              'absolute hidden h-full sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2'
-            }
-            scrolling={false}
-          />
-          {logBookEntries.map((entry, i) => (
-            <LogCard key={entry._id} entry={entry} style={cardStyleFor(i)} />
-          ))}
-        </div> */}
+          >
+            {logBookEntries.map((entry, i) => (
+              <EntryCard selected={selected} entry={entry} index={i} styleActive />
+            ))}
+          </EntryCarousel>
+        ) : (
+          <MobileEntryCarousel selected={selected} setSelected={setSelected}>
+            {logBookEntries.map((entry, idx) => (
+              <EntryCard selected={selected} entry={entry} index={idx} styleActive={false} />
+            ))}
+          </MobileEntryCarousel>
+        )}
       </section>
 
       {/* Continuation */}

@@ -1,5 +1,3 @@
-// import {useRef} from 'react'
-// import {motion} from 'framer-motion'
 import Link from 'next/link'
 import {urlFor} from '../../lib/sanity'
 import {LogbookEntry} from '../../types'
@@ -9,6 +7,7 @@ type Props = {
   entry: LogbookEntry
   selected: number
   index: number
+  styleActive: boolean
 }
 const cardStyleFor = (i: number, selected: number): React.CSSProperties => {
   const offset = (selected - i) / 3
@@ -30,11 +29,11 @@ const cardStyleFor = (i: number, selected: number): React.CSSProperties => {
     filter: `blur(${Math.min(4, absOffset * 1.5)}rem)`,
   }
 }
-export default function EntryCard({selected, entry, index}: Props) {
+export default function EntryCard({selected, entry, index, styleActive}: Props) {
   return (
     <div
-      className="absolute w-[23rem] rounded-lg shadow-lg overflow-hidden bg-gradient-to-b from-stone-600 to-slate-700 text-white"
-      style={cardStyleFor(index, selected)}
+      className="w-[23rem] rounded-lg shadow-lg overflow-hidden bg-gradient-to-b from-stone-600 to-slate-700 text-white"
+      style={styleActive ? cardStyleFor(index, selected) : {}}
     >
       <Link href={`/captainsLog/bigLogs/${entry.slug.current}`} className="block h-full">
         <div className="h-[10rem] w-full overflow-hidden">
