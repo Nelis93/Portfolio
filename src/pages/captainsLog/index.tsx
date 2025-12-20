@@ -9,7 +9,6 @@ import {urlFor} from '@/lib/sanity'
 import formatDate from '@/utils/formateDate'
 import type {Social, LogbookEntry} from '@/types'
 import Slider from '@/components/ui/Slider'
-import logbookEntry from '@/schemas/logbookEntry'
 /* ---------------- Card ---------------- */
 function LogCard({entry, style}: {entry: LogbookEntry; style: React.CSSProperties}) {
   return (
@@ -53,52 +52,12 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
     const rect = sectionRef.current.getBoundingClientRect()
     const vh = window.innerHeight
     const startFactor = 0.4
-    // const topOrBottom =
-    //   logBookEntries[selected]._id == logBookEntries[logBookEntries.length - 1]._id
-    //     ? rect.bottom
-    //     : rect.top
-    // start when section top hits middle of viewport
     const start = vh * startFactor
     const raw = (start - rect.top) / CARD_SCROLL_PX
 
-    const idx = Math.min(logBookEntries.length - 1, Math.max(0, Math.round(raw)))
-    console.log(
-      // 'topOrBottom: ',
-      // Math.round(topOrBottom),
-      'top: ',
-      Math.round(rect.top),
-      'bottom: ',
-      Math.round(rect.bottom),
-      'selected: ',
-      selected,
-    )
+    const idx = Math.min(logBookEntries.length - 1, Math.max(0, Math.floor(raw)))
     setSelected(idx)
   }
-  // setSelected((current: number) => {
-  //     const rect = sectionRef.current?.getBoundingClientRect() || {top: 0, bottom: 0}
-  //     const vh = window.innerHeight
-  //     const startFactor = 0.4
-  //     const topOrBottom =
-  //       logBookEntries[current]._id == logBookEntries[logBookEntries.length - 1]._id
-  //         ? rect?.bottom
-  //         : rect?.top
-  //     // start when section top hits middle of viewport
-  //     const start = vh * startFactor
-  //     const raw = (start - topOrBottom) / CARD_SCROLL_PX
-
-  //     const idx = Math.min(logBookEntries.length - 1, Math.max(0, Math.round(raw)))
-  //     console.log(
-  //       'topOrBottom: ',
-  //       Math.round(topOrBottom),
-  //       'top: ',
-  //       Math.round(rect.top),
-  //       'bottom: ',
-  //       Math.round(rect.bottom),
-  //       'selected: ',
-  //       current,
-  //     )
-  //     return idx
-  //   })
   useEffect(() => {
     window.addEventListener('scroll', onScroll, {passive: true})
     onScroll()
