@@ -1,58 +1,56 @@
-import {useRef} from 'react'
-import {motion} from 'framer-motion'
+// import {useRef} from 'react'
+// import {motion} from 'framer-motion'
 import Link from 'next/link'
 import {urlFor} from '../../lib/sanity'
 import {LogbookEntry} from '../../types'
 import formatDate from '@/utils/formateDate'
 
 type Props = {
-  uniqueId: number
-  logBookEntryRefs: any
-  logBookEntry: LogbookEntry
-  style: string
+  entry: LogbookEntry
+  selected: number
+  index: number
 }
-export default function EntryCard({uniqueId, logBookEntryRefs, logBookEntry, style}: Props) {
-  const ref = useRef<HTMLElement | null>(null)
-  const url = window.location.href.includes('bigLogs')
-    ? window.location.href
-    : window.location.href + '/bigLogs'
-  console.log(url)
+const cardStyleFor = (i: number, selected: number): React.CSSProperties => {
+  const offset = (selected - i) / 3
+  const absOffset = Math.abs(selected - i) / 3
+  const direction = Math.sign(selected - i)
+  const hidden = Math.abs(selected - i) > 3
+
+  return {
+    position: 'absolute',
+    maxHeight: '25rem',
+    transition: 'transform 280ms ease-out, opacity 280ms ease-out, filter 280ms ease-out',
+    transform: `rotateY(${offset * 50}deg)
+                scaleY(${1 - absOffset * 0.4})
+                translateZ(${-Math.max(0, absOffset) * 30}rem)
+                translateX(${direction * -5}rem)`,
+    opacity: hidden ? 0 : 1,
+    pointerEvents: selected === i ? 'auto' : 'none',
+    zIndex: Math.max(0, 100 - Math.abs(selected - i)),
+    filter: `blur(${Math.min(4, absOffset * 1.5)}rem)`,
+  }
+}
+export default function EntryCard({selected, entry, index}: Props) {
   return (
-    <Link href={`${url}/${logBookEntry.slug.current}`} className={style || ''}>
-      <motion.div
-        className="relative flex flex-col sm:flex-row lg:flex-col text-justify items-center sm:items-start lg:items-center w-full h-full bg-gradient-to-b from-stone-600 to-slate-700 overflow-clip rounded-lg text-white "
-        style={{
-          transition: 'all 0.3s ease-out',
-        }}
-        ref={(el) => {
-          ref.current = el
-          logBookEntryRefs.current[uniqueId] = el
-        }}
-      >
-        <motion.img
-          initial={{
-            y: -100,
-            opacity: 0,
-          }}
-          transition={{duration: 1.2}}
-          whileInView={{opacity: 1, y: 0}}
-          viewport={{once: true}}
-          className="h-[10em] w-full sm:size-[5em] lg-[h-10em] lg:w-full flex-shrink-0 self-center sm:rounded-full lg:rounded-none object-cover sm:mr-[1.8em] sm:object-left lg:mr-0 lg:object-center"
-          src={urlFor(logBookEntry.image)?.url()}
-          alt="not found"
-        />
-        <div className="relative p-8 flex flex-col justify-start items-start w-full sm:w-[30em] h-full">
-          <h2 className="relative block text-2xl sm:text-xl lg:text-2xl w-full font-bold text-center pb-4 text-white text-nowrap overflow-hidden overflow-ellipsis">
-            {logBookEntry.title}
-          </h2>
-          <p className=" relative text-xl sm:text-base lg:text-xl font-paragraph mb-4 sm:mb-0 line-clamp-[4] lg:line-clamp-[5] text-justify">
-            {logBookEntry.description}
-          </p>
-          <p className="absolute bottom-0 right-0 p-4 font-paragraph text-justify">
-            {formatDate(logBookEntry._updatedAt)}
-          </p>
+    <div
+      className="absolute w-[23rem] rounded-lg shadow-lg overflow-hidden bg-gradient-to-b from-stone-600 to-slate-700 text-white"
+      style={cardStyleFor(index, selected)}
+    >
+      <Link href={`/captainsLog/bigLogs/${entry.slug.current}`} className="block h-full">
+        <div className="h-[10rem] w-full overflow-hidden">
+          <img
+            src={urlFor(entry.image)?.url()}
+            alt={entry.title}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
         </div>
-      </motion.div>
-    </Link>
+        <div className="h-[13rem] p-6">
+          <h3 className="text-xl font-bold mb-2 truncate">{entry.title}</h3>
+          <p className="text-sm line-clamp-4 mb-4">{entry.description}</p>
+          <div className="text-xs text-right">{formatDate(entry._updatedAt)}</div>
+        </div>
+      </Link>
+    </div>
   )
 }

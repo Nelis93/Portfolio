@@ -1,14 +1,3 @@
-// // import { GetServerSideProps } from "next";
-// // export const getServerSideProps: GetServerSideProps = async (context) => {
-// //   // Redirect to /products if the user lands on /products/new-products
-// //   return {
-// //     redirect: {
-// //       destination: "/captainsLog", // The target redirect URL
-// //       permanent: false, // Use false for temporary redirect (HTTP 302), true for permanent (HTTP 308)
-// //     },
-// //   };
-// // };
-
 import {useState, useMemo} from 'react'
 import {LogbookEntry, Social} from '../../../types'
 import {fetchLogbookEntries} from '@/utils/fetchLogbookEntries'
@@ -20,7 +9,7 @@ import {urlFor} from '../../../lib/sanity'
 import Link from 'next/link'
 import {FaSearch} from 'react-icons/fa'
 import {IconContext} from 'react-icons'
-import Breadcrumbs from '../../../components/CaptainsLog/BreadCrumbs'
+import Breadcrumbs from '../../../components/ui/BreadCrumbs'
 
 // Component Props
 type Props = {

@@ -9,6 +9,8 @@ import {urlFor} from '@/lib/sanity'
 import formatDate from '@/utils/formateDate'
 import type {Social, LogbookEntry} from '@/types'
 import Slider from '@/components/ui/Slider'
+import EntryCarousel from '@/components/CaptainsLog/EntryCarousel'
+import EntryCard from '@/components/CaptainsLog/EntryCard'
 /* ---------------- Card ---------------- */
 function LogCard({entry, style}: {entry: LogbookEntry; style: React.CSSProperties}) {
   return (
@@ -64,12 +66,6 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
     return () => window.removeEventListener('scroll', onScroll)
   }, [logBookEntries.length])
 
-  useEffect(() => {
-    logBookEntries[selected]._id == logBookEntries[logBookEntries.length - 1]._id
-      ? console.log('last')
-      : console.log('not last')
-    console.log(logBookEntries[selected])
-  }, [selected])
   /* 3D transform per card (same logic as your container version) */
   const cardStyleFor = (i: number): React.CSSProperties => {
     const offset = (selected - i) / 3
@@ -117,7 +113,23 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
       >
         {/* {window.innerWidth > 1000 && (
         )} */}
-        <div
+        <EntryCarousel>
+          <Slider
+            items={logBookEntries}
+            refs={sectionRef}
+            currentIndex={selected}
+            setCurrentIndex={setSelected}
+            style={
+              'absolute hidden h-full sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2'
+            }
+            scrolling={false}
+          />
+          {logBookEntries.map((entry, i) => (
+            <EntryCard selected={selected} entry={entry} index={i} />
+            // <LogCard key={entry._id} entry={entry} style={cardStyleFor(i)} />
+          ))}
+        </EntryCarousel>
+        {/* <div
           className="sticky top-0 pt-[50vh] flex items-center justify-center"
           style={{perspective: 800, transformStyle: 'preserve-3d'}}
         >
@@ -134,7 +146,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
           {logBookEntries.map((entry, i) => (
             <LogCard key={entry._id} entry={entry} style={cardStyleFor(i)} />
           ))}
-        </div>
+        </div> */}
       </section>
 
       {/* Continuation */}

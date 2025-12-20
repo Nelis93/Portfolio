@@ -6,7 +6,7 @@ import {fetchSocials} from '@/utils/fetchSocials'
 import {PortableText, PortableTextComponents} from '@portabletext/react'
 import {urlFor} from '../../../lib/sanity'
 import Header from '@/components/ui/Header'
-import Breadcrumbs from '@/components/CaptainsLog/BreadCrumbs'
+import Breadcrumbs from '@/components/ui/BreadCrumbs'
 
 type Props = {
   socials: Social[]
@@ -87,7 +87,7 @@ export default function BigLog({logBookEntries, socials}: Props) {
         socials={socials}
         setSelectedFilter={''}
         style={
-          'sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30'
+          'sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30  bg-black bg-opacity-80'
         }
       />
       <Breadcrumbs />
