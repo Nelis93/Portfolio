@@ -45,7 +45,7 @@ const MobileEntryCarousel = ({children, selected, setSelected}: Props) => {
       >
         {React.Children.map(children, (child, idx) => (
           <div
-            className="flex-shrink-0 w-full snap-center px-2"
+            className="flex flex-shrink-0 w-full snap-center items-center justify-center"
             style={{maxWidth: '100%'}}
             key={idx}
           >

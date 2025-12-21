@@ -23,7 +23,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
   /* Page scroll → selected index */
   const onScroll = () => {
     if (!sectionRef.current) return
-
+    if (window.innerWidth < 650) return
     const rect = sectionRef.current.getBoundingClientRect()
     const vh = window.innerHeight
     const startFactor = 0.4

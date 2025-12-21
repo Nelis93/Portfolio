@@ -14,7 +14,7 @@ type Props = {
 }
 // Create a ref for each image
 
-export default function FocusedImageCard({image, galleryRefs, setSelected, uniqueId}: Props) {
+export default function FocusedImageCardSmall({image, galleryRefs, setSelected, uniqueId}: Props) {
   const ref = useRef<HTMLElement | null>(null)
 
   // Track if each image is in view
@@ -43,16 +43,13 @@ export default function FocusedImageCard({image, galleryRefs, setSelected, uniqu
     }
   }
   return (
-    <motion.div
-      className="relative flex flex-col sm:flex-row justify-start snap-center items-center sm:items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-full"
-      initial={{opacity: 0}}
-      animate={{opacity: 1}}
+    <article
+      className="relative flex flex-col sm:flex-row justify-start snap-center items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-full"
+      onClick={detDom}
       ref={(el) => {
         ref.current = el
         galleryRefs.current[uniqueId] = el
       }}
-      exit={{opacity: 0}}
-      onClick={detDom}
     >
       <IconContext.Provider
         value={{
@@ -66,25 +63,36 @@ export default function FocusedImageCard({image, galleryRefs, setSelected, uniqu
       >
         <TfiClose />
       </IconContext.Provider>
-      <motion.img
-        className="relative rounded-lg h-fit max-h-full w-auto justify-self-start self-start place-items-start items-start lg:col-span-3 lg:row-span-10"
-        src={urlFor(image.actualImage)?.url()}
-        alt={image.title}
+      <section
+        className="relative flex flex-col sm:flex-row lg:flex-col w-full h-full px-[.5em]"
         style={{
-          x: dominance ? 0 : '-30%',
-          cursor: dominance ? 'url(/ArrowLeft.svg), pointer' : 'url(/ArrowRight.svg), pointer',
+          transform: dominance ? 'translateY(-100%)' : 'inherit',
+          transition: 'transform',
+          transitionDuration: '1s',
+          transitionTimingFunction: 'ease-in-out',
         }}
-      />
+      >
+        <motion.img
+          className="relative rounded-lg h-fit max-h-full w-auto  justify-self-start self-start place-items-start items-start    lg:col-span-3 lg:row-span-10"
+          src={urlFor(image.actualImage)?.url()}
+          alt={image.title}
+          style={{
+            x: dominance ? 0 : '-30%',
+            cursor: dominance ? 'url(/ArrowLeft.svg), pointer' : 'url(/ArrowRight.svg), pointer',
+          }}
+        />
+        <h4 className="bottom-2 relative text-center font-bold">{image.title}</h4>
+      </section>
       <div
         style={{
           transform: dominance ? '' : 'translate(-40%)',
           minWidth: dominance ? '0' : '40%',
           pointerEvents: 'none',
         }}
-        className="absolute bottom-0 min-h-[30%] sm:min-h-auto bg-black bg-opacity-70 sm:bottom-auto sm:relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start w-full sm:h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] sm:pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
+        className="relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start w-full sm:h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] sm:pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
       >
         <Link href={'en.wikipedia.org'} className="z-50">
-          <h4 className="relative bottom-[2em] sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
+          <h4 className="bottom-[2em] relative sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
             {image.title}
           </h4>
         </Link>
@@ -95,6 +103,6 @@ export default function FocusedImageCard({image, galleryRefs, setSelected, uniqu
           {image.location}
         </p>
       </div>
-    </motion.div>
+    </article>
   )
 }
