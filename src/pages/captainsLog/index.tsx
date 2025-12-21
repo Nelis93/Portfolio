@@ -59,7 +59,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
       {/* Scroll-driven carousel */}
       <section
         ref={sectionRef}
-        className="relative bg-blue-200"
+        className="relative"
         style={{height: `${logBookEntries.length * CARD_SCROLL_PX}px`}}
       >
         {window.innerWidth > 1000 ? (
@@ -83,8 +83,8 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
       </section>
 
       {/* Continuation */}
-      <section className="h-[200vh] bg-black flex items-center justify-center">
-        <p className="text-xl">More page content ↓</p>
+      <section className="h-[200vh] flex items-center justify-center">
+        <p className="text-xl">More page content coming soon ...</p>
       </section>
     </main>
   )
