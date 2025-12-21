@@ -59,6 +59,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
   // when an image is clicked, it is set to the index of the clicked image
   // when an image is selected, the gallery is displayed in a focused view
   // and the selected image is scrolled into view
+  const sectionRef = useRef<HTMLDivElement | null>(null)
   const [selected, setSelected] = useState(-1)
   // focus is used to keep track of the currently focused image
   // it is set to -1 when no image is focused
@@ -71,10 +72,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
   //   index: number;
   // }>({ current: [], index: 0 });
   const [maxHeight, setMaxHeight] = useState<{id: string; value: number}[]>([])
-  const [imgHeight, setImgHeight] = useState<number[]>([])
-  const [imgTitle, setImgTitle] = useState<string[]>([])
-  const [imgNaturalHeight, setImgNaturalHeight] = useState<number[]>([])
-  const [imgWidth, setImgWidth] = useState<number[]>([])
   // selectedFilter is used to keep track of the currently selected filters
   // it is an object with two arrays: countries and dates
   const [selectedFilter, setSelectedFilter] = useState<{
@@ -101,23 +98,8 @@ const Gallery = ({galleryImages, socials}: Props) => {
       })
   }, [galleryImages, selectedFilter])
 
-  //end edit by claude
-  // const filteredImages = () => {
-  //   return galleryImages
-  //     .sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1))
-  //     .filter((image) => {
-  //       const countries = selectedFilter?.countries
-  //       let index = image.location.split(' ')
-  //       return countries.length > 0 ? countries.includes(index[index.length - 1]) : image
-  //     })
-  //     .filter((image) => {
-  //       const dates = selectedFilter?.dates
-  //       return dates.length > 0 ? dates.includes(image?.dateTaken.toString().split('-')[0]) : image
-  //     })
-  // }
-
   useFilterSync(selectedFilter, setSelectedFilter)
-  //edit by claude
+
   useEffect(() => {
     const allHeightsReady = displayedImages.every((img) =>
       maxHeight.some((h) => h.id === img._id && h.value > 0),
@@ -126,48 +108,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
       console.log('Heights matched!')
     }
   }, [displayedImages, maxHeight])
-  //end edit by claude
-  // useEffect(() => {
-  //   // Only run when all displayed images have a height
-  //   const allHeightsReady = displayedImages.every((img) =>
-  //     maxHeight.some((h) => h.id === img._id && h.value > 0),
-  //   )
-  //   if (allHeightsReady) {
-  //     console.log(
-  //       'Heights are matched! MaxHeight: ' +
-  //         maxHeight.length +
-  //         ', DisplayedImages: ' +
-  //         displayedImages.length,
-  //     )
-  //     debounceMaxHeightCalculation()
-  //   } else {
-  //     console.log(
-  //       'Heights NOT matched! MaxHeight: ' +
-  //         maxHeight.length +
-  //         ', DisplayedImages: ' +
-  //         displayedImages.length +
-  //         ', Page: ' +
-  //         page,
-  //     )
-  //     // --- Detailed diagnostic table/logging ---
-  //     const imageIds = displayedImages
-  //       .map((img) => img._id)
-  //       .slice()
-  //       .sort()
-  //     const maxIds = maxHeight
-  //       .map((h) => h.id)
-  //       .slice()
-  //       .sort()
-
-  //     // Build a table that pairs sorted ids side-by-side
-  //     const maxLen = Math.max(imageIds.length, maxIds.length)
-  //     const table = Array.from({length: maxLen}, (_, i) => ({
-  //       imageId: imageIds[i] ?? null,
-  //       maxHeightId: maxIds[i] ?? null,
-  //     }))
-  //     console.table(table)
-  //   }
-  // }, [displayedImages, maxHeight.length])
 
   useEffect(() => {
     if (loading) {
@@ -176,7 +116,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
     }
   }, [loading])
 
-  //edit by claude
   const debounceMaxHeightCalculation = useCallback(
     debounce(() => {
       console.log('debounceMaxHeightCalculation called')
@@ -200,41 +139,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
     }, 300),
     [displayedImages],
   )
-  //end edit by claude
-  // const debounceMaxHeightCalculation = debounce(() => {
-  //   console.log('debounceMaxHeightCalculation called')
-  //   setMaxHeight((prevMaxHeight: {id: string; value: number}[]) => {
-  //     const newMaxArray: {id: string; value: number}[] = []
-  //     // Group by triplets in displayedImages
-  //     for (let i = 0; i < displayedImages.length; i += 3) {
-  //       const triplet = displayedImages.slice(i, i + 3)
-  //       // Get heights for this triplet
-  //       const heights = triplet.map((img) => {
-  //         const found = prevMaxHeight.find((item) => item.id === img._id)
-  //         return found ? found.value : undefined
-  //       })
-  //       // Only calculate if all heights are defined
-  //       if (heights.every((h) => typeof h === 'number')) {
-  //         const maxTripletHeight = Math.max(...heights)
-  //         triplet.forEach((img) => {
-  //           newMaxArray.push({id: img._id, value: maxTripletHeight})
-  //         })
-  //       } else {
-  //         // If not all heights are ready, push undefined or 0
-  //         triplet.forEach((img) => {
-  //           newMaxArray.push({id: img._id, value: 0})
-  //         })
-  //       }
-  //     }
-  //     return newMaxArray
-  //   })
-  //   console.log('debounceMaxHeightCalculation ran')
-  //   setLoading(false)
-  // }, 300)
-
-  // Scroll to selected image when it's clicked
-
-  // edit by claude
 
   useEffect(() => {
     if (selected > -1) {
@@ -245,35 +149,21 @@ const Gallery = ({galleryImages, socials}: Props) => {
     setPage(1)
     setDisplayedImages(filteredImages.slice(0, 9))
   }, [selected, filteredImages])
-  //end edit by claude
-  // useEffect(() => {
-  //   if (selected > -1) {
-  //     setDisplayedImages(filteredImages())
-  //     galleryRefs.current[selected]?.scrollIntoView()
-  //     return
-  //   }
-  //   setPage(1)
-  //   setDisplayedImages(filteredImages().slice(0, 9))
-  // }, [selected])
 
-  //edit by claude
-
+  const scrollToTop = () => {
+    sectionRef.current?.scrollTo({
+      top: 0,
+      behavior: 'smooth', // optional
+    })
+  }
   useEffect(() => {
     setDisplayedImages(filteredImages.slice(0, 9))
     if (selectedFilter.countries.length === 0 && selectedFilter.dates.length === 0) return
 
     setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages.slice(0, 9), prev))
     setPage(1)
+    scrollToTop()
   }, [filteredImages, selectedFilter])
-  // end edit by claude
-  // useEffect(() => {
-  //   setDisplayedImages(filteredImages().slice(0, 9))
-  //   if (selectedFilter.countries.length == 0 && selectedFilter.dates.length == 0) return
-  //   else {
-  //     setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages().slice(0, 9), prev))
-  //     setPage(1)
-  //   }
-  // }, [selectedFilter])
 
   function filteredMaxHeightForImages(
     filteredImgs: GalleryImage[],
@@ -286,7 +176,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
     })
   }
 
-  //edit by claude
   const handleImageData = useCallback(
     (
       imageId: string,
@@ -307,7 +196,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
     },
     [displayedImages],
   )
-  //end edit by claude
 
   // Function to load more images
   const loadMoreImages = useInfiniteScroll(
@@ -332,9 +220,9 @@ const Gallery = ({galleryImages, socials}: Props) => {
         }
       />
       <section
+        ref={sectionRef}
         className="relative flex w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
         onScroll={loadMoreImages}
-        // onResize={debounceMaxHeightCalculation}
         style={{
           backgroundImage:
             displayedImages.length >= 6 && window.innerWidth > 1000 ? "url('/FlipMe.svg')" : '',
@@ -367,16 +255,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
                   setSelected={setSelected}
                   focus={focus}
                   setFocus={setFocus}
-                  // imgHeight={imgHeight}
-                  // setImgHeight={setImgHeight}
-                  // imgNaturalHeight={imgNaturalHeight}
-                  // setImgNaturalHeight={setImgNaturalHeight}
-                  // imgWidth={imgWidth}
-                  // setImgWidth={setImgWidth}
-                  // imgTitle={imgTitle}
-                  // setImgTitle={setImgTitle}
                   maxHeight={maxHeight}
-                  // setMaxHeight={setMaxHeight}
                   selectedFilter={selectedFilter}
                   onImageData={handleImageData} // NEW: Pass callback instead of all state setters
                 />
