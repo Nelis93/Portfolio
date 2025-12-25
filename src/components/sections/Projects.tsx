@@ -34,7 +34,7 @@ export default function Projects({projects}: Props) {
       />
       {/* Projects Carousel */}
       <div
-        className="relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-10 scrollbar-none sm:pt-[3em] lg:px-0  lg:scrollbar-thin lg:scrollbar-track-teal-300/40 lg:scrollbar-thumb-yellow-500/80"
+        className="relative w-screen h-screen px-10 flex overflow-x-scroll overflow-y-hidden scroll-smooth snap-x snap-mandatory z-10 scrollbar-none sm:pt-[3em] lg:px-0  lg:scrollbar-thin lg:scrollbar-track-teal-300/40 lg:scrollbar-thumb-yellow-500/80"
         ref={containerRef}
       >
         {projects

@@ -33,20 +33,18 @@ const MobileEntryCarousel = ({children, selected, setSelected}: Props) => {
   }
 
   return (
-    <div className="block w-screen max-w-full overflow-x-hidden">
+    <div className="flex flex-col w-full">
       <div
         ref={scrollRef}
-        className="flex flex-row overflow-x-auto snap-x snap-mandatory scrollbar-none w-screen"
+        className="flex flex-row overflow-x-scroll snap-x snap-mandatory scrollbar-none w-full"
         style={{
-          scrollSnapType: 'x mandatory',
           WebkitOverflowScrolling: 'touch',
         }}
         onScroll={handleScroll}
       >
         {React.Children.map(children, (child, idx) => (
           <div
-            className="flex flex-shrink-0 w-full snap-center items-center justify-center"
-            style={{maxWidth: '100%'}}
+            className="flex flex-shrink-0 w-full max-w-full snap-start items-center justify-center"
             key={idx}
           >
             {child}

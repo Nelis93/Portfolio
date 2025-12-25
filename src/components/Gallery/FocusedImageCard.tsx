@@ -44,7 +44,7 @@ export default function FocusedImageCard({image, galleryRefs, setSelected, uniqu
   }
   return (
     <motion.div
-      className="relative flex flex-col sm:flex-row justify-start snap-center items-center sm:items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 sm:overflow-x-clip h-full"
+      className="relative flex flex-col sm:flex-row justify-start snap-start flex-shrink-0 items-center sm:items-start w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 overflow-y-clip sm:overflow-y-auto sm:overflow-x-clip h-full"
       initial={{opacity: 0}}
       animate={{opacity: 1}}
       ref={(el) => {
@@ -67,28 +67,28 @@ export default function FocusedImageCard({image, galleryRefs, setSelected, uniqu
         <TfiClose />
       </IconContext.Provider>
       <motion.img
-        className="relative rounded-lg h-fit max-h-full w-auto justify-self-start self-start place-items-start items-start lg:col-span-3 lg:row-span-10"
+        className="relative rounded-lg h-fit sm:max-h-full w-auto sm:max-w-[80%] justify-self-start self-center sm:self-start place-items-start items-start lg:row-span-10"
         src={urlFor(image.actualImage)?.url()}
         alt={image.title}
         style={{
-          x: dominance ? 0 : '-30%',
+          x: dominance ? 0 : '-5em',
           cursor: dominance ? 'url(/ArrowLeft.svg), pointer' : 'url(/ArrowRight.svg), pointer',
         }}
       />
       <div
         style={{
-          transform: dominance ? '' : 'translate(-40%)',
-          minWidth: dominance ? '0' : '40%',
+          transform: dominance ? '' : 'translate(-5em)',
+          minWidth: dominance ? '0' : 'calc(20% + 5em)',
           pointerEvents: 'none',
         }}
-        className="absolute bottom-0 min-h-[30%] sm:min-h-auto bg-black bg-opacity-70 sm:bottom-auto sm:relative flex flex-col flex-grow  justify-center sm:justify-start sm:items-start w-full sm:h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] sm:pb-[3em] lg:pb-0 space-y-[1em] lg:col-span-2 lg:row-span-10"
+        className="absolute sm:relative bg-black bottom-0 sm:bottom-auto min-h-[30%] sm:min-h-auto bg-opacity-70 flex flex-col flex-grow justify-center sm:justify-start items-center w-full sm:h-full text-wrap px-[.2em] sm:px-[1em] pt-[2em] sm:pb-[3em] lg:pb-0 space-y-[1em] lg:row-span-10"
       >
         <Link href={'en.wikipedia.org'} className="z-50">
           <h4 className="relative bottom-[2em] sm:bottom-auto text-[.8em] text-center sm:text-[.9em] lg:text-[.7em] font-bold">
             {image.title}
           </h4>
         </Link>
-        <p className="hidden sm:block text-[.7em] lg:text-[.5em] max-w-full overflow-scroll scrollbar-none  lg:max-h-[70%] ">
+        <p className="hidden sm:block text-[.7em] lg:text-[.5em] max-w-full overflow-scroll scrollbar-none lg:max-h-[70%] ">
           {image.description}
         </p>
         <p className="absolute bg-black text-[.6em] sm:text-[.7em] lg:text-[.5em] bottom-4 text-right right-4 italic">

@@ -40,7 +40,11 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
   }, [logBookEntries.length])
 
   return (
-    <main className="bg-gradient-to-br from-teal-300 to-teal-600 text-white">
+    <main
+      translate="no"
+      className="relative flex flex-col items-center w-screen sm:w-full h-full px-4 sm:px-0 overflow-y-scroll sm:overflow-y-visible scrollbar-none bg-gradient-to-br from-teal-300 to-teal-600 text-white"
+      // className="relative px-4 sm:px-0 w-full bg-gradient-to-br from-teal-300 to-teal-600 text-white"
+    >
       <Header
         socials={socials}
         setSelectedFilter={null}
@@ -48,7 +52,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
       />
 
       {/* Intro */}
-      <section className="h-[20vh] sm:h-[30vh] flex sm:items-end justify-center">
+      <section className="relative h-[20vh] sm:h-[30vh] flex items-center sm:items-end justify-center">
         <Link href={'captainsLog/bigLogs'} className="flex w-auto sm:z-50">
           <h1 className="flex py-4 sm:px-0 lg:px-2 text-lg sm:text-2xl h-20 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
             These are some writings for when you're free 🦅
@@ -59,7 +63,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
       {/* Scroll-driven carousel */}
       <section
         ref={sectionRef}
-        className="relative"
+        className="relative w-full"
         style={{height: `${logBookEntries.length * CARD_SCROLL_PX}px`}}
       >
         {window.innerWidth > 1000 ? (
@@ -91,7 +95,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
 }
 
 export default dynamic(() => Promise.resolve(CaptainsLog), {ssr: false})
-
+// export default CaptainsLog
 export const getStaticProps: GetStaticProps = async () => {
   const logBookEntries = await fetchLogbookEntries()
   const socials = await fetchSocials()
