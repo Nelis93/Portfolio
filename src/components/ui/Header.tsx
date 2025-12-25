@@ -95,18 +95,19 @@ function Header({socials, setSelectedFilter, style}: Props) {
         }}
         className="flex flex-row items-center text-gray-300 cursor-pointer space-x-4"
       >
-        {router.pathname.includes('gallery') && (
+        {router.pathname.includes('gallery') ? (
           <DropDownFilter setSelectedFilter={setSelectedFilter} />
+        ) : (
+          <Link href="/#contact" className="social-icon">
+            <IconContext.Provider
+              value={{
+                className: 'h-[75%]',
+              }}
+            >
+              <FaEnvelope />
+            </IconContext.Provider>
+          </Link>
         )}
-        <Link href="/#contact" className="social-icon">
-          <IconContext.Provider
-            value={{
-              className: 'h-[75%]',
-            }}
-          >
-            <FaEnvelope />
-          </IconContext.Provider>
-        </Link>
         <Link
           href="/#contact"
           className="uppercase pl-2 hidden lg:inline-flex text-[.5em] text-gray-400 hover:text-yellow-500"

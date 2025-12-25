@@ -19,7 +19,7 @@ export default function FocusedImageCard({image, galleryRefs, setSelected, uniqu
 
   // Track if each image is in view
   const isInView = useInView(ref, {
-    amount: 0.4,
+    amount: 0.5,
     once: false,
   })
   // Update the currentIndex based on which image is in view

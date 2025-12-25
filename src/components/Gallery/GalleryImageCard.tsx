@@ -13,19 +13,10 @@ type Props = {
   focus: any
   setFocus: any
   maxHeight: any
-  // setMaxHeight: any
-  // imgHeight: any
-  // setImgHeight: any
-  // imgNaturalHeight: any
-  // setImgNaturalHeight: any
-  // imgWidth: any
-  // setImgWidth: any
   onImageData: (
     imageId: string,
     data: {height: number; naturalHeight: number; width: number; title: string},
-  ) => void // NEW PROP by claude
-  // imgTitle: any
-  // setImgTitle: any
+  ) => void
   selectedFilter: any
 }
 
@@ -37,16 +28,7 @@ export default function GalleryImageCard({
   focus,
   setFocus,
   maxHeight,
-  onImageData, // NEW PROP by claude
-  // setMaxHeight,
-  // imgHeight,
-  // setImgHeight,
-  // imgNaturalHeight,
-  // setImgNaturalHeight,
-  // imgWidth,
-  // setImgWidth,
-  // imgTitle,
-  // setImgTitle,
+  onImageData,
 }: Props) {
   const [iconPosition, setIconPosition] = useState({
     distance: 0,
@@ -111,45 +93,6 @@ export default function GalleryImageCard({
     },
     [image._id, onImageData],
   )
-  //end edit by claude
-  // const handleImageLoad = (event: any) => {
-  //   const offsetHeight = event.target.offsetHeight
-  //   const heightInVH = (offsetHeight / window.innerHeight) * 100
-  //   const naturalWidth = event.target.naturalWidth
-  //   const naturalHeight = event.target.naturalHeight
-  //   setImgHeight((prev: any) => {
-  //     const next = [...prev]
-  //     next[uniqueId] = offsetHeight
-  //     return next
-  //   })
-  //   setImgNaturalHeight((prev: any) => {
-  //     const next = [...prev]
-  //     next[uniqueId] = naturalHeight
-  //     return next
-  //   })
-  //   setImgWidth((prev: any) => {
-  //     const next = [...prev]
-  //     next[uniqueId] = naturalWidth
-  //     return next
-  //   })
-  //   setImgTitle((prev: any) => {
-  //     const next = [...prev]
-  //     next[uniqueId] = event.target.alt
-  //     return next
-  //   })
-  //   setMaxHeight((prev: {id: string; value: number}[]) => {
-  //     const next = [...prev]
-  //     const idx = next.findIndex((item) => item.id === image._id)
-  //     if (idx > -1) {
-  //       next[idx].value = heightInVH
-  //     } else {
-  //       next.push({id: image._id, value: heightInVH})
-  //     }
-  //     return next
-  //   })
-  // }
-
-  // When using maxHeight for rendering:
 
   const heightObj = maxHeight.find((item: any) => item.id === image._id)
   const maxHeightValue = heightObj ? heightObj.value : 0
@@ -202,8 +145,8 @@ export default function GalleryImageCard({
           style={{
             position: 'absolute',
             transitionProperty: 'transform',
-            transitionDelay: '.6s',
-            transitionTimingFunction: 'ease-in-out',
+            transitionDelay: '.5s',
+            transitionTimingFunction: 'ease-out',
             transform: `${iconPosition.transform}`,
             transformStyle: 'preserve-3d',
           }}
@@ -226,14 +169,6 @@ export default function GalleryImageCard({
             backfaceVisibility: 'hidden', // Hide image when back is shown
           }}
         >
-          {/* <div className="absolute flex flex-col z-40 w-full h-full text-xl bg-black bg-opacity-50  ">
-            <span>Image Id: {image._id.substring(0, 4)}</span>
-            <span>imgHeight: {Math.round(imageData.height)}</span>
-            <span>imgWidth: {Math.round(imageData.width)}</span>
-            <span>imgNaturalHeight: {Math.round(imageData.naturalHeight)}</span>
-            <span>MaxHeight Title: {imageData.title.substring(0, 10)}</span>
-            <span>Image Title: {image.title.substring(0, 10)}</span>
-          </div> */}
           <motion.img
             className="absolute z-20 w-full h-auto rounded-lg"
             src={urlFor(image.actualImage)?.url()}

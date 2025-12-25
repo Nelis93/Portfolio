@@ -22,14 +22,7 @@ export default function GalleryImageCardSmall({
   }
 
   return (
-    <div
-      key={image._id}
-      className="group relative w-full h-full"
-      onClick={handleCardClick}
-      // ref={(el) => {
-      //   galleryRefs.current[uniqueId] = el;
-      // }}
-    >
+    <div key={image._id} className="group relative w-full h-full" onClick={handleCardClick}>
       {/* Front side of the card: Image */}
       <motion.img
         className="relative z-20 w-full h-auto rounded-lg"
