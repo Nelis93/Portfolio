@@ -43,7 +43,6 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
     <main
       translate="no"
       className="relative flex flex-col items-center w-screen sm:w-full h-full px-4 sm:px-0 overflow-y-scroll sm:overflow-y-visible scrollbar-none bg-gradient-to-br from-teal-300 to-teal-600 text-white"
-      // className="relative px-4 sm:px-0 w-full bg-gradient-to-br from-teal-300 to-teal-600 text-white"
     >
       <Header
         socials={socials}

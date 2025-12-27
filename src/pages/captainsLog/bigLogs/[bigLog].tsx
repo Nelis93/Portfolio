@@ -7,6 +7,10 @@ import {PortableText, PortableTextComponents} from '@portabletext/react'
 import {urlFor} from '../../../lib/sanity'
 import Header from '@/components/ui/Header'
 import Breadcrumbs from '@/components/ui/BreadCrumbs'
+import {FaAngleUp} from 'react-icons/fa'
+import {IconContext} from 'react-icons'
+import scrollToTop from '@/utils/scrollToTop'
+import {useRef} from 'react'
 
 type Props = {
   socials: Social[]
@@ -14,7 +18,16 @@ type Props = {
 }
 const components: PortableTextComponents = {
   types: {
-    image: ({value}) => <img src={urlFor(value).url()} />,
+    imageWithDescription: ({value}) => (
+      <figure className="flex flex-col items-center my-6">
+        <img src={urlFor(value.image).url()} className="w-full rounded-lg" />
+        {value.description && (
+          <figcaption className="text-sm text-gray-600 mt-2 text-center italic">
+            {value.description}
+          </figcaption>
+        )}
+      </figure>
+    ),
   },
   marks: {
     // Ex. 1: custom renderer for the em / italics decorator
@@ -51,8 +64,8 @@ const components: PortableTextComponents = {
   },
   list: {
     // Ex. 1: customizing common list types
-    bullet: ({children}) => <ul className="mt-xl">{children}</ul>,
-    number: ({children}) => <ol className="mt-lg">{children}</ol>,
+    bullet: ({children}) => <ul className="mt-14">{children}</ul>,
+    number: ({children}) => <ol className="mt-12">{children}</ol>,
 
     // Ex. 2: rendering custom lists
     checkmarks: ({children}) => <ol className="m-auto text-lg">{children}</ol>,
@@ -67,6 +80,8 @@ const components: PortableTextComponents = {
 }
 export default function BigLog({logBookEntries, socials}: Props) {
   const router = useRouter()
+  const mainRef = useRef<HTMLDivElement | null>(null)
+
   // Handle fallback loading state
   if (router.isFallback) {
     return <div className="h-screen flex justify-center items-center text-white">Loading...</div>
@@ -82,15 +97,20 @@ export default function BigLog({logBookEntries, socials}: Props) {
     )
   }
   return (
-    <main className="h-screen max-w-screen bg-black overflow-y-scroll overflow-x-hidden scrollbar-none">
+    <main
+      className="h-screen max-w-screen bg-black overflow-y-scroll overflow-x-hidden scrollbar-none"
+      ref={mainRef}
+    >
       <Header
         socials={socials}
-        setSelectedFilter={''}
+        setSelectedFilter={null}
         style={
           'sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30  bg-black bg-opacity-80'
         }
       />
-      <Breadcrumbs />
+      <div className="sticky top-20">
+        <Breadcrumbs />
+      </div>
       {/* Main Content */}
       <div className="min-h-screen text-gray-800 p-6 sm:p-12">
         <article className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
@@ -113,6 +133,15 @@ export default function BigLog({logBookEntries, socials}: Props) {
               <PortableText value={logEntry?.entry} components={components} />
             </div>
           </section>
+          <IconContext.Provider
+            value={{
+              className:
+                'relative opacity-100 hover:bg-yellow-500/80 z-50 bg-gray-500 hover:cursor-pointer p-3 mx-auto rounded-[50%] size-14 mb-6',
+              attr: {onClick: () => scrollToTop(mainRef)},
+            }}
+          >
+            <FaAngleUp />
+          </IconContext.Provider>
         </article>
       </div>
     </main>

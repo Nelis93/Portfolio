@@ -16,6 +16,7 @@ import debounce from '@/utils/debounce'
 import {extraCards} from '@/utils/extraCards'
 import {useFilterSync} from '@/hooks/useFilterSync'
 import {useInfiniteScroll} from '@/hooks/useInfiniteScroll'
+import scrollToTop from '@/utils/scrollToTop'
 
 type Props = {
   galleryImages: GalleryImage[]
@@ -150,19 +151,13 @@ const Gallery = ({galleryImages, socials}: Props) => {
     setDisplayedImages(filteredImages.slice(0, 9))
   }, [selected, filteredImages])
 
-  const scrollToTop = () => {
-    sectionRef.current?.scrollTo({
-      top: 0,
-      behavior: 'smooth', // optional
-    })
-  }
   useEffect(() => {
     setDisplayedImages(filteredImages.slice(0, 9))
     if (selectedFilter.countries.length === 0 && selectedFilter.dates.length === 0) return
 
     setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages.slice(0, 9), prev))
     setPage(1)
-    scrollToTop()
+    scrollToTop(sectionRef)
   }, [filteredImages, selectedFilter])
 
   function filteredMaxHeightForImages(

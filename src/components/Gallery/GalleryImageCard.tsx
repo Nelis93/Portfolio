@@ -4,6 +4,7 @@ import {GalleryImage} from '../../types'
 import {urlFor} from '../../lib/sanity'
 import {TfiNewWindow} from 'react-icons/tfi'
 import {IconContext} from 'react-icons'
+import {getImageDimensions} from '@sanity/asset-utils'
 
 type Props = {
   image: GalleryImage
@@ -34,14 +35,6 @@ export default function GalleryImageCard({
     distance: 0,
     transform: 'none',
   })
-  //edit by claude
-  const [imageData, setImageData] = useState({
-    height: 0,
-    naturalHeight: 0,
-    width: 0,
-    title: '',
-  })
-  //end edit by claude
   const handlePosition = (event: any) => {
     const intendedFlipWidth =
       event.target.parentElement.parentElement.offsetWidth -
@@ -69,6 +62,7 @@ export default function GalleryImageCard({
   //edit by claude
   const handleImageLoad = useCallback(
     (event: any) => {
+      const {width: dimensionWidth, height: dimensionHeight} = getImageDimensions(event.target.src)
       const offsetHeight = event.target.offsetHeight
       const heightInVH = (offsetHeight / window.innerHeight) * 100
       const naturalWidth = event.target.naturalWidth
@@ -82,14 +76,9 @@ export default function GalleryImageCard({
         width: naturalWidth,
         title: title,
       })
-
-      // Optional: Keep local state for debug display if needed
-      setImageData({
-        height: heightInVH,
-        naturalHeight: naturalHeight,
-        width: naturalWidth,
-        title: title,
-      })
+      console.log(
+        `Image Loaded: ${title}, SanityWidth: ${dimensionWidth}, SanityHeight: ${dimensionHeight}, height: ${heightInVH}vh, naturalHeight: ${naturalHeight}, width: ${naturalWidth}`,
+      )
     },
     [image._id, onImageData],
   )
@@ -124,7 +113,7 @@ export default function GalleryImageCard({
         transitionDuration: focus == uniqueId ? '0.3s' : '1s', // Faster black, slower to transparent
         transitionDelay: focus == uniqueId ? '0s' : '0.6s',
       }}
-      className="group relative w-full max-h-[75vh] border-black border-8 cursor-pointer"
+      className="relative w-full max-h-[75vh] border-black border-8 cursor-pointer"
       onClick={handleCardClick}
     >
       {/* Card container with 3D flip */}
@@ -139,6 +128,7 @@ export default function GalleryImageCard({
         }}
         onLoad={handlePosition}
       >
+        {/* Button in right hand top corner, sets focus */}
         <div
           className="z-30 flex right-0 justify-center items-center  w-[15%] h-auto  rounded-[50px]  text-gray-500"
           id={image._id}

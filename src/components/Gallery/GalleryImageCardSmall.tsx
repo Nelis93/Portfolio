@@ -5,17 +5,10 @@ import {urlFor} from '../../lib/sanity'
 type Props = {
   image: GalleryImage
   uniqueId: number
-  // galleryRefs: any;
   setSelected: any
 }
 
-export default function GalleryImageCardSmall({
-  image,
-  uniqueId,
-  // galleryRefs,
-  setSelected,
-}: Props) {
-  //clicking on the photo should flip the card, showing the info like it's written on the back of it.
+export default function GalleryImageCardSmall({image, uniqueId, setSelected}: Props) {
   const handleCardClick = (event: any) => {
     event.stopPropagation()
     setSelected(uniqueId)
