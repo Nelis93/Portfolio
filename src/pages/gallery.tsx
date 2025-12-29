@@ -155,7 +155,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
 
       setLoading(true);
 
-      const nextImages = filteredImages().slice(page * 9, (page + 1) * 9);
+      const nextImages = filteredImages().slice(page * 3, (page + 1) * 3);
 
       if (nextImages.length > 0) {
         setDisplayedImages((prev) => [...prev, ...nextImages]);
@@ -180,7 +180,7 @@ const Gallery = ({ galleryImages, socials }: Props) => {
       />
       <section
         className="relative flex w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
-        onScroll={loadMoreImages}
+        onWheel={loadMoreImages}
         onResize={debounceMaxHeightCalculation}
         style={{
           backgroundImage:
