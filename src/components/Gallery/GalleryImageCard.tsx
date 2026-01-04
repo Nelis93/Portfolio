@@ -19,6 +19,7 @@ type Props = {
     data: {height: number; naturalHeight: number; width: number; title: string},
   ) => void
   selectedFilter: any
+  setManualFocus?: any
 }
 
 export default function GalleryImageCard({
@@ -28,6 +29,7 @@ export default function GalleryImageCard({
   setSelected,
   focus,
   setFocus,
+  setManualFocus,
   maxHeight,
   onImageData,
 }: Props) {
@@ -96,10 +98,14 @@ export default function GalleryImageCard({
     })
     return
   }
-
+  // Button in right hand top corner, sets focus
   const handleButtonClick = (event: any) => {
     event.stopPropagation()
-    setSelected(uniqueId)
+    setSelected((current: number) => {
+      console.log('current: ', current, 'uniqueId: ', uniqueId)
+      return uniqueId
+    })
+    setManualFocus(true)
   }
   return (
     <div
