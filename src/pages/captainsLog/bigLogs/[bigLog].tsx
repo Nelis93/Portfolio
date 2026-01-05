@@ -1,44 +1,53 @@
-import { useRouter } from "next/router";
-import type { GetStaticPaths, GetStaticProps } from "next";
-import { LogbookEntry, Social } from "../../../../typings";
-import { fetchLogbookEntries } from "@/utils/fetchLogbookEntries";
-import { fetchSocials } from "@/utils/fetchSocials";
-import { PortableText, PortableTextComponents } from "@portabletext/react";
-import { urlFor } from "../../../../sanity";
-import Header from "@/components/Header";
-import Breadcrumbs from "@/components/CaptainsLog/BreadCrumbs";
+import {useRouter} from 'next/router'
+import type {GetStaticPaths, GetStaticProps} from 'next'
+import {LogbookEntry, Social} from '../../../types'
+import {fetchLogbookEntries} from '@/utils/fetchLogbookEntries'
+import {fetchSocials} from '@/utils/fetchSocials'
+import {PortableText, PortableTextComponents} from '@portabletext/react'
+import {urlFor} from '../../../lib/sanity'
+import Header from '@/components/ui/Header'
+import Breadcrumbs from '@/components/ui/BreadCrumbs'
+import {FaAngleUp} from 'react-icons/fa'
+import {IconContext} from 'react-icons'
+import scrollToTop from '@/utils/scrollToTop'
+import {useRef} from 'react'
 
 type Props = {
-  socials: Social[];
-  logBookEntries: LogbookEntry[];
-};
+  socials: Social[]
+  logBookEntries: LogbookEntry[]
+}
 const components: PortableTextComponents = {
   types: {
-    image: ({ value }) => <img src={urlFor(value).url()} />,
+    imageWithDescription: ({value}) => (
+      <figure className="flex flex-col items-center my-6">
+        <img src={urlFor(value.image).url()} className="w-full rounded-lg" />
+        {value.description && (
+          <figcaption className="text-sm text-gray-600 mt-2 text-center italic">
+            {value.description}
+          </figcaption>
+        )}
+      </figure>
+    ),
   },
   marks: {
     // Ex. 1: custom renderer for the em / italics decorator
-    em: ({ children }) => (
-      <em className="text-gray-600 font-semibold">{children}</em>
-    ),
+    em: ({children}) => <em className="text-gray-600 font-semibold">{children}</em>,
 
     // Ex. 2: rendering a custom `link` annotation
-    link: ({ value, children }) => {
-      const target = (value?.href || "").startsWith("http")
-        ? "_blank"
-        : undefined;
+    link: ({value, children}) => {
+      const target = (value?.href || '').startsWith('http') ? '_blank' : undefined
       return (
         <a
           href={value?.href}
           target={target}
-          rel={"noindex nofollow"}
+          rel={'noindex nofollow'}
           className="text-blue-800 underline hover:text-teal-700"
         >
           {children}
         </a>
-      );
+      )
     },
-    break: ({ value, children }) => (
+    break: ({value, children}) => (
       <span>
         {children}
         <br />
@@ -48,67 +57,60 @@ const components: PortableTextComponents = {
   },
   block: {
     // Ex. 1: customizing common block types
-    h1: ({ children }) => <h1 className="text-2xl">{children}</h1>,
-    h2: ({ children }) => <h2 className="text-xl">{children}</h2>,
-    h3: ({ children }) => <h3 className="text-lg">{children}</h3>,
-    blockquote: ({ children }) => (
-      <blockquote className="border-l-purple-500">{children}</blockquote>
-    ),
+    h1: ({children}) => <h1 className="text-2xl">{children}</h1>,
+    h2: ({children}) => <h2 className="text-xl">{children}</h2>,
+    h3: ({children}) => <h3 className="text-lg">{children}</h3>,
+    blockquote: ({children}) => <blockquote className="border-l-purple-500">{children}</blockquote>,
   },
   list: {
     // Ex. 1: customizing common list types
-    bullet: ({ children }) => <ul className="mt-xl">{children}</ul>,
-    number: ({ children }) => <ol className="mt-lg">{children}</ol>,
+    bullet: ({children}) => <ul className="mt-14">{children}</ul>,
+    number: ({children}) => <ol className="mt-12">{children}</ol>,
 
     // Ex. 2: rendering custom lists
-    checkmarks: ({ children }) => (
-      <ol className="m-auto text-lg">{children}</ol>
-    ),
+    checkmarks: ({children}) => <ol className="m-auto text-lg">{children}</ol>,
   },
   listItem: {
     // Ex. 1: customizing common list types
-    bullet: ({ children }) => (
-      <li style={{ listStyleType: "disclosure-closed" }}>{children}</li>
-    ),
+    bullet: ({children}) => <li style={{listStyleType: 'disclosure-closed'}}>{children}</li>,
 
     // Ex. 2: rendering custom list items
-    checkmarks: ({ children }) => <li>✅ {children}</li>,
+    checkmarks: ({children}) => <li>✅ {children}</li>,
   },
-};
-export default function BigLog({ logBookEntries, socials }: Props) {
-  const router = useRouter();
+}
+export default function BigLog({logBookEntries, socials}: Props) {
+  const router = useRouter()
+  const mainRef = useRef<HTMLDivElement | null>(null)
+
   // Handle fallback loading state
   if (router.isFallback) {
-    return (
-      <div className="h-screen flex justify-center items-center text-white">
-        Loading...
-      </div>
-    );
+    return <div className="h-screen flex justify-center items-center text-white">Loading...</div>
   }
 
   // Find the specific log entry
-  const logEntry = logBookEntries.find(
-    (entry) => entry.slug.current == router.query.bigLog
-  );
+  const logEntry = logBookEntries.find((entry) => entry.slug.current == router.query.bigLog)
 
   // Handle case where logEntry is not found
   if (!logEntry) {
     return (
-      <div className="h-screen flex justify-center items-center text-white">
-        Entry not found.
-      </div>
-    );
+      <div className="h-screen flex justify-center items-center text-white">Entry not found.</div>
+    )
   }
   return (
-    <main className="h-screen max-w-screen bg-black overflow-y-scroll overflow-x-hidden scrollbar-none">
+    <main
+      className="h-screen max-w-screen bg-black overflow-y-scroll overflow-x-hidden scrollbar-none"
+      ref={mainRef}
+    >
       <Header
         socials={socials}
-        setSelectedFilter={""}
+        setSelectedFilter={null}
         style={
-          "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
+          'sticky text-[5vh] w-full  h-24 sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30  bg-black bg-opacity-80'
         }
       />
-      <Breadcrumbs />
+      <div className="sticky top-24 w-full bg-black bg-opacity-80 z-40">
+        <Breadcrumbs />
+      </div>
       {/* Main Content */}
       <div className="min-h-screen text-gray-800 p-6 sm:p-12">
         <article className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
@@ -122,9 +124,7 @@ export default function BigLog({ logBookEntries, socials }: Props) {
 
           {/* Article Summary */}
           <section className="p-6 border-b border-gray-200">
-            <p className="text-lg text-gray-600 italic">
-              {logEntry?.description}
-            </p>
+            <p className="text-lg text-gray-600 italic">{logEntry?.description}</p>
           </section>
 
           {/* Article Content */}
@@ -133,34 +133,43 @@ export default function BigLog({ logBookEntries, socials }: Props) {
               <PortableText value={logEntry?.entry} components={components} />
             </div>
           </section>
+          <IconContext.Provider
+            value={{
+              className:
+                'relative opacity-100 hover:bg-yellow-500/80 z-50 bg-gray-500 hover:cursor-pointer p-3 mx-auto rounded-[50%] size-14 mb-6',
+              attr: {onClick: () => scrollToTop(mainRef)},
+            }}
+          >
+            <FaAngleUp />
+          </IconContext.Provider>
         </article>
       </div>
     </main>
-  );
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const logBookEntries: LogbookEntry[] = await fetchLogbookEntries();
-  const socials: Social[] = await fetchSocials();
+  const logBookEntries: LogbookEntry[] = await fetchLogbookEntries()
+  const socials: Social[] = await fetchSocials()
   // Create paths for each entry
   const paths = logBookEntries.map((entry) => ({
-    params: { bigLog: entry.slug.current }, // Ensure `id` corresponds to the dynamic [bigLog] param
-  }));
+    params: {bigLog: entry.slug.current}, // Ensure `id` corresponds to the dynamic [bigLog] param
+  }))
 
   return {
     paths,
-    fallback: "blocking",
-  };
-};
+    fallback: 'blocking',
+  }
+}
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const logBookEntries: LogbookEntry[] = await fetchLogbookEntries();
-  const socials: Social[] = await fetchSocials();
+  const logBookEntries: LogbookEntry[] = await fetchLogbookEntries()
+  const socials: Social[] = await fetchSocials()
   return {
     props: {
       logBookEntries,
       socials,
     },
     revalidate: 10,
-  };
-};
+  }
+}

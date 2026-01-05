@@ -1,139 +1,102 @@
-import React, { useState, useRef } from "react";
-import type { GetStaticProps } from "next";
-import { Social, LogbookEntry } from "../../../typings";
-import dynamic from "next/dynamic";
-import Header from "@/components/Header";
-import { fetchSocials } from "../../utils/fetchSocials";
-import { fetchLogbookEntries } from "@/utils/fetchLogbookEntries";
-import EntryCarousel from "@/components/CaptainsLog/EntryCarousel";
-import EntryCard from "@/components/CaptainsLog/EntryCard";
-import Slider from "@/components/Slider";
-import Link from "next/link";
+import React, {useEffect, useRef, useState} from 'react'
+import type {GetStaticProps} from 'next'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import Header from '@/components/ui/Header'
+import {fetchSocials} from '@/utils/fetchSocials'
+import {fetchLogbookEntries} from '@/utils/fetchLogbookEntries'
+import type {Social, LogbookEntry} from '@/types'
+import EntryCarousel from '@/components/CaptainsLog/EntryCarousel'
+import EntryCard from '@/components/CaptainsLog/EntryCard'
+import MobileEntryCarousel from '@/components/CaptainsLog/MobileEntryCarousel'
 
-type Props = {
-  socials: Social[];
-  logBookEntries: LogbookEntry[];
-};
+/* ---------------- Page ---------------- */
+const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}> = ({
+  socials,
+  logBookEntries,
+}) => {
+  const sectionRef = useRef<HTMLDivElement | null>(null)
+  const [selected, setSelected] = useState(0)
 
-const CaptainsLog = ({ socials, logBookEntries }: Props) => {
-  const [selected, setSelected] = useState(0);
-  // const [scrollPos, setScrollPos] = useState(0);
-  // const [focus, setFocus] = useState(-1);
-  const logBookEntryRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const CARD_SCROLL_PX = 350 // how much page scroll advances one card
 
-  function debounce(cb: Function, delay = 1000) {
-    let timeout: any;
+  /* Page scroll → selected index */
+  const onScroll = () => {
+    if (!sectionRef.current) return
+    if (window.innerWidth < 650) return
+    const rect = sectionRef.current.getBoundingClientRect()
+    const vh = window.innerHeight
+    const startFactor = 0.4
+    const start = vh * startFactor
+    const raw = (start - rect.top) / CARD_SCROLL_PX
 
-    return (...args: any) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        cb(...args);
-      }, delay);
-    };
+    const idx = Math.min(logBookEntries.length - 1, Math.max(0, Math.floor(raw)))
+    setSelected(idx)
   }
-  function throttle(cb: Function, delay = 1000) {
-    let shouldWait = false;
-    let waitingArgs: any;
-    const timeoutFunc = () => {
-      if (waitingArgs == null) {
-        shouldWait = false;
-        // waitingArgs = undefined
-      } else {
-        cb(...waitingArgs); // Execute with the last arguments if needed
-        waitingArgs = null;
-        setTimeout(timeoutFunc, delay);
-      }
-    };
+  useEffect(() => {
+    window.addEventListener('scroll', onScroll, {passive: true})
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [logBookEntries.length])
 
-    return (...args: any) => {
-      if (shouldWait) {
-        waitingArgs = args;
-        return;
-      }
-      cb(...args); // Execute the callback immediately
-      shouldWait = true;
-      setTimeout(timeoutFunc, delay);
-    };
-  }
-  const handleScroll = (event: any) => {
-    setSelected(() => {
-      return Math.round(
-        (event.target.scrollTop / event.target.scrollTopMax) *
-          (logBookEntries.length - 1)
-      );
-    });
-  };
   return (
     <main
       translate="no"
-      className="relative flex flex-col justify-start items-center bg-gradient-to-br from-teal-300 to-teal-600 text-white w-full overflow-x-clip"
+      className="relative flex flex-col items-center w-screen sm:w-full h-full px-4 sm:px-0 overflow-y-scroll sm:overflow-y-visible scrollbar-none bg-gradient-to-br from-teal-300 to-teal-600 text-white"
     >
       <Header
         socials={socials}
         setSelectedFilter={null}
-        style={
-          "sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
-        }
+        style="sticky bg-teal-500 sm:bg-transparent rounded-b-md text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30"
       />
-      <section className="relative flex flex-col justify-center w-full px-auto min-h-screen scrollbar-none overflow-x-hidden items-center">
-        <Link href={"captainsLog/bigLogs"}>
-          <h1 className="py-4 sm:px-0 lg:px-2 text-[2em] h-20 mb-8 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
+
+      {/* Intro */}
+      <section className="relative h-[20vh] sm:h-[30vh] flex items-center sm:items-end justify-center">
+        <Link href={'captainsLog/bigLogs'} className="flex w-auto sm:z-50">
+          <h1 className="flex py-4 sm:px-0 lg:px-2 text-lg sm:text-2xl h-20 text-center font-bold hover:bg-yellow-500 border-2 border-teal-500 rounded-lg bg-teal-500 text-white">
             These are some writings for when you're free 🦅
           </h1>
         </Link>
-        <Slider
-          items={logBookEntries}
-          refs={logBookEntryRefs}
-          currentIndex={selected}
-          setCurrentIndex={setSelected}
-          style={
-            "absolute hidden sm:flex flex-row justify-between items-center h-[5em] bg-transparent w-1/2"
-          }
-          scrolling={false}
-        />
-        <div
-          className="relative text-white w-2/3 max-w-[80vw] sm:max-w-[60em] h-[60vh] max-h-[30em] overflow-y-scroll scrollbar-none"
-          onScroll={handleScroll}
-        >
+      </section>
+
+      {/* Scroll-driven carousel */}
+      <section
+        ref={sectionRef}
+        className="relative w-full"
+        style={{height: `${logBookEntries.length * CARD_SCROLL_PX}px`}}
+      >
+        {window.innerWidth > 1000 ? (
           <EntryCarousel
+            entries={logBookEntries}
             selected={selected}
             setSelected={setSelected}
-            debounce={debounce}
+            refs={sectionRef}
           >
-            {logBookEntries
-              .sort((a, b) => a.position - b.position)
-              .map((entry, index) => {
-                return (
-                  <EntryCard
-                    key={entry._id}
-                    uniqueId={index}
-                    logBookEntry={entry}
-                    logBookEntryRefs={logBookEntryRefs}
-                    style={""}
-                  />
-                );
-              })}
+            {logBookEntries.map((entry, i) => (
+              <EntryCard selected={selected} entry={entry} index={i} styleActive />
+            ))}
           </EntryCarousel>
-          <div className="relative hidden sm:block text-white w-full h-[200vh]"></div>
-        </div>
+        ) : (
+          <MobileEntryCarousel selected={selected} setSelected={setSelected}>
+            {logBookEntries.map((entry, idx) => (
+              <EntryCard selected={selected} entry={entry} index={idx} styleActive={false} />
+            ))}
+          </MobileEntryCarousel>
+        )}
       </section>
-      <section className="relative hidden sm:block">
-        <div className="h-screen w-screen bg-black "></div>
+
+      {/* Continuation */}
+      <section className="h-[200vh] flex items-center justify-center">
+        <p className="text-xl">More page content coming soon ...</p>
       </section>
     </main>
-  );
-};
+  )
+}
 
-export default dynamic(() => Promise.resolve(CaptainsLog), { ssr: false });
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const logBookEntries: LogbookEntry[] = await fetchLogbookEntries();
-  const socials: Social[] = await fetchSocials();
-  return {
-    props: {
-      logBookEntries,
-      socials,
-    },
-    revalidate: 10,
-  };
-};
+export default dynamic(() => Promise.resolve(CaptainsLog), {ssr: false})
+// export default CaptainsLog
+export const getStaticProps: GetStaticProps = async () => {
+  const logBookEntries = await fetchLogbookEntries()
+  const socials = await fetchSocials()
+  return {props: {logBookEntries, socials}, revalidate: 10}
+}
