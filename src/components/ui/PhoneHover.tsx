@@ -10,7 +10,7 @@ export default function PhoneHover({tooltipContent, ...rest}: Props) {
   const textRef: any = useRef(null)
   return (
     <>
-      <p
+      <div
         {...rest}
         ref={textRef}
         onPointerEnter={() => {

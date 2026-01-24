@@ -16,6 +16,7 @@ import {fetchProjects} from '../utils/fetchProjects'
 import {fetchSkills} from '../utils/fetchSkills'
 import {fetchSocials} from '../utils/fetchSocials'
 import dynamic from 'next/dynamic'
+import ScrollProgressButton from '@/components/ui/ScrollTracker'
 
 type Props = {
   pageInfo: PageInfo
@@ -60,6 +61,7 @@ const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
       <section id="contact" className="snap-start">
         <Contact pageInfo={pageInfo} />
       </section>
+      <ScrollProgressButton />
       <Link href="#hero">
         <footer className="invisible lg:visible sticky bottom-[2.5vh] w-full z-20 cursor-pointer">
           <div className="flex items-center justify-center">

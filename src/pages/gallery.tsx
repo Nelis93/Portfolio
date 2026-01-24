@@ -306,7 +306,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
             }
           />
           <div className="relative z-30 bg-black text-white w-full sm:mx-auto mb-2 sm:mb-0 max-h-full overflow-y-hidden sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-mandatory scrollbar-none items-start justify-start scroll-smooth">
-            {displayedImages.map((image, index) => (
+            {filteredImages.map((image, index) => (
               <FocusedImageCard
                 key={image._id}
                 uniqueId={index}

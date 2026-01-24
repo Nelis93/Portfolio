@@ -31,7 +31,7 @@ export default function ExperienceCard({
   // Update the currentIndex based on which project is in view
   useEffect(() => {
     if (isInView) {
-      console.log(uniqueId, ' is in view')
+      // console.log(uniqueId, ' is in view')
       setCurrentIndex(uniqueId)
     }
   }, [isInView, uniqueId])
