@@ -6,23 +6,13 @@ const ScrollProgressButton = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Get the scrollable element (div with overflow-y-scroll)
-      const scrollElement = document.querySelector('[class*="overflow-y-scroll"]')
-      // const scrollContainer = scrollElement || window
+      const scrollElement = document.getElementById('main')
+      // console.log('scrollElement', scrollElement)
+      if (!scrollElement) return
 
-      let scrollTop = 0
-      let scrollHeight = 0
-      let clientHeight = 0
-
-      if (scrollElement) {
-        scrollTop = scrollElement.scrollTop
-        scrollHeight = scrollElement.scrollHeight
-        clientHeight = scrollElement.clientHeight
-      } else {
-        scrollTop = window.scrollY
-        scrollHeight = document.documentElement.scrollHeight
-        clientHeight = window.innerHeight
-      }
+      let scrollTop = scrollElement.scrollTop
+      let scrollHeight = scrollElement.scrollHeight
+      let clientHeight = scrollElement.clientHeight
 
       // Calculate scroll percentage
       const totalScroll = scrollHeight - clientHeight
@@ -33,25 +23,24 @@ const ScrollProgressButton = () => {
     }
 
     // Listen to both scroll events
-    window.addEventListener('scroll', handleScroll)
-    const scrollElement = document.querySelector('[class*="overflow-y-scroll"]')
-    if (scrollElement) {
-      scrollElement.addEventListener('scroll', handleScroll)
-    }
+    const scrollElement = document.getElementById('main')
+
+    console.log('scrollElement', scrollElement)
+    scrollElement?.addEventListener('scroll', handleScroll)
+    console.log('Added scroll listener to #main')
 
     // Call once on mount
-    handleScroll()
+    // handleScroll()
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      if (scrollElement) {
-        scrollElement.removeEventListener('scroll', handleScroll)
-      }
+      scrollElement?.removeEventListener('scroll', handleScroll)
     }
   }, [])
-
+  useEffect(() => {
+    console.log('visible changed:', isVisible)
+  }, [isVisible])
   const scrollToTop = () => {
-    const scrollElement = document.querySelector('[class*="overflow-y-scroll"]')
+    const scrollElement = document.getElementById('main')
     if (scrollElement) {
       scrollElement.scrollTo({top: 0, behavior: 'smooth'})
     } else {

@@ -28,7 +28,8 @@ type Props = {
 
 const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
   return (
-    <div
+    <main
+      id="main"
       translate="no"
       className="bg-teal-600 text-white h-screen snap-y snap-mandatory max-w-screen overflow-y-scroll overflow-x-hidden scrollbar-none"
     >
@@ -73,7 +74,7 @@ const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
           </div>
         </footer>
       </Link>
-    </div>
+    </main>
   )
 }
 export default dynamic(() => Promise.resolve(Home), {ssr: false})
