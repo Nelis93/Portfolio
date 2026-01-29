@@ -9,6 +9,7 @@ import type {Social, LogbookEntry} from '@/types'
 import EntryCarousel from '@/components/CaptainsLog/EntryCarousel'
 import EntryCard from '@/components/CaptainsLog/EntryCard'
 import MobileEntryCarousel from '@/components/CaptainsLog/MobileEntryCarousel'
+import ScrollProgressButton from '@/components/ui/ScrollTracker'
 
 /* ---------------- Page ---------------- */
 const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}> = ({
@@ -16,6 +17,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
   logBookEntries,
 }) => {
   const sectionRef = useRef<HTMLDivElement | null>(null)
+  const mainRef = useRef<HTMLDivElement | null>(null)
   const [selected, setSelected] = useState(0)
 
   const CARD_SCROLL_PX = 350 // how much page scroll advances one card
@@ -29,20 +31,21 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
     const startFactor = 0.4
     const start = vh * startFactor
     const raw = (start - rect.top) / CARD_SCROLL_PX
-
     const idx = Math.min(logBookEntries.length - 1, Math.max(0, Math.floor(raw)))
     setSelected(idx)
   }
+
   useEffect(() => {
-    window.addEventListener('scroll', onScroll, {passive: true})
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
+    mainRef.current?.addEventListener('scroll', onScroll, {passive: true})
+    return () => mainRef.current?.removeEventListener('scroll', onScroll)
   }, [logBookEntries.length])
 
   return (
     <main
+      id="main"
       translate="no"
-      className="relative flex flex-col items-center w-screen sm:w-full h-full px-4 sm:px-0 overflow-y-scroll sm:overflow-y-visible scrollbar-none bg-gradient-to-br from-teal-300 to-teal-600 text-white"
+      ref={mainRef}
+      className="relative w-screen sm:w-full h-screen px-4 sm:px-0 overflow-y-scroll scrollbar-none bg-gradient-to-br from-teal-300 to-teal-600 text-white"
     >
       <Header
         socials={socials}
@@ -73,7 +76,7 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
             refs={sectionRef}
           >
             {logBookEntries.map((entry, i) => (
-              <EntryCard selected={selected} entry={entry} index={i} styleActive />
+              <EntryCard key={entry._id} selected={selected} entry={entry} index={i} styleActive />
             ))}
           </EntryCarousel>
         ) : (
@@ -84,11 +87,11 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
           </MobileEntryCarousel>
         )}
       </section>
-
       {/* Continuation */}
       <section className="h-[200vh] flex items-center justify-center">
         <p className="text-xl">More page content coming soon ...</p>
       </section>
+      <ScrollProgressButton />
     </main>
   )
 }

@@ -16,6 +16,7 @@ import {fetchProjects} from '../utils/fetchProjects'
 import {fetchSkills} from '../utils/fetchSkills'
 import {fetchSocials} from '../utils/fetchSocials'
 import dynamic from 'next/dynamic'
+import ScrollProgressButton from '@/components/ui/ScrollTracker'
 
 type Props = {
   pageInfo: PageInfo
@@ -27,7 +28,8 @@ type Props = {
 
 const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
   return (
-    <div
+    <main
+      id="main"
       translate="no"
       className="bg-teal-600 text-white h-screen snap-y snap-mandatory max-w-screen overflow-y-scroll overflow-x-hidden scrollbar-none"
     >
@@ -60,6 +62,7 @@ const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
       <section id="contact" className="snap-start">
         <Contact pageInfo={pageInfo} />
       </section>
+      <ScrollProgressButton />
       <Link href="#hero">
         <footer className="invisible lg:visible sticky bottom-[2.5vh] w-full z-20 cursor-pointer">
           <div className="flex items-center justify-center">
@@ -71,7 +74,7 @@ const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
           </div>
         </footer>
       </Link>
-    </div>
+    </main>
   )
 }
 export default dynamic(() => Promise.resolve(Home), {ssr: false})
