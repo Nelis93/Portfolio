@@ -37,7 +37,6 @@ const CaptainsLog: React.FC<{socials: Social[]; logBookEntries: LogbookEntry[]}>
 
   useEffect(() => {
     mainRef.current?.addEventListener('scroll', onScroll, {passive: true})
-    onScroll()
     return () => mainRef.current?.removeEventListener('scroll', onScroll)
   }, [logBookEntries.length])
 

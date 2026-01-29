@@ -7,7 +7,6 @@ const ScrollProgressButton = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollElement = document.getElementById('main')
-      // console.log('scrollElement', scrollElement)
       if (!scrollElement) return
 
       let scrollTop = scrollElement.scrollTop
@@ -28,9 +27,6 @@ const ScrollProgressButton = () => {
     console.log('scrollElement', scrollElement)
     scrollElement?.addEventListener('scroll', handleScroll)
     console.log('Added scroll listener to #main')
-
-    // Call once on mount
-    // handleScroll()
 
     return () => {
       scrollElement?.removeEventListener('scroll', handleScroll)
