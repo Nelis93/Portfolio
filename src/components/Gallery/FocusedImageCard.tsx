@@ -5,17 +5,27 @@ import {GalleryImage} from '../../types'
 import {TfiClose} from 'react-icons/tfi'
 import {IconContext} from 'react-icons'
 import Link from 'next/link'
-import throttle from '../../utils/throttle'
 
 type Props = {
   image: GalleryImage
   uniqueId: number
+  selected: number
   setSelected: any
   galleryRefs: any
+  manualFocus: boolean
+  setManualFocus: any
 }
 // Create a ref for each image
 
-export default function FocusedImageCard({image, galleryRefs, setSelected, uniqueId}: Props) {
+export default function FocusedImageCard({
+  image,
+  galleryRefs,
+  selected,
+  setSelected,
+  uniqueId,
+  manualFocus,
+  setManualFocus,
+}: Props) {
   const ref = useRef<HTMLElement | null>(null)
 
   // Track if each image is in view
@@ -24,24 +34,29 @@ export default function FocusedImageCard({image, galleryRefs, setSelected, uniqu
     once: false,
   })
   // Update the currentIndex based on which image is in view
-  // useEffect(() => {
-  //   if (isInView) {
-  //     setSelected(uniqueId)
-  //   }
-  // }, [isInView, uniqueId])
-
-
-// Inside component:
-const throttledSetSelected = useRef(throttle((id: number) => setSelected(id), 500)).current
-
-useEffect(() => {
-  if (isInView) {
-    throttledSetSelected(uniqueId)
-  }
-}, [isInView, uniqueId, throttledSetSelected])
+  useEffect(() => {
+    if (isInView && !manualFocus) {
+      console.log('uniqueId: ', uniqueId)
+      // setSelected((current: number) => {
+      //   if (current < 0) {
+      //     setTimeout(() => {
+      //       console.log('latent current: ', current)
+      //       return uniqueId
+      //     }, 300)
+      //   }
+      // console.log('current: ', current)
+      // return uniqueId
+      // })
+      setSelected(uniqueId)
+      return
+    }
+    console.log(selected == uniqueId ? 'selected is uniqueId' : 'selected is not uniqueId')
+    setTimeout(() => setManualFocus(false), 1000)
+  }, [isInView, uniqueId])
   const [dominance, setDominance] = useState(true)
   const handleButtonClick = (event: any) => {
     event.stopPropagation()
+    setManualFocus(false)
     setSelected(-1)
   }
   // detDom will toggle the lateral position of the image within the card

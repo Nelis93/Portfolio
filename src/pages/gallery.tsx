@@ -29,7 +29,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
     galleryImages.sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1)).slice(0, 9),
   )
-  // edit by claude
   const imageDataRef = useRef<
     Map<
       string,
@@ -41,7 +40,6 @@ const Gallery = ({galleryImages, socials}: Props) => {
       }
     >
   >(new Map())
-  //end edit by claude
 
   // page is used to keep track of the current page of images
   // we load 9 images per page
@@ -82,7 +80,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
     countries: [],
     dates: [],
   })
-  //edit by claude
+  const [manualFocus, setManualFocus] = useState(false)
   const filteredImages = useMemo(() => {
     return galleryImages
       .sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1))
@@ -143,6 +141,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
   )
 
   useEffect(() => {
+    console.log('selected changed to ', selected)
     if (selected > -1) {
       // setDisplayedImages(filteredImages)
       galleryRefs.current[selected]?.scrollIntoView()
@@ -251,6 +250,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
                   cardCount={displayedImages.length}
                   setSelected={setSelected}
                   focus={focus}
+                  setManualFocus={setManualFocus}
                   setFocus={setFocus}
                   maxHeight={maxHeight}
                   selectedFilter={selectedFilter}
@@ -311,7 +311,10 @@ const Gallery = ({galleryImages, socials}: Props) => {
                 key={image._id}
                 uniqueId={index}
                 image={image}
+                manualFocus={manualFocus}
+                setManualFocus={setManualFocus}
                 galleryRefs={galleryRefs}
+                selected={selected}
                 setSelected={setSelected}
               />
             ))}
