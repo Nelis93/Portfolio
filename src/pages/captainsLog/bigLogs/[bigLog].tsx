@@ -11,6 +11,7 @@ import {FaAngleUp} from 'react-icons/fa'
 import {IconContext} from 'react-icons'
 import scrollToTop from '@/utils/scrollToTop'
 import {useRef} from 'react'
+import ScrollProgressButton from '@/components/ui/ScrollTracker'
 
 type Props = {
   socials: Social[]
@@ -100,6 +101,7 @@ export default function BigLog({logBookEntries, socials}: Props) {
     <main
       className="h-screen max-w-screen bg-black overflow-y-scroll overflow-x-hidden scrollbar-none"
       ref={mainRef}
+      id="main"
     >
       <Header
         socials={socials}
@@ -133,7 +135,7 @@ export default function BigLog({logBookEntries, socials}: Props) {
               <PortableText value={logEntry?.entry} components={components} />
             </div>
           </section>
-          <IconContext.Provider
+          {/* <IconContext.Provider
             value={{
               className:
                 'relative opacity-100 hover:bg-yellow-500/80 z-50 bg-gray-500 hover:cursor-pointer p-3 mx-auto rounded-[50%] size-14 mb-6',
@@ -141,9 +143,10 @@ export default function BigLog({logBookEntries, socials}: Props) {
             }}
           >
             <FaAngleUp />
-          </IconContext.Provider>
+          </IconContext.Provider> */}
         </article>
       </div>
+      <ScrollProgressButton />
     </main>
   )
 }
