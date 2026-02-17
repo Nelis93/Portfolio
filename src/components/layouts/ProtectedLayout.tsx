@@ -37,6 +37,11 @@ const ProtectedLayout: React.FC<ProtectedLayoutProps> = ({children}) => {
     previousPathnameRef.current = router.pathname
   }, [isAdminMode, isHomePage, router.pathname, setShowPrompt])
 
+  // Don't render protected page content if not authenticated
+  if (!isHomePage && !isAuthenticated && !isAdminMode) {
+    return <PasswordPrompt isOpen={showPrompt} />
+  }
+
   return (
     <>
       {children}
