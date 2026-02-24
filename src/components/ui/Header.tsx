@@ -7,12 +7,14 @@ import {
   FaHome,
   FaEnvelope,
   FaBookDead,
+  FaUser,
 } from 'react-icons/fa'
 import {IconContext} from 'react-icons'
 import {motion} from 'framer-motion'
 import Link from 'next/link'
 import {Social} from '../../types'
 import DropDownFilter from '../Gallery/DropDownFilter'
+import {useAuth} from '@/context/AuthContext'
 
 type Props = {
   socials: Social[]
@@ -22,6 +24,7 @@ type Props = {
 
 function Header({socials, setSelectedFilter, style}: Props) {
   const router = useRouter()
+  const {isAuthenticated, setShowPrompt, logout} = useAuth()
 
   // Define the icon map for general use
   const iconMap: {[key: string]: React.ElementType} = {
@@ -108,6 +111,19 @@ function Header({socials, setSelectedFilter, style}: Props) {
             </IconContext.Provider>
           </Link>
         )}
+        <button
+          onClick={() => (isAuthenticated ? logout() : setShowPrompt(true))}
+          className="social-icon hover:text-yellow-500 transition"
+          title={isAuthenticated ? 'Logout' : 'Login'}
+        >
+          <IconContext.Provider
+            value={{
+              className: 'h-[75%]',
+            }}
+          >
+            <FaUser />
+          </IconContext.Provider>
+        </button>
         <Link
           href="/#contact"
           className="uppercase pl-2 hidden lg:inline-flex text-[.5em] text-gray-400 hover:text-yellow-500"
