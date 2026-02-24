@@ -2,12 +2,14 @@ import React, {createContext, useContext, useState, ReactNode, useEffect} from '
 
 interface AuthContextType {
   isAuthenticated: boolean
-  login: (password: string) => boolean
+  login: (username: string, password: string) => Promise<boolean>
   logout: () => void
   showPrompt: boolean
   setShowPrompt: (show: boolean) => void
   isAdminMode: boolean
   toggleAdminMode: () => void
+  loginError: string
+  setLoginError: (error: string) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -16,9 +18,7 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [showPrompt, setShowPrompt] = useState(false)
   const [isAdminMode, setIsAdminMode] = useState(false)
-
-  // Hardcoded password for now - you can change this later
-  const CORRECT_PASSWORD = 'password123'
+  const [loginError, setLoginError] = useState('')
 
   useEffect(() => {
     // Check if user was previously authenticated in this session
@@ -28,14 +28,34 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
     }
   }, [])
 
-  const login = (password: string): boolean => {
-    if (password === CORRECT_PASSWORD) {
-      setIsAuthenticated(true)
-      sessionStorage.setItem('portfolioAuthenticated', 'true')
-      setShowPrompt(false)
-      return true
+  const login = async (username: string, password: string): Promise<boolean> => {
+    try {
+      setLoginError('')
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({username, password}),
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        setIsAuthenticated(true)
+        sessionStorage.setItem('portfolioAuthenticated', 'true')
+        sessionStorage.setItem('username', username)
+        setShowPrompt(false)
+        return true
+      } else {
+        setLoginError(data.message || 'Invalid credentials')
+        return false
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      setLoginError('An error occurred during login')
+      return false
     }
-    return false
   }
 
   const logout = () => {
@@ -63,6 +83,8 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
         setShowPrompt,
         isAdminMode,
         toggleAdminMode,
+        loginError,
+        setLoginError,
       }}
     >
       {children}

@@ -18,6 +18,7 @@
     "jsx": "react-jsx",
     "allowImportingTsExtensions": true,
     "types": [
+      "node",
       "@types/react"
     ],
     "paths": {
@@ -36,9 +37,17 @@
     "src/**/*.tsx",
     "sanity/**/*.ts",
     "sanity/**/*.tsx",
+    "scripts/**/*.ts",
     "globals.d.ts"
   ],
   "exclude": [
     "node_modules"
-  ]
-}
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noEmit": false
+    },
+    "transpileOnly": true
+  }}
