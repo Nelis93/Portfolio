@@ -6,6 +6,8 @@ interface AuthContextType {
   logout: () => void
   showPrompt: boolean
   setShowPrompt: (show: boolean) => void
+  promptMode: 'login' | 'signup'
+  setPromptMode: (mode: 'login' | 'signup') => void
   isAdminMode: boolean
   toggleAdminMode: () => void
   loginError: string
@@ -17,6 +19,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [showPrompt, setShowPrompt] = useState(false)
+  const [promptMode, setPromptMode] = useState<'login' | 'signup'>('login')
   const [isAdminMode, setIsAdminMode] = useState(false)
   const [loginError, setLoginError] = useState('')
 
@@ -81,6 +84,8 @@ export const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
         logout,
         showPrompt,
         setShowPrompt,
+        promptMode,
+        setPromptMode,
         isAdminMode,
         toggleAdminMode,
         loginError,

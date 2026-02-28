@@ -1,18 +1,42 @@
 import React, {useState, useEffect} from 'react'
+import {useRouter} from 'next/router'
+import {FaXmark} from 'react-icons/fa6'
 import {useAuth} from '@/context/AuthContext'
 
 interface PasswordPromptProps {
   isOpen: boolean
+  initialMode?: 'login' | 'signup'
 }
 
-const PasswordPrompt: React.FC<PasswordPromptProps> = ({isOpen}) => {
+const PasswordPrompt: React.FC<PasswordPromptProps> = ({isOpen, initialMode = 'login'}) => {
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [isSignup, setIsSignup] = useState(false)
+  const [isSignup, setIsSignup] = useState(initialMode === 'signup')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const {login, isAdminMode, toggleAdminMode} = useAuth()
+  const {login, isAdminMode, toggleAdminMode, setShowPrompt} = useAuth()
+
+  // Handle close and redirect to home
+  const handleClose = () => {
+    setShowPrompt(false)
+    router.push('/')
+  }
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        handleClose()
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape)
+      return () => document.removeEventListener('keydown', handleEscape)
+    }
+  }, [isOpen])
 
   // Reset state when dialog opens
   useEffect(() => {
@@ -20,10 +44,10 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({isOpen}) => {
       setUsername('')
       setPassword('')
       setConfirmPassword('')
-      setIsSignup(false)
+      setIsSignup(initialMode === 'signup')
       setError('')
     }
-  }, [isOpen])
+  }, [isOpen, initialMode])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -83,7 +107,15 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({isOpen}) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 p-8 animate-fade-in">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 p-8 animate-fade-in relative">
+        <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition"
+          title="Close (ESC)"
+        >
+          <FaXmark className="text-xl" />
+        </button>
+
         <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             {isSignup ? 'Create Account' : 'Access Required'}
@@ -106,6 +138,7 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({isOpen}) => {
               placeholder="Enter username"
               disabled={isLoading}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition disabled:bg-gray-100"
+              autoFocus
             />
           </div>
 
@@ -121,7 +154,6 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({isOpen}) => {
               placeholder="Enter password"
               disabled={isLoading}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition disabled:bg-gray-100"
-              autoFocus
             />
           </div>
 

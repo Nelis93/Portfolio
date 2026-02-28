@@ -13,7 +13,7 @@ interface ProtectedLayoutProps {
  */
 const ProtectedLayout: React.FC<ProtectedLayoutProps> = ({children}) => {
   const router = useRouter()
-  const {isAuthenticated, showPrompt, setShowPrompt, isAdminMode} = useAuth()
+  const {isAuthenticated, showPrompt, promptMode, setShowPrompt, isAdminMode} = useAuth()
   const isHomePage = router.pathname === '/'
   const previousPathnameRef = useRef<string | null>(null)
 
@@ -39,13 +39,13 @@ const ProtectedLayout: React.FC<ProtectedLayoutProps> = ({children}) => {
 
   // Don't render protected page content if not authenticated
   if (!isHomePage && !isAuthenticated && !isAdminMode) {
-    return <PasswordPrompt isOpen={showPrompt} />
+    return <PasswordPrompt isOpen={showPrompt} initialMode={promptMode} />
   }
 
   return (
     <>
       {children}
-      <PasswordPrompt isOpen={showPrompt} />
+      <PasswordPrompt isOpen={showPrompt} initialMode={promptMode} />
     </>
   )
 }

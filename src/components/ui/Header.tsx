@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import {useRouter} from 'next/router'
 import {
   FaLinkedinIn,
@@ -24,7 +24,29 @@ type Props = {
 
 function Header({socials, setSelectedFilter, style}: Props) {
   const router = useRouter()
-  const {isAuthenticated, setShowPrompt, logout} = useAuth()
+  const {isAuthenticated, setShowPrompt, setPromptMode, logout} = useAuth()
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const handleAuthAction = (mode: 'login' | 'signup') => {
+    setPromptMode(mode)
+    setShowPrompt(true)
+    setIsDropdownOpen(false)
+  }
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropdownOpen])
 
   // Define the icon map for general use
   const iconMap: {[key: string]: React.ElementType} = {
@@ -111,19 +133,53 @@ function Header({socials, setSelectedFilter, style}: Props) {
             </IconContext.Provider>
           </Link>
         )}
-        <button
-          onClick={() => (isAuthenticated ? logout() : setShowPrompt(true))}
-          className="social-icon hover:text-yellow-500 transition"
-          title={isAuthenticated ? 'Logout' : 'Login'}
-        >
-          <IconContext.Provider
-            value={{
-              className: 'h-[75%]',
-            }}
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="social-icon hover:text-yellow-500 transition"
+            title={isAuthenticated ? 'Account' : 'Login'}
           >
-            <FaUser />
-          </IconContext.Provider>
-        </button>
+            <IconContext.Provider
+              value={{
+                className: 'h-[75%]',
+              }}
+            >
+              <FaUser />
+            </IconContext.Provider>
+          </button>
+
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg z-40">
+              {isAuthenticated ? (
+                <button
+                  onClick={() => {
+                    logout()
+                    setIsDropdownOpen(false)
+                    router.push('/')
+                  }}
+                  className="w-full px-4 py-3 text-left text-gray-300 hover:bg-gray-800 hover:text-yellow-500 transition rounded-lg text-sm font-medium"
+                >
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => handleAuthAction('login')}
+                    className="w-full px-4 py-3 text-left text-gray-300 hover:bg-gray-800 hover:text-yellow-500 transition text-sm font-medium border-b border-gray-700"
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    onClick={() => handleAuthAction('signup')}
+                    className="w-full px-4 py-3 text-left text-gray-300 hover:bg-gray-800 hover:text-yellow-500 transition rounded-lg text-sm font-medium"
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
         <Link
           href="/#contact"
           className="uppercase pl-2 hidden lg:inline-flex text-[.5em] text-gray-400 hover:text-yellow-500"
