@@ -1,9 +1,14 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
-import {createUser, getUserByUsername} from '@/utils/auth'
+import {createUser, getUserByUsername, getUserByEmail} from '@/utils/auth'
 
 type ResponseData = {
   success: boolean
   message?: string
+}
+
+// Simple email validation regex
+const isValidEmail = (email: string) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
@@ -12,10 +17,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
-    const {username, password} = req.body
+    const {username, email, password} = req.body
 
-    if (!username || !password) {
-      return res.status(400).json({success: false, message: 'Username and password required'})
+    if (!username || !email || !password) {
+      return res
+        .status(400)
+        .json({success: false, message: 'Username, email, and password required'})
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).json({success: false, message: 'Invalid email address'})
     }
 
     if (password.length < 6) {
@@ -30,13 +41,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       return res.status(409).json({success: false, message: 'Username already exists'})
     }
 
+    // Check if email already exists
+    const existingEmail = await getUserByEmail(email)
+    if (existingEmail) {
+      return res.status(409).json({success: false, message: 'Email already registered'})
+    }
+
     // Create new user
-    await createUser(username, password)
+    await createUser(username, email, password)
     return res.status(201).json({success: true, message: 'User created successfully'})
   } catch (error: any) {
     console.error('Signup error:', error)
     if (error.code === 'P2002') {
-      return res.status(409).json({success: false, message: 'Username already exists'})
+      return res.status(409).json({success: false, message: 'Username or email already exists'})
     }
     return res.status(500).json({success: false, message: 'Internal server error'})
   }

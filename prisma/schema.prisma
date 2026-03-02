@@ -11,9 +11,12 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  username  String  @unique
-  password  String  // This will store the hashed password
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 Int     @id @default(autoincrement())
+  username           String  @unique
+  email              String? @unique // Email address for password reset
+  password           String  // This will store the hashed password
+  resetToken         String? // Token for password reset
+  resetTokenExpiry   DateTime? // Expiry time for reset token
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
