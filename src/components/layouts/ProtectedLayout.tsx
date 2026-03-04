@@ -10,16 +10,19 @@ interface ProtectedLayoutProps {
 /**
  * Layout component that protects non-home pages with authentication
  * Shows password prompt when accessing non-home pages without being authenticated
+ * Exempts public pages like password reset
  */
 const ProtectedLayout: React.FC<ProtectedLayoutProps> = ({children}) => {
   const router = useRouter()
   const {isAuthenticated, showPrompt, promptMode, setShowPrompt, isAdminMode} = useAuth()
   const isHomePage = router.pathname === '/'
+  // Public pages that don't require authentication
+  const isPublicPage = router.pathname === '/reset-password'
   const previousPathnameRef = useRef<string | null>(null)
 
   // Show prompt when accessing protected pages without authentication
   useEffect(() => {
-    if (!isHomePage && !isAuthenticated && !isAdminMode) {
+    if (!isHomePage && !isPublicPage && !isAuthenticated && !isAdminMode) {
       setShowPrompt(true)
     }
 
@@ -27,7 +30,7 @@ const ProtectedLayout: React.FC<ProtectedLayoutProps> = ({children}) => {
     if (isHomePage) {
       setShowPrompt(false)
     }
-  }, [isHomePage, isAuthenticated, isAdminMode, setShowPrompt])
+  }, [isHomePage, isPublicPage, isAuthenticated, isAdminMode, setShowPrompt])
 
   // In admin mode, show prompt on every navigation to non-home pages
   useEffect(() => {
@@ -38,7 +41,7 @@ const ProtectedLayout: React.FC<ProtectedLayoutProps> = ({children}) => {
   }, [isAdminMode, isHomePage, router.pathname, setShowPrompt])
 
   // Don't render protected page content if not authenticated
-  if (!isHomePage && !isAuthenticated && !isAdminMode) {
+  if (!isHomePage && !isPublicPage && !isAuthenticated && !isAdminMode) {
     return <PasswordPrompt isOpen={showPrompt} initialMode={promptMode} />
   }
 

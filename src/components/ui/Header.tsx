@@ -149,7 +149,7 @@ function Header({socials, setSelectedFilter, style}: Props) {
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg z-40">
+            <div className="absolute flex flex-col right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-lg shadow-lg z-40">
               {isAuthenticated ? (
                 <button
                   onClick={() => {
@@ -165,7 +165,7 @@ function Header({socials, setSelectedFilter, style}: Props) {
                 <>
                   <button
                     onClick={() => handleAuthAction('login')}
-                    className="w-full px-4 py-3 text-left text-gray-300 hover:bg-gray-800 hover:text-yellow-500 transition text-sm font-medium border-b border-gray-700"
+                    className="w-full px-4 py-3 text-left text-gray-300 hover:bg-gray-800 hover:text-yellow-500 transition rounded-lg text-sm font-medium border-b border-gray-700"
                   >
                     Sign In
                   </button>

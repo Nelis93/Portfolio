@@ -170,7 +170,7 @@ export const resetPassword = async (token: string, newPassword: string) => {
       },
     })
 
-    return {success: true, message: 'Password reset successfully'}
+    return {success: true, message: 'Password reset successfully', username: user.username}
   } catch (error) {
     console.error('Error resetting password:', error)
     return {success: false, message: 'An error occurred during password reset'}
