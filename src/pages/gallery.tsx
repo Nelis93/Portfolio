@@ -93,7 +93,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
       .filter((image) => {
         const dates = selectedFilter?.dates
         if (dates.length === 0) return true
-        return dates.includes(image?.dateTaken.toString().split('-')[0])
+        return dates.includes(image?.dateTaken?.toString().split('-')[0])
       })
   }, [galleryImages, selectedFilter])
 
@@ -145,7 +145,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
     if (selected > -1) {
       // setDisplayedImages(filteredImages)
       galleryRefs.current[selected]?.scrollIntoView()
-      console.log("selected: ",selected)
+      console.log('selected: ', selected)
       return
     }
     setPage(1)
