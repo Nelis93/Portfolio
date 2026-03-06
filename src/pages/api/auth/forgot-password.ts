@@ -1,5 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next'
+import {Resend} from 'resend'
 import {generateResetToken} from '@/utils/auth'
+import {generatePasswordResetEmail} from '@/utils/emailTemplates'
 import prisma from '@/lib/prisma'
 
 type ResponseData = {
@@ -8,6 +10,8 @@ type ResponseData = {
   resetToken?: string
   resetTokenExpiry?: string
 }
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
   if (req.method !== 'POST') {
@@ -43,17 +47,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       },
     })
 
-    // For development/testing: return the token and link
-    // In production, you would send this via email instead
     const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`
+    const {subject, html} = generatePasswordResetEmail(user.username, resetLink)
 
-    console.log(`[DEV] Password reset requested for ${user.email} (${user.username})`)
-    console.log(`[DEV] Reset link: ${resetLink}`)
-    console.log(`[DEV] Token expires at: ${expiry.toISOString()}`)
+    // Send email via Resend
+    try {
+      await resend.emails.send({
+        from: 'Nelis <noreply@neliseerdekens.info>',
+        to: email,
+        subject,
+        html,
+      })
+
+      console.log(`✅ Password reset email sent to ${email}`)
+    } catch (emailError) {
+      console.error('Resend email error:', emailError)
+      // Still return success to avoid revealing if email was sent
+      // (but log error for debugging)
+    }
+
+    // In development, still log the token for testing
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[DEV] Reset link: ${resetLink}`)
+      console.log(`[DEV] Token expires at: ${expiry.toISOString()}`)
+    }
 
     return res.status(200).json({
       success: true,
-      message: 'Password reset email sent. Check console in development.',
+      message: 'If the email exists, a reset link has been generated. Check your email.',
+      // Only return token in development for testing
       resetToken: process.env.NODE_ENV === 'development' ? token : undefined,
       resetTokenExpiry: expiry.toISOString(),
     })
