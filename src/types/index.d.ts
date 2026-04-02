@@ -130,6 +130,21 @@ export interface GalleryImage extends SanityBody {
   position: number
   linkToPost: reference
 }
+
+export interface GalleryVideo extends SanityBody {
+  _type: 'galleryVideo'
+  title: string
+  description: string
+  muxVideoId: string
+  muxPlaybackId: string
+  thumbnail?: Image
+  location: string
+  dateTaken: Date
+  peopleInVideo: string[]
+  linkToPost?: reference
+  duration?: number
+}
+
 export interface LogbookEntry extends SanityBody {
   _type: 'logbookEntry'
   title: string
