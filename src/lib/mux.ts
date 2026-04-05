@@ -7,8 +7,7 @@
  * - NEXT_PUBLIC_MUX_PLAYBACK_TOKEN_ID: Public Mux token ID for client-side playback (optional for secured streams)
  */
 
-import Mux from 'mux.js'
-
+import {Mux} from '@mux/mux-node'
 // Validate that required environment variables are set
 if (!process.env.MUX_TOKEN_ID || !process.env.MUX_TOKEN_SECRET) {
   console.warn(
@@ -19,7 +18,10 @@ if (!process.env.MUX_TOKEN_ID || !process.env.MUX_TOKEN_SECRET) {
 // Initialize Mux on the server side
 export const muxClient =
   process.env.MUX_TOKEN_ID && process.env.MUX_TOKEN_SECRET
-    ? new Mux(process.env.MUX_TOKEN_ID, process.env.MUX_TOKEN_SECRET)
+    ? new Mux({
+        tokenId: process.env.MUX_TOKEN_ID,
+        tokenSecret: process.env.MUX_TOKEN_SECRET,
+      })
     : null
 
 // Mux playback URL builder
@@ -64,7 +66,7 @@ export const getMuxVideoDetails = async (videoId: string) => {
   }
 
   try {
-    const video = await muxClient.Video.get(videoId)
+    const video = await muxClient.video.assets.retrieve(videoId)
     return video
   } catch (error) {
     console.error(`Failed to fetch Mux video details for ${videoId}:`, error)

@@ -1,14 +1,17 @@
 import {useEffect, useState, useRef, useMemo, useCallback} from 'react'
 import type {GetStaticProps} from 'next'
-import {GalleryImage, Social} from '../types'
+import {GalleryImage, GalleryVideo, Social} from '../types'
 import {fetchGalleryImages} from '../utils/fetchGalleryImages'
+import {fetchGalleryVideos} from '../utils/fetchGalleryVideos'
 import dynamic from 'next/dynamic'
 import GalleryImageCard from '@/components/Gallery/GalleryImageCard'
 import GalleryImageCardSmall from '@/components/Gallery/GalleryImageCardSmall'
+import GalleryVideoCard from '@/components/Gallery/GalleryVideoCard'
 import Header from '@/components/ui/Header'
 import {fetchSocials} from '../utils/fetchSocials'
 import Slider from '@/components/ui/Slider'
 import FocusedImageCard from '@/components/Gallery/FocusedImageCard'
+import FocusedVideoCard from '@/components/Gallery/FocusedVideoCard'
 import Dots from '@/components/ui/Dots'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -17,19 +20,26 @@ import {extraCards} from '@/utils/extraCards'
 import {useFilterSync} from '@/hooks/useFilterSync'
 import {useInfiniteScroll} from '@/hooks/useInfiniteScroll'
 import scrollToTop from '@/utils/scrollToTop'
+import {
+  isGalleryImage,
+  isGalleryVideo,
+  combineGalleryItems,
+  filterGalleryItems,
+} from '@/utils/galleryUtils'
+
+type GalleryItem = GalleryImage | GalleryVideo
 
 type Props = {
-  galleryImages: GalleryImage[]
+  galleryItems: GalleryItem[]
   socials: Social[]
 }
 
-const Gallery = ({galleryImages, socials}: Props) => {
-  // displayed images are the images that are currently shown in the gallery
-  // initially, we show the first 9 images
-  const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>(
-    galleryImages.sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1)).slice(0, 9),
+const Gallery = ({galleryItems, socials}: Props) => {
+  // displayed items include both images and videos, initially showing first 9
+  const [displayedItems, setDisplayedItems] = useState<GalleryItem[]>(
+    galleryItems.sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1)).slice(0, 9),
   )
-  const imageDataRef = useRef<
+  const itemDataRef = useRef<
     Map<
       string,
       {
@@ -81,32 +91,20 @@ const Gallery = ({galleryImages, socials}: Props) => {
     dates: [],
   })
   const [manualFocus, setManualFocus] = useState(false)
-  const filteredImages = useMemo(() => {
-    return galleryImages
-      .sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1))
-      .filter((image) => {
-        const countries = selectedFilter?.countries
-        if (countries.length === 0) return true
-        let index = image.location.split(' ')
-        return countries.includes(index[index.length - 1])
-      })
-      .filter((image) => {
-        const dates = selectedFilter?.dates
-        if (dates.length === 0) return true
-        return dates.includes(image?.dateTaken?.toString().split('-')[0])
-      })
-  }, [galleryImages, selectedFilter])
+  const filteredItems = useMemo(() => {
+    return filterGalleryItems(galleryItems, selectedFilter)
+  }, [galleryItems, selectedFilter])
 
   useFilterSync(selectedFilter, setSelectedFilter)
 
   useEffect(() => {
-    const allHeightsReady = displayedImages.every((img) =>
-      maxHeight.some((h) => h.id === img._id && h.value > 0),
+    const allHeightsReady = displayedItems.every((item) =>
+      maxHeight.some((h) => h.id === item._id && h.value > 0),
     )
     if (allHeightsReady) {
       console.log('Heights matched!')
     }
-  }, [displayedImages, maxHeight])
+  }, [displayedItems, maxHeight])
 
   useEffect(() => {
     if (selected > -1) return
@@ -121,60 +119,60 @@ const Gallery = ({galleryImages, socials}: Props) => {
       console.log('debounceMaxHeightCalculation called')
       const newMaxArray: {id: string; value: number}[] = []
 
-      for (let i = 0; i < displayedImages.length; i += 3) {
-        const triplet = displayedImages.slice(i, i + 3)
-        const heights = triplet.map((img) => {
-          const data = imageDataRef.current.get(img._id)
+      for (let i = 0; i < displayedItems.length; i += 3) {
+        const triplet = displayedItems.slice(i, i + 3)
+        const heights = triplet.map((item) => {
+          const data = itemDataRef.current.get(item._id)
           return data?.height ?? 0
         })
 
         const maxTripletHeight = Math.max(...heights)
-        triplet.forEach((img) => {
-          newMaxArray.push({id: img._id, value: maxTripletHeight})
+        triplet.forEach((item) => {
+          newMaxArray.push({id: item._id, value: maxTripletHeight})
         })
       }
 
       setMaxHeight(newMaxArray)
       setLoading(false)
     }, 300),
-    [displayedImages],
+    [displayedItems],
   )
 
   useEffect(() => {
     console.log('selected changed to ', selected)
     if (selected > -1) {
-      // setDisplayedImages(filteredImages)
+      // setDisplayedItems(filteredItems)
       galleryRefs.current[selected]?.scrollIntoView()
       console.log('selected: ', selected)
       return
     }
     setPage(1)
-    setDisplayedImages(filteredImages.slice(0, 9))
-  }, [selected, filteredImages])
+    setDisplayedItems(filteredItems.slice(0, 9))
+  }, [selected, filteredItems])
 
   useEffect(() => {
-    setDisplayedImages(filteredImages.slice(0, 9))
+    setDisplayedItems(filteredItems.slice(0, 9))
     if (selectedFilter.countries.length === 0 && selectedFilter.dates.length === 0) return
 
-    setMaxHeight((prev) => filteredMaxHeightForImages(filteredImages.slice(0, 9), prev))
+    setMaxHeight((prev) => filteredMaxHeightForItems(filteredItems.slice(0, 9), prev))
     setPage(1)
     scrollToTop(sectionRef)
-  }, [filteredImages, selectedFilter])
+  }, [filteredItems, selectedFilter])
 
-  function filteredMaxHeightForImages(
-    filteredImgs: GalleryImage[],
+  function filteredMaxHeightForItems(
+    filteredItemsList: GalleryItem[],
     prevMax: {id: string; value: number}[],
   ): {id: string; value: number}[] {
     const map = new Map(prevMax.map((m) => [m.id, m.value]))
-    return filteredImgs.map((img) => {
-      const val = map.get(img._id)
-      return {id: img._id, value: typeof val === 'number' ? val : 0}
+    return filteredItemsList.map((item) => {
+      const val = map.get(item._id)
+      return {id: item._id, value: typeof val === 'number' ? val : 0}
     })
   }
 
-  const handleImageData = useCallback(
+  const handleItemData = useCallback(
     (
-      imageId: string,
+      itemId: string,
       data: {
         height: number
         naturalHeight: number
@@ -182,25 +180,25 @@ const Gallery = ({galleryImages, socials}: Props) => {
         title: string
       },
     ) => {
-      imageDataRef.current.set(imageId, data)
+      itemDataRef.current.set(itemId, data)
 
-      // Check if all images in current view have loaded
-      const allLoaded = displayedImages.every((img) => imageDataRef.current.has(img._id))
+      // Check if all items in current view have loaded
+      const allLoaded = displayedItems.every((item) => itemDataRef.current.has(item._id))
       if (allLoaded) {
         debounceMaxHeightCalculation()
       }
     },
-    [displayedImages],
+    [displayedItems, debounceMaxHeightCalculation],
   )
 
-  // Function to load more images
-  const loadMoreImages = useInfiniteScroll(
+  // Function to load more items
+  const loadMoreItems = useInfiniteScroll(
     loading,
     page,
     setPage,
-    setDisplayedImages,
+    setDisplayedItems,
     setLoading,
-    filteredImages,
+    filteredItems,
   )
 
   return (
@@ -218,10 +216,10 @@ const Gallery = ({galleryImages, socials}: Props) => {
       <section
         ref={sectionRef}
         className="relative flex w-full h-auto overflow-y-scroll lg:overscroll-none scrollbar-none pt-[5vh] sm:pt-0 lg:mt-15 max-w-[90vw] mx-auto sm:max-w-[80vw] sm:px-[1em] lg:text-[2em] lg:px-[20vh] lg:h-screen  lg:max-w-[1500px]"
-        onScroll={loadMoreImages}
+        onScroll={loadMoreItems}
         style={{
           backgroundImage:
-            displayedImages.length >= 6 && window.innerWidth > 1000 ? "url('/FlipMe.svg')" : '',
+            displayedItems.length >= 6 && window.innerWidth > 1000 ? "url('/FlipMe.svg')" : '',
           backgroundAttachment: 'fixed',
           backgroundClip: 'content-box',
           backgroundOrigin: 'content-box',
@@ -231,35 +229,51 @@ const Gallery = ({galleryImages, socials}: Props) => {
           className="relative z-[1] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-0 w-full"
           ref={gridRef}
         >
-          {displayedImages
-            .map((image, index) => ({image, index})) // Attach index to each image
+          {displayedItems
+            .map((item, index) => ({item, index})) // Attach index to each item
             .sort((a, b) => a.index - b.index)
-            .map(({image, index}) =>
-              window.innerWidth < 1024 ? (
-                <GalleryImageCardSmall
-                  key={image._id}
+            .map(({item, index}) =>
+              isGalleryImage(item) ? (
+                window.innerWidth < 1024 ? (
+                  <GalleryImageCardSmall
+                    key={item._id}
+                    uniqueId={index}
+                    image={item}
+                    setSelected={setSelected}
+                  />
+                ) : (
+                  <GalleryImageCard
+                    key={item._id}
+                    uniqueId={index}
+                    image={item}
+                    cardCount={displayedItems.length}
+                    setSelected={setSelected}
+                    focus={focus}
+                    setManualFocus={setManualFocus}
+                    setFocus={setFocus}
+                    maxHeight={maxHeight}
+                    selectedFilter={selectedFilter}
+                    onImageData={handleItemData}
+                  />
+                )
+              ) : window.innerWidth < 1024 ? null : ( // Hide video cards on mobile for now
+                <GalleryVideoCard
+                  key={item._id}
                   uniqueId={index}
-                  image={image}
-                  setSelected={setSelected}
-                />
-              ) : (
-                <GalleryImageCard
-                  key={image._id}
-                  uniqueId={index}
-                  image={image}
-                  cardCount={displayedImages.length}
+                  video={item}
+                  cardCount={displayedItems.length}
                   setSelected={setSelected}
                   focus={focus}
                   setManualFocus={setManualFocus}
                   setFocus={setFocus}
                   maxHeight={maxHeight}
                   selectedFilter={selectedFilter}
-                  onImageData={handleImageData} // NEW: Pass callback instead of all state setters
+                  onVideoData={handleItemData}
                 />
               ),
             )}
           {window.innerWidth > 1024 &&
-            Array.from({length: extraCards(displayedImages)}).map((_, i) => (
+            Array.from({length: extraCards(displayedItems)}).map((_, i) => (
               <div
                 key={i}
                 style={{
@@ -287,7 +301,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
       {selected > -1 && (
         <section className="fixed flex flex-col text-[5vh] z-30 sm:top-0 justify-center w-full sm:w-[70vw] lg:px-auto h-[85vh] sm:h-screen overflow-x-scroll scrollbar-none items-start sm:items-center">
           <Slider
-            items={displayedImages}
+            items={displayedItems}
             refs={galleryRefs}
             currentIndex={selected}
             setCurrentIndex={setSelected}
@@ -297,7 +311,7 @@ const Gallery = ({galleryImages, socials}: Props) => {
             scrolling
           />
           <Dots
-            items={displayedImages}
+            items={displayedItems}
             refs={galleryRefs}
             currentIndex={selected}
             setCurrentIndex={setSelected}
@@ -306,18 +320,31 @@ const Gallery = ({galleryImages, socials}: Props) => {
             }
           />
           <div className="relative z-30 bg-black text-white w-full sm:mx-auto mb-2 sm:mb-0 max-h-full overflow-y-hidden sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-mandatory scrollbar-none items-start justify-start scroll-smooth">
-            {filteredImages.map((image, index) => (
-              <FocusedImageCard
-                key={image._id}
-                uniqueId={index}
-                image={image}
-                manualFocus={manualFocus}
-                setManualFocus={setManualFocus}
-                galleryRefs={galleryRefs}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            ))}
+            {filteredItems.map((item, index) =>
+              isGalleryImage(item) ? (
+                <FocusedImageCard
+                  key={item._id}
+                  uniqueId={index}
+                  image={item}
+                  manualFocus={manualFocus}
+                  setManualFocus={setManualFocus}
+                  galleryRefs={galleryRefs}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              ) : (
+                <FocusedVideoCard
+                  key={item._id}
+                  uniqueId={index}
+                  video={item}
+                  manualFocus={manualFocus}
+                  setManualFocus={setManualFocus}
+                  galleryRefs={galleryRefs}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              ),
+            )}
           </div>
         </section>
       )}
@@ -329,10 +356,12 @@ export default dynamic(() => Promise.resolve(Gallery), {ssr: false})
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const galleryImages: GalleryImage[] = await fetchGalleryImages()
+  const galleryVideos: GalleryVideo[] = await fetchGalleryVideos()
+  const galleryItems = combineGalleryItems(galleryImages, galleryVideos)
   const socials: Social[] = await fetchSocials()
   return {
     props: {
-      galleryImages,
+      galleryItems,
       socials,
     },
     revalidate: 10,
