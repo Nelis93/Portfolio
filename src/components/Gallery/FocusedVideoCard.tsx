@@ -62,6 +62,7 @@ export default function FocusedVideoCard({
       ref={(el) => {
         ref.current = el
         galleryRefs.current[uniqueId] = el
+        console.log('FocusedVideoCard mounted at uniqueId:', uniqueId, 'video title:', video.title)
       }}
       exit={{opacity: 0}}
     >

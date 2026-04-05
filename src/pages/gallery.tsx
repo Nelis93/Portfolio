@@ -141,9 +141,14 @@ const Gallery = ({galleryItems, socials}: Props) => {
   useEffect(() => {
     console.log('selected changed to ', selected)
     if (selected > -1) {
-      // setDisplayedItems(filteredItems)
-      galleryRefs.current[selected]?.scrollIntoView()
-      console.log('selected: ', selected)
+      // Use galleryRefs to scroll to the selected item
+      const selectedItem = displayedItems[selected]
+      console.log('displayedItems length:', displayedItems.length)
+      console.log('displayedItems[selected]:', selectedItem)
+      console.log('galleryRefs.current length:', galleryRefs.current.length)
+      console.log('galleryRefs.current[selected]:', galleryRefs.current[selected])
+      galleryRefs.current[selected]?.scrollIntoView({behavior: 'smooth', block: 'center'})
+      console.log('Scrolling to selected index:', selected)
       return
     }
     setPage(1)
@@ -320,7 +325,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
             }
           />
           <div className="relative z-30 bg-black text-white w-full sm:mx-auto mb-2 sm:mb-0 max-h-full overflow-y-hidden sm:h-[80vh] flex flex-row space-x-11 overflow-x-scroll snap-x snap-mandatory scrollbar-none items-start justify-start scroll-smooth">
-            {filteredItems.map((item, index) =>
+            {displayedItems.map((item, index) =>
               isGalleryImage(item) ? (
                 <FocusedImageCard
                   key={item._id}

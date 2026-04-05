@@ -88,9 +88,10 @@ export default function GalleryVideoCard({
   }
 
   const handleCardClick = () => {
+    console.log('GalleryVideoCard clicked - uniqueId:', uniqueId, 'video title:', video.title)
     setSelected(uniqueId)
-    if (setManualFocus) setManualFocus(true)
-    setFocus(uniqueId)
+    setManualFocus(true)
+    // setFocus(uniqueId)
   }
 
   return (
@@ -98,24 +99,22 @@ export default function GalleryVideoCard({
       style={{
         height: `${getHeight()}vh`,
         perspective: '1000px',
+        boxShadow: 'inset 0em 1em black',
       }}
       className="relative w-full max-h-[75vh] border-black border-8 cursor-pointer group"
       onClick={handleCardClick}
     >
       {/* Card container with shadow and rounded corners */}
       <motion.div
-        className="relative h-full w-full shadow-lg shadow-gray-700 rounded-lg overflow-hidden"
+        className="relative h-full w-full shadow-lg shadow-gray-700 rounded-lg overflow-y-clip"
         initial={false}
         id={video._id}
-        style={{
-          boxShadow: 'inset 0em 1em black',
-        }}
       >
         {/* Thumbnail Image */}
         <motion.img
           src={thumbnailUrl}
           alt={video.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover rounded-lg"
           onLoad={handleVideoLoad}
           loading="lazy"
         />

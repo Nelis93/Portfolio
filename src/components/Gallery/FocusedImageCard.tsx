@@ -76,6 +76,7 @@ export default function FocusedImageCard({
       ref={(el) => {
         ref.current = el
         galleryRefs.current[uniqueId] = el
+        console.log('FocusedImageCard mounted at uniqueId:', uniqueId, 'image title:', image.title)
       }}
       exit={{opacity: 0}}
       onClick={detDom}

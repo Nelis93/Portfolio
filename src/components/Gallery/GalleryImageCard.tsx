@@ -78,9 +78,9 @@ export default function GalleryImageCard({
         width: naturalWidth,
         title: title,
       })
-      console.log(
-        `Image Loaded: ${title}, SanityWidth: ${dimensionWidth}, SanityHeight: ${dimensionHeight}, height: ${heightInVH}vh, naturalHeight: ${naturalHeight}, width: ${naturalWidth}`,
-      )
+      // console.log(
+      //   `Image Loaded: ${title}, SanityWidth: ${dimensionWidth}, SanityHeight: ${dimensionHeight}, height: ${heightInVH}vh, naturalHeight: ${naturalHeight}, width: ${naturalWidth}`,
+      // )
     },
     [image._id, onImageData],
   )
@@ -158,7 +158,7 @@ export default function GalleryImageCard({
         </div>
         {/* Front side of the card: Image */}
         <div
-          className="relative overflow-y-clip w-full h-full rounded-lg"
+          className="relative overflow-y-clip w-full h-full rounded-lg group"
           style={{
             background:
               cardCount < 6 && window.innerWidth > 1024 ? "top left url('/FlipMe.svg')" : 'inherit',
@@ -166,7 +166,7 @@ export default function GalleryImageCard({
           }}
         >
           <motion.img
-            className="absolute z-20 w-full h-auto rounded-lg"
+            className="absolute z-10 w-full h-auto rounded-lg"
             src={urlFor(image.actualImage)?.url()}
             alt={image.title}
             onLoad={handleImageLoad}
@@ -174,6 +174,15 @@ export default function GalleryImageCard({
               backfaceVisibility: 'hidden',
             }}
           />
+
+          {/* Dark overlay on hover */}
+          <div className="absolute inset-0 z-20 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300" />
+
+          {/* Image metadata overlay (appears on hover) */}
+          <div className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-black via-black/50 to-transparent p-3 sm:p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-full group-hover:translate-y-0">
+            <h3 className="text-xs sm:text-sm font-bold text-white truncate">{image.title}</h3>
+            <p className="text-xs text-gray-200 truncate">{image.location}</p>
+          </div>
         </div>
         {/* Back side of the card: Information */}
         <div
