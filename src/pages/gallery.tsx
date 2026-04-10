@@ -113,7 +113,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
       debounceMaxHeightCalculation()
     }
   }, [loading])
-
+  //https: claude.ai/magic-link#46110191bfe111782df9b80581f28a26:MnlydXVjemIxQG1vem1haWwuY29t
   const debounceMaxHeightCalculation = useCallback(
     debounce(() => {
       console.log('debounceMaxHeightCalculation called')
@@ -139,16 +139,16 @@ const Gallery = ({galleryItems, socials}: Props) => {
   )
 
   useEffect(() => {
-    console.log('selected changed to ', selected)
+    console.log('Gallery - selected changed to ', selected)
     if (selected > -1) {
       // Use galleryRefs to scroll to the selected item
       const selectedItem = displayedItems[selected]
-      console.log('displayedItems length:', displayedItems.length)
-      console.log('displayedItems[selected]:', selectedItem)
-      console.log('galleryRefs.current length:', galleryRefs.current.length)
-      console.log('galleryRefs.current[selected]:', galleryRefs.current[selected])
+      console.log('Gallery - displayedItems length:', displayedItems.length)
+      console.log('Gallery - displayedItems[selected]:', selectedItem)
+      console.log('Gallery - galleryRefs.current length:', galleryRefs.current.length)
+      console.log('Gallery - galleryRefs.current[selected]:', galleryRefs.current[selected])
       galleryRefs.current[selected]?.scrollIntoView({behavior: 'smooth', block: 'center'})
-      console.log('Scrolling to selected index:', selected)
+      console.log('Gallery - Scrolling to selected index:', selected)
       return
     }
     setPage(1)

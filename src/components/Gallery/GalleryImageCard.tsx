@@ -78,9 +78,6 @@ export default function GalleryImageCard({
         width: naturalWidth,
         title: title,
       })
-      // console.log(
-      //   `Image Loaded: ${title}, SanityWidth: ${dimensionWidth}, SanityHeight: ${dimensionHeight}, height: ${heightInVH}vh, naturalHeight: ${naturalHeight}, width: ${naturalWidth}`,
-      // )
     },
     [image._id, onImageData],
   )
@@ -102,7 +99,8 @@ export default function GalleryImageCard({
   const handleButtonClick = (event: any) => {
     event.stopPropagation()
     setSelected((current: number) => {
-      console.log('current: ', current, 'uniqueId: ', uniqueId)
+      console.log('GIC - current (selected): ', current)
+      console.log('GIC - uniqueId: ', uniqueId)
       return uniqueId
     })
     setManualFocus(true)

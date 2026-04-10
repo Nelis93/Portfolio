@@ -36,7 +36,7 @@ export default function FocusedImageCard({
   // Update the currentIndex based on which image is in view
   useEffect(() => {
     if (isInView && !manualFocus) {
-      console.log('uniqueId: ', uniqueId)
+      console.log('FIC - uniqueId: ', uniqueId)
       // setSelected((current: number) => {
       //   if (current < 0) {
       //     setTimeout(() => {
@@ -51,7 +51,7 @@ export default function FocusedImageCard({
       return
     }
     console.log(selected == uniqueId ? 'selected is uniqueId' : 'selected is not uniqueId')
-    setTimeout(() => setManualFocus(false), 1000)
+    setTimeout(() => setManualFocus(false), 2000)
   }, [isInView, uniqueId])
   const [dominance, setDominance] = useState(true)
   const handleButtonClick = (event: any) => {
@@ -76,7 +76,7 @@ export default function FocusedImageCard({
       ref={(el) => {
         ref.current = el
         galleryRefs.current[uniqueId] = el
-        console.log('FocusedImageCard mounted at uniqueId:', uniqueId, 'image title:', image.title)
+        console.log('FIC mounted at uniqueId:', uniqueId, 'image title:', image.title)
       }}
       exit={{opacity: 0}}
       onClick={detDom}

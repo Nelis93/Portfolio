@@ -88,10 +88,9 @@ export default function GalleryVideoCard({
   }
 
   const handleCardClick = () => {
-    console.log('GalleryVideoCard clicked - uniqueId:', uniqueId, 'video title:', video.title)
+    console.log('GVC - uniqueId:', uniqueId, 'video title:', video.title)
     setSelected(uniqueId)
     setManualFocus(true)
-    // setFocus(uniqueId)
   }
 
   return (

@@ -39,7 +39,7 @@ export default function FocusedVideoCard({
       setSelected(uniqueId)
       return
     }
-    setTimeout(() => setManualFocus(false), 1000)
+    setTimeout(() => setManualFocus(false), 2000)
   }, [isInView, uniqueId, manualFocus, setSelected, setManualFocus])
 
   const handleButtonClick = (event: any) => {
