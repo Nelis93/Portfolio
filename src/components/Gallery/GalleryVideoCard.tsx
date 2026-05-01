@@ -1,7 +1,8 @@
-import {useEffect, useState, useCallback} from 'react'
+import {useCallback} from 'react'
 import {motion} from 'framer-motion'
 import {GalleryVideo} from '../../types'
 import {getMuxThumbnailUrl} from '../../lib/mux'
+import {urlFor} from '../../lib/sanity'
 import {MdPlayArrow} from 'react-icons/md'
 import {IconContext} from 'react-icons'
 
@@ -24,45 +25,50 @@ type Props = {
 export default function GalleryVideoCard({
   video,
   uniqueId,
-  cardCount,
+  // cardCount,
   setSelected,
-  focus,
-  setFocus,
+  // focus,
+  // setFocus,
   setManualFocus,
   maxHeight,
   onVideoData,
 }: Props) {
-  const [iconPosition, setIconPosition] = useState({
-    distance: 0,
-    transform: 'none',
-  })
+  // const [iconPosition, setIconPosition] = useState({
+  //   distance: 0,
+  //   transform: 'none',
+  // })
 
-  const thumbnailUrl = getMuxThumbnailUrl(video.muxPlaybackId)
+  // Use custom Mux URL if provided, otherwise use custom thumbnail image, otherwise use auto-generated Mux thumbnail
+  const thumbnailUrl = video.customMuxThumbnailUrl
+    ? video.customMuxThumbnailUrl
+    : video.thumbnail
+      ? urlFor(video.thumbnail).url()
+      : getMuxThumbnailUrl(video.muxPlaybackId)
 
-  const handlePosition = (event: any) => {
-    const intendedFlipWidth =
-      event.target.parentElement.parentElement.offsetWidth -
-      event.target.parentElement.parentElement.firstChild.clientWidth
-    setIconPosition((current) => {
-      return {distance: intendedFlipWidth, transform: current.transform}
-    })
-  }
+  // const handlePosition = (event: any) => {
+  //   const intendedFlipWidth =
+  //     event.target.parentElement.parentElement.offsetWidth -
+  //     event.target.parentElement.parentElement.firstChild.clientWidth
+  //   setIconPosition((current) => {
+  //     return {distance: intendedFlipWidth, transform: current.transform}
+  //   })
+  // }
 
-  useEffect(() => {
-    if (focus == uniqueId) {
-      setIconPosition((current) => {
-        return {
-          distance: current.distance,
-          transform: `rotateY(180deg) translateX(${current.distance}px)`,
-        }
-      })
-      return
-    }
-    setIconPosition((current) => {
-      return {distance: current.distance, transform: 'none'}
-    })
-    return
-  }, [focus])
+  // useEffect(() => {
+  //   if (focus == uniqueId) {
+  //     setIconPosition((current) => {
+  //       return {
+  //         distance: current.distance,
+  //         transform: `rotateY(180deg) translateX(${current.distance}px)`,
+  //       }
+  //     })
+  //     return
+  //   }
+  //   setIconPosition((current) => {
+  //     return {distance: current.distance, transform: 'none'}
+  //   })
+  //   return
+  // }, [focus])
 
   const handleVideoLoad = useCallback(
     (event: any) => {

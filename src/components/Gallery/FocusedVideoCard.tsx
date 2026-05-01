@@ -1,6 +1,7 @@
 import {useRef, useEffect} from 'react'
 import {motion, useInView} from 'framer-motion'
 import {getMuxPlaybackUrl} from '../../lib/mux'
+import {urlFor} from '../../lib/sanity'
 import {GalleryVideo} from '../../types'
 import {TfiClose} from 'react-icons/tfi'
 import {IconContext} from 'react-icons'
@@ -18,7 +19,7 @@ type Props = {
 export default function FocusedVideoCard({
   video,
   galleryRefs,
-  selected,
+  // selected,
   setSelected,
   uniqueId,
   manualFocus,
@@ -54,6 +55,13 @@ export default function FocusedVideoCard({
 
   const playbackUrl = getMuxPlaybackUrl(video.muxPlaybackId)
 
+  // Use custom Mux URL if provided, otherwise use custom thumbnail image as poster
+  const posterUrl = video.customMuxThumbnailUrl
+    ? video.customMuxThumbnailUrl
+    : video.thumbnail
+      ? urlFor(video.thumbnail).url()
+      : undefined
+
   return (
     <motion.div
       className="relative flex justify-center items-center snap-start flex-shrink-0 w-screen sm:w-[70vw] z-50 sm:mx-auto border-4 rounded-xl border-gray-500 overflow-hidden h-full"
@@ -81,7 +89,13 @@ export default function FocusedVideoCard({
       </IconContext.Provider>
 
       {/* Full-screen Video Player */}
-      <motion.video ref={videoRef} className="w-full h-full object-contain" controls autoPlay>
+      <motion.video
+        ref={videoRef}
+        className="w-full h-full object-contain"
+        controls
+        autoPlay
+        poster={posterUrl}
+      >
         <source src={playbackUrl} type="application/x-mpegURL" />
         Your browser does not support the video tag.
       </motion.video>

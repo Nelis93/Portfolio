@@ -37,6 +37,13 @@ export default defineType({
       description: 'Video thumbnail (optional - Mux can generate this)',
     }),
     defineField({
+      name: 'customMuxThumbnailUrl',
+      title: 'Custom Mux Thumbnail URL',
+      type: 'string',
+      description:
+        'Paste a Mux thumbnail URL directly (e.g., with GIF format or custom time/dimensions). Takes precedence over image thumbnail.',
+    }),
+    defineField({
       name: 'dateTaken',
       title: 'Date',
       type: 'date',

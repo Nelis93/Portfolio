@@ -138,6 +138,7 @@ export interface GalleryVideo extends SanityBody {
   muxVideoId: string
   muxPlaybackId: string
   thumbnail?: Image
+  customMuxThumbnailUrl?: string
   location: string
   dateTaken: Date
   peopleInVideo: string[]

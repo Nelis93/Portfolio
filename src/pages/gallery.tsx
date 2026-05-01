@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 import GalleryImageCard from '@/components/Gallery/GalleryImageCard'
 import GalleryImageCardSmall from '@/components/Gallery/GalleryImageCardSmall'
 import GalleryVideoCard from '@/components/Gallery/GalleryVideoCard'
+import GalleryVideoCardSmall from '@/components/Gallery/GalleryVideoCardSmall'
 import Header from '@/components/ui/Header'
 import {fetchSocials} from '../utils/fetchSocials'
 import Slider from '@/components/ui/Slider'
@@ -22,7 +23,7 @@ import {useInfiniteScroll} from '@/hooks/useInfiniteScroll'
 import scrollToTop from '@/utils/scrollToTop'
 import {
   isGalleryImage,
-  isGalleryVideo,
+  // isGalleryVideo,
   combineGalleryItems,
   filterGalleryItems,
 } from '@/utils/galleryUtils'
@@ -261,7 +262,16 @@ const Gallery = ({galleryItems, socials}: Props) => {
                     onImageData={handleItemData}
                   />
                 )
-              ) : window.innerWidth < 1024 ? null : ( // Hide video cards on mobile for now
+              ) : window.innerWidth < 1024 ? ( // Hide video cards on mobile for now
+                <GalleryVideoCardSmall
+                  key={item._id}
+                  uniqueId={index}
+                  video={item}
+                  setSelected={setSelected}
+                  setManualFocus={setManualFocus}
+                />
+              ) : (
+                // Show video cards on desktop
                 <GalleryVideoCard
                   key={item._id}
                   uniqueId={index}

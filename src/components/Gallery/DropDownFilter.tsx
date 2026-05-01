@@ -81,7 +81,7 @@ export default function DropDownFilter({setSelectedFilter}: Props) {
 
   const leftMenu = () => {
     let tempArray = []
-    for (let i = 2018; i <= 2025; i++) {
+    for (let i = 2018; i <= 2026; i++) {
       tempArray.push(i.toString())
     }
     return tempArray
