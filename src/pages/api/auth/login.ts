@@ -12,6 +12,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
+    // Debug logging
+    console.log('LOGIN API: Environment check')
+    console.log('DATABASE_URL:', process.env.DATABASE_URL ? 'SET' : 'UNDEFINED')
+    console.log('NODE_ENV:', process.env.NODE_ENV)
+
     const {username, password} = req.body
 
     if (!username || !password) {
