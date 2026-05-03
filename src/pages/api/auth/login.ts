@@ -27,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   } catch (error) {
     console.error('Login error:', error)
+    console.log('DATABASE_URL:', process.env.DATABASE_URL)
     return res.status(500).json({success: false, message: 'Internal server error'})
   }
 }
