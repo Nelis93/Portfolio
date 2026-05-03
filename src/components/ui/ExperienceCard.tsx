@@ -76,7 +76,7 @@ export default function ExperienceCard({
               {experience.jobTitle}
             </h4>
             <p className="font-bold pt-2 pl-1 text-[.5em] lg:text-[.6em]">{experience.company}</p>
-            <div className="absolute bottom-10 flex space-x-5 overflow-x-auto scrollbar-none py-[2.5vh]">
+            <div className="absolute bottom-10 flex space-x-5 overflow-x-auto scrollbar-none py-[2.5dvh]">
               {experience.technologies.map((tech) => {
                 return (
                   <img key={tech._id} src={urlFor(tech.image).url()} className="h-[1em] w-[1em]" />

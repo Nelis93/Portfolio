@@ -41,7 +41,7 @@ const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
         socials={socials}
         setSelectedFilter={''}
         style={
-          'sticky text-[5vh] w-full sm:text-[5vw] lg:text-[5vh] top-0 p-5 flex items-start justify-between z-30'
+          'sticky text-[5dvh] w-full sm:text-[5vw] lg:text-[5dvh] top-0 p-5 flex items-start justify-between z-30'
         }
       />
       <section id="hero" className="snap-start">
@@ -64,10 +64,10 @@ const Home = ({pageInfo, experiences, skills, projects, socials}: Props) => {
       </section>
       <ScrollProgressButton />
       <Link href="#hero">
-        <footer className="invisible lg:visible sticky bottom-[2.5vh] w-full z-20 cursor-pointer">
+        <footer className="invisible lg:visible sticky bottom-[2.5dvh] w-full z-20 cursor-pointer">
           <div className="flex items-center justify-center">
             <img
-              className="h-[7.5vh] w-[7.5vh] rounded-full filter grayscale hover:grayscale-0 object-cover object-center"
+              className="h-[7.5dvh] w-[7.5dvh] rounded-full filter grayscale hover:grayscale-0 object-cover object-center"
               src={urlFor(experiences[0].companyImage).url()}
               alt={experiences[0].companyImage._type}
             />

@@ -147,7 +147,7 @@ export default function DropDownFilter({setSelectedFilter}: Props) {
     <div className="relative z-50 w-auto" ref={dropdownRef}>
       <DropDownButton isOpen={isOpen} setIsOpen={setIsOpen} />
       <div
-        className="block rounded-md shadow-md left-[-5.5em] overflow-x-hidden absolute h-auto sm:max-h-[80vh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
+        className="block rounded-md shadow-md left-[-5.5em] overflow-x-hidden absolute h-auto sm:max-h-[80dvh] lg:max-h-none w-[5em] z-40 overflow-y-scroll scrollbar-none border-2 border-white bg-black"
         // initial="close"
         style={{
           transform: isOpen ? 'translateY(-1em)' : 'translateY(-20em)',

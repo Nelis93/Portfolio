@@ -102,11 +102,11 @@ export default function GalleryVideoCard({
   return (
     <div
       style={{
-        height: `${getHeight()}vh`,
+        height: `${getHeight()}dvh`,
         perspective: '1000px',
         boxShadow: 'inset 0em 1em black',
       }}
-      className="relative w-full max-h-[75vh] border-black border-8 cursor-pointer group"
+      className="relative w-full max-h-[75dvh] border-black border-8 cursor-pointer group"
       onClick={handleCardClick}
     >
       {/* Card container with shadow and rounded corners */}

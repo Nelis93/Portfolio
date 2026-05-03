@@ -12,7 +12,7 @@ type Props = {
 export default function EntryCarousel({children, entries, refs, selected, setSelected}: Props) {
   return (
     <div
-      className="sticky top-0 pt-[50vh] flex items-center justify-center"
+      className="sticky top-0 pt-[50dvh] flex items-center justify-center"
       style={{perspective: 800, transformStyle: 'preserve-3d'}}
     >
       <Slider

@@ -47,7 +47,7 @@ const ScrollProgressButton = () => {
   return (
     <button
       onClick={scrollToTop}
-      className={`rounded-full fixed bottom-[2.5vh] right-3 w-16 h-16 z-50 transition-opacity duration-300 ${
+      className={`rounded-full fixed bottom-[2.5dvh] right-3 w-16 h-16 z-50 transition-opacity duration-300 ${
         isVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}
       style={{

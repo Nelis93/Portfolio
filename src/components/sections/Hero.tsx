@@ -14,7 +14,7 @@ function Hero({pageInfo}: Props) {
     delaySpeed: 3000,
   })
   return (
-    <div className="text-[5vh] h-screen w-screen relative flex flex-col mx-auto">
+    <div className="text-[5dvh] h-screen w-screen relative flex flex-col mx-auto">
       <div className=" relative min-h-[10em] w-screen flex flex-row justify-center">
         <img
           src={urlFor(pageInfo?.heroImage).url()}

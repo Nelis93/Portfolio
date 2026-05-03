@@ -108,7 +108,7 @@ export default function GalleryImageCard({
   return (
     <div
       style={{
-        height: `${maxHeightValue}vh`,
+        height: `${maxHeightValue}dvh`,
         perspective: '1000px',
         backgroundColor: focus == uniqueId ? 'black' : 'transparent',
         transitionProperty: 'background-color',
@@ -117,7 +117,7 @@ export default function GalleryImageCard({
         transitionDuration: focus == uniqueId ? '0.3s' : '1s', // Faster black, slower to transparent
         transitionDelay: focus == uniqueId ? '0s' : '0.6s',
       }}
-      className="relative w-full max-h-[75vh] border-black border-8 cursor-pointer"
+      className="relative w-full max-h-[75dvh] border-black border-8 cursor-pointer"
       onClick={handleCardClick}
     >
       {/* Card container with 3D flip */}

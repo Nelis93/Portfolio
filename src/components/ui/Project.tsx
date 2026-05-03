@@ -44,7 +44,7 @@ export default function Project({
         ref.current = el
         projectRefs.current[index] = el
       }}
-      className="text-[2em] relative w-screen pb-[1em] px-[.5em] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4 sm:text-[1em] sm:pt-14 sm:px-[1em] sm:grid sm:gap-x-10 sm:grid-flow-col-dense sm:grid-cols-5 sm:grid-rows-10 sm:space-y-3 lg:text-[3vh] lg:pl-[10em] lg:pr-[5em] lg:gap-x-5"
+      className="text-[2em] relative w-screen pb-[1em] px-[.5em] snap-center flex flex-col flex-shrink-0 items-center justify-end space-y-4 sm:text-[1em] sm:pt-14 sm:px-[1em] sm:grid sm:gap-x-10 sm:grid-flow-col-dense sm:grid-cols-5 sm:grid-rows-10 sm:space-y-3 lg:text-[3dvh] lg:pl-[10em] lg:pr-[5em] lg:gap-x-5"
     >
       {/* Project Image */}
       <motion.img

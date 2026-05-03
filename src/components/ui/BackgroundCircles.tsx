@@ -16,14 +16,14 @@ export default function BackgroundCircles({}: Props) {
       transition={{
         duration: 2.5,
       }}
-      className="absolute z-0 mx-auto top-[37.5vh]"
+      className="absolute z-0 mx-auto top-[37.5dvh]"
     >
       <div className="relative flex justify-center items-center">
-        <div className="absolute border border-white rounded-full h-[25vh] w-[25vh] animate-ping" />
-        <div className="absolute border border-teal-200 opacity-20 rounded-full h-[35vh] w-[35vh]" />
-        <div className="absolute border border-teal-200 opacity-20 rounded-full h-[55vh] w-[55vh]" />
-        <div className="absolute border border-teal-200 opacity-20 rounded-full h-[70vh] w-[70vh] animate-pulse" />
-        <div className="absolute border border-teal-200 rounded-full h-[85vh] w-[85vh]" />
+        <div className="absolute border border-white rounded-full h-[25dvh] w-[25dvh] animate-ping" />
+        <div className="absolute border border-teal-200 opacity-20 rounded-full h-[35dvh] w-[35dvh]" />
+        <div className="absolute border border-teal-200 opacity-20 rounded-full h-[55dvh] w-[55dvh]" />
+        <div className="absolute border border-teal-200 opacity-20 rounded-full h-[70dvh] w-[70dvh] animate-pulse" />
+        <div className="absolute border border-teal-200 rounded-full h-[85dvh] w-[85dvh]" />
       </div>
     </motion.div>
   )
