@@ -7,6 +7,7 @@ type ResponseData = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+  console.log('Login request received')
   if (req.method !== 'POST') {
     return res.status(405).json({success: false, message: 'Method not allowed'})
   }
