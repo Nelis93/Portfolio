@@ -98,7 +98,8 @@ const PasswordPrompt: React.FC<PasswordPromptProps> = ({isOpen, initialMode = 'l
     e.preventDefault()
     setIsLoading(true)
     setError('')
-
+    console.log('Login request received')
+    console.log('DATABASE_URL:', process.env.DATABASE_URL)
     try {
       if (isSignup) {
         // Signup flow

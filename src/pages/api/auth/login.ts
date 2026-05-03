@@ -7,7 +7,6 @@ type ResponseData = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-  console.log('Login request received')
   if (req.method !== 'POST') {
     return res.status(405).json({success: false, message: 'Method not allowed'})
   }
@@ -28,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   } catch (error) {
     console.error('Login error:', error)
-    console.log('DATABASE_URL:', process.env.DATABASE_URL)
+
     return res.status(500).json({success: false, message: 'Internal server error'})
   }
 }
