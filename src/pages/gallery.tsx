@@ -21,12 +21,7 @@ import {extraCards} from '@/utils/extraCards'
 import {useFilterSync} from '@/hooks/useFilterSync'
 import {useInfiniteScroll} from '@/hooks/useInfiniteScroll'
 import scrollToTop from '@/utils/scrollToTop'
-import {
-  isGalleryImage,
-  // isGalleryVideo,
-  combineGalleryItems,
-  filterGalleryItems,
-} from '@/utils/galleryUtils'
+import {isGalleryImage, combineGalleryItems, filterGalleryItems} from '@/utils/galleryUtils'
 
 type GalleryItem = GalleryImage | GalleryVideo
 
@@ -114,7 +109,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
       debounceMaxHeightCalculation()
     }
   }, [loading])
-  //https: claude.ai/magic-link#46110191bfe111782df9b80581f28a26:MnlydXVjemIxQG1vem1haWwuY29t
+
   const debounceMaxHeightCalculation = useCallback(
     debounce(() => {
       console.log('debounceMaxHeightCalculation called')

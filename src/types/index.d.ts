@@ -82,6 +82,11 @@ export interface Technology extends SanityBody {
   title: string
 }
 
+export interface Friend extends SanityBody {
+  _type: 'friend'
+  name: string
+}
+
 export interface Skill extends SanityBody {
   _type: 'skill'
   image: Image
@@ -126,7 +131,7 @@ export interface GalleryImage extends SanityBody {
   actualImage: Image
   location: string
   dateTaken: Date
-  people: string[]
+  peopleInPicture: Friend[]
   position: number
   linkToPost: reference
 }
@@ -141,7 +146,7 @@ export interface GalleryVideo extends SanityBody {
   customMuxThumbnailUrl?: string
   location: string
   dateTaken: Date
-  peopleInVideo: string[]
+  peopleInVideo: Friend[]
   linkToPost?: reference
   duration?: number
 }

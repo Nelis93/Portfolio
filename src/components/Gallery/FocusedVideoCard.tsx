@@ -19,7 +19,7 @@ type Props = {
 export default function FocusedVideoCard({
   video,
   galleryRefs,
-  // selected,
+  selected,
   setSelected,
   uniqueId,
   manualFocus,
@@ -42,6 +42,13 @@ export default function FocusedVideoCard({
     }
     setTimeout(() => setManualFocus(false), 2000)
   }, [isInView, uniqueId, manualFocus, setSelected, setManualFocus])
+
+  // Pause video when this card is no longer selected
+  useEffect(() => {
+    if (videoRef.current && uniqueId !== selected) {
+      videoRef.current.pause()
+    }
+  }, [selected, uniqueId])
 
   const handleButtonClick = (event: any) => {
     event.stopPropagation()

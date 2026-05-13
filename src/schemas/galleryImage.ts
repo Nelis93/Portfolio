@@ -1,46 +1,46 @@
-import { defineField, defineType } from "@sanity/types";
+import {defineField, defineType} from '@sanity/types'
 
 export default defineType({
-  name: "galleryImage",
-  title: "GalleryImage",
-  type: "document",
+  name: 'galleryImage',
+  title: 'GalleryImage',
+  type: 'document',
   fields: [
     defineField({
-      name: "title",
-      title: "Title",
-      type: "string",
+      name: 'title',
+      title: 'Title',
+      type: 'string',
     }),
     defineField({
-      name: "description",
-      title: "Description",
-      type: "text",
+      name: 'description',
+      title: 'Description',
+      type: 'text',
     }),
     defineField({
-      name: "actualImage",
-      title: "Image",
-      type: "image",
+      name: 'actualImage',
+      title: 'Image',
+      type: 'image',
     }),
     defineField({
-      name: "dateTaken",
-      title: "Date",
-      type: "date",
+      name: 'dateTaken',
+      title: 'Date',
+      type: 'date',
     }),
     defineField({
-      name: "location",
-      title: "Location",
-      type: "string",
+      name: 'location',
+      title: 'Location',
+      type: 'string',
     }),
     defineField({
-      name: "linkToPost",
-      title: "LinkToPost",
-      type: "reference",
-      to: { type: "logbookEntry" },
+      name: 'linkToPost',
+      title: 'LinkToPost',
+      type: 'reference',
+      to: {type: 'logbookEntry'},
     }),
     defineField({
-      name: "peopleInPicture",
-      title: "Friends",
-      type: "array",
-      of: [{ type: "string" }],
+      name: 'peopleInPicture',
+      title: 'Friends',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'friend'}}],
     }),
   ],
-});
+})

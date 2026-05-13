@@ -6,6 +6,7 @@ import pageInfo from './pageInfo'
 import galleryImage from './galleryImage'
 import galleryVideo from './galleryVideo'
 import logbookEntry from './logbookEntry'
+import friend from './friend'
 
 export const schemaTypes = [
   pageInfo,
@@ -13,6 +14,7 @@ export const schemaTypes = [
   project,
   experience,
   social,
+  friend,
   galleryImage,
   galleryVideo,
   logbookEntry,

@@ -61,9 +61,9 @@ export default defineType({
     }),
     defineField({
       name: 'peopleInVideo',
-      title: 'People',
+      title: 'Friends',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{type: 'reference', to: {type: 'friend'}}],
     }),
     defineField({
       name: 'duration',
