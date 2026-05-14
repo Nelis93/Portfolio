@@ -1,4 +1,5 @@
 import {useEffect, useState, useRef, useMemo, useCallback} from 'react'
+import {useRouter} from 'next/router'
 import type {GetStaticProps} from 'next'
 import {GalleryImage, GalleryVideo, Social} from '../types'
 import {fetchGalleryImages} from '../utils/fetchGalleryImages'
@@ -31,6 +32,7 @@ type Props = {
 }
 
 const Gallery = ({galleryItems, socials}: Props) => {
+  const router = useRouter()
   // displayed items include both images and videos, initially showing first 9
   const [displayedItems, setDisplayedItems] = useState<GalleryItem[]>(
     galleryItems.sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1)).slice(0, 9),
@@ -92,6 +94,35 @@ const Gallery = ({galleryItems, socials}: Props) => {
   }, [galleryItems, selectedFilter])
 
   useFilterSync(selectedFilter, setSelectedFilter)
+
+  // Handle URL-based item selection on mount and when router is ready
+  useEffect(() => {
+    if (!router.isReady) return
+
+    const itemId = router.query.itemId as string
+    if (itemId) {
+      const itemIndex = displayedItems.findIndex((item) => item._id === itemId)
+      if (itemIndex > -1) {
+        setSelected(itemIndex)
+      }
+    }
+  }, [router.isReady, router.query.itemId, displayedItems])
+
+  // Update URL when selected item changes
+  useEffect(() => {
+    if (selected > -1 && displayedItems[selected]) {
+      const itemId = displayedItems[selected]._id
+      router.push({pathname: router.pathname, query: {...router.query, itemId}}, undefined, {
+        shallow: true,
+      })
+    } else if (selected === -1) {
+      // Remove itemId from URL when deselecting
+      const {itemId, ...restQuery} = router.query
+      if (itemId) {
+        router.push({pathname: router.pathname, query: restQuery}, undefined, {shallow: true})
+      }
+    }
+  }, [selected, displayedItems, router])
 
   useEffect(() => {
     const allHeightsReady = displayedItems.every((item) =>
