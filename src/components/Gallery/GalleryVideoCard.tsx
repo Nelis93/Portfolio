@@ -4,6 +4,7 @@ import {GalleryVideo} from '../../types'
 import {getMuxThumbnailUrl} from '../../lib/mux'
 import {urlFor} from '../../lib/sanity'
 import {MdPlayArrow} from 'react-icons/md'
+import {FiShare2} from 'react-icons/fi'
 import {IconContext} from 'react-icons'
 
 type Props = {
@@ -99,6 +100,14 @@ export default function GalleryVideoCard({
     setManualFocus(true)
   }
 
+  const handleShareClick = (event: any) => {
+    event.stopPropagation()
+    const shareUrl = `${window.location.origin}${window.location.pathname}?itemId=${video._id}`
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      alert('Link copied to clipboard!')
+    })
+  }
+
   return (
     <div
       style={{
@@ -126,6 +135,16 @@ export default function GalleryVideoCard({
 
         {/* Dark overlay on hover */}
         <motion.div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300" />
+
+        {/* Share button */}
+        <div
+          className="absolute z-30 flex top-2 left-2 justify-center items-center w-[15%] rounded-[50px] bg-black text-gray-500 hover:text-white transition-colors cursor-pointer"
+          onClick={handleShareClick}
+        >
+          <IconContext.Provider value={{className: 'size-full p-3'}}>
+            <FiShare2 />
+          </IconContext.Provider>
+        </div>
 
         {/* Play button - always visible, scales on hover */}
         <IconContext.Provider

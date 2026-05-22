@@ -3,6 +3,7 @@ import {motion} from 'framer-motion'
 import {GalleryImage} from '../../types'
 import {urlFor} from '../../lib/sanity'
 import {TfiNewWindow} from 'react-icons/tfi'
+import {FiShare2} from 'react-icons/fi'
 import {IconContext} from 'react-icons'
 import {getImageDimensions} from '@sanity/asset-utils'
 
@@ -35,7 +36,7 @@ export default function GalleryImageCard({
 }: Props) {
   const [iconPosition, setIconPosition] = useState({
     distance: 0,
-    transform: 'none',
+    transform: {left: '', right: ''},
   })
   const handlePosition = (event: any) => {
     const intendedFlipWidth =
@@ -50,13 +51,16 @@ export default function GalleryImageCard({
       setIconPosition((current) => {
         return {
           distance: current.distance,
-          transform: `rotateY(180deg) translateX(${current.distance}px)`,
+          transform: {
+            left: `rotateY(180deg) translateX(-${current.distance}px)`,
+            right: `rotateY(180deg) translateX(${current.distance}px)`,
+          },
         }
       })
       return
     }
     setIconPosition((current) => {
-      return {distance: current.distance, transform: 'none'}
+      return {distance: current.distance, transform: {left: '', right: ''}}
     })
     return
   }, [focus])
@@ -105,6 +109,14 @@ export default function GalleryImageCard({
     })
     setManualFocus(true)
   }
+
+  const handleShareClick = (event: any) => {
+    event.stopPropagation()
+    const shareUrl = `${window.location.origin}${window.location.pathname}?itemId=${image._id}`
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      alert('Link copied to clipboard!')
+    })
+  }
   return (
     <div
       style={{
@@ -134,24 +146,45 @@ export default function GalleryImageCard({
       >
         {/* Button in right hand top corner, sets selected state to id */}
         <div
-          className="z-30 flex right-0 justify-center items-center  w-[15%] h-auto  rounded-[50px]  text-gray-500"
+          className="z-30 flex top-2 right-2 justify-center items-center  w-[15%] rounded-[50px]  bg-black text-gray-500 hover:text-white  cursor-pointer"
           id={image._id}
           style={{
             position: 'absolute',
             transitionProperty: 'transform',
             transitionDelay: '.5s',
             transitionTimingFunction: 'ease-out',
-            transform: `${iconPosition.transform}`,
+            transform: `${iconPosition.transform.right}`,
             transformStyle: 'preserve-3d',
           }}
           onClick={handleButtonClick}
         >
           <IconContext.Provider
             value={{
-              className: 'social-icon size-full p-3 bg-black',
+              className: 'size-full p-3',
             }}
           >
-            <TfiNewWindow />
+            <TfiNewWindow className="p-3" />
+          </IconContext.Provider>
+        </div>
+        {/* Share button in left hand top corner */}
+        <div
+          className="z-30 flex top-2 left-2 justify-center items-center w-[15%] rounded-[50px] bg-black text-gray-500 hover:text-white cursor-pointer"
+          style={{
+            position: 'absolute',
+            transitionProperty: 'transform',
+            transitionDelay: '.5s',
+            transitionTimingFunction: 'ease-out',
+            transform: `${iconPosition.transform.left}`,
+            transformStyle: 'preserve-3d',
+          }}
+          onClick={handleShareClick}
+        >
+          <IconContext.Provider
+            value={{
+              className: 'size-full  p-3 ',
+            }}
+          >
+            <FiShare2 />
           </IconContext.Provider>
         </div>
         {/* Front side of the card: Image */}

@@ -22,7 +22,12 @@ import {extraCards} from '@/utils/extraCards'
 import {useFilterSync} from '@/hooks/useFilterSync'
 import {useInfiniteScroll} from '@/hooks/useInfiniteScroll'
 import scrollToTop from '@/utils/scrollToTop'
-import {isGalleryImage, combineGalleryItems, filterGalleryItems} from '@/utils/galleryUtils'
+import {
+  isGalleryImage,
+  // isGalleryVideo,
+  combineGalleryItems,
+  filterGalleryItems,
+} from '@/utils/galleryUtils'
 
 type GalleryItem = GalleryImage | GalleryVideo
 
@@ -95,7 +100,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
 
   useFilterSync(selectedFilter, setSelectedFilter)
 
-  // Handle URL-based item selection on mount and when router is ready
+  // Handle URL-based item selection when router is ready
   useEffect(() => {
     if (!router.isReady) return
 
@@ -106,23 +111,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
         setSelected(itemIndex)
       }
     }
-  }, [router.isReady, router.query.itemId, displayedItems])
-
-  // Update URL when selected item changes
-  useEffect(() => {
-    if (selected > -1 && displayedItems[selected]) {
-      const itemId = displayedItems[selected]._id
-      router.push({pathname: router.pathname, query: {...router.query, itemId}}, undefined, {
-        shallow: true,
-      })
-    } else if (selected === -1) {
-      // Remove itemId from URL when deselecting
-      const {itemId, ...restQuery} = router.query
-      if (itemId) {
-        router.push({pathname: router.pathname, query: restQuery}, undefined, {shallow: true})
-      }
-    }
-  }, [selected, displayedItems, router])
+  }, [router.isReady, router.query.itemId])
 
   useEffect(() => {
     const allHeightsReady = displayedItems.every((item) =>

@@ -100,7 +100,7 @@ export default function FocusedVideoCard({
         ref={videoRef}
         className="w-full h-full object-contain"
         controls
-        autoPlay
+        autoPlay={uniqueId === selected}
         poster={posterUrl}
       >
         <source src={playbackUrl} type="application/x-mpegURL" />
