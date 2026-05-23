@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import {useRouter} from 'next/router'
-import {buildQueryFromFilter} from '@/utils/buildQueryFromFilter'
+import {buildGalleryQuery} from '@/utils/galleryQuery'
 import {parseFilterFromQuery} from '@/utils/parseFilterFromQuery'
 
 export const useFilterSync = (
@@ -22,7 +22,9 @@ export const useFilterSync = (
 
   useEffect(() => {
     if (!router.isReady) return
-    const query = buildQueryFromFilter(selectedFilter)
+    const itemId =
+      typeof router.query.itemId === 'string' ? router.query.itemId : undefined
+    const query = buildGalleryQuery(selectedFilter, itemId)
     router.replace(
       {
         pathname: router.pathname,

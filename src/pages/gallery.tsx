@@ -28,6 +28,8 @@ import {
   combineGalleryItems,
   filterGalleryItems,
 } from '@/utils/galleryUtils'
+import {buildGalleryQuery} from '@/utils/galleryQuery'
+import {ShareFeedbackProvider} from '@/components/ui/ShareFeedback'
 
 type GalleryItem = GalleryImage | GalleryVideo
 
@@ -39,8 +41,8 @@ type Props = {
 const Gallery = ({galleryItems, socials}: Props) => {
   const router = useRouter()
   // displayed items include both images and videos, initially showing first 9
-  const [displayedItems, setDisplayedItems] = useState<GalleryItem[]>(
-    galleryItems.sort((a, b) => (Number(a._id) > Number(b._id) ? -1 : 1)).slice(0, 9),
+  const [displayedItems, setDisplayedItems] = useState<GalleryItem[]>(() =>
+    galleryItems.slice(0, 9),
   )
   const itemDataRef = useRef<
     Map<
@@ -94,24 +96,69 @@ const Gallery = ({galleryItems, socials}: Props) => {
     dates: [],
   })
   const [manualFocus, setManualFocus] = useState(false)
+  const sharedItemIdRef = useRef<string | null>(null)
+  const dismissedShareLinkRef = useRef(false)
+  const filterKeyRef = useRef<string | null>(null)
   const filteredItems = useMemo(() => {
     return filterGalleryItems(galleryItems, selectedFilter)
   }, [galleryItems, selectedFilter])
 
   useFilterSync(selectedFilter, setSelectedFilter)
 
-  // Handle URL-based item selection when router is ready
+  // Open the shared item from ?itemId= (search full filtered list, not just first page)
   useEffect(() => {
     if (!router.isReady) return
 
-    const itemId = router.query.itemId as string
-    if (itemId) {
-      const itemIndex = displayedItems.findIndex((item) => item._id === itemId)
-      if (itemIndex > -1) {
-        setSelected(itemIndex)
-      }
+    const itemId =
+      typeof router.query.itemId === 'string' ? router.query.itemId : undefined
+
+    if (!itemId) {
+      sharedItemIdRef.current = null
+      dismissedShareLinkRef.current = false
+      return
     }
-  }, [router.isReady, router.query.itemId])
+
+    if (dismissedShareLinkRef.current) return
+
+    const index = filteredItems.findIndex((item) => item._id === itemId)
+    if (index === -1) return
+
+    const neededCount = index + 1
+    if (displayedItems.length < neededCount) {
+      const pagesNeeded = Math.ceil(neededCount / 9)
+      setDisplayedItems(filteredItems.slice(0, pagesNeeded * 9))
+      setPage(pagesNeeded)
+      return
+    }
+
+    if (sharedItemIdRef.current === itemId) return
+
+    sharedItemIdRef.current = itemId
+    setManualFocus(true)
+    setSelected(index)
+  }, [router.isReady, router.query.itemId, filteredItems, displayedItems.length])
+
+  const handleCloseViewer = useCallback(() => {
+    dismissedShareLinkRef.current = true
+    setManualFocus(false)
+    setSelected(-1)
+    sharedItemIdRef.current = null
+    if (router.isReady && router.query.itemId) {
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: buildGalleryQuery(selectedFilter),
+        },
+        undefined,
+        {shallow: true},
+      )
+    }
+  }, [router.isReady, router.query.itemId, selectedFilter, router.pathname])
+
+  const setCarouselIndex = useCallback((index: number | ((prev: number) => number)) => {
+    setManualFocus(false)
+    setSelected(index)
+  }, [])
 
   useEffect(() => {
     const allHeightsReady = displayedItems.every((item) =>
@@ -155,26 +202,31 @@ const Gallery = ({galleryItems, socials}: Props) => {
   )
 
   useEffect(() => {
-    console.log('Gallery - selected changed to ', selected)
-    if (selected > -1) {
-      // Use galleryRefs to scroll to the selected item
-      const selectedItem = displayedItems[selected]
-      console.log('Gallery - displayedItems length:', displayedItems.length)
-      console.log('Gallery - displayedItems[selected]:', selectedItem)
-      console.log('Gallery - galleryRefs.current length:', galleryRefs.current.length)
-      console.log('Gallery - galleryRefs.current[selected]:', galleryRefs.current[selected])
-      galleryRefs.current[selected]?.scrollIntoView({behavior: 'smooth', block: 'center'})
-      console.log('Gallery - Scrolling to selected index:', selected)
-      return
+    if (selected < 0) return
+
+    const scrollTarget = () => {
+      galleryRefs.current[selected]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center',
+      })
     }
-    setPage(1)
-    setDisplayedItems(filteredItems.slice(0, 9))
-  }, [selected, filteredItems])
+
+    scrollTarget()
+    const timer = window.setTimeout(scrollTarget, 150)
+    return () => window.clearTimeout(timer)
+  }, [selected])
 
   useEffect(() => {
-    setDisplayedItems(filteredItems.slice(0, 9))
-    if (selectedFilter.countries.length === 0 && selectedFilter.dates.length === 0) return
+    const filterKey = `${selectedFilter.countries.join('-')}|${selectedFilter.dates.join('-')}`
+    if (filterKeyRef.current === filterKey) return
 
+    const isFilterChange = filterKeyRef.current !== null
+    filterKeyRef.current = filterKey
+
+    if (!isFilterChange) return
+
+    setDisplayedItems(filteredItems.slice(0, 9))
     setMaxHeight((prev) => filteredMaxHeightForItems(filteredItems.slice(0, 9), prev))
     setPage(1)
     scrollToTop(sectionRef)
@@ -223,6 +275,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
   )
 
   return (
+    <ShareFeedbackProvider>
     <main
       translate="no"
       className="relative flex flex-col justify-center items-center bg-black text-white w-screen h-screen p-2 sm:p-4 lg:p-8 overflow-y-scroll overflow-auto"
@@ -334,7 +387,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
             items={displayedItems}
             refs={galleryRefs}
             currentIndex={selected}
-            setCurrentIndex={setSelected}
+            setCurrentIndex={setCarouselIndex}
             style={
               'fixed z-20 hidden sm:flex flex-row justify-between items-center h-full bg-opacity-50 bg-black w-screen'
             }
@@ -344,7 +397,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
             items={displayedItems}
             refs={galleryRefs}
             currentIndex={selected}
-            setCurrentIndex={setSelected}
+            setCurrentIndex={setCarouselIndex}
             style={
               'fixed bottom-[.2em] self-center sm:bottom-[2dvh] sm:top-auto justify-self-center z-40 sm:z-20 flex gap-5 p-2 rounded-lg bg-gray-500 bg-opacity-60'
             }
@@ -361,6 +414,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
                   galleryRefs={galleryRefs}
                   selected={selected}
                   setSelected={setSelected}
+                  onClose={handleCloseViewer}
                 />
               ) : (
                 <FocusedVideoCard
@@ -372,6 +426,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
                   galleryRefs={galleryRefs}
                   selected={selected}
                   setSelected={setSelected}
+                  onClose={handleCloseViewer}
                 />
               ),
             )}
@@ -379,6 +434,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
         </section>
       )}
     </main>
+    </ShareFeedbackProvider>
   )
 }
 

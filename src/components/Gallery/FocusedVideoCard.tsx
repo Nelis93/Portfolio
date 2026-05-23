@@ -14,6 +14,7 @@ type Props = {
   galleryRefs: any
   manualFocus: boolean
   setManualFocus: any
+  onClose?: () => void
 }
 
 export default function FocusedVideoCard({
@@ -24,6 +25,7 @@ export default function FocusedVideoCard({
   uniqueId,
   manualFocus,
   setManualFocus,
+  onClose,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null)
   const videoRef = useRef<HTMLVideoElement | null>(null)
@@ -52,12 +54,15 @@ export default function FocusedVideoCard({
 
   const handleButtonClick = (event: any) => {
     event.stopPropagation()
-    setManualFocus(false)
-    setSelected(-1)
-    // Pause video on close
     if (videoRef.current) {
       videoRef.current.pause()
     }
+    if (onClose) {
+      onClose()
+      return
+    }
+    setManualFocus(false)
+    setSelected(-1)
   }
 
   const playbackUrl = getMuxPlaybackUrl(video.muxPlaybackId)

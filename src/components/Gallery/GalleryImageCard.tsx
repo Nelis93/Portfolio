@@ -4,6 +4,8 @@ import {GalleryImage} from '../../types'
 import {urlFor} from '../../lib/sanity'
 import {TfiNewWindow} from 'react-icons/tfi'
 import {FiShare2} from 'react-icons/fi'
+import {copyGalleryShareLink} from '@/utils/galleryQuery'
+import {useShareFeedback} from '@/components/ui/ShareFeedback'
 import {IconContext} from 'react-icons'
 import {getImageDimensions} from '@sanity/asset-utils'
 
@@ -34,6 +36,7 @@ export default function GalleryImageCard({
   maxHeight,
   onImageData,
 }: Props) {
+  const {notifyLinkCopied} = useShareFeedback()
   const [iconPosition, setIconPosition] = useState({
     distance: 0,
     transform: {left: '', right: ''},
@@ -112,10 +115,7 @@ export default function GalleryImageCard({
 
   const handleShareClick = (event: any) => {
     event.stopPropagation()
-    const shareUrl = `${window.location.origin}${window.location.pathname}?itemId=${image._id}`
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      alert('Link copied to clipboard!')
-    })
+    copyGalleryShareLink(image._id, notifyLinkCopied).catch(() => {})
   }
   return (
     <div

@@ -14,6 +14,7 @@ type Props = {
   galleryRefs: any
   manualFocus: boolean
   setManualFocus: any
+  onClose?: () => void
 }
 // Create a ref for each image
 
@@ -25,6 +26,7 @@ export default function FocusedImageCard({
   uniqueId,
   manualFocus,
   setManualFocus,
+  onClose,
 }: Props) {
   const ref = useRef<HTMLElement | null>(null)
 
@@ -36,26 +38,18 @@ export default function FocusedImageCard({
   // Update the currentIndex based on which image is in view
   useEffect(() => {
     if (isInView && !manualFocus) {
-      console.log('FIC - uniqueId: ', uniqueId)
-      // setSelected((current: number) => {
-      //   if (current < 0) {
-      //     setTimeout(() => {
-      //       console.log('latent current: ', current)
-      //       return uniqueId
-      //     }, 300)
-      //   }
-      // console.log('current: ', current)
-      // return uniqueId
-      // })
       setSelected(uniqueId)
       return
     }
-    console.log(selected == uniqueId ? 'selected is uniqueId' : 'selected is not uniqueId')
     setTimeout(() => setManualFocus(false), 2000)
-  }, [isInView, uniqueId])
+  }, [isInView, uniqueId, manualFocus, setSelected, setManualFocus])
   const [dominance, setDominance] = useState(true)
   const handleButtonClick = (event: any) => {
     event.stopPropagation()
+    if (onClose) {
+      onClose()
+      return
+    }
     setManualFocus(false)
     setSelected(-1)
   }

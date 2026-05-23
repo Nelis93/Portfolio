@@ -5,6 +5,8 @@ import {getMuxThumbnailUrl} from '../../lib/mux'
 import {urlFor} from '../../lib/sanity'
 import {MdPlayArrow} from 'react-icons/md'
 import {FiShare2} from 'react-icons/fi'
+import {copyGalleryShareLink} from '@/utils/galleryQuery'
+import {useShareFeedback} from '@/components/ui/ShareFeedback'
 import {IconContext} from 'react-icons'
 
 type Props = {
@@ -34,6 +36,7 @@ export default function GalleryVideoCard({
   maxHeight,
   onVideoData,
 }: Props) {
+  const {notifyLinkCopied} = useShareFeedback()
   // const [iconPosition, setIconPosition] = useState({
   //   distance: 0,
   //   transform: 'none',
@@ -102,10 +105,7 @@ export default function GalleryVideoCard({
 
   const handleShareClick = (event: any) => {
     event.stopPropagation()
-    const shareUrl = `${window.location.origin}${window.location.pathname}?itemId=${video._id}`
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      alert('Link copied to clipboard!')
-    })
+    copyGalleryShareLink(video._id, notifyLinkCopied).catch(() => {})
   }
 
   return (
