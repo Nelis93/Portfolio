@@ -27,6 +27,7 @@ import {
   // isGalleryVideo,
   combineGalleryItems,
   filterGalleryItems,
+  getGalleryItemSlug,
   matchesGalleryShareKey,
 } from '@/utils/galleryUtils'
 import {buildGalleryQuery, getShareKeyFromQuery} from '@/utils/galleryQuery'
@@ -159,6 +160,31 @@ const Gallery = ({galleryItems, socials}: Props) => {
     setManualFocus(false)
     setSelected(index)
   }, [])
+
+  // Keep ?item=slug in sync when the user moves through the focused carousel
+  useEffect(() => {
+    if (!router.isReady || selected < 0) return
+
+    const item = displayedItems[selected]
+    if (!item) return
+
+    const slug = getGalleryItemSlug(item)
+    const currentKey = getShareKeyFromQuery(router.query)
+    if (currentKey === slug) {
+      sharedItemKeyRef.current = slug
+      return
+    }
+
+    sharedItemKeyRef.current = slug
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: buildGalleryQuery(selectedFilter, slug),
+      },
+      undefined,
+      {shallow: true},
+    )
+  }, [selected, router.isReady, displayedItems, selectedFilter, router.pathname, router.query])
 
   useEffect(() => {
     const allHeightsReady = displayedItems.every((item) =>
