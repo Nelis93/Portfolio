@@ -16,7 +16,8 @@
     "sanity-start": "sanity start",
     "sanity-build": "sanity build",
     "sanity-deploy": "sanity deploy",
-    "sanity-deploy-graphql": "sanity graphql deploy"
+    "sanity-deploy-graphql": "sanity graphql deploy",
+    "backfill-gallery-slugs": "npx tsx scripts/backfill-gallery-slugs.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import {useRouter} from 'next/router'
-import {buildGalleryQuery} from '@/utils/galleryQuery'
+import {buildGalleryQuery, getShareKeyFromQuery} from '@/utils/galleryQuery'
 import {parseFilterFromQuery} from '@/utils/parseFilterFromQuery'
 
 export const useFilterSync = (
@@ -22,9 +22,8 @@ export const useFilterSync = (
 
   useEffect(() => {
     if (!router.isReady) return
-    const itemId =
-      typeof router.query.itemId === 'string' ? router.query.itemId : undefined
-    const query = buildGalleryQuery(selectedFilter, itemId)
+    const item = getShareKeyFromQuery(router.query)
+    const query = buildGalleryQuery(selectedFilter, item)
     router.replace(
       {
         pathname: router.pathname,

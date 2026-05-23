@@ -6,6 +6,7 @@ import {urlFor} from '../../lib/sanity'
 import {MdPlayArrow} from 'react-icons/md'
 import {FiShare2} from 'react-icons/fi'
 import {copyGalleryShareLink} from '@/utils/galleryQuery'
+import {getGalleryItemSlug} from '@/utils/galleryUtils'
 import {useShareFeedback} from '@/components/ui/ShareFeedback'
 import {IconContext} from 'react-icons'
 
@@ -105,7 +106,7 @@ export default function GalleryVideoCard({
 
   const handleShareClick = (event: any) => {
     event.stopPropagation()
-    copyGalleryShareLink(video._id, notifyLinkCopied).catch(() => {})
+    copyGalleryShareLink(getGalleryItemSlug(video), notifyLinkCopied).catch(() => {})
   }
 
   return (

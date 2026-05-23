@@ -1,4 +1,23 @@
 import {GalleryImage, GalleryVideo} from '../types'
+import {slugifyTitle} from './slugifyTitle'
+
+export type GalleryItem = GalleryImage | GalleryVideo
+
+export function getGalleryItemSlug(item: GalleryItem): string {
+  if (item.slug?.current) return item.slug.current
+  if (item.title) {
+    const fromTitle = slugifyTitle(item.title)
+    if (fromTitle) return fromTitle
+  }
+  return item._id
+}
+
+export function matchesGalleryShareKey(item: GalleryItem, key: string): boolean {
+  if (item.slug?.current === key) return true
+  if (item._id === key) return true
+  if (item.title && slugifyTitle(item.title) === key) return true
+  return false
+}
 
 /**
  * Type guards for distinguishing between images and videos

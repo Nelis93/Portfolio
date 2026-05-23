@@ -63,6 +63,11 @@ interface Image {
 //     },
 //   ];
 // }
+interface slug {
+  _type: 'slug'
+  current: string
+}
+
 export interface PageInfo extends SanityBody {
   _type: 'pageInfo'
   address: string
@@ -127,6 +132,7 @@ export interface Social extends SanityBody {
 export interface GalleryImage extends SanityBody {
   _type: 'galleryImage'
   title: string
+  slug?: slug
   description: string
   actualImage: Image
   location: string
@@ -139,6 +145,7 @@ export interface GalleryImage extends SanityBody {
 export interface GalleryVideo extends SanityBody {
   _type: 'galleryVideo'
   title: string
+  slug?: slug
   description: string
   muxVideoId: string
   muxPlaybackId: string

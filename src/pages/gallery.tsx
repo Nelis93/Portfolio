@@ -27,8 +27,9 @@ import {
   // isGalleryVideo,
   combineGalleryItems,
   filterGalleryItems,
+  matchesGalleryShareKey,
 } from '@/utils/galleryUtils'
-import {buildGalleryQuery} from '@/utils/galleryQuery'
+import {buildGalleryQuery, getShareKeyFromQuery} from '@/utils/galleryQuery'
 import {ShareFeedbackProvider} from '@/components/ui/ShareFeedback'
 
 type GalleryItem = GalleryImage | GalleryVideo
@@ -96,7 +97,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
     dates: [],
   })
   const [manualFocus, setManualFocus] = useState(false)
-  const sharedItemIdRef = useRef<string | null>(null)
+  const sharedItemKeyRef = useRef<string | null>(null)
   const dismissedShareLinkRef = useRef(false)
   const filterKeyRef = useRef<string | null>(null)
   const filteredItems = useMemo(() => {
@@ -105,22 +106,21 @@ const Gallery = ({galleryItems, socials}: Props) => {
 
   useFilterSync(selectedFilter, setSelectedFilter)
 
-  // Open the shared item from ?itemId= (search full filtered list, not just first page)
+  // Open the shared item from ?item=slug (or legacy ?itemId=)
   useEffect(() => {
     if (!router.isReady) return
 
-    const itemId =
-      typeof router.query.itemId === 'string' ? router.query.itemId : undefined
+    const shareKey = getShareKeyFromQuery(router.query)
 
-    if (!itemId) {
-      sharedItemIdRef.current = null
+    if (!shareKey) {
+      sharedItemKeyRef.current = null
       dismissedShareLinkRef.current = false
       return
     }
 
     if (dismissedShareLinkRef.current) return
 
-    const index = filteredItems.findIndex((item) => item._id === itemId)
+    const index = filteredItems.findIndex((item) => matchesGalleryShareKey(item, shareKey))
     if (index === -1) return
 
     const neededCount = index + 1
@@ -131,19 +131,19 @@ const Gallery = ({galleryItems, socials}: Props) => {
       return
     }
 
-    if (sharedItemIdRef.current === itemId) return
+    if (sharedItemKeyRef.current === shareKey) return
 
-    sharedItemIdRef.current = itemId
+    sharedItemKeyRef.current = shareKey
     setManualFocus(true)
     setSelected(index)
-  }, [router.isReady, router.query.itemId, filteredItems, displayedItems.length])
+  }, [router.isReady, router.query.item, router.query.itemId, filteredItems, displayedItems.length])
 
   const handleCloseViewer = useCallback(() => {
     dismissedShareLinkRef.current = true
     setManualFocus(false)
     setSelected(-1)
-    sharedItemIdRef.current = null
-    if (router.isReady && router.query.itemId) {
+    sharedItemKeyRef.current = null
+    if (router.isReady && getShareKeyFromQuery(router.query)) {
       router.replace(
         {
           pathname: router.pathname,
@@ -153,7 +153,7 @@ const Gallery = ({galleryItems, socials}: Props) => {
         {shallow: true},
       )
     }
-  }, [router.isReady, router.query.itemId, selectedFilter, router.pathname])
+  }, [router.isReady, router.query, selectedFilter, router.pathname])
 
   const setCarouselIndex = useCallback((index: number | ((prev: number) => number)) => {
     setManualFocus(false)

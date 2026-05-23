@@ -1,30 +1,38 @@
 import {buildQueryFromFilter} from './buildQueryFromFilter'
 
 /**
- * Builds the full gallery URL query (filters + optional shared item).
+ * Builds the full gallery URL query (filters + optional shared item slug).
  */
 export const buildGalleryQuery = (
   filter: {countries: string[]; dates: string[]},
-  itemId?: string | null,
+  item?: string | null,
 ): Record<string, string> => {
   const query = buildQueryFromFilter(filter)
-  if (itemId) {
-    query.itemId = itemId
+  if (item) {
+    query.item = item
   }
   return query
 }
 
-export const buildGalleryShareUrl = (itemId: string): string => {
+export const buildGalleryShareUrl = (slug: string): string => {
+  const encoded = encodeURIComponent(slug)
   if (typeof window === 'undefined') {
-    return `/gallery?itemId=${itemId}`
+    return `/gallery?item=${encoded}`
   }
-  return `${window.location.origin}/gallery?itemId=${itemId}`
+  return `${window.location.origin}/gallery?item=${encoded}`
 }
 
 export const copyGalleryShareLink = async (
-  itemId: string,
+  slug: string,
   onCopied?: () => void,
 ): Promise<void> => {
-  await navigator.clipboard.writeText(buildGalleryShareUrl(itemId))
+  await navigator.clipboard.writeText(buildGalleryShareUrl(slug))
   onCopied?.()
+}
+
+/** Reads ?item=slug from the URL, with legacy ?itemId= support for old links. */
+export const getShareKeyFromQuery = (query: Record<string, string | string[] | undefined>) => {
+  if (typeof query.item === 'string') return query.item
+  if (typeof query.itemId === 'string') return query.itemId
+  return undefined
 }

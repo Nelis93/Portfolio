@@ -12,6 +12,24 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      title: 'Slug',
+      name: 'slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 200,
+        slugify: (input: string) =>
+          input
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')
+            .replace(/[^a-z0-9-]/g, '')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '')
+            .slice(0, 200),
+      },
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
